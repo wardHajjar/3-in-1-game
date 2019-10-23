@@ -4,6 +4,7 @@ package com.example.dungeonescape;
  * Represents a Player in the Game.
  */
 public class Player extends GameObject {
+
     /** The Player's name. */
     private String name;
 
