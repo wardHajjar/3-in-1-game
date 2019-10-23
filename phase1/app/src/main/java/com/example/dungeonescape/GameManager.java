@@ -12,15 +12,11 @@ public class GameManager {
 
     public GameManager() {
         /* Sets the initial total time elapsed in the Game to 0. */
-        setTotalTime(0);
+        totalTime = 0;
     }
 
     public int getTotalTime() {
         return totalTime;
-    }
-
-    public void setTotalTime(int totalTime) {
-        this.totalTime = totalTime;
     }
 
     /** As each second passes, increment the totalTime elapsed.
