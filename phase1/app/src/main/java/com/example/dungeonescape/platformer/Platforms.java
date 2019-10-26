@@ -1,6 +1,4 @@
-package com.example.dungeonescape.Platformer;
-
-import android.graphics.Canvas;
+package com.example.dungeonescape.platformer;
 
 public class Platforms {
 

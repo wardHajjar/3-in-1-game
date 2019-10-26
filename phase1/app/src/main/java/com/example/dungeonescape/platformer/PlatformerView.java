@@ -1,7 +1,6 @@
-package com.example.dungeonescape.Platformer;
+package com.example.dungeonescape.platformer;
 import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.view.SurfaceView;

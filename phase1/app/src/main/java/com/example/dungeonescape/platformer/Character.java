@@ -1,7 +1,5 @@
-package com.example.dungeonescape.Platformer;
-import android.graphics.Canvas;
+package com.example.dungeonescape.platformer;
 import android.graphics.Paint;
-import android.graphics.Typeface;
 
 public class Character {
 

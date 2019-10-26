@@ -1,9 +1,6 @@
-package com.example.dungeonescape.Platformer;
-
-import android.graphics.Canvas;
+package com.example.dungeonescape.platformer;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 class PlatformerManager {

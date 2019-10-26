@@ -1,4 +1,4 @@
-package com.example.dungeonescape;
+package com.example.dungeonescape.platformer;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,24 +7,25 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.dungeonescape.platformer.PlatformerMainActivity;
+import com.example.dungeonescape.MainActivity;
+import com.example.dungeonescape.R;
 
-public class MainActivity extends AppCompatActivity {
+public class PlatformerMainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_platformer_main);
+        setTitle("Level2: Platformer");
         configureNextButton();
     }
-
     private void configureNextButton() {
-        Button nextButton = (Button) findViewById(R.id.button);
+        Button nextButton = (Button) findViewById(R.id.startButton);
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(MainActivity.this, PlatformerMainActivity.class);
+                Intent intent = new Intent(PlatformerMainActivity.this, Level2MainActivity.class);
                 startActivity(intent);
             }
         });
