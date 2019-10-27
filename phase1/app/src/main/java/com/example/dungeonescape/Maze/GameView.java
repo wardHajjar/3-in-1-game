@@ -12,16 +12,26 @@ import java.util.ArrayList;
 import java.util.Stack;
 
 /**
- * The code from GameView was from the following video: https://www.youtube.com/watch?v=I9lTBTAk5MU.
+ * The code from GameView was from the following videos:
+ * https://www.youtube.com/watch?v=I9lTBTAk5MU
+ * https://www.youtube.com/watch?v=iri0wZ3NvdQ
  *
  * TODO: Edit this javadoc as we change the code below.
  */
 
 public class GameView  extends View {
+    /** A 2D Array of MazeCell cells. */
     private MazeCell[][] cells;
+
+    /** The number of columns and rows in this maze. */
     private static final int COLS =20, ROWS = 20;
+
+    /** The line thickness of the walls. */
     private static final float wallThickness = 4;
+
     private float cellSize, hMargin, vMargin;
+
+    /** Represents the colour of the walls. */
     private Paint wallPaint;
     private Random rand = new Random();
 
@@ -82,7 +92,6 @@ public class GameView  extends View {
     }
 
     private void removeWall(MazeCell current, MazeCell next){
-
         /* (x, y) coordinates for the current and next MazeCell. */
         int currX = current.getX();
         int currY = current.getY();
