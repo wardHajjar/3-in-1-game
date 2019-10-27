@@ -49,14 +49,17 @@ public class GameView extends View {
     private void createMaze(){
         Stack<MazeCell> stack = new Stack<>();
         MazeCell current, next;
+        int mazeCols = getNumMazeCols();
+        int mazeRows = getNumMazeRows();
 
-        cells = new MazeCell[numMazeCols][numMazeRows];
+        cells = new MazeCell[mazeCols][mazeRows];
 
-        for(int x=0; x<numMazeCols; x++){
-            for(int y=0; y<numMazeRows; y++){
-                cells[x][y] = new MazeCell(x,y, 0);
+        for (int x = 0; x < mazeCols; x++) {
+            for (int y = 0; y < mazeRows; y++) {
+                cells[x][y] = new MazeCell(x, y, 1);
             }
         }
+
         current = cells[0][0];
         current.setVisited(true);
 
