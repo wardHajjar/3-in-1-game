@@ -19,7 +19,7 @@ import java.util.Stack;
  * TODO: Edit this javadoc as we change the code below.
  */
 
-public class GameView  extends View {
+public class GameView extends View {
     /** A 2D Array of MazeCell cells. */
     private MazeCell[][] cells;
 
@@ -31,8 +31,8 @@ public class GameView  extends View {
 
     /** Represents the colour of the walls. */
     private Paint wallPaint;
-    private Random rand = new Random();
 
+    private Random rand = new Random();
 
     public GameView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -111,11 +111,11 @@ public class GameView  extends View {
         }
     }
 
-
     @Override
     protected void onDraw(Canvas canvas) {
         canvas.drawColor(Color.BLACK);
 
+        /* Represents the width and height of the available screen in pixels. */
         int width = getWidth();
         int height = getHeight();
 
