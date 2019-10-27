@@ -29,8 +29,6 @@ public class GameView  extends View {
     /** The line thickness of the walls. */
     private static final float wallThickness = 4;
 
-    private float cellSize, hMargin, vMargin;
-
     /** Represents the colour of the walls. */
     private Paint wallPaint;
     private Random rand = new Random();
@@ -121,6 +119,7 @@ public class GameView  extends View {
         int width = getWidth();
         int height = getHeight();
 
+        float cellSize;
         if((float) width/height < (float) COLS/ROWS)
             cellSize = width / (COLS + 1);
         else
@@ -129,8 +128,8 @@ public class GameView  extends View {
 
         System.out.println(cellSize);
 
-        hMargin = (width - COLS*cellSize)/2;
-        vMargin = (height - ROWS*cellSize)/2;
+        float hMargin = (width - COLS * cellSize) / 2;
+        float vMargin = (height - ROWS * cellSize) / 2;
 
         canvas.translate(hMargin, vMargin);
 
@@ -138,34 +137,34 @@ public class GameView  extends View {
             for(int y=0; y<ROWS; y++){
                 if (cells[x][y].isTopWall())
                     canvas.drawLine(
-                            x*cellSize,
-                            y*cellSize,
-                            (x+1)*cellSize,
-                            y*cellSize,
+                            x* cellSize,
+                            y* cellSize,
+                            (x+1)* cellSize,
+                            y* cellSize,
                             wallPaint);
 
                 if (cells[x][y].isLeftWall())
                     canvas.drawLine(
-                            x*cellSize,
-                            y*cellSize,
-                            x*cellSize,
-                            (y+1)*cellSize,
+                            x* cellSize,
+                            y* cellSize,
+                            x* cellSize,
+                            (y+1)* cellSize,
                             wallPaint);
 
                 if (cells[x][y].isBottomWall())
                     canvas.drawLine(
-                            x*cellSize,
-                            (y+1)*cellSize,
-                            (x+1)*cellSize,
-                            (y+1)*cellSize,
+                            x* cellSize,
+                            (y+1)* cellSize,
+                            (x+1)* cellSize,
+                            (y+1)* cellSize,
                             wallPaint);
 
                 if (cells[x][y].isRightWall())
                     canvas.drawLine(
-                            (x+1)*cellSize,
-                            y*cellSize,
-                            (x+1)*cellSize,
-                            (y+1)*cellSize,
+                            (x+1)* cellSize,
+                            y* cellSize,
+                            (x+1)* cellSize,
+                            (y+1)* cellSize,
                             wallPaint);
             }
         }
