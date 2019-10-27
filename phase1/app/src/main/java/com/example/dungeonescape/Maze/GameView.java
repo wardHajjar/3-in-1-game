@@ -35,6 +35,9 @@ public class GameView extends View {
 
     private Random rand = new Random();
 
+    /** Instantiates the MazeManager class for this Maze. */
+    private MazeManager thisMaze = new MazeManager();
+
     public GameView(Context context, AttributeSet attrs) {
         super(context, attrs);
         wallPaint = new Paint();
