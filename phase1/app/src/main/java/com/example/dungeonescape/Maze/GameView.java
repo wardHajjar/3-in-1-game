@@ -125,8 +125,6 @@ public class GameView extends View {
 
         float cellSize = thisMaze.calculateCellSize(width, height, numMazeCols, numMazeRows);
 
-        System.out.println(cellSize);
-
         float hMargin = (width - numMazeCols * cellSize) / 2;
         float vMargin = (height - numMazeRows * cellSize) / 2;
 

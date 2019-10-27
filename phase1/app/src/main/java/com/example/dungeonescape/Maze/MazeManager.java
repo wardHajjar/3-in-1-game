@@ -40,7 +40,7 @@ public class MazeManager {
      * @param cellSize the calculated size of the MazeCell.
      * @return the calculated horizontalPadding.
      */
-    public float calculateCellHorizontalPadding(int screenWidth, int numMazeCols, int cellSize) {
+    public float calculateCellHorizontalPadding(int screenWidth, int numMazeCols, float cellSize) {
         return (float) ((screenWidth - (numMazeCols * cellSize)) / 2);
     }
 
@@ -52,7 +52,7 @@ public class MazeManager {
      * @param cellSize the calculated size of the MazeCell.
      * @return the calculated verticalPadding.
      */
-    public float calculateCellVerticalPadding(int screenHeight, int numMazeRows, int cellSize) {
+    public float calculateCellVerticalPadding(int screenHeight, int numMazeRows, float cellSize) {
         return (float) ((screenHeight - (numMazeRows * cellSize)) / 2);
     }
 }
