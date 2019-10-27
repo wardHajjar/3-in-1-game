@@ -1,4 +1,4 @@
-package com.example.dungeonescape;
+package com.example.dungeonescape.Maze;
 
 import java.util.Random;
 import android.content.Context;
@@ -10,6 +10,12 @@ import android.view.View;
 
 import java.util.ArrayList;
 import java.util.Stack;
+
+/**
+ * The code from GameView was from the following video: https://www.youtube.com/watch?v=I9lTBTAk5MU.
+ *
+ * TODO: Edit this javadoc as we change the code below.
+ */
 
 public class GameView  extends View {
     private Cell[][] cells;
