@@ -1,14 +1,20 @@
 package com.example.dungeonescape.BrickBreaker;
 
-/**
- * Class that creates a brick breaker object.
-*/
-class BBObject {
-    /**
-     *the x and y coordinates of the object's location
-     */
-    private int x, y;
 
+import android.graphics.Canvas;
+import android.graphics.Paint;
+/**
+ * Abstract Class that creates a brick breaker object.
+*/
+abstract class BBObject {
+    /**
+     * the x and y coordinates of the object's location
+     */
+    int x, y;
+    /**
+     * Paint object that describes the colors and styles for drawing.
+     */
+    Paint paintStyle;
     /**
      * Method initializes a brick breaker object.
      *
@@ -18,6 +24,7 @@ class BBObject {
     BBObject(int x, int y){
         this.x = x;
         this.y = y;
+        this.paintStyle = new Paint();
     }
 
     /**
@@ -51,4 +58,11 @@ class BBObject {
     int getY(){
         return this.y;
     }
+
+    /**
+     * Draws the brick breaker object on screen.
+     *
+     * @param canvas the graphic context on which the object is drawn
+     */
+    abstract void draw(Canvas canvas);
 }
