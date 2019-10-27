@@ -120,50 +120,67 @@ public class GameView extends View {
         canvas.drawColor(Color.BLACK);
 
         /* Represents the width and height of the available screen in pixels. */
-        int width = getWidth();
-        int height = getHeight();
+        int screenWidth = getWidth();
+        int screenHeight = getHeight();
 
-        float cellSize = thisMaze.calculateCellSize(width, height, numMazeCols, numMazeRows);
+        int mazeCols = getNumMazeCols();
+        int mazeRows = getNumMazeRows();
 
-        float horizontalPadding = thisMaze.calculateCellHorizontalPadding(width, numMazeCols, cellSize);
-        float verticalPadding = thisMaze.calculateCellVerticalPadding(height, numMazeRows, cellSize);
+        float cellSize = thisMaze.calculateCellSize(screenWidth, screenHeight,
+                mazeCols, mazeRows);
+        float horizontalPadding = thisMaze.calculateCellHorizontalPadding(screenWidth,
+                mazeCols, cellSize);
+        float verticalPadding = thisMaze.calculateCellVerticalPadding(screenHeight,
+                mazeRows, cellSize);
 
         canvas.translate(horizontalPadding, verticalPadding);
 
         for(int x = 0; x < numMazeCols; x++) {
             for(int y = 0; y < numMazeRows; y++) {
-                if (cells[x][y].isTopWall())
+                if (cells[x][y].isTopWall()) {
                     canvas.drawLine(
                             x * cellSize,
                             y * cellSize,
                             (x + 1) * cellSize,
                             y * cellSize,
                             wallPaint);
+                }
 
-                if (cells[x][y].isLeftWall())
+                if (cells[x][y].isLeftWall()) {
                     canvas.drawLine(
                             x * cellSize,
                             y * cellSize,
                             x * cellSize,
                             (y + 1) * cellSize,
                             wallPaint);
+                }
 
-                if (cells[x][y].isBottomWall())
+                if (cells[x][y].isBottomWall()) {
                     canvas.drawLine(
                             x * cellSize,
                             (y + 1) * cellSize,
                             (x + 1) * cellSize,
                             (y + 1) * cellSize,
                             wallPaint);
+                }
 
-                if (cells[x][y].isRightWall())
+                if (cells[x][y].isRightWall()) {
                     canvas.drawLine(
                             (x + 1) * cellSize,
                             y * cellSize,
                             (x + 1) * cellSize,
                             (y + 1) * cellSize,
                             wallPaint);
+                }
             }
         }
+    }
+
+    public int getNumMazeCols() {
+        return numMazeCols;
+    }
+
+    public int getNumMazeRows() {
+        return numMazeRows;
     }
 }
