@@ -34,6 +34,7 @@ public class MazeManager {
 
     /**
      * Calculates the cell's horizontal padding based on the screen's width and calculated cell size.
+     *
      * @param screenWidth the width of the phone screen in pixels.
      * @param numMazeCols the number of columns in this Maze.
      * @param cellSize the calculated size of the MazeCell.
@@ -41,5 +42,17 @@ public class MazeManager {
      */
     public float calculateCellHorizontalPadding(int screenWidth, int numMazeCols, int cellSize) {
         return (float) ((screenWidth - (numMazeCols * cellSize)) / 2);
+    }
+
+    /**
+     * Calculates the cell's vertical padding based on the screen's height and calculated cell size.
+     *
+     * @param screenHeight the height of the phone screen in pixels.
+     * @param numMazeRows the number of rows in this Maze.
+     * @param cellSize the calculated size of the MazeCell.
+     * @return the calculated verticalPadding.
+     */
+    public float calculateCellVerticalPadding(int screenHeight, int numMazeRows, int cellSize) {
+        return (float) ((screenHeight - (numMazeRows * cellSize)) / 2);
     }
 }
