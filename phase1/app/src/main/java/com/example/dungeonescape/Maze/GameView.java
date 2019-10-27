@@ -82,13 +82,20 @@ public class GameView  extends View {
     }
 
     private void removeWall(MazeCell current, MazeCell next){
-        if (current.getX() == next.getX() - 1){
+
+        /* (x, y) coordinates for the current and next MazeCell. */
+        int currX = current.getX();
+        int currY = current.getY();
+        int nextX = next.getX();
+        int nextY = next.getY();
+
+        if (currX == nextX - 1) {
             current.setRightWall(false);
             next.setLeftWall(false);
-        } else if (current.getX() == next.getX() + 1){
+        } else if (currX == nextX + 1) {
             current.setLeftWall(false);
             next.setRightWall(false);
-        } else if (current.getY() == next.getY() - 1) {
+        } else if (currY == nextY - 1) {
             current.setBottomWall(false);
             next.setTopWall(false);
         } else {
