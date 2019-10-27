@@ -64,7 +64,7 @@ public class GameView extends View {
         current.setVisited(true);
 
         do {
-            next = getNeighbor(current);
+            next = getNeighbour(current);
             if (next != null) {
                 removeWall(current, next);
                 stack.push(current);
@@ -76,24 +76,38 @@ public class GameView extends View {
         } while (!stack.isEmpty());
     }
 
-    private MazeCell getNeighbor(MazeCell cell){
-        ArrayList<MazeCell> neighbors = new ArrayList<>();
+    private MazeCell getNeighbour(MazeCell cell) {
+        ArrayList<MazeCell> neighbours = new ArrayList<>();
+        int cellX = cell.getX();
+        int cellY = cell.getY();
+        int mazeCols = getNumMazeCols();
+        int mazeRows = getNumMazeRows();
+
         // left
-        if (cell.getX()-1>=0 && !cells[cell.getX()-1][cell.getY()].isVisited())
-            neighbors.add(cells[cell.getX()-1][cell.getY()]);
+        if (cellX - 1 >= 0 && !cells[cellX - 1][cellY].isVisited()) {
+            neighbours.add(cells[cellX - 1][cellY]);
+        }
+
         // right
-        if (cell.getX()+1<numMazeCols && !cells[cell.getX()+1][cell.getY()].isVisited())
-            neighbors.add(cells[cell.getX()+1][cell.getY()]);
+        if (cellX + 1 < mazeCols && !cells[cellX + 1][cellY].isVisited()) {
+            neighbours.add(cells[cellX + 1][cellY]);
+        }
+
         // bottom
-        if (cell.getY()+1<numMazeRows && !cells[cell.getX()][cell.getY()+1].isVisited())
-            neighbors.add(cells[cell.getX()][cell.getY()+1]);
+        if (cellY + 1 < mazeRows && !cells[cellX][cellY + 1].isVisited()) {
+            neighbours.add(cells[cellX][cellY + 1]);
+        }
+
         // top
-        if (cell.getY()-1>=0 && !cells[cell.getX()][cell.getY()-1].isVisited())
-            neighbors.add(cells[cell.getX()][cell.getY()-1]);
-        if (!neighbors.isEmpty())
-            return neighbors.get(rand.nextInt(neighbors.size()));
-        else
+        if (cellY - 1 >= 0 && !cells[cellX][cellY - 1].isVisited()) {
+            neighbours.add(cells[cellX][cellY - 1]);
+        }
+
+        if (neighbours.isEmpty()) {
             return null;
+        } else {
+            return neighbours.get(rand.nextInt(neighbours.size()));
+        }
     }
 
     private void removeWall(MazeCell current, MazeCell next){
