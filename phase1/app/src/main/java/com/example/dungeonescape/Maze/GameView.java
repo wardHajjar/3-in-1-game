@@ -18,7 +18,7 @@ import java.util.Stack;
  */
 
 public class GameView  extends View {
-    private Cell[][] cells;
+    private MazeCell[][] cells;
     private static final int COLS =20, ROWS = 20;
     private static final float wallThickness = 4;
     private float cellSize, hMargin, vMargin;
@@ -35,18 +35,18 @@ public class GameView  extends View {
     }
 
     private void createMaze(){
-        Stack<Cell> stack = new Stack<>();
-        Cell current, next;
+        Stack<MazeCell> stack = new Stack<>();
+        MazeCell current, next;
 
-        cells = new Cell[COLS][ROWS];
+        cells = new MazeCell[COLS][ROWS];
 
         for(int x=0; x<COLS; x++){
             for(int y=0; y<ROWS; y++){
-                cells[x][y] = new Cell(x,y);
+                cells[x][y] = new MazeCell(x,y, 0);
             }
         }
         current = cells[0][0];
-        current.visited = true;
+        current.setVisited(true);
 
         do {
             next = getNeighbor(current);
@@ -54,46 +54,46 @@ public class GameView  extends View {
                 removeWall(current, next);
                 stack.push(current);
                 current = next;
-                current.visited = true;
+                current.setVisited(true);
             } else {
                 current = stack.pop();
             }
         } while (!stack.isEmpty());
     }
 
-    private Cell getNeighbor(Cell cell){
-        ArrayList<Cell> neighbors = new ArrayList<>();
+    private MazeCell getNeighbor(MazeCell cell){
+        ArrayList<MazeCell> neighbors = new ArrayList<>();
         // left
-        if (cell.col-1>=0 && !cells[cell.col-1][cell.row].visited)
-            neighbors.add(cells[cell.col-1][cell.row]);
+        if (cell.getX()-1>=0 && !cells[cell.getX()-1][cell.getY()].isVisited())
+            neighbors.add(cells[cell.getX()-1][cell.getY()]);
         // right
-        if (cell.col+1<COLS && !cells[cell.col+1][cell.row].visited)
-            neighbors.add(cells[cell.col+1][cell.row]);
+        if (cell.getX()+1<COLS && !cells[cell.getX()+1][cell.getY()].isVisited())
+            neighbors.add(cells[cell.getX()+1][cell.getY()]);
         // bottom
-        if (cell.row+1<ROWS && !cells[cell.col][cell.row+1].visited)
-            neighbors.add(cells[cell.col][cell.row+1]);
+        if (cell.getY()+1<ROWS && !cells[cell.getX()][cell.getY()+1].isVisited())
+            neighbors.add(cells[cell.getX()][cell.getY()+1]);
         // top
-        if (cell.row-1>=0 && !cells[cell.col][cell.row-1].visited)
-            neighbors.add(cells[cell.col][cell.row-1]);
+        if (cell.getY()-1>=0 && !cells[cell.getX()][cell.getY()-1].isVisited())
+            neighbors.add(cells[cell.getX()][cell.getY()-1]);
         if (!neighbors.isEmpty())
             return neighbors.get(rand.nextInt(neighbors.size()));
         else
             return null;
     }
 
-    private void removeWall(Cell current, Cell next){
-        if (current.col == next.col-1){
-            current.rightWall= false;
-            next.leftWall = false;
-        } else if (current.col == next.col+1){
-            current.leftWall = false;
-            next.rightWall = false;
-        } else if (current.row == next.row-1) {
-            current.bottomWall = false;
-            next.topWall = false;
+    private void removeWall(MazeCell current, MazeCell next){
+        if (current.getX() == next.getX() - 1){
+            current.setRightWall(false);
+            next.setLeftWall(false);
+        } else if (current.getX() == next.getX() + 1){
+            current.setLeftWall(false);
+            next.setRightWall(false);
+        } else if (current.getY() == next.getY() - 1) {
+            current.setBottomWall(false);
+            next.setTopWall(false);
         } else {
-            current.topWall = false;
-            next.bottomWall = false;
+            current.setTopWall(false);
+            next.setBottomWall(false);
         }
     }
 
@@ -120,7 +120,7 @@ public class GameView  extends View {
 
         for(int x=0; x<COLS; x++){
             for(int y=0; y<ROWS; y++){
-                if (cells[x][y].topWall)
+                if (cells[x][y].isTopWall())
                     canvas.drawLine(
                             x*cellSize,
                             y*cellSize,
@@ -128,7 +128,7 @@ public class GameView  extends View {
                             y*cellSize,
                             wallPaint);
 
-                if (cells[x][y].leftWall)
+                if (cells[x][y].isLeftWall())
                     canvas.drawLine(
                             x*cellSize,
                             y*cellSize,
@@ -136,7 +136,7 @@ public class GameView  extends View {
                             (y+1)*cellSize,
                             wallPaint);
 
-                if (cells[x][y].bottomWall)
+                if (cells[x][y].isBottomWall())
                     canvas.drawLine(
                             x*cellSize,
                             (y+1)*cellSize,
@@ -144,7 +144,7 @@ public class GameView  extends View {
                             (y+1)*cellSize,
                             wallPaint);
 
-                if (cells[x][y].rightWall)
+                if (cells[x][y].isRightWall())
                     canvas.drawLine(
                             (x+1)*cellSize,
                             y*cellSize,
@@ -152,22 +152,6 @@ public class GameView  extends View {
                             (y+1)*cellSize,
                             wallPaint);
             }
-        }
-    }
-
-    private class Cell{
-        boolean
-            topWall = true,
-            bottomWall = true,
-            leftWall = true,
-            rightWall = true,
-            visited = false;
-
-        int col, row;
-
-        Cell(int col, int row) {
-            this.col = col;
-            this.row = row;
         }
     }
 }
