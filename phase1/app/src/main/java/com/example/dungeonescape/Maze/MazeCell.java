@@ -111,6 +111,6 @@ public class MazeCell extends GameObject {
           newCellSize = screenHeight / (numMazeRows + 1);
         }
 
-        return cellSize;
+        return newCellSize;
     }
 }
