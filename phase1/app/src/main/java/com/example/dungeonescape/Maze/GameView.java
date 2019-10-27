@@ -125,10 +125,10 @@ public class GameView extends View {
 
         float cellSize = thisMaze.calculateCellSize(width, height, numMazeCols, numMazeRows);
 
-        float hMargin = (width - numMazeCols * cellSize) / 2;
-        float vMargin = (height - numMazeRows * cellSize) / 2;
+        float horizontalPadding = thisMaze.calculateCellHorizontalPadding(width, numMazeCols, cellSize);
+        float verticalPadding = thisMaze.calculateCellVerticalPadding(height, numMazeRows, cellSize);
 
-        canvas.translate(hMargin, vMargin);
+        canvas.translate(horizontalPadding, verticalPadding);
 
         for(int x = 0; x < numMazeCols; x++) {
             for(int y = 0; y < numMazeRows; y++) {
