@@ -123,12 +123,7 @@ public class GameView extends View {
         int width = getWidth();
         int height = getHeight();
 
-        float cellSize;
-        if((float) width/height < (float) numMazeCols/numMazeRows)
-            cellSize = width / (numMazeCols + 1);
-        else
-            cellSize = height / (numMazeRows + 1);
-
+        float cellSize = thisMaze.calculateCellSize(width, height, numMazeCols, numMazeRows);
 
         System.out.println(cellSize);
 
