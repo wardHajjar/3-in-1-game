@@ -37,7 +37,7 @@ class Character {
         else {
             speed -= gravity;
         }
-        if (y+ size + speed*direction - canvas.getHeight() >= 0) {
+        if (y+ size + speed*direction - canvas.getHeight() > 0) {
             y = height;
             direction = -direction;
             speed = -80;
