@@ -1,34 +1,32 @@
 package com.example.dungeonescape.brickbreaker;
 
-import android.graphics.Rect;
+import android.graphics.Canvas;
+import android.graphics.Color;
 
-
-class Paddle {
+class Paddle extends BBObject {
     // width and height of paddle
     private int w, h;
-
-    // position of paddle, in x & y
-    private int x, y;
 
     // whether paddle if moving left or right
     private boolean movingLeft;
     private boolean movingRight;
 
-
     // construct a Paddle at location x, y
     // width and height of the canvas are passed into the constructor
-
-    Paddle(int width, int height) {
+    Paddle(int x, int y) {
+        super(x, y);
         w = 150;
         h = 20;
-        x = width/2 - w/2;
-        y = height - 40;
         movingLeft = false;
         movingRight = false;
     }
 
-    void draw() {
-        Rect rect = new Rect(x, y - h, x + w, y);
+    @Override
+    void draw(Canvas canvas) {
+        paintStyle.setColor(Color.WHITE);
+        paintStyle.setStrokeWidth(3);
+        canvas.drawRect(x, y, x + w, y + h, paintStyle);
+        // x is left, y is top
     }
 
     void updateLocation() {
@@ -43,9 +41,24 @@ class Paddle {
         x += step;
     }
 
-    // checks the x-axis edges of the canvas; width of canvas ia passed into it
+    // checks the x-axis edges of the canvas; width of canvas is passed into it
     void checkBounds(int width) {
         if (x <= 0) x = 0;
-        else if (x + w >= width) x = width - this.w;
+        else if (x + w >= width) x = width - w;
     }
 }
+
+    /*  Move the key events to GamePanel when ready
+
+    import android.view.KeyEvent;
+
+    public boolean onKeyDown(int KeyCode, KeyEvent event) {
+        if (KeyCode == KeyEvent.KEYCODE_DPAD_LEFT) {
+            paddle.movingLeft = true;
+        } else if (KeyCode == KeyEvent.KEYCODE_DPAD_RIGHT) {
+            paddle.movingRight = true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    */
