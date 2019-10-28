@@ -7,7 +7,9 @@ import android.graphics.Paint;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-
+import android.view.Display;
+import android.graphics.Point;
+import android.app.Activity;
 /*
 BBMainActivity and BBView were structured like the following game:
 http://gamecodeschool.com/android/building-a-simple-game-engine/
@@ -28,6 +30,8 @@ public class BBView extends SurfaceView implements Runnable {
      * fps - frames per second.
      * timeThisFrame - time it takes to execute the draw and update methods in one frame.
      * paint - the Paint object which determines the drawing style.
+     * screenX - the width of the screen
+     * screenY - the height of the screen
      */
     Thread gameThread = null;
     SurfaceHolder holder;
@@ -37,15 +41,22 @@ public class BBView extends SurfaceView implements Runnable {
     long fps;
     private long timeThisFrame;
     Paint paint;
-
+    int screenX;
+    int screenY;
     /**
      * Initializes the surface in the context environment.
      * @param context the environment
      */
     public BBView(Context context){
         super(context);
-        holder = getHolder();
-        paint = new Paint();
+        this.holder = getHolder();
+        this.paint = new Paint();
+
+        Display display = ((Activity)context).getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        this.screenX = size.x;
+        this.screenY = size.y;
     }
 
     /**
@@ -97,7 +108,11 @@ public class BBView extends SurfaceView implements Runnable {
 
             // Choose the brush color for drawing - white
             paint.setColor(Color.argb(255,  255, 255, 255));
-            // TODO: Draw the balls, bricks and paddle.
+            paint.setTextSize(100);
+            // TODO: Draw the balls, bricks and paddle
+
+
+            // The size of the screen in pixels
 
             // Draws everything to the screen
             holder.unlockCanvasAndPost(canvas);
