@@ -6,22 +6,34 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
+
+import com.example.dungeonescape.Player;
 
 import java.util.ArrayList;
 import java.util.Stack;
 
 /**
- * The code from GameView was from the following videos:
+ * This class is responsible for drawing out the game objects and walls of the maze, as well as
+ * executing the movements of the player in the maze on the touch screen.
+ *
+ * The original code from GameView was from the following videos:
  * https://www.youtube.com/watch?v=I9lTBTAk5MU
  * https://www.youtube.com/watch?v=iri0wZ3NvdQ
  *
+ * It has been edited and adjusted to fit our own objectives and visions of the game.
  * TODO: Edit this javadoc as we change the code below.
  */
 
 public class GameView extends View {
     /** A 2D Array of MazeCell cells. */
     private MazeCell[][] cells;
+
+    /** Player and exit objects, and their positions. */
+    private Player player;
+    private MazeCell playerLoc;
+    private MazeCell exitLoc;
 
     /** The number of columns and rows in this maze. */
     private int numMazeCols = 20;
@@ -30,8 +42,19 @@ public class GameView extends View {
     /** The line thickness of the walls. */
     private static final float wallThickness = 4;
 
-    /** Represents the colour of the walls. */
+    /** The horizontal and vertical margin from the edge of the screen to the walls of the maze */
+    float cellSize;
+    float horizontalPadding;
+    float verticalPadding;
+
+    /** Represents the colour of the objects to be printed. */
     private Paint wallPaint;
+    private Paint playerPaint;
+    private Paint exitPaint;
+
+    private enum Direction{
+        UP, DOWN, LEFT, RIGHT
+    }
 
     private Random rand = new Random();
 
@@ -40,9 +63,14 @@ public class GameView extends View {
 
     public GameView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        player = new Player(0,0,1, "PLAYER");
         wallPaint = new Paint();
         wallPaint.setColor(Color.WHITE);
         wallPaint.setStrokeWidth(wallThickness);
+        playerPaint = new Paint();
+        playerPaint.setColor(Color.RED);
+        exitPaint = new Paint();
+        exitPaint.setColor(Color.BLUE);
         createMaze();
     }
 
@@ -74,6 +102,9 @@ public class GameView extends View {
                 current = stack.pop();
             }
         } while (!stack.isEmpty());
+
+        playerLoc = cells[0][0];
+        exitLoc = cells[numMazeCols-1][numMazeRows-1];
     }
 
     private MazeCell getNeighbour(MazeCell cell) {
@@ -143,11 +174,11 @@ public class GameView extends View {
         int mazeCols = getNumMazeCols();
         int mazeRows = getNumMazeRows();
 
-        float cellSize = thisMaze.calculateCellSize(screenWidth, screenHeight,
+        cellSize = thisMaze.calculateCellSize(screenWidth, screenHeight,
                 mazeCols, mazeRows);
-        float horizontalPadding = thisMaze.calculateCellHorizontalPadding(screenWidth,
+        horizontalPadding = thisMaze.calculateCellHorizontalPadding(screenWidth,
                 mazeCols, cellSize);
-        float verticalPadding = thisMaze.calculateCellVerticalPadding(screenHeight,
+        verticalPadding = thisMaze.calculateCellVerticalPadding(screenHeight,
                 mazeRows, cellSize);
 
         canvas.translate(horizontalPadding, verticalPadding);
@@ -191,6 +222,91 @@ public class GameView extends View {
                 }
             }
         }
+
+
+
+        float margin = cellSize/10;
+
+        canvas.drawRect(
+                playerLoc.getX()*cellSize+margin,
+                playerLoc.getY()*cellSize+margin,
+                (playerLoc.getX()+1)*cellSize-margin,
+                (playerLoc.getY()+1)*cellSize-margin,
+                playerPaint);
+
+        canvas.drawRect(
+                exitLoc.getX()*cellSize+margin,
+                exitLoc.getY()*cellSize+margin,
+                (exitLoc.getX()+1)*cellSize-margin,
+                (exitLoc.getY()+1)*cellSize-margin,
+                exitPaint);
+    }
+
+    private void movePlayer(Direction direction){
+        switch (direction){
+            case UP:
+                if(!playerLoc.isTopWall())
+                    playerLoc = cells[playerLoc.getX()][playerLoc.getY()-1];
+                break;
+            case DOWN:
+                if(!playerLoc.isBottomWall())
+                    playerLoc = cells[playerLoc.getX()][playerLoc.getY()+1];
+                break;
+            case LEFT:
+                if(!playerLoc.isLeftWall())
+                    playerLoc = cells[playerLoc.getX()-1][playerLoc.getY()];
+                break;
+            case RIGHT:
+                if(!playerLoc.isRightWall())
+                    playerLoc = cells[playerLoc.getX()+1][playerLoc.getY()];
+                break;
+        }
+        checkExit();
+        invalidate();
+    }
+
+    private void checkExit(){
+        if(playerLoc == exitLoc)
+            createMaze();
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if(event.getAction() == MotionEvent.ACTION_DOWN)
+            return true;
+
+        if(event.getAction() == MotionEvent.ACTION_MOVE){
+            float x = event.getX();
+            float y = event.getY();
+
+            float playerCenterX = horizontalPadding + (playerLoc.getX()+0.5f)*cellSize;
+            float playerCenterY = verticalPadding + (playerLoc.getY()+0.5f)*cellSize;
+
+            float dx = x - playerCenterX;
+            float dy = y - playerCenterY;
+
+            float absDx = Math.abs(dx);
+            float absDy = Math.abs(dy);
+
+            if(absDx > cellSize || absDy > cellSize){
+                if(absDx > absDy){
+                    //move in x direction
+                    if (dx > 0)
+                        movePlayer(Direction.RIGHT);
+                    else
+                        movePlayer(Direction.LEFT);
+                }
+                else {
+                    //move in y direction
+                    if(dy>0)
+                        movePlayer(Direction.DOWN);
+                    else
+                        movePlayer((Direction.UP));
+                }
+            }
+            return true;
+        }
+        return super.onTouchEvent(event);
     }
 
     public int getNumMazeCols() {
