@@ -7,8 +7,9 @@ import android.graphics.Paint;
 public class Brick extends BBObject {
     // width and height of each brick
     private int w, h;
+    // whether the brick has been hit or not
+    boolean hit;
 
-    private boolean hit;
 
     Brick(int x, int y) {
     // construct a Paddle at location x, y
@@ -31,4 +32,13 @@ public class Brick extends BBObject {
 
 }
 
-
+/** in BBView
+ * - initialize bricks as an array
+ * - then them up using a for-loop
+ *      - decide how many bricks and how they will be positioned
+ * - in BBView draw(): loop through brick array --> call brick.draw()
+ *      - nested for-loop:
+ *
+ *
+ *
+ */
