@@ -10,6 +10,9 @@ import android.view.SurfaceView;
 
 import java.util.ArrayList;
 
+import android.view.Display;
+import android.graphics.Point;
+import android.app.Activity;
 /*
 BBMainActivity and BBView were structured like the following game:
 http://gamecodeschool.com/android/building-a-simple-game-engine/
@@ -30,6 +33,8 @@ public class BBView extends SurfaceView implements Runnable {
      * fps - frames per second.
      * timeThisFrame - time it takes to execute the draw and update methods in one frame.
      * paint - the Paint object which determines the drawing style.
+     * screenX - the width of the screen
+     * screenY - the height of the screen
      */
     Thread gameThread = null;
     SurfaceHolder holder;
@@ -40,12 +45,13 @@ public class BBView extends SurfaceView implements Runnable {
     private long timeThisFrame;
     Paint paint;
 
-    // Canvas width and height
-    int width; int height;
+    int screenX;
+    int screenY;
 
     //
     Paddle paddle;
     ArrayList<Brick> bricks;
+
 
     /**
      * Initializes the surface in the context environment.
@@ -53,14 +59,22 @@ public class BBView extends SurfaceView implements Runnable {
      */
     public BBView(Context context){
         super(context);
+        this.holder = getHolder();
+        this.paint = new Paint();
+
+        Display display = ((Activity)context).getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        this.screenX = size.x;
+        this.screenY = size.y;
         holder = getHolder();
         paint = new Paint();
 
         // construct paddle and bricks
-        paddle = new Paddle(width/2 - 75, height - 30);
+        paddle = new Paddle(screenX/2 - 75, screenY - 30);
         bricks = new ArrayList<>();
-        for (int x = 0; x < width; x += 24) {
-            for (int y = 0; y < height; y += 18) {
+        for (int x = 0; x < screenX; x += 24) {
+            for (int y = 0; y < screenY; y += 18) {
                 bricks.add(new Brick(x, y));
             }
         }
@@ -116,8 +130,11 @@ public class BBView extends SurfaceView implements Runnable {
 
             // Choose the brush color for drawing - white
             paint.setColor(Color.argb(255,  255, 255, 255));
+            paint.setTextSize(100);
+            // TODO: Draw the balls, bricks and paddle
 
-            // TODO: Draw the balls, bricks and paddle.
+            // The size of the screen in pixels
+
 
             // Paddle
             paddle.draw(canvas);
