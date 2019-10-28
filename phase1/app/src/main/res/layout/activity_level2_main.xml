@@ -18,13 +18,30 @@
     <com.example.dungeonescape.platformer.Level2View
         android:id="@+id/level2"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="600dp"
+        android:layout_weight="1" />
 
-    <Button
-        android:id="@+id/button3"
+    <LinearLayout
+        android:id="@+id/linLay"
         android:layout_width="match_parent"
-        android:layout_height="31dp"
-        android:text="Button" />
+        android:layout_height="43dp"
+        android:orientation="horizontal"
+        android:visibility="visible"
+        tools:visibility="visible">
+
+        <Button
+            android:id="@+id/left"
+            android:layout_width="193dp"
+            android:layout_height="wrap_content"
+            android:text="Left" />
+
+        <Button
+            android:id="@+id/right"
+            android:layout_width= "0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Right" />
+    </LinearLayout>
 
 
 </LinearLayout>

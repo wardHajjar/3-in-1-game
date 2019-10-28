@@ -64,4 +64,7 @@ class Character {
 //            }
 //        }
     }
+    public void draw(Canvas canvas) {
+        canvas.drawOval(this.oval,this.paint);
+    }
 }
