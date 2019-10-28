@@ -52,6 +52,11 @@ public class Ball extends BBObject{
         this.y += this.y_speed;
     }
 
+    /**
+     * Draws the ball object as a black circle.
+     *
+     * @param canvas the graphic context on which the object is drawn
+     */
     @Override
     public void draw(Canvas canvas){
         this.paintStyle.setStyle(Paint.Style.FILL);
