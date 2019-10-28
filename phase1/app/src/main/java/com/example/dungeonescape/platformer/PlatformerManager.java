@@ -3,6 +3,7 @@ package com.example.dungeonescape.platformer;
 import android.graphics.Canvas;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 class PlatformerManager {
@@ -18,6 +19,9 @@ class PlatformerManager {
     private ArrayList<Platforms> platforms;
     private Character character;
 
+    private List<Integer> yPositions = new ArrayList<>();
+    private List<Double> xPositions = new ArrayList<>();
+
     int getGridWidth() {
         return gridWidth;
     }
@@ -26,15 +30,18 @@ class PlatformerManager {
         return gridHeight;
     }
 
-    /**
-     * The fish tank manager on a screen with height rows and width columns.
-     */
     PlatformerManager() {
         character = new Character(50,50,100);
+        for (int i=0; i<18; i++){
+            yPositions.add(i*10);
+            xPositions.add(Math.random()*500);
+        }
+        for (int i=0; i<18; i++){
+            platforms.add(new Platforms(xPositions.get(i), yPositions.get(i), 200, 50, this))
 
     }
 
-    void draw(Canvas canvas) {
+    void draw(Canvas canvas){
 //        for (int i = 0; i < platforms.size(); i++) {
 //            platforms.get(i).draw(canvas);
 //        }
@@ -46,10 +53,10 @@ class PlatformerManager {
 
     void update(Canvas canvas) {
 
-//        for (int i = 0; i < platforms.size(); i++) {
-//            platforms.get(i).draw(canvas);
-//        }
-//        character.update(canvas);
+        for (int i = 0; i < platforms.size(); i++) {
+            platforms.get(i).update(canvas);
+        }
+        character.update(canvas);
     }
 
 
