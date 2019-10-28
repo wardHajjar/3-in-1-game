@@ -30,7 +30,7 @@ class PlatformerManager {
      * The fish tank manager on a screen with height rows and width columns.
      */
     PlatformerManager() {
-        character = new Character(50,50,100);
+        character = new Character(50,50,100, this);
 
     }
 
@@ -38,18 +38,17 @@ class PlatformerManager {
 //        for (int i = 0; i < platforms.size(); i++) {
 //            platforms.get(i).draw(canvas);
 //        }
-        character.move(canvas);
         character.draw(canvas);
         gridHeight = canvas.getHeight();
         gridWidth = canvas.getWidth();
     }
 
-    void update(Canvas canvas) {
+    void update() {
 
 //        for (int i = 0; i < platforms.size(); i++) {
 //            platforms.get(i).draw(canvas);
 //        }
-//        character.update(canvas);
+        character.move();
     }
 
 
