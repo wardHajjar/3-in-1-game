@@ -10,6 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".platformer.Level2MainActivity"></activity>
+        <activity android:name=".Maze.MazeActivity"></activity>
         <activity android:name=".platformer.PlatformerMainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.dungeonescape.Maze.MazeActivity;
+import com.example.dungeonescape.platformer.Level2MainActivity;
 import com.example.dungeonescape.platformer.PlatformerMainActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -14,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_maze);
+        setContentView(R.layout.activity_main);
         configureNextButton();
     }
 
@@ -24,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(MainActivity.this, PlatformerMainActivity.class);
+                Intent intent = new Intent(MainActivity.this, MazeActivity.class);
                 startActivity(intent);
             }
         });

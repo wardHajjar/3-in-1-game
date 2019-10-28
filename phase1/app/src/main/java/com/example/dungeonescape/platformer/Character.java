@@ -1,41 +1,67 @@
 package com.example.dungeonescape.platformer;
+import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.RectF;
 
-public class Character {
+class Character {
+    private int direction;
+    private int x,y,size;
+    private double speed = 7.0;
+    private int height;
+    Paint paint;
+    RectF oval;
 
-    /**
-     * This items's first coordinate.
-     */
-    int x;
-    /**
-     * This items's second coordinate.
-     */
-    int y;
-    float speedX, speedY; // Ball's speed per step in x and y (package access)
-    float radius;         // Ball's radius (package access)
-//    private Color color;  // Ball's color
-//    private static final Color DEFAULT_COLOR = Color.BLUE;
 
-    Paint paintText = new Paint();
+    Character(int x, int y, int size){
+        this.x = x;
+        this.y = y;
+        this.size = size;
+        paint = new Paint();
+        paint.setColor(Color.BLUE);
+        direction = 1;
 
-    Character() {
-
-        x = 0;
-        y = 0;
     }
-//    void drawString(Canvas canvas, String s, int x, int y) {
-//        canvas.drawText(s, x * FishTankView.charWidth, y * FishTankView.charHeight, paintText);
-//    }
+
+    void move(Canvas canvas) {
+        if (height == 0) {
+            height = canvas.getHeight();
+        }
+
+         double gravity = 3.0;
+        if (direction == 1) {
+
+            speed += gravity;
+        }
+        else {
+            speed -= gravity;
+        }
+        if (y+ size + speed*direction - canvas.getHeight() >= 0) {
+            y = height;
+            direction = -direction;
+            speed = -80;
+            y += speed;
+        }
+
+        else{
+            y += speed*direction;
+        }
 
 
-    /**
-     * Draws this fish tank item.
-     *
-     * @param canvas the canvas on which to draw this item.
-     */
-//    public void draw(Canvas canvas) {
-//        drawString(canvas, appearance, x, y);
-//    }
 
+        this.oval = new RectF(x-size/2,y-size/2,x+size/2,y+size/2);
 
+        //Do we need to bounce next time?
+        Rect bounds = new Rect();
+        this.oval.roundOut(bounds); ///store our int bounds
+
+//        //This is what you're looking for ▼
+//        if(!canvas.getClipBounds().contains(bounds)){
+//
+//            if(y-size<=0 || y+size > canvas.getHeight()){
+//                direction = direction*-1;
+//            }
+//        }
+    }
 }
