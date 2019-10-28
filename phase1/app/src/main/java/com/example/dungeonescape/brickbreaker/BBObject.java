@@ -1,4 +1,4 @@
-package com.example.dungeonescape.BrickBreaker;
+package com.example.dungeonescape.brickbreaker;
 
 
 import android.graphics.Canvas;
