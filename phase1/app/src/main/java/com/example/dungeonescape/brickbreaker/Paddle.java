@@ -48,7 +48,7 @@ class Paddle extends BBObject {
     }
 }
 
-    /*  Move the key events to GamePanel when ready
+    /**  Move the key events to BBView when ready
 
     import android.view.KeyEvent;
 
