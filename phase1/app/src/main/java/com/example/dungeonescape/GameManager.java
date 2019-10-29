@@ -18,20 +18,20 @@ public class GameManager {
         lives = 3;
         coins = 0;
     }
-    public void add_coin() {
+    public void addCoin() {
         coins += 1;
     }
-    public void lost_life() {
+    public void loseLife() {
         lives -= 1;
     }
     public int getTotalTime() {
         return totalTime;
     }
 
-    int get_lives() {
+    int getLives() {
         return lives;
     }
-    int get_coins() {
+    int getCoins() {
         return coins;
     }
 
