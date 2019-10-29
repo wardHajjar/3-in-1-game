@@ -48,7 +48,7 @@ public class BBView extends SurfaceView implements Runnable {
 
     int screenX;
     int screenY;
-
+    Ball ball;
     //
     Paddle paddle;
     ArrayList<Brick> bricks;
@@ -63,6 +63,7 @@ public class BBView extends SurfaceView implements Runnable {
         this.holder = getHolder();
         this.paint = new Paint();
 
+
         Display display = ((Activity)context).getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
@@ -70,13 +71,16 @@ public class BBView extends SurfaceView implements Runnable {
         this.screenY = size.y;
         holder = getHolder();
         paint = new Paint();
+        this.ball = new Ball(20, screenY - 200, 25, -25);
 
         // construct paddle and bricks
-        paddle = new Paddle(screenX/2 - 75, screenY - 30);
+        paddle = new Paddle(screenX/2 - 75, screenY - 100);
         bricks = new ArrayList<>();
-        for (int x = 0; x < screenX; x += 24) {
-            for (int y = 10; y < 70; y += 18) {
-                bricks.add(new Brick(x, y));
+        int brickWidth = screenX / 6;
+        int brickHeight = screenY / 20;
+        for (int x = 0; x < screenX; x += brickWidth + 1) {
+            for (int y = 10; y < 4 * brickHeight; y += brickHeight + 1) {
+                bricks.add(new Brick(x, y, brickWidth, brickHeight));
             }
         }
     }
@@ -90,8 +94,14 @@ public class BBView extends SurfaceView implements Runnable {
 
             // Capture the current time in milliseconds in startFrameTime
             long startFrameTime = System.currentTimeMillis();
+            try {
+                //set time in mili
+                Thread.sleep(1);
 
-            // Updating the frame
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+//             Updating the frame
             if(!paused){
                 update();
             }
@@ -101,6 +111,7 @@ public class BBView extends SurfaceView implements Runnable {
 
             timeThisFrame = System.currentTimeMillis() - startFrameTime;
             if (timeThisFrame >= 1) {   // Calculating the fps
+                paused = false;
                 fps = 1000 / timeThisFrame;
             }
 
@@ -112,12 +123,34 @@ public class BBView extends SurfaceView implements Runnable {
      */
     // TODO: Detecting collisions and updating objects' positions.
     public void update() {
+        char wall_collision = ball.madeWallCollision(screenX, screenY);
+        if ( wall_collision == 'x'){
+            ball.setX_speed(ball.getX_speed() * -1);
+        }
+        else if(wall_collision == 'y'){
+            ball.setY_speed(ball.getY_speed() * -1);
+        }
 
+        for (Brick brick: bricks){
+            if (!(brick.getHitStatus())) {
+                char brick_collision = ball.madeRectCollision(brick.getRect());
+                if (brick_collision == 'x') {
+                    ball.setX_speed(ball.getX_speed() * -1);
+                    brick.changeHitStatus();
+                } else if (brick_collision == 'y') {
+                    ball.setY_speed(ball.getY_speed() * -1);
+                    brick.changeHitStatus();
+                }
+            }
+        }
+
+        ball.move(fps);
     }
 
     /**
      *
      */
+    // TODO: Draw the balls, bricks and paddle
     public void draw() {
 
         // Make sure the drawing surface is valid or program crashes
@@ -129,11 +162,11 @@ public class BBView extends SurfaceView implements Runnable {
             canvas.drawColor(Color.argb(255,  0, 0, 0));
 
             // Choose the brush color for drawing - white
-            paint.setColor(Color.argb(255,  255, 255, 255));
-            paint.setTextSize(100);
 
-            // TODO: Draw the balls, bricks and paddle
-            // The size of the screen in pixels
+            paint.setColor(Color.argb(255,  255, 255, 255));
+
+            // Ball
+            ball.draw(canvas);
 
             // Paddle
             paddle.draw(canvas);
@@ -143,7 +176,7 @@ public class BBView extends SurfaceView implements Runnable {
 
             // Bricks
             for (int i = 0; i < bricks.size(); i++) {
-                if (!bricks.get(i).hit) {
+                if (!bricks.get(i).getHitStatus()) {
                     bricks.get(i).draw(canvas);
                 }
             }
