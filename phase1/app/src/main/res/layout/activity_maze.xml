@@ -6,6 +6,21 @@
     android:layout_height="match_parent"
     tools:context=".Maze.MazeActivity">
 
+    <!-- Code from https://codinginflow.com/tutorials/android/countdowntimer/part-1-countdown-timer
+    slightly edited -->
+    <TextView
+        android:id="@+id/countTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="00:00"
+        android:textColor="@android:color/white"
+        android:textSize="60sp"
+        android:elevation="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
     <view
         android:id="@+id/view"
         class="com.example.dungeonescape.Maze.MazeView"
