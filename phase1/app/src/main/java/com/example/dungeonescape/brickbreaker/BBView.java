@@ -137,8 +137,8 @@ public class BBView extends SurfaceView implements Runnable {
             // Paddle
             paddle.draw(canvas);
             // while playing/not dead
-            paddle.checkBounds(screenX);
-            paddle.updateLocation();
+            if (playing) paddle.checkBounds(screenX);
+            if (playing) paddle.updateLocation();
 
             // Bricks
             for (int i = 0; i < bricks.size(); i++) {
