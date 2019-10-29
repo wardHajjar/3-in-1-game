@@ -37,17 +37,4 @@ public class Brick extends BBObject {
     Rect getRect(){
         return new Rect(x, y, w, h);
     }
-
-
 }
-
-/** in BBView
- * - initialize bricks as an array
- * - then them up using a for-loop
- *      - decide how many bricks and how they will be positioned
- * - in BBView draw(): loop through brick array --> call brick.draw()
- *      - nested for-loop:
- *
- *
- *
- */
