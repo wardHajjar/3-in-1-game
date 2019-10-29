@@ -37,11 +37,12 @@ class PlatformerManager {
             yPositions.add(i*10);
             xPositions.add(Math.random()*500);
         }
-        for (int i=0; i<18; i++){
-            platforms.add(new Platforms(xPositions.get(i), yPositions.get(i), 200, 50,
-                    this));
+        platforms = new ArrayList<>();
+//        for (int i=0; i<18; i++){
+//            platforms.add(new Platforms(xPositions.get(i), yPositions.get(i), 200, 50,
+//                    this));
 
-        }
+//        }
 
 
     }
@@ -53,6 +54,18 @@ class PlatformerManager {
         character.draw(canvas);
         gridHeight = canvas.getHeight();
         gridWidth = canvas.getWidth();
+    }
+    void left_button() {
+        character.move_left();
+    }
+    void right_button() {
+        character.move_right();
+    }
+
+    void move_down() {
+        for (int i = 0; i < platforms.size(); i++) {
+            platforms.get(i).platformDown();
+        }
     }
 
     void update() {

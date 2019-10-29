@@ -54,7 +54,28 @@ class Character {
         System.out.println(y);
 
     }
+//    void collision_detection() {
+//        for(Platforms platform: manager.platforms) {
+//            if (direction == -1) {
+//                if (y == platform.gety() && x <= platform.getx + length && x >= platform.getx ) {
+//                    // Bounce on this platform
+//                    direction = -direction;
+//                    speed = -80;
+//                    y += speed;
+//                    manager.move_down();
+//                }
+//            }
+//        }
+//    }
     void draw(Canvas canvas) {
         canvas.drawOval(this.oval,this.paint);
     }
+
+    void move_left() {
+        x -= 50;
+    }
+    void move_right() {
+        x += 50;
+    }
 }
+//577 is max height
