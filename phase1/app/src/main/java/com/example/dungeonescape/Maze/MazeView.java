@@ -18,7 +18,7 @@ import java.util.Stack;
  * This class is responsible for drawing out the game objects and walls of the maze, as well as
  * executing the movements of the player in the maze on the touch screen.
  *
- * The original code from GameView was from the following videos:
+ * The original code from MazeView was from the following videos:
  * https://www.youtube.com/watch?v=I9lTBTAk5MU
  * https://www.youtube.com/watch?v=iri0wZ3NvdQ
  *
@@ -26,7 +26,7 @@ import java.util.Stack;
  * TODO: Edit this javadoc as we change the code below.
  */
 
-public class GameView extends View {
+public class MazeView extends View {
     /** A 2D Array of MazeCell cells. */
     private MazeCell[][] cells;
 
@@ -61,7 +61,7 @@ public class GameView extends View {
     /** Instantiates the MazeManager class for this Maze. */
     private MazeManager thisMaze = new MazeManager();
 
-    public GameView(Context context, AttributeSet attrs) {
+    public MazeView(Context context, AttributeSet attrs) {
         super(context, attrs);
         player = new Player(0,0,1, "PLAYER");
         wallPaint = new Paint();
