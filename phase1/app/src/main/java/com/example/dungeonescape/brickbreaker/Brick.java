@@ -3,6 +3,7 @@ package com.example.dungeonescape.brickbreaker;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 
 public class Brick extends BBObject {
     // width and height of each brick
@@ -27,6 +28,14 @@ public class Brick extends BBObject {
         paintStyle.setStrokeWidth(3);
         canvas.drawRect(x, y, x + w, y + h, paintStyle);
         // x is left, y is top
+    }
+
+    /**
+     * Method constructs a rectangle.
+     * @return a rectangle representation of the brick.
+     */
+    Rect getRect(){
+        return new Rect(x, y, w, h);
     }
 
 
