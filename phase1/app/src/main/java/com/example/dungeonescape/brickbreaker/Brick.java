@@ -41,7 +41,15 @@ public class Brick extends BBObject {
     /**
      * Method changes this.hit to true to indicate that the brick has been hit by the ball.
      */
-    void hitBrick(){
+    void changeHitStatus(){
         hit = true;
+    }
+
+    /**
+     * Methods returns the brick's state, whether it has been hit or not
+     * @return this.hit
+     */
+    boolean getHitStatus(){
+        return this.hit;
     }
 }
