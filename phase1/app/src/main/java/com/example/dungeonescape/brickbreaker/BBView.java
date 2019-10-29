@@ -74,11 +74,10 @@ public class BBView extends SurfaceView implements Runnable {
         paddle = new Paddle(screenX/2 - 75, screenY - 30);
         bricks = new ArrayList<>();
         for (int x = 0; x < screenX; x += 24) {
-            for (int y = 0; y < screenY; y += 18) {
+            for (int y = 10; y < 70; y += 18) {
                 bricks.add(new Brick(x, y));
             }
         }
-
     }
 
     /**
@@ -131,24 +130,22 @@ public class BBView extends SurfaceView implements Runnable {
             // Choose the brush color for drawing - white
             paint.setColor(Color.argb(255,  255, 255, 255));
             paint.setTextSize(100);
+
             // TODO: Draw the balls, bricks and paddle
-
             // The size of the screen in pixels
-
 
             // Paddle
             paddle.draw(canvas);
             // while playing/not dead
-            paddle.checkBounds(screenX);
-            paddle.updateLocation();
+            if (playing) paddle.checkBounds(screenX);
+            if (playing) paddle.updateLocation();
 
-            // bricks
-//            for (int i = 0; i < bricks.size(); i++) {
-//                if (bricks.get(i).hit == false) {
-//
-//                }
-//
-//            }
+            // Bricks
+            for (int i = 0; i < bricks.size(); i++) {
+                if (!bricks.get(i).hit) {
+                    bricks.get(i).draw(canvas);
+                }
+            }
 
             // Draws everything to the screen
             holder.unlockCanvasAndPost(canvas);
