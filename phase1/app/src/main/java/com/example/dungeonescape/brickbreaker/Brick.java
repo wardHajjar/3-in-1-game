@@ -9,15 +9,15 @@ public class Brick extends BBObject {
     // width and height of each brick
     private int w, h;
     // whether the brick has been hit or not
-    boolean hit;
+    private boolean hit;
 
 
-    Brick(int x, int y) {
+    Brick(int x, int y, int w, int h) {
     // construct a Paddle at location x, y
     // width and height of the canvas are passed into the constructor
         super(x, y);
-        w = 24;
-        h = 18;
+        this.w = w;
+        this.h = h;
         hit = false;
     }
 
@@ -35,6 +35,13 @@ public class Brick extends BBObject {
      * @return a rectangle representation of the brick.
      */
     Rect getRect(){
-        return new Rect(x, y, w, h);
+        return new Rect(x, y, x + w,  y + h);
+    }
+
+    /**
+     * Method changes this.hit to true to indicate that the brick has been hit by the ball.
+     */
+    void hitBrick(){
+        hit = true;
     }
 }
