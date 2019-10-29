@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -152,7 +153,27 @@ public class BBView extends SurfaceView implements Runnable {
         }
 
     }
-
+    // Dictates the movement of the paddle
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if(event.getAction() == MotionEvent.ACTION_DOWN) {
+            return true;
+        }
+        if (event.getAction() == MotionEvent.ACTION_MOVE) {
+            float x = event.getX();
+            if (x < paddle.x) {
+                paddle.movingLeft = true;
+            } else if (x > paddle.x) {
+                paddle.movingRight = true;
+            }
+            return true;
+        }
+        if (event.getAction() == MotionEvent.ACTION_UP) {
+            paddle.movingLeft = false;
+            paddle.movingRight = false;
+        }
+        return super.onTouchEvent(event);
+    }
     /**
      * If Activity is paused/stopped, the thread must stop as well.
      */
