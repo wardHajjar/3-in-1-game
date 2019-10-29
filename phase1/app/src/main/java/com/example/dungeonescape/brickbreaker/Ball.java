@@ -43,8 +43,26 @@ public class Ball extends BBObject {
      * @param y_speed the new speed in the y direction.
      */
     public void setY_speed(int y_speed) {
+
         this.y_speed = y_speed;
     }
+
+    /**
+     * Getter method that returns the ball's speed in the x direction.
+     * @return x_speed attrivute.
+     */
+    public int getX_speed(){
+        return x_speed;
+    }
+
+    /**
+     * Getter method that return the ball's speed in the y direction.
+     * @return y_speed attribute.
+     */
+    public int getY_speed(){
+        return y_speed;
+    }
+
 
     /**
      * Moves the ball in the x and y directions with their corresponding speeds.
