@@ -52,8 +52,10 @@ public class Level2View extends SurfaceView implements Runnable{
 //                update();
 //            }
             // Draw the frame
-            draw();
+
             update();
+            draw();
+//            collision_detection();
 
             timeThisFrame = System.currentTimeMillis() - startFrameTime;
             if (timeThisFrame >= 1) {   // Calculating the fps
@@ -78,7 +80,9 @@ public class Level2View extends SurfaceView implements Runnable{
     public void update() {
         manager.update();
     }
-
+    public void collision_detection() {
+        manager.collision_detection();
+    }
     public void pause() {
         playing = false;
         try {

@@ -4,15 +4,24 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.drawable.shapes.OvalShape;
+import android.graphics.drawable.shapes.RectShape;
+import android.graphics.drawable.shapes.Shape;
 
-class Character {
-    private int direction;
-    private int x,y,size;
-    private double speed = 7.0;
+import androidx.constraintlayout.solver.widgets.Rectangle;
+
+
+class Character extends RectShape {
+
+    private float x,y,size;
+    private int direction = 1;
+    private int speed = 5;
     private int height;
     private Paint paint;
     private RectF oval;
     private PlatformerManager manager;
+    private float bottom;
+    private Rect rect;
 
 
     Character(int x, int y, int size, PlatformerManager manager){
@@ -21,52 +30,59 @@ class Character {
         this.size = size;
         paint = new Paint();
         paint.setColor(Color.BLUE);
-        direction = 1;
+
         this.manager = manager;
+        this.rect = new Rect(x-size/2,y-size/2,x+size/2,y+size/2);
         this.oval = new RectF(x-size/2,y-size/2,x+size/2,y+size/2);
     }
-
+    void setY(float y) {
+        this.y = y;
+    }
+    float getX() {
+        return x;
+    }
+    float getY() {
+        return y;
+    }
     void move() {
-
-         double gravity = 3.0;
-        if (direction == 1) {
+        collision_detection();
+        this.rect = new Rect((int)(x-size/3),(int)(y-size/2),(int)(x+size/2),(int)(y+size/3));
+        double gravity = 3.0;
+        if (speed >= 0) {
 
             speed += gravity;
         }
         else {
-            speed -= gravity;
+            speed += gravity;
         }
-        if (y+ size + speed*direction - manager.getGridHeight() > 0) {
+        if (y+ size/2 + speed - manager.getGridHeight() > 0) {
             y = manager.getGridHeight();
-            direction = -direction;
-            speed = -80;
+            speed = - 80;
             y += speed;
         }
         else{
-            y += speed*direction;
+            y += speed;
         }
-        this.oval = new RectF(x-size/2,y-size/2,x+size/2,y+size/2);
-
-        //Do we need to bounce next time?
-        Rect bounds = new Rect();
-        this.oval.roundOut(bounds); ///store our int bounds
-        System.out.println(speed);
         System.out.println(y);
 
+        this.oval = new RectF(x-size/2,y-size/2,x+size/2,y+size/2 + 5);
+        Rect bounds = new Rect();
+        this.oval.roundOut(bounds);
     }
-//    void collision_detection() {
-//        for(Platforms platform: manager.platforms) {
-//            if (direction == -1) {
-//                if (y == platform.gety() && x <= platform.getx + length && x >= platform.getx ) {
-//                    // Bounce on this platform
-//                    direction = -direction;
-//                    speed = -80;
-//                    y += speed;
-//                    manager.move_down();
-//                }
-//            }
-//        }
-//    }
+    void collision_detection() {
+        this.bottom = this.y+ (size/2);
+        if (speed >= 0) {
+            for(Platforms platform: manager.getPlatforms()) {
+                if (this.rect.intersect(platform.rectangle) || bottom + speed - platform.gety() > 0 &&
+                        x > platform.getx() && x < platform.getx() + 150) {
+                    System.out.println("hit");
+                    y = platform.gety() - size/2;
+                    speed = -90;
+                    y += speed;
+                }
+            }
+        }
+    }
     void draw(Canvas canvas) {
         canvas.drawOval(this.oval,this.paint);
     }
