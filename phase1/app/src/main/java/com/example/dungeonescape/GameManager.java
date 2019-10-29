@@ -8,31 +8,24 @@ package com.example.dungeonescape;
  * TODO: Edit this javadoc as this class is updated.
  */
 public class GameManager {
-    private int totalTime;
-    private int lives;
-    private int coins;
+    private int totalTimePlayed;
+    private Player player = new Player(0, 0, 0, "player 1");
 
     public GameManager() {
         /* Sets the initial total time elapsed in the Game to 0. */
-        totalTime = 0;
-        lives = 3;
-        coins = 0;
+        totalTimePlayed = 0;
     }
     public void addCoin() {
-        coins += 1;
+        int newCoinAmount = player.getNumCoins();
+        player.setNumCoins(newCoinAmount + 1);
     }
     public void loseLife() {
-        lives -= 1;
-    }
-    public int getTotalTime() {
-        return totalTime;
+        int currLives = player.getNumLives();
+        player.setNumLives(currLives - 1);
     }
 
-    int getLives() {
-        return lives;
-    }
-    int getCoins() {
-        return coins;
+    public int getTotalTime() {
+        return totalTimePlayed;
     }
 
     /** As each second passes, increment the totalTime elapsed.

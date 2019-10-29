@@ -14,6 +14,9 @@ public class Player extends GameObject {
     /** The number of lives this Player has. */
     private int numLives;
 
+    /** The number of coins this Player has. */
+    private int numCoins;
+
     public Player(int x, int y, int z, String name) {
         super(x, y, z);
         this.name = name;
@@ -47,5 +50,18 @@ public class Player extends GameObject {
      */
     public void setNumLives(int numLives) {
         this.numLives = numLives;
+    }
+
+    public int getNumCoins() {
+        return numCoins;
+    }
+
+    /**
+     * Sets the Player's number of coins.
+     *
+     * @param numCoins the new number of coins.
+     */
+    public void setNumCoins(int numCoins) {
+        this.numCoins = numCoins;
     }
 }
