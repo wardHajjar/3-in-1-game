@@ -2,8 +2,7 @@ package com.example.dungeonescape.platformer;
 
 import android.graphics.Canvas;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 
 class PlatformerManager {
@@ -18,7 +17,6 @@ class PlatformerManager {
     private int gridHeight;
     private ArrayList<Platforms> platforms;
     private Character character;
-
     private List<Integer> yPositions = new ArrayList<>();
     private List<Double> xPositions = new ArrayList<>();
 
@@ -30,33 +28,39 @@ class PlatformerManager {
         return gridHeight;
     }
 
+    /**
+     * The fish tank manager on a screen with height rows and width columns.
+     */
     PlatformerManager() {
-        character = new Character(50,50,100);
+        character = new Character(50,50,100, this);
         for (int i=0; i<18; i++){
             yPositions.add(i*10);
             xPositions.add(Math.random()*500);
         }
         for (int i=0; i<18; i++){
-            platforms.add(new Platforms(xPositions.get(i), yPositions.get(i), 200, 50, this))
+            platforms.add(new Platforms(xPositions.get(i), yPositions.get(i), 200, 50,
+                    this));
+
+        }
+
 
     }
 
-    void draw(Canvas canvas){
-//        for (int i = 0; i < platforms.size(); i++) {
-//            platforms.get(i).draw(canvas);
-//        }
-        character.move(canvas);
+    void draw(Canvas canvas) {
+        for (int i = 0; i < platforms.size(); i++) {
+            platforms.get(i).draw(canvas);
+        }
         character.draw(canvas);
         gridHeight = canvas.getHeight();
         gridWidth = canvas.getWidth();
     }
 
-    void update(Canvas canvas) {
+    void update() {
 
         for (int i = 0; i < platforms.size(); i++) {
-            platforms.get(i).update(canvas);
+            platforms.get(i).update();
         }
-        character.update(canvas);
+        character.move();
     }
 
 

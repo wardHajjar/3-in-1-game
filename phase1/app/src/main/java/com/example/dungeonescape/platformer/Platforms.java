@@ -1,12 +1,11 @@
 package com.example.dungeonescape.platformer;
 
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.graphics.RectF;
-import java.util.Random;
 import java.lang.Math;
-import java.util.*;
+
 
 public class Platforms {
     private double xPositions, yPositions;
@@ -17,6 +16,7 @@ public class Platforms {
     private boolean monstAlive;
     private PlatformerManager manager;
     private int velocityY;
+    private Rect rectangle;
 
     void setxPositions(double x) {
         this.xPositions = x;
@@ -44,9 +44,11 @@ public class Platforms {
         paint = new Paint();
         paint.setColor(Color.GREEN);
         this.manager = manager;
+        this.rectangle = new Rect((int) this.xPositions, (int) this.yPositions, (int) this.length,
+                (int) this.width);
     }
 
-    void update(){
+    void update() {
         // Stops character from jumping too high
         platformDown();
 
@@ -57,21 +59,19 @@ public class Platforms {
             monstAlive = true;
         }
     }
-    void platformDown(){
-        if (yPositions < (Math.round(manager.getGridHeight()/2) - 50)) {
+
+    void platformDown() {
+        if (yPositions < (Math.round(manager.getGridHeight() / 2) - 50)) {
             yPositions = (Math.round(manager.getGridHeight() / 2) - 50) + 1;
             yPositions -= velocityY;
         }
-}
+    }
 
-
-//    void drawString(Canvas canvas, String s, int x, int y) {
-//        canvas.drawText(s, x * FishTankView.charWidth, y * FishTankView.charHeight, paintText);
-//    }
-
-
-//    public void draw(Canvas canvas) {
-//        drawString(canvas, appearance, x, y);
-//    }
+    void draw(Canvas canvas) {
+        canvas.drawRect(this.rectangle, this.paint);
+    }
 
 }
+
+
+

@@ -10,24 +10,23 @@ class Character {
     private int x,y,size;
     private double speed = 7.0;
     private int height;
-    Paint paint;
-    RectF oval;
+    private Paint paint;
+    private RectF oval;
+    private PlatformerManager manager;
 
 
-    Character(int x, int y, int size){
+    Character(int x, int y, int size, PlatformerManager manager){
         this.x = x;
         this.y = y;
         this.size = size;
         paint = new Paint();
         paint.setColor(Color.BLUE);
         direction = 1;
-
+        this.manager = manager;
+        this.oval = new RectF(x-size/2,y-size/2,x+size/2,y+size/2);
     }
 
-    void move(Canvas canvas) {
-        if (height == 0) {
-            height = canvas.getHeight();
-        }
+    void move() {
 
          double gravity = 3.0;
         if (direction == 1) {
@@ -37,34 +36,25 @@ class Character {
         else {
             speed -= gravity;
         }
-        if (y+ size + speed*direction - canvas.getHeight() > 0) {
-            y = height;
+        if (y+ size + speed*direction - manager.getGridHeight() > 0) {
+            y = manager.getGridHeight();
             direction = -direction;
             speed = -80;
             y += speed;
         }
-
         else{
             y += speed*direction;
         }
-
-
-
         this.oval = new RectF(x-size/2,y-size/2,x+size/2,y+size/2);
 
         //Do we need to bounce next time?
         Rect bounds = new Rect();
         this.oval.roundOut(bounds); ///store our int bounds
+        System.out.println(speed);
+        System.out.println(y);
 
-//        //This is what you're looking for ▼
-//        if(!canvas.getClipBounds().contains(bounds)){
-//
-//            if(y-size<=0 || y+size > canvas.getHeight()){
-//                direction = direction*-1;
-//            }
-//        }
     }
-    public void draw(Canvas canvas) {
+    void draw(Canvas canvas) {
         canvas.drawOval(this.oval,this.paint);
     }
 }
