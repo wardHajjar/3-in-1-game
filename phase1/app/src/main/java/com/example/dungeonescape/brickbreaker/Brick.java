@@ -28,17 +28,4 @@ public class Brick extends BBObject {
         canvas.drawRect(x, y, x + w, y + h, paintStyle);
         // x is left, y is top
     }
-
-
 }
-
-/** in BBView
- * - initialize bricks as an array
- * - then them up using a for-loop
- *      - decide how many bricks and how they will be positioned
- * - in BBView draw(): loop through brick array --> call brick.draw()
- *      - nested for-loop:
- *
- *
- *
- */
