@@ -12,12 +12,13 @@ import com.example.dungeonescape.platformer.Level2MainActivity;
 import com.example.dungeonescape.platformer.PlatformerMainActivity;
 
 public class MainActivity extends AppCompatActivity {
-
+    public GameManager gameManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         configureNextButton();
+        gameManager = new GameManager();
     }
 
     private void configureNextButton() {
@@ -26,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(MainActivity.this, Level2MainActivity.class);
+                Intent intent = new Intent(MainActivity.this, MazeActivity.class);
                 startActivity(intent);
             }
         });
