@@ -111,21 +111,25 @@ public class Ball extends BBObject {
      * @return character which represents which movement direction to reverse.
      */
     public char madeRectCollision(Rect obstacle) {
-        int topLeftX = obstacle.left;
-        int topLeftY = obstacle.top;
-        int width = obstacle.width();
-        int height = obstacle.height();
-        int newXPos = x + x_speed;
-        int newYPos = y + y_speed;
-        if (newXPos >= topLeftX && newXPos <= topLeftX + width) {
-            if (newYPos <= topLeftY || newYPos >= topLeftY + height) {
+
+        Rect ballRect = new Rect(x - 25, y - 25, x + 25, y + 25);
+        Rect intersection = null;
+        int leftX = Math.max(ballRect.left, obstacle.left);
+        int rightX = Math.min(ballRect.right, obstacle.right);
+        int topY = Math.max(ballRect.top, obstacle.top);
+        int bottomY = Math.min(ballRect.bottom, obstacle.bottom);
+        if (leftX < rightX && topY < bottomY){
+            intersection = new Rect(leftX, topY, rightX, bottomY);
+        }
+        if (intersection != null){
+            if (intersection.width() >= intersection.height()){
                 return 'y';
             }
-        } else if (newYPos >= topLeftY && newYPos <= topLeftY + height) {
-            if (newXPos <= topLeftX || newXPos >= topLeftX + width) {
+            else if (intersection.height() >= intersection.width()){
                 return 'x';
             }
         }
         return ' ';
+
     }
 }
