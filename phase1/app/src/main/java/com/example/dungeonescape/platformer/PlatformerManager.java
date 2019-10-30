@@ -95,6 +95,7 @@ class PlatformerManager {
 //        if (!alive) {
 //            return false;
 //        }
+        collision_detection();
         if (character.getY() < 550) {
             int diff = Math.abs(550 - (int) character.getY());
             character.setY(549);

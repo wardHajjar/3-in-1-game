@@ -90,11 +90,11 @@ class Character extends RectShape {
                 if (this.rect.intersect(platform.rectangle) || (Math.abs((int)bottom - (int)platform.gety()) < 20 &&
                         x > platform.getx() && x < platform.getx() + 150)) {
                     System.out.println("hit");
-                    this.gameScore+=1;
+                    this.gameScore += 1;
                     y = platform.gety() - size/2;
                     speed = -90;
                     y += speed;
-                    start = true;
+//                    start = true;
                     this.oval = new RectF(x-size/2,(int)(y + size/4),x+size/2,y+size/2 + 5);
                     Rect bounds = new Rect();
                     this.oval.roundOut(bounds);
