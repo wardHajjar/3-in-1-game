@@ -94,7 +94,7 @@ class Character extends RectShape {
                     y = platform.gety() - size/2;
                     speed = -90;
                     y += speed;
-//                    start = true;
+                    start = true;
                     this.oval = new RectF(x-size/2,(int)(y + size/4),x+size/2,y+size/2 + 5);
                     Rect bounds = new Rect();
                     this.oval.roundOut(bounds);
@@ -107,6 +107,13 @@ class Character extends RectShape {
     }
     void draw(Canvas canvas) {
         canvas.drawOval(this.oval,this.paint);
+    }
+
+    boolean isAlive() {
+        if (start && y > manager.getGridHeight()) {
+            return false;
+        }
+        return true;
     }
 
     void move_left() {

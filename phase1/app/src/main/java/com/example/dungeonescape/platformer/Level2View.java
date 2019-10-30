@@ -80,14 +80,18 @@ public class Level2View extends SurfaceView implements Runnable{
     public void update() {
 
         boolean alive = manager.update();
-//        if (!alive) {
-//            gameOver();
-//        }
+        if (!alive) {
+            gameOver();
+        }
     }
 
     public void gameOver() {
-        playing = false;
+        manager = new PlatformerManager();
+        holder = getHolder();
+        setFocusable(true);
+        setZOrderOnTop(true);
     }
+
     public void pause() {
         playing = false;
         try {

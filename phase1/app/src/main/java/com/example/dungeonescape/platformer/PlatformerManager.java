@@ -91,10 +91,10 @@ class PlatformerManager {
     boolean update() {
 
         character.move();
-//        boolean alive = character.isAlive();
-//        if (!alive) {
-//            return false;
-//        }
+        boolean alive = character.isAlive();
+        if (!alive) {
+            return false;
+        }
         collision_detection();
         if (character.getY() < 550) {
             int diff = Math.abs(550 - (int) character.getY());
