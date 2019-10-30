@@ -56,17 +56,35 @@ public abstract class GameView extends SurfaceView implements Runnable{
      */
     @Override
     public void run(){
+        while (playing) {
+
+            // Capture the current time in milliseconds in startFrameTime
+            try {
+                //set time in mili
+                Thread.sleep(1);
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+//             Updating the frame
+            if(!paused){
+                update();
+            }
+
+            // Draw the frame
+            draw();
+        }
     }
 
     /**
      * Method updates the state of the objects within the game based on user events.
      */
-    abstract void update();
+    public abstract void update();
 
     /**
      * Method draws all the objects onto the screen.
      */
-    abstract void draw();
+    public abstract void draw();
 
     /**
      * If Activity is paused/stopped, the thread must stop as well.

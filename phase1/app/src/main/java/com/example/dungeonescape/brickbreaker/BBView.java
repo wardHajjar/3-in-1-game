@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import android.view.Display;
 import android.graphics.Point;
 import android.app.Activity;
-import com.example.dungeonescape.GameView;
 /*
 BBMainActivity and BBView were structured like the following game:
 http://gamecodeschool.com/android/building-a-simple-game-engine/
@@ -24,23 +23,35 @@ http://gamecodeschool.com/android/building-a-simple-game-engine/
  * Class that controls the logic of the game by handling collisions, updating the objects' stats and
  * drawing the new states onto the canvas.
  */
-public class BBView extends GameView {
+public class BBView extends SurfaceView implements Runnable {
     /**
+     * gameThread - the main game thread that gets executed by the program.
+     * holder - contains the canvas on which objects are drawn.
+     * playing - indicates whether the game is running i.e. user is playing
+     * paused - indicates if the game is paused; starts off as true since the user hasn't started
+     *          playing yet.
+     * canvas - the Canvas object onto which objects are drawn.
+     * fps - frames per second.
+     * timeThisFrame - time it takes to execute the draw and update methods in one frame.
+     * paint - the Paint object which determines the drawing style.
      * screenX - the width of the screen
      * screenY - the height of the screen
      */
+    Thread gameThread = null;
+    SurfaceHolder holder;
+    boolean playing;
+    boolean paused = true;
+    Canvas canvas;
+    Paint paint;
+    boolean startGame = false;
+
     int screenX;
     int screenY;
-
-    /**
-     * ball - the ball object that bounces around and hits bricks.
-     * paddle - the paddle that catches the ball.
-     * bricks - list of all the bricks in the game.
-     */
     Ball ball;
+    //
     Paddle paddle;
     ArrayList<Brick> bricks;
-    boolean startGame = false;
+
 
     /**
      * Initializes the surface in the context environment.
@@ -48,6 +59,8 @@ public class BBView extends GameView {
      */
     public BBView(Context context){
         super(context);
+        this.holder = getHolder();
+        this.paint = new Paint();
 
 
         Display display = ((Activity)context).getWindowManager().getDefaultDisplay();
@@ -55,13 +68,13 @@ public class BBView extends GameView {
         display.getSize(size);
         this.screenX = size.x;
         this.screenY = size.y;
-
-        // construct the ball
-        this.ball = new Ball(screenX/2 - 75 + (screenX/2 - 75)/ 2 - 25,
-                screenY - 100 - 25, 25, -26);
+        holder = getHolder();
+        paint = new Paint();
+        this.ball = new Ball(screenX/2 - 75 + (screenX/2 - 75)/2 - 25,
+                screenY - 100 - 26, 25, -26);
 
         // construct paddle and bricks
-        paddle = new Paddle(screenX/2 - 75, screenY - 100, screenX/4, screenY/25);
+        paddle = new Paddle(screenX/2 - 75, screenY - 100, screenX/3, 40);
         bricks = new ArrayList<>();
         int brickWidth = screenX / 6;
         int brickHeight = screenY / 20;
@@ -73,11 +86,39 @@ public class BBView extends GameView {
     }
 
     /**
+     * The method that runs the program's while loop.
+     */
+    @Override
+    public void run(){
+        while (playing) {
+
+            try {
+                //set time in mili
+                Thread.sleep(1);
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+//             Updating the frame
+            if(!paused){
+                update();
+            }
+
+            // Draw the frame
+            draw();
+
+        }
+    }
+
+    /**
      *
      */
+    // TODO: Detecting collisions and updating objects' positions.
     public void update() {
-        ball.move();
-        // Wall Collision Detection
+        if (startGame){
+            ball.move();
+        }
+
         char wall_collision = ball.madeWallCollision(screenX, screenY);
         if ( wall_collision == 'x'){
             ball.setXSpeed(ball.getXSpeed() * -1);
@@ -86,7 +127,6 @@ public class BBView extends GameView {
             ball.setYSpeed(ball.getYSpeed() * -1);
         }
 
-        // Brick Collision Detection
         for (Brick brick: bricks){
             if (!(brick.getHitStatus())) {
                 String brick_collision = ball.madeRectCollision(brick.getRect());
@@ -94,6 +134,7 @@ public class BBView extends GameView {
                     ball.setXSpeed(ball.getXSpeed() * -1);
                     brick.changeHitStatus();
                     break;
+
                 } else if (brick_collision.equals("y")) {
                     ball.setYSpeed(ball.getYSpeed() * -1);
                     brick.changeHitStatus();
@@ -101,18 +142,20 @@ public class BBView extends GameView {
                 }
             }
         }
-
         // Paddle Collision Detection
         String paddle_collision = ball.madeRectCollision(paddle.getRect());
-        if (!(paddle_collision.equals(" "))){
+        if (!(paddle_collision.equals(" ")) && startGame) {
             ball.setYSpeed(ball.getYSpeed() * -1);
             ball.setRandomXSpeed();
+
         }
+
     }
 
     /**
      *
      */
+    // TODO: Draw the balls, bricks and paddle
     public void draw() {
 
         // Make sure the drawing surface is valid or program crashes
@@ -152,7 +195,10 @@ public class BBView extends GameView {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if(event.getAction() == MotionEvent.ACTION_DOWN) {
-            startGame = true;
+            if(!startGame){
+                ball.move();
+                startGame = true;
+            }
             return true;
         }
         if (event.getAction() == MotionEvent.ACTION_MOVE) {
@@ -170,4 +216,29 @@ public class BBView extends GameView {
         }
         return super.onTouchEvent(event);
     }
+    /**
+     * If Activity is paused/stopped, the thread must stop as well.
+     */
+    public void pause() {
+        playing = false;
+        try {
+            gameThread.join();
+        } catch (InterruptedException e) {
+            Log.e("Error:", "joining thread");
+        }
+
+    }
+
+    /**
+     * If Activity is started then thread must start as well.
+     */
+    public void resume() {
+        playing = true;
+        gameThread = new Thread(this);
+        gameThread.start();
+    }
+
+
+
 }
+

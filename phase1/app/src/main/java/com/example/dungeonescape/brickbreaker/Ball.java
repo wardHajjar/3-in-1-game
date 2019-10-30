@@ -54,7 +54,9 @@ public class Ball extends BBObject {
      */
     void setRandomXSpeed(){
         Random random = new Random();
-        xSpeed = random.nextInt((ySpeed - 1)) + 1;
+        xSpeed = random.nextInt((Math.abs(ySpeed) - 15)) + 15;
+        System.out.printf("%d", xSpeed);
+        System.out.println(" ");
     }
 
     /**
