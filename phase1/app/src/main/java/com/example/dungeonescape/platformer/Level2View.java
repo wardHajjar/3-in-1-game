@@ -22,6 +22,8 @@ public class Level2View extends SurfaceView implements Runnable{
     private boolean nextLevel;
     private long timeThisFrame;
 
+    //    private Player user; // referencing from player class for lives
+
     public Level2View(Context context, AttributeSet attrs) {
         super(context, attrs);
         manager = new PlatformerManager();
@@ -80,6 +82,8 @@ public class Level2View extends SurfaceView implements Runnable{
 
         boolean alive = manager.update();
         if (!alive) {
+            //            user.setNumLives(user.getNumLives()-1); //this is for when we'll be able to reference from player class
+            manager.setCharacterLives(manager.getCharacterLives()-1);
             gameOver();
 
         }

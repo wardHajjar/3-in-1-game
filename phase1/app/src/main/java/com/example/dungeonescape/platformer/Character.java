@@ -25,12 +25,27 @@ class Character extends RectShape {
 
     private int gameScore;
 
+    //    private Player user; // referencing from player class for lives
+    private int lives;
+
     int getGamescore(){
         return this.gameScore;
     }
     void setGamescore(int gameScore){
         this.gameScore = gameScore;
     }
+
+    //    int getGamelives(){
+//        return user.getNumLives();
+//    }
+
+    int getLives(){
+        return this.getLives();
+    }
+    void setLives(int lives){
+        this.lives = lives;
+    }
+
 
     Character(int x, int y, int size, PlatformerManager manager){
         this.x = x;
@@ -44,6 +59,9 @@ class Character extends RectShape {
         this.manager = manager;
         this.rect = new Rect(x-size/2,(int)(y + size/4),x+size/2,y+size/2);
         this.oval = new RectF(x-size/2,y-size/2,x+size/2,y+size/2);
+
+        this.lives = 3;
+
     }
     void setY(float y) {
         this.y = y;
