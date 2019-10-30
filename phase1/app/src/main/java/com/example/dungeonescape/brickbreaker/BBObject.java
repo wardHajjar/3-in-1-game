@@ -3,6 +3,7 @@ package com.example.dungeonescape.brickbreaker;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Rect;
 /**
  * Abstract Class that creates a brick breaker object.
 */
@@ -65,4 +66,10 @@ abstract class BBObject {
      * @param canvas the graphic context on which the object is drawn
      */
     abstract void draw(Canvas canvas);
+
+    /**
+     * Returns a rectangular representation of the object.
+     * @return Rect object.
+     */
+    abstract Rect getRect();
 }
