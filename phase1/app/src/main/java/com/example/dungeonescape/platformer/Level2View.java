@@ -78,10 +78,15 @@ public class Level2View extends SurfaceView implements Runnable{
     }
 
     public void update() {
-        manager.update();
+
+        boolean alive = manager.update();
+//        if (!alive) {
+//            gameOver();
+//        }
     }
-    public void collision_detection() {
-        manager.collision_detection();
+
+    public void gameOver() {
+        playing = false;
     }
     public void pause() {
         playing = false;

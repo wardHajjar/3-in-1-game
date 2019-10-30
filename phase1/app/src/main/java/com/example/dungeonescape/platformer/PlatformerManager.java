@@ -12,11 +12,12 @@ import java.util.*;
 class PlatformerManager {
 
     /**
-     * The width of myLittleFishes.
+     * The width of canvas.
      */
+    private int lives;
     private int gridWidth;
     /**
-     * The height of myLittleFishes.
+     * The height of canvas.
      */
     private int gridHeight;
     private ArrayList<Platforms> platforms;
@@ -59,9 +60,7 @@ class PlatformerManager {
         return arr;
 
     }
-    void collision_detection() {
-        character.collision_detection();
-    }
+
     void draw(Canvas canvas) {
 
         for (int i = 0; i < platforms.size(); i++) {
@@ -79,11 +78,15 @@ class PlatformerManager {
     }
 
 
-    void update() {
+    boolean update() {
 
         character.move();
+//        boolean alive = character.isAlive();
+//        if (!alive) {
+//            return false;
+//        }
         if (character.getY() < 550) {
-            int diff = Math.abs(550 - (int)character.getY());
+            int diff = Math.abs(550 - (int) character.getY());
             character.setY(549);
 
 
@@ -92,6 +95,7 @@ class PlatformerManager {
             }
 
         }
+        return true;
     }
 
 }

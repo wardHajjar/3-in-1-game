@@ -20,6 +20,7 @@ public class Level2MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_level2_main);
         game = findViewById(R.id.level2);
+        setTitle("Level3: Platformer");
         buttons();
 
     }

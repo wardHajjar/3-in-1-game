@@ -22,6 +22,7 @@ class Character extends RectShape {
     private PlatformerManager manager;
     private float bottom;
     private Rect rect;
+    private boolean start;
 
 
     Character(int x, int y, int size, PlatformerManager manager){
@@ -30,7 +31,7 @@ class Character extends RectShape {
         this.size = size;
         paint = new Paint();
         paint.setColor(Color.BLUE);
-
+        start = false;
         this.manager = manager;
         this.rect = new Rect(x-size/2,(int)(y + size/4),x+size/2,y+size/2);
         this.oval = new RectF(x-size/2,y-size/2,x+size/2,y+size/2);
@@ -55,7 +56,7 @@ class Character extends RectShape {
         else {
             speed += gravity;
         }
-        if (y+ size/2 + speed - manager.getGridHeight() > 0) {
+        if (y+ size/2 + speed - manager.getGridHeight() > 0 && !start) {
             y = manager.getGridHeight();
             speed = - 80;
             y += speed;
@@ -74,12 +75,13 @@ class Character extends RectShape {
         this.bottom = this.y+ (size/2);
         if (speed > 10) {
             for(Platforms platform: manager.getPlatforms()) {
-                if (this.rect.intersect(platform.rectangle) || (((int)bottom == (int)platform.gety()) &&
+                if (this.rect.intersect(platform.rectangle) || (Math.abs((int)bottom - (int)platform.gety()) < 20 &&
                         x > platform.getx() && x < platform.getx() + 150)) {
                     System.out.println("hit");
                     y = platform.gety() - size/2;
                     speed = -90;
                     y += speed;
+                    start = true;
                     this.oval = new RectF(x-size/2,(int)(y + size/4),x+size/2,y+size/2 + 5);
                     Rect bounds = new Rect();
                     this.oval.roundOut(bounds);
