@@ -17,7 +17,7 @@
 
     <com.example.dungeonescape.platformer.Level2View
         android:id="@+id/level2"
-        android:layout_width="wrap_content"
+        android:layout_width="411dp"
         android:layout_height="600dp"
         android:layout_weight="1" />
 

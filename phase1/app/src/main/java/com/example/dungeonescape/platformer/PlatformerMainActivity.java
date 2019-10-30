@@ -16,7 +16,7 @@ public class PlatformerMainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_platformer_main);
-        setTitle("Level2: Platformer");
+        setTitle("Level3: Platformer");
         configureNextButton();
     }
     private void configureNextButton() {

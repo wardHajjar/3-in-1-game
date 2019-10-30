@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.dungeonescape.R;
 
@@ -20,6 +21,7 @@ public class Level2MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_level2_main);
         game = findViewById(R.id.level2);
+        setTitle("Level3: Platformer");
         buttons();
 
     }
@@ -49,7 +51,10 @@ public class Level2MainActivity extends Activity {
             }
         });
 
-
+        int score = game.manager.getCharacterScore();
+        String scr = String.valueOf(score);
+        TextView score1=(TextView) findViewById(R.id.score);
+        score1.setText(scr);
     }
     /**
      * Method executes when the player quits the game.
