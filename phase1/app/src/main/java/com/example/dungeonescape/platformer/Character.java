@@ -32,7 +32,7 @@ class Character extends RectShape {
         paint.setColor(Color.BLUE);
 
         this.manager = manager;
-        this.rect = new Rect(x-size/2,y-size/2,x+size/2,y+size/2);
+        this.rect = new Rect(x-size/2,(int)(y + size/4),x+size/2,y+size/2);
         this.oval = new RectF(x-size/2,y-size/2,x+size/2,y+size/2);
     }
     void setY(float y) {
@@ -46,7 +46,7 @@ class Character extends RectShape {
     }
     void move() {
         collision_detection();
-        this.rect = new Rect((int)(x-size/3),(int)(y-size/2),(int)(x+size/2),(int)(y+size/3));
+
         double gravity = 3.0;
         if (speed >= 0) {
 
@@ -63,22 +63,26 @@ class Character extends RectShape {
         else{
             y += speed;
         }
-        System.out.println(y);
+        System.out.println(speed);
 
         this.oval = new RectF(x-size/2,y-size/2,x+size/2,y+size/2 + 5);
+        this.rect = new Rect((int)(x-size/3),(int)(y + size/4),(int)(x+size/2),(int)(y+size/3));
         Rect bounds = new Rect();
         this.oval.roundOut(bounds);
     }
     void collision_detection() {
         this.bottom = this.y+ (size/2);
-        if (speed >= 0) {
+        if (speed > 10) {
             for(Platforms platform: manager.getPlatforms()) {
-                if (this.rect.intersect(platform.rectangle) || bottom + speed - platform.gety() > 0 &&
-                        x > platform.getx() && x < platform.getx() + 150) {
+                if (this.rect.intersect(platform.rectangle) || (((int)bottom == (int)platform.gety()) &&
+                        x > platform.getx() && x < platform.getx() + 150)) {
                     System.out.println("hit");
                     y = platform.gety() - size/2;
                     speed = -90;
                     y += speed;
+                    this.oval = new RectF(x-size/2,(int)(y + size/4),x+size/2,y+size/2 + 5);
+                    Rect bounds = new Rect();
+                    this.oval.roundOut(bounds);
                 }
             }
         }

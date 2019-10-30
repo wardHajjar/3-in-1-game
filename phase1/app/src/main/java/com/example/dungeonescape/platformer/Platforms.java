@@ -52,24 +52,31 @@ public class Platforms extends Rectangle {
     void update(int down) {
         // Moves platforms down
         platformDown(down);
+        this.rectangle = new Rect((int) this.x, (int) this.y, (int) (this.length + x),
+                (int) (y+this.width));
     }
 
     private void platformDown(int down) {
         if (this.y + down > manager.getGridHeight()) {
             // Move it to the top
-            this.sety(0);
+            int diff = Math.abs((int)this.y + down - manager.getGridHeight());
+            if (diff > 400) {
+                this.sety(0);
+            }
+            else if (diff > 200) {
+                this.sety(200);
+            }
+            else {
+                this.sety(diff);
+            }
             Random r = new Random();
             int a = r.nextInt(1080- 150);
             this.setx(a);
-            this.rectangle = new Rect((int) this.x, (int) this.y, (int) (this.length + x),
-                    (int) (y+this.width));
         }
         else {
             this.sety(this.y + down);
-            this.rectangle = new Rect((int) this.x, (int) this.y, (int) (this.length + x),
-                    (int) (y+this.width));
-        }
 
+        }
     }
 
     void draw(Canvas canvas) {

@@ -50,7 +50,7 @@ class PlatformerManager {
         int w = 1080;
 
         ArrayList<Platforms> arr = new ArrayList<>(15);
-        for (int i = 1; i <= 10; i++) {
+        for (int i = 1; i <= 8; i++) {
             Random random = new Random();
             int a = random.nextInt(1080- 150);
             arr.add(new Platforms(a, h*i/10, 150, 30, this));
