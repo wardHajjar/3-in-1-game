@@ -35,6 +35,9 @@ class PlatformerManager {
     Character getCharacter() {
         return character;
     }
+    int getCharacterScore(){
+        return character.getGamescore();
+    }
 
     /**
      * The fish tank manager on a screen with height rows and width columns.
@@ -59,6 +62,13 @@ class PlatformerManager {
 
         return arr;
 
+    }
+
+    void collision_detection() {
+        character.collision_detection();
+        if(character.collision_detection()){
+            character.setGamescore(character.getGamescore()+1);
+        }
     }
 
     void draw(Canvas canvas) {

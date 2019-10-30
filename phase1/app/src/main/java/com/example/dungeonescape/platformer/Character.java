@@ -22,8 +22,17 @@ class Character extends RectShape {
     private PlatformerManager manager;
     private float bottom;
     private Rect rect;
+
     private boolean start;
 
+    private int gameScore;
+
+    int getGamescore(){
+        return this.gameScore;
+    }
+    void setGamescore(int gameScore){
+        this.gameScore = gameScore;
+    }
 
     Character(int x, int y, int size, PlatformerManager manager){
         this.x = x;
@@ -32,6 +41,8 @@ class Character extends RectShape {
         paint = new Paint();
         paint.setColor(Color.BLUE);
         start = false;
+
+        this.gameScore = 0;
         this.manager = manager;
         this.rect = new Rect(x-size/2,(int)(y + size/4),x+size/2,y+size/2);
         this.oval = new RectF(x-size/2,y-size/2,x+size/2,y+size/2);
@@ -71,13 +82,15 @@ class Character extends RectShape {
         Rect bounds = new Rect();
         this.oval.roundOut(bounds);
     }
-    void collision_detection() {
+    boolean collision_detection() {
         this.bottom = this.y+ (size/2);
+        boolean a = false;
         if (speed > 10) {
             for(Platforms platform: manager.getPlatforms()) {
                 if (this.rect.intersect(platform.rectangle) || (Math.abs((int)bottom - (int)platform.gety()) < 20 &&
                         x > platform.getx() && x < platform.getx() + 150)) {
                     System.out.println("hit");
+                    this.gameScore+=1;
                     y = platform.gety() - size/2;
                     speed = -90;
                     y += speed;
@@ -85,9 +98,12 @@ class Character extends RectShape {
                     this.oval = new RectF(x-size/2,(int)(y + size/4),x+size/2,y+size/2 + 5);
                     Rect bounds = new Rect();
                     this.oval.roundOut(bounds);
+                    a = true;
                 }
+
             }
         }
+        return a;
     }
     void draw(Canvas canvas) {
         canvas.drawOval(this.oval,this.paint);
