@@ -23,6 +23,7 @@ class PlatformerManager {
     private ArrayList<Platforms> platforms;
     private Character character;
 
+
     int getGridWidth() {
         return gridWidth;
     }
@@ -47,6 +48,7 @@ class PlatformerManager {
         platforms = createPlatforms();
         gridHeight = 1684;
 
+
     }
 
     private ArrayList<Platforms> createPlatforms() {
@@ -64,12 +66,6 @@ class PlatformerManager {
 
     }
 
-    void collision_detection() {
-        character.collision_detection();
-        if(character.collision_detection()){
-            character.setGamescore(character.getGamescore()+1);
-        }
-    }
 
     void draw(Canvas canvas) {
 
@@ -91,11 +87,11 @@ class PlatformerManager {
     boolean update() {
 
         character.move();
-//        boolean alive = character.isAlive();
-//        if (!alive) {
-//            return false;
-//        }
-        collision_detection();
+        boolean alive = character.isAlive();
+        if (!alive) {
+            return false;
+        }
+
         if (character.getY() < 550) {
             int diff = Math.abs(550 - (int) character.getY());
             character.setY(549);
@@ -107,6 +103,10 @@ class PlatformerManager {
 
         }
         return true;
+    }
+    boolean finishedLevel() {
+        return (character.getGamescore() > 10);
+
     }
 
 }
