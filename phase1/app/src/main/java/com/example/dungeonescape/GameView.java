@@ -103,6 +103,7 @@ public abstract class GameView extends SurfaceView implements Runnable{
      * If Activity is started then thread must start as well.
      */
     public void resume() {
+        paused = false;
         playing = true;
         gameThread = new Thread(this);
         gameThread.start();
