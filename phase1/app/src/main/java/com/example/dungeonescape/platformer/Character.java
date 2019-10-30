@@ -40,7 +40,7 @@ class Character extends RectShape {
 //    }
 
     int getLives(){
-        return this.getLives();
+        return this.lives;
     }
     void setLives(int lives){
         this.lives = lives;
@@ -98,7 +98,7 @@ class Character extends RectShape {
         Rect bounds = new Rect();
         this.oval.roundOut(bounds);
     }
-    void collision_detection() {
+    private void collision_detection() {
         this.bottom = this.y+ (size/2);
         if (speed > 10) {
             for(Platforms platform: manager.getPlatforms()) {

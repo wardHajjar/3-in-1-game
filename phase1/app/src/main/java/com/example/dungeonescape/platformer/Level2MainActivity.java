@@ -44,9 +44,15 @@ public class Level2MainActivity extends AppCompatActivity {
                                 if (running) {
                                     // Update the score shown
                                     int score = game.manager.getCharacterScore();
-                                    String scr = String.valueOf(score);
+                                    String scr = String.valueOf(score) ;
+                                    String scre = "Score: " + scr;
+
                                     TextView score1 = (TextView) findViewById(R.id.score);
-                                    score1.setText(scr);
+                                    score1.setText(scre);
+                                    int lives = game.manager.getCharacterLives();
+                                    String life = "Lives: " + String.valueOf(lives);
+                                    TextView lifeText = (TextView) findViewById(R.id.lives);
+                                    lifeText.setText(life);
                                     boolean doneLevel = game.nextLevel();
                                     if (doneLevel) {
                                         nextLevel();

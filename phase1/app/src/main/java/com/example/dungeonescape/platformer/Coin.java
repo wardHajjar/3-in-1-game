@@ -25,7 +25,7 @@ public class Coin extends RectShape {
         paint.setColor(Color.YELLOW);
 
         this.manager = manager;
-        this.rectangle = new Rect(x - size / 2, (int) (y + size / 4), x + size / 2, y + size / 2);
+        this.rectangle = new Rect(x - size / 2, (int) (y - size /2), x + size / 2, y + size / 2);
         this.oval = new RectF(x - size / 2, y - size / 2, x + size / 2, y + size / 2);
     }
     void draw(Canvas canvas) {
@@ -37,13 +37,13 @@ public class Coin extends RectShape {
         Random r = new Random();
         int a = r.nextInt(1080- 150);
         this.x = a;
-        this.rectangle = new Rect((int)(x - size / 2), (int) (y + size / 4), (int) (x + size / 2), (int) (y + size / 2));
+        this.rectangle = new Rect((int)(x - size / 2), (int) (y - size/2), (int) (x + size / 2), (int) (y + size / 2));
         this.oval = new RectF(x - size / 2, y - size / 2, x + size / 2, y + size / 2);
     }
     void update(int down) {
         // Moves platforms down
         coinDown(down);
-        this.rectangle = new Rect((int)(x - size / 2), (int) (y + size / 4), (int) (x + size / 2), (int) (y + size / 2));
+        this.rectangle = new Rect((int)(x - size / 2), (int) (y - size /2), (int) (x + size / 2), (int) (y + size / 2));
         this.oval = new RectF(x - size / 2, y - size / 2, x + size / 2, y + size / 2);
     }
     private void coinDown(int down) {

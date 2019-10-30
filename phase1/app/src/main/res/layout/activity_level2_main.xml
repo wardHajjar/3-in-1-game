@@ -10,9 +10,16 @@
     <TextView
         android:id="@+id/score"
         android:layout_width="match_parent"
-        android:layout_height="58dp"
+        android:layout_height="wrap_content"
         android:fontFamily="sans-serif-medium"
-        android:text="Score: 300"
+        android:text="Score"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/lives"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Lives"
         android:textSize="24sp" />
 
     <com.example.dungeonescape.platformer.Level2View
