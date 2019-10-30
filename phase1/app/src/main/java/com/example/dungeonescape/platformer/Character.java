@@ -90,7 +90,7 @@ class Character extends RectShape {
                 if (this.rect.intersect(platform.rectangle) || (Math.abs((int)bottom - (int)platform.gety()) < 20 &&
                         x > platform.getx() && x < platform.getx() + 150)) {
                     System.out.println("hit");
-                    this.gameScore+=1;
+                    this.gameScore += 1;
                     y = platform.gety() - size/2;
                     speed = -90;
                     y += speed;
@@ -107,6 +107,13 @@ class Character extends RectShape {
     }
     void draw(Canvas canvas) {
         canvas.drawOval(this.oval,this.paint);
+    }
+
+    boolean isAlive() {
+        if (start && y > manager.getGridHeight()) {
+            return false;
+        }
+        return true;
     }
 
     void move_left() {
