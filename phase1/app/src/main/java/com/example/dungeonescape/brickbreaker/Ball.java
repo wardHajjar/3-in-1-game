@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Color;
 import android.graphics.Rect;
+import java.util.Random;
 /**
  * Class that creates the ball used in the brick breaker game.
  * Ball has the functionality of bouncing from walls and bricks and breaking breaks.
@@ -12,20 +13,20 @@ public class Ball extends BBObject {
     /**
      * The ball's speed in the x and y directions, respectively.
      */
-    private int x_speed, y_speed;
+    private int xSpeed, ySpeed;
 
     /**
      * Initializes the ball at a given centre with a specified speed in the x and y directions.
      *
      * @param x_loc   the x coordinate of the ball's centre.
      * @param y_loc   the y coordinate of the ball's centre.
-     * @param x_speed the speed of the ball in the x direction.
-     * @param y_speed the speed of the ball in the y direction.
+     * @param xSpeed the speed of the ball in the x direction.
+     * @param ySpeed the speed of the ball in the y direction.
      */
-    public Ball(int x_loc, int y_loc, int x_speed, int y_speed) {
+    public Ball(int x_loc, int y_loc, int xSpeed, int ySpeed) {
         super(x_loc, y_loc);
-        this.x_speed = x_speed;
-        this.y_speed = y_speed;
+        this.xSpeed = xSpeed;
+        this.ySpeed = ySpeed;
     }
 
     /**
@@ -33,8 +34,8 @@ public class Ball extends BBObject {
      *
      * @param x_speed the new speed in the x direction.
      */
-    public void setX_speed(int x_speed) {
-        this.x_speed = x_speed;
+    public void setXSpeed(int x_speed) {
+        this.xSpeed = x_speed;
     }
 
     /**
@@ -42,37 +43,43 @@ public class Ball extends BBObject {
      *
      * @param y_speed the new speed in the y direction.
      */
-    public void setY_speed(int y_speed) {
+    public void setYSpeed(int y_speed) {
 
-        this.y_speed = y_speed;
+        this.ySpeed = y_speed;
+    }
+
+    /**
+     * Sets the speed of the ball in the x direction as a random speed with a max of y_speed - 1
+     * and min speed of 1.
+     */
+    void setRandomXSpeed(){
+        Random random = new Random();
+        xSpeed = random.nextInt((ySpeed - 1)) + 1;
     }
 
     /**
      * Getter method that returns the ball's speed in the x direction.
-     * @return x_speed attrivute.
+     * @return xSpeed attrivute.
      */
-    public int getX_speed(){
-        return x_speed;
+    public int getXSpeed(){
+        return xSpeed;
     }
 
     /**
      * Getter method that return the ball's speed in the y direction.
-     * @return y_speed attribute.
+     * @return ySpeed attribute.
      */
-    public int getY_speed(){
-        return y_speed;
+    public int getYSpeed(){
+        return ySpeed;
     }
 
 
     /**
      * Moves the ball in the x and y directions with their corresponding speeds.
      */
-    public void move(long fps) {
-        System.out.println("HERETSVSJFHASF");
-//        this.x = this.x + (int)(this.x_speed/fps);
-//        this.y = this.y + (int)(this.y_speed/fps);
-        this.x = this.x + this.x_speed;
-        this.y = this.y + this.y_speed;
+    public void move() {
+        this.x = this.x + this.xSpeed;
+        this.y = this.y + this.ySpeed;
     }
 
     /**
@@ -95,9 +102,9 @@ public class Ball extends BBObject {
      * @param height the screen height
      * @return character which represents which movement direction to reverse.
      */
-    public char madeWallCollision(int width, int height) {
-        int newXPos = x + x_speed;
-        int newYPos = y + y_speed;
+    char madeWallCollision(int width, int height) {
+        int newXPos = x + xSpeed;
+        int newYPos = y + ySpeed;
         if (newXPos <= 0 || newXPos >= width) {
             return 'x';
         } else if (newYPos <= 0 || newYPos >= height) {
@@ -108,12 +115,13 @@ public class Ball extends BBObject {
 
     /** Determines if the ball made a collision with a rectangular obstacle.
      * @param obstacle the Rect that represents the obstacle.
-     * @return character which represents which movement direction to reverse.
+     * @return String which represents which movement direction to reverse.
      */
-    public char madeRectCollision(Rect obstacle) {
+    String madeRectCollision(Rect obstacle) {
 
-        Rect ballRect = new Rect(x - 25, y - 25, x + 25, y + 25);
+        Rect ballRect = getRect();
         Rect intersection = null;
+        // calculating the rectangle of intersection between the obstacle and the ball.
         int leftX = Math.max(ballRect.left, obstacle.left);
         int rightX = Math.min(ballRect.right, obstacle.right);
         int topY = Math.max(ballRect.top, obstacle.top);
@@ -122,14 +130,26 @@ public class Ball extends BBObject {
             intersection = new Rect(leftX, topY, rightX, bottomY);
         }
         if (intersection != null){
+            // if width of the intersection is greater than the height then the ball must have hit
+            // the top/bottom of the obstacle.
             if (intersection.width() >= intersection.height()){
-                return 'y';
+                return "y";
             }
+            // if height of the intersection is greater than the width then the ball must have hit
+            // the sides of the obstacle.
             else if (intersection.height() >= intersection.width()){
-                return 'x';
+                System.out.println('x');
+                return "x";
             }
         }
-        return ' ';
+        return " ";
+    }
 
+    /**
+     * Returns a rectangular representation of the object.
+     * @return Rect object.
+     */
+    Rect getRect(){
+        return new Rect(x - 25, y - 25, x + 25, y + 25);
     }
 }
