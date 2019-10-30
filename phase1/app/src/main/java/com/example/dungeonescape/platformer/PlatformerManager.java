@@ -22,6 +22,7 @@ class PlatformerManager {
     private int gridHeight;
     private ArrayList<Platforms> platforms;
     private Character character;
+    private ArrayList<Coin> coins;
 
 
     int getGridWidth() {
@@ -33,6 +34,10 @@ class PlatformerManager {
     int getGridHeight() {
         return gridHeight;
     }
+    ArrayList<Coin> getCoins() {
+        return coins;
+    }
+
     Character getCharacter() {
         return character;
     }
@@ -41,29 +46,30 @@ class PlatformerManager {
     }
 
     /**
-     * The fish tank manager on a screen with height rows and width columns.
+     * Platform manager on a screen with characters and platforms.
      */
     PlatformerManager() {
         character = new Character(50,1000,100, this);
-        platforms = createPlatforms();
-        gridHeight = 1684;
 
+        gridHeight = 1684;
+        gridWidth = 1080;
+        platforms = createPlatforms();
+        coins = new ArrayList<>(2);
+        coins.add(new Coin(300,300,60, this));
+        coins.add(new Coin(70,1000,60, this));
 
     }
 
     private ArrayList<Platforms> createPlatforms() {
-        int h = 1684;
-        int w = 1080;
+        int h = gridHeight;
 
         ArrayList<Platforms> arr = new ArrayList<>(15);
         for (int i = 1; i <= 8; i++) {
             Random random = new Random();
-            int a = random.nextInt(1080- 150);
+            int a = random.nextInt(gridWidth- 150);
             arr.add(new Platforms(a, h*i/10, 150, 30, this));
         }
-
         return arr;
-
     }
 
 
@@ -75,6 +81,9 @@ class PlatformerManager {
         character.draw(canvas);
         gridHeight = canvas.getHeight();
         gridWidth = canvas.getWidth();
+        for (int i = 0; i < coins.size(); i++) {
+            coins.get(i).draw(canvas);
+        }
     }
     void left_button() {
         character.move_left();
@@ -87,6 +96,9 @@ class PlatformerManager {
     boolean update() {
 
         character.move();
+
+
+        character.coin_detection();
         boolean alive = character.isAlive();
         if (!alive) {
             return false;
@@ -96,7 +108,9 @@ class PlatformerManager {
             int diff = Math.abs(550 - (int) character.getY());
             character.setY(549);
 
-
+            for (int i = 0; i < coins.size(); i++) {
+                coins.get(i).update(diff);
+            }
             for (int i = 0; i < platforms.size(); i++) {
                 platforms.get(i).update(diff);
             }
@@ -104,6 +118,7 @@ class PlatformerManager {
         }
         return true;
     }
+
     boolean finishedLevel() {
         return (character.getGamescore() > 10);
 

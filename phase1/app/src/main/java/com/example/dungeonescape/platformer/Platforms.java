@@ -64,10 +64,10 @@ public class Platforms extends Rectangle {
                 this.sety(0);
             }
             else if (diff > 200) {
-                this.sety(200);
+                this.sety(-200);
             }
             else {
-                this.sety(diff);
+                this.sety(-diff);
             }
             Random r = new Random();
             int a = r.nextInt(1080- 150);

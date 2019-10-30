@@ -14,9 +14,7 @@ import androidx.constraintlayout.solver.widgets.Rectangle;
 class Character extends RectShape {
 
     private float x,y,size;
-    private int direction = 1;
     private int speed = 5;
-    private int height;
     private Paint paint;
     private RectF oval;
     private PlatformerManager manager;
@@ -69,7 +67,7 @@ class Character extends RectShape {
         }
         if (y+ size/2 + speed - manager.getGridHeight() > 0 && !start) {
             y = manager.getGridHeight();
-            speed = - 80;
+            speed = - 75;
             y += speed;
         }
         else{
@@ -82,9 +80,8 @@ class Character extends RectShape {
         Rect bounds = new Rect();
         this.oval.roundOut(bounds);
     }
-    boolean collision_detection() {
+    void collision_detection() {
         this.bottom = this.y+ (size/2);
-        boolean a = false;
         if (speed > 10) {
             for(Platforms platform: manager.getPlatforms()) {
                 if (this.rect.intersect(platform.rectangle) || (Math.abs((int)bottom - (int)platform.gety()) < 20 &&
@@ -92,19 +89,29 @@ class Character extends RectShape {
                     System.out.println("hit");
                     this.gameScore += 1;
                     y = platform.gety() - size/2;
-                    speed = -90;
+                    speed = -75;
                     y += speed;
                     start = true;
                     this.oval = new RectF(x-size/2,(int)(y + size/4),x+size/2,y+size/2 + 5);
                     Rect bounds = new Rect();
                     this.oval.roundOut(bounds);
-                    a = true;
                 }
 
             }
         }
-        return a;
+
     }
+    void coin_detection() {
+        this.bottom = this.y+ (size/2);
+
+        for(Coin coin: manager.getCoins()) {
+            if (this.rect.intersect(coin.rectangle)) {
+                coin.gotCoin();
+            }
+        }
+
+    }
+
     void draw(Canvas canvas) {
         canvas.drawOval(this.oval,this.paint);
     }
@@ -117,10 +124,20 @@ class Character extends RectShape {
     }
 
     void move_left() {
-        x -= 50;
+        if (x - 50 <= 0) {
+            x = manager.getGridWidth();
+        }
+        else {
+            x -= 50;
+        }
     }
     void move_right() {
-        x += 50;
+        if (x + 50 >= manager.getGridWidth()) {
+            x = 0;
+        }
+        else {
+            x += 50;
+        }
     }
 }
 //577 is max height
