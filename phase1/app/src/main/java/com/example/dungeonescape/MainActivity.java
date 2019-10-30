@@ -17,17 +17,39 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        configureNextButton();
+        buttons();
         gameManager = new GameManager();
     }
 
-    private void configureNextButton() {
+
+    private void buttons() {
+
         Button nextButton = (Button) findViewById(R.id.button);
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 Intent intent = new Intent(MainActivity.this, MazeActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        Button newGame = (Button) findViewById(R.id.newGame);
+        newGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(MainActivity.this, NewGameActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        Button loadGame = (Button) findViewById(R.id.loadGame);
+        loadGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(MainActivity.this, LoadGameActivity.class);
                 startActivity(intent);
             }
         });
