@@ -1,6 +1,10 @@
 package com.example.dungeonescape.platformer;
 
 import android.graphics.Canvas;
+import android.graphics.Rect;
+import android.graphics.RectF;
+
+import java.util.Random;
 
 import java.util.*;
 
@@ -8,46 +12,67 @@ import java.util.*;
 class PlatformerManager {
 
     /**
-     * The width of myLittleFishes.
+     * The width of canvas.
      */
+    private int lives;
     private int gridWidth;
     /**
-     * The height of myLittleFishes.
+     * The height of canvas.
      */
     private int gridHeight;
     private ArrayList<Platforms> platforms;
     private Character character;
-    private List<Integer> yPositions = new ArrayList<>();
-    private List<Double> xPositions = new ArrayList<>();
 
     int getGridWidth() {
         return gridWidth;
     }
-
+    ArrayList<Platforms> getPlatforms() {
+        return platforms;
+    }
     int getGridHeight() {
         return gridHeight;
+    }
+    Character getCharacter() {
+        return character;
+    }
+    int getCharacterScore(){
+        return character.getGamescore();
     }
 
     /**
      * The fish tank manager on a screen with height rows and width columns.
      */
     PlatformerManager() {
-        character = new Character(50,50,100, this);
-        for (int i=0; i<18; i++){
-            yPositions.add(i*10);
-            xPositions.add(Math.random()*500);
-        }
-        platforms = new ArrayList<>();
-//        for (int i=0; i<18; i++){
-//            platforms.add(new Platforms(xPositions.get(i), yPositions.get(i), 200, 50,
-//                    this));
-
-//        }
-
+        character = new Character(50,1000,100, this);
+        platforms = createPlatforms();
+        gridHeight = 1684;
 
     }
 
+    private ArrayList<Platforms> createPlatforms() {
+        int h = 1684;
+        int w = 1080;
+
+        ArrayList<Platforms> arr = new ArrayList<>(15);
+        for (int i = 1; i <= 8; i++) {
+            Random random = new Random();
+            int a = random.nextInt(1080- 150);
+            arr.add(new Platforms(a, h*i/10, 150, 30, this));
+        }
+
+        return arr;
+
+    }
+
+    void collision_detection() {
+        character.collision_detection();
+        if(character.collision_detection()){
+            character.setGamescore(character.getGamescore()+1);
+        }
+    }
+
     void draw(Canvas canvas) {
+
         for (int i = 0; i < platforms.size(); i++) {
             platforms.get(i).draw(canvas);
         }
@@ -62,20 +87,26 @@ class PlatformerManager {
         character.move_right();
     }
 
-    void move_down() {
-        for (int i = 0; i < platforms.size(); i++) {
-            platforms.get(i).platformDown();
-        }
-    }
 
-    void update() {
+    boolean update() {
 
-        for (int i = 0; i < platforms.size(); i++) {
-            platforms.get(i).update();
-        }
         character.move();
+//        boolean alive = character.isAlive();
+//        if (!alive) {
+//            return false;
+//        }
+        collision_detection();
+        if (character.getY() < 550) {
+            int diff = Math.abs(550 - (int) character.getY());
+            character.setY(549);
+
+
+            for (int i = 0; i < platforms.size(); i++) {
+                platforms.get(i).update(diff);
+            }
+
+        }
+        return true;
     }
-
-
 
 }
