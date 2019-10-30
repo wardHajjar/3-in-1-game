@@ -25,10 +25,10 @@ class Paddle extends BBObject {
      * @param x coordinate of the top left corner of the paddle location.
      * @param y coordinate of the top left cornery of the paddle location.
      */
-    Paddle(int x, int y) {
+    Paddle(int x, int y, int w, int h) {
         super(x, y);
-        w = 150;
-        h = 20;
+        this.w = w;
+        this.h = h;
         movingLeft = false;
         movingRight = false;
     }
