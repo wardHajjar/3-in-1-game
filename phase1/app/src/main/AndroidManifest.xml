@@ -9,13 +9,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="brickbreaker.BBMainActivity"></activity>
-        <activity android:name=".platformer.Level2MainActivity"></activity>
-        <activity android:name=".Maze.MazeActivity"></activity>
-        <activity android:name= ".brickbreaker.BBMainActivity">
+        <activity android:name=".platformer.Level3FinishedActivity"></activity>
+        <activity android:name="brickbreaker.BBMainActivity" />
+        <activity android:name=".platformer.Level2MainActivity" />
+        <activity android:name=".Maze.MazeActivity" />
+        <activity android:name=".brickbreaker.BBMainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
@@ -24,7 +24,6 @@
         <activity android:name=".platformer.PlatformerMainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
@@ -33,7 +32,6 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.LAUNCHER" />

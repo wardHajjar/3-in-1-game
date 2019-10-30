@@ -19,6 +19,7 @@ public class Level2View extends SurfaceView implements Runnable{
     long fps;
     private Thread thread;
     Canvas canvas;
+    private boolean nextLevel;
     private long timeThisFrame;
 
     public Level2View(Context context, AttributeSet attrs) {
@@ -48,14 +49,12 @@ public class Level2View extends SurfaceView implements Runnable{
             long startFrameTime = System.currentTimeMillis();
 
             // Updating the frame
-//            if(!paused){
-//                update();
-//            }
+            if(!paused){
+                update();
+            }
             // Draw the frame
 
-            update();
             draw();
-//            collision_detection();
 
             timeThisFrame = System.currentTimeMillis() - startFrameTime;
             if (timeThisFrame >= 1) {   // Calculating the fps
@@ -82,6 +81,11 @@ public class Level2View extends SurfaceView implements Runnable{
         boolean alive = manager.update();
         if (!alive) {
             gameOver();
+
+        }
+        boolean finishedLevel = manager.finishedLevel();
+        if (finishedLevel) {
+            nextLevel = true;
         }
     }
 
@@ -90,6 +94,10 @@ public class Level2View extends SurfaceView implements Runnable{
         holder = getHolder();
         setFocusable(true);
         setZOrderOnTop(true);
+    }
+
+    public boolean nextLevel() {
+        return nextLevel;
     }
 
     public void pause() {

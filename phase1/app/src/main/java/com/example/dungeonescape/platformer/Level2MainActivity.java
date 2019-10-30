@@ -9,12 +9,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.dungeonescape.MainActivity;
 import com.example.dungeonescape.R;
 
 
 
 public class Level2MainActivity extends AppCompatActivity {
     private Level2View game;
+    private boolean running;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +27,7 @@ public class Level2MainActivity extends AppCompatActivity {
         setTitle("Level3: Platformer");
         // Set Buttons
         buttons();
+        running = true;
 
         // Thread code is from the following Youtube Video, body of run() is written myself
         // https://www.youtube.com/watch?v=6sBqeoioCHE&t=193s
@@ -38,11 +41,18 @@ public class Level2MainActivity extends AppCompatActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                // Update the score shown
-                                int score = game.manager.getCharacterScore();
-                                String scr = String.valueOf(score);
-                                TextView score1=(TextView) findViewById(R.id.score);
-                                score1.setText(scr);
+                                if (running) {
+                                    // Update the score shown
+                                    int score = game.manager.getCharacterScore();
+                                    String scr = String.valueOf(score);
+                                    TextView score1 = (TextView) findViewById(R.id.score);
+                                    score1.setText(scr);
+                                    boolean doneLevel = game.nextLevel();
+                                    if (doneLevel) {
+                                        nextLevel();
+                                        running = false;
+                                    }
+                                }
                             }
                         });
                     } catch (InterruptedException e) {
@@ -53,6 +63,10 @@ public class Level2MainActivity extends AppCompatActivity {
             }
         };
         t.start();
+    }
+    private void nextLevel() {
+        Intent intent = new Intent(Level2MainActivity.this, Level3FinishedActivity.class);
+        startActivity(intent);
     }
 
     /**
