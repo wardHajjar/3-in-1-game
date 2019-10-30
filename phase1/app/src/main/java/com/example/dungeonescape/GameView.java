@@ -17,7 +17,7 @@ http://gamecodeschool.com/android/building-a-simple-game-engine/
  * Class that controls the logic of the game by handling collisions, updating the objects' stats and
  * drawing the new states onto the canvas.
  */
-public class GameView extends SurfaceView implements Runnable{
+public abstract class GameView extends SurfaceView implements Runnable{
     /**
      * gameThread - the main game thread that gets executed by the program.
      * holder - contains the canvas on which objects are drawn.
@@ -25,18 +25,14 @@ public class GameView extends SurfaceView implements Runnable{
      * paused - indicates if the game is paused; starts off as true since the user hasn't started
      *          playing yet.
      * canvas - the Canvas object onto which objects are drawn.
-     * fps - frames per second.
-     * timeThisFrame - time it takes to execute the draw and update methods in one frame.
      * paint - the Paint object which determines the drawing style.
      */
-    Thread gameThread = null;
-    SurfaceHolder holder;
-    boolean playing;
-    boolean paused = true;
-    Canvas canvas;
-    long fps;
-    private long timeThisFrame;
-    Paint paint;
+    public Thread gameThread = null;
+    public SurfaceHolder holder;
+    public boolean playing;
+    public boolean paused = true;
+    public Canvas canvas;
+    public Paint paint;
 
     /**
      * Initializes the surface in the context environment.
@@ -46,7 +42,9 @@ public class GameView extends SurfaceView implements Runnable{
         super(context);
         holder = getHolder();
         paint = new Paint();
+
     }
+
     public GameView(Context context, AttributeSet attributeSet){
         super(context, attributeSet);
         holder = getHolder();
@@ -61,16 +59,14 @@ public class GameView extends SurfaceView implements Runnable{
     }
 
     /**
-     *
+     * Method updates the state of the objects within the game based on user events.
      */
-    void update() {
-    }
+    abstract void update();
 
     /**
-     *
+     * Method draws all the objects onto the screen.
      */
-    void draw() {
-    }
+    abstract void draw();
 
     /**
      * If Activity is paused/stopped, the thread must stop as well.
