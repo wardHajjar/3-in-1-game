@@ -8,12 +8,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.dungeonescape.GameView;
 import com.example.dungeonescape.MainActivity;
 import com.example.dungeonescape.R;
 import com.example.dungeonescape.platformer.PlatformerMainActivity;
 
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
+
 
 public class MazeActivity extends MainActivity {
 
@@ -72,7 +74,22 @@ public class MazeActivity extends MainActivity {
                 startActivity(intent);
             }
         });
+    }
 
-
+    public void movePlayerUp(View view){
+        MazeView mazeView = findViewById(R.id.view);
+        mazeView.movePlayer("UP");
+    }
+    public void movePlayerDown(View view){
+        MazeView mazeView = findViewById(R.id.view);
+        mazeView.movePlayer("DOWN");
+    }
+    public void movePlayerLeft(View view){
+        MazeView mazeView = findViewById(R.id.view);
+        mazeView.movePlayer("LEFT");
+    }
+    public void movePlayerRight(View view){
+        MazeView mazeView = findViewById(R.id.view);
+        mazeView.movePlayer("RIGHT");
     }
 }
