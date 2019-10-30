@@ -12,9 +12,15 @@ import com.example.dungeonescape.MainActivity;
 import com.example.dungeonescape.R;
 import com.example.dungeonescape.platformer.PlatformerMainActivity;
 
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
+
 public class MazeActivity extends MainActivity {
 
-    public int counter;
+    // initial time set in milliseconds
+    public long counter = 120000;
+    long minutes;
+    long seconds;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,27 +31,35 @@ public class MazeActivity extends MainActivity {
         configureNextButton();
 
         // countdown to losing the game
-        final TextView countTime = findViewById(R.id.countTime);
+        final TextView countTime=findViewById(R.id.countTime);
 
         // countdown code from: https://www.tutorialspoint.com/how-to-make-a-countdown-timer-in-android
         // partially edited
-        new CountDownTimer(5000, 1000) {
+        new CountDownTimer(counter, 1000) {
 
             @Override
             public void onTick(long millisUntilFinished) {
                 countTime.setTextColor(Color.WHITE);
-                countTime.setText(String.valueOf(counter));
-                counter++;
-                System.out.println(counter);
+                counter = millisUntilFinished;
+                updateCountDown();
+                countTime.setText(String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds));
+                counter--;
             }
 
             @Override
             public void onFinish() {
                 countTime.setTextColor(Color.WHITE);
-                countTime.setText("Finished");
-                System.out.println("finished");
+                countTime.setText("Game Over");
             }
         }.start();
+    }
+
+    private void updateCountDown() {
+        /* minutes & seconds calculation from here:
+        https://codinginflow.com/tutorials/android/countdowntimer/part-2-configuration-changes
+         */
+        minutes = (counter / 1000) / 60;
+        seconds = (counter / 1000) % 60;
     }
 
     private void configureNextButton() {
