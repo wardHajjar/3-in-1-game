@@ -23,6 +23,13 @@ class PlatformerManager {
     private ArrayList<Platforms> platforms;
     private Character character;
 
+    int getCharacterLives(){
+        return character.getLives();
+    }
+    void setCharacterLives(int lives){
+        character.setLives(lives);
+    }
+
 
     int getGridWidth() {
         return gridWidth;
@@ -89,6 +96,8 @@ class PlatformerManager {
         character.move();
         boolean alive = character.isAlive();
         if (!alive) {
+            character.setLives(character.getLives()-1);
+//            user.setNumLives(user.getNumLives()-1); //this is for when we'll be able to reference from player class
             return false;
         }
 
