@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.example.dungeonescape.Maze.MazeActivity;
 import com.example.dungeonescape.Player;
 import com.example.dungeonescape.R;
-import com.example.dungeonescape.Maze.MazeActivity;
 
 /**
  * The main activity of the game (entry point).
@@ -32,18 +31,17 @@ public class BBMainActivity extends Activity {
         // Set the View we are using
         setContentView(R.layout.activity_brick_breaker_main);
         gameView = findViewById(R.id.BBView2);
+
         setTitle("Level1: Brick Breaker");
         Intent i = getIntent();
         player = (Player) i.getSerializableExtra("Player");
-
+        gameView.manager.addPlayer(player);
         Button nextButton = (Button) findViewById(R.id.nextlvl);
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 Intent intent = new Intent(BBMainActivity.this, MazeActivity.class);
-                intent.putExtra("lives", gameView.manager.getCharacterLives());
-                intent.putExtra("score", gameView.manager.getCharacterCoins());
                 intent.putExtra("Player", player);
                 startActivity(intent);
             }
@@ -64,18 +62,18 @@ public class BBMainActivity extends Activity {
                             public void run() {
                                 if (running) {
                                     // Update the score shown
-                                    int score = gameView.manager.getCharacterCoins();
+                                    int score = player.getNumCoins();
                                     String scr = String.valueOf(score) ;
                                     String scre = "Score: " + scr;
 
                                     TextView score1 = findViewById(R.id.score);
                                     score1.setText(scre);
-                                    int lives = gameView.manager.getCharacterLives();
+                                    int lives = player.getNumLives();
                                     String life = "Lives: " + lives;
                                     TextView lifeText = findViewById(R.id.lives);
                                     lifeText.setText(life);
-                                    boolean gameOver = gameView.doneLevel();
-                                    if (gameOver) {
+                                    boolean doneLevel = gameView.doneLevel();
+                                    if (doneLevel) {
                                         nextLevel();
                                         running = false;
                                     }
@@ -114,8 +112,6 @@ public class BBMainActivity extends Activity {
      */
     protected void nextLevel(){
         Intent intent = new Intent(BBMainActivity.this, MazeActivity.class);
-        intent.putExtra("lives", gameView.manager.getCharacterLives());
-        intent.putExtra("score", gameView.manager.getCharacterCoins());
         intent.putExtra("Player", player);
         startActivity(intent);
     }
