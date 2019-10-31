@@ -28,17 +28,6 @@ public class MainActivity extends AppCompatActivity{
 
     private void buttons() {
 
-        Button nextButton = (Button) findViewById(R.id.button);
-        nextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent intent = new Intent(MainActivity.this, BBMainActivity.class);
-                intent.putExtra("Game Manager", gameManager);
-                startActivity(intent);
-            }
-        });
-
         Button newGame = (Button) findViewById(R.id.newGame);
         newGame.setOnClickListener(new View.OnClickListener() {
             @Override

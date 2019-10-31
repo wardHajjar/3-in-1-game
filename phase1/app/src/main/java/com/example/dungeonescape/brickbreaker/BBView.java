@@ -44,7 +44,6 @@ public class BBView extends GameView {
         display.getSize(size);
         this.screenX = size.x;
         this.screenY = size.y - 300;    // 300 accounts for the buttons above the playing screen.
-        System.out.println(screenY);
         manager = new BBGameManager(screenX, screenY);
     }
 
@@ -54,7 +53,6 @@ public class BBView extends GameView {
      */
     public BBView(Context context){
         super(context);
-
 
         Display display = ((Activity)context).getWindowManager().getDefaultDisplay();
         Point size = new Point();
@@ -71,8 +69,7 @@ public class BBView extends GameView {
         if (startGame){
             manager.moveBall();
             manager.movePaddle();
-            if (manager.loseLife()){
-                System.out.println("WEHERE");
+            if (manager.checkLifeCondition()){
                 startGame = false;
             }
         }
@@ -129,7 +126,5 @@ public class BBView extends GameView {
     public boolean doneLevel(){
         return manager.hitAllBricks();
     }
-
-
 
 }

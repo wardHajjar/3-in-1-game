@@ -19,47 +19,72 @@ public class MazeCell extends GameObject {
     /** The size of this MazeCell in pixels. */
     private float cellSize;
 
-    public MazeCell(int col, int row, int depth) {
+    MazeCell(int col, int row, int depth) {
         super(col, row, depth);
     }
 
-    public boolean isTopWall() {
+    boolean isTopWall() {
         return topWall;
     }
 
-    public void setTopWall(boolean topWall) {
+    /**
+     * Sets if the MazeCell has a topWall.
+     *
+     * @param topWall MazeCell's topWall.
+     */
+    void setTopWall(boolean topWall) {
         this.topWall = topWall;
     }
 
-    public boolean isBottomWall() {
+    boolean isBottomWall() {
         return bottomWall;
     }
 
-    public void setBottomWall(boolean bottomWall) {
+    /**
+     * Sets if the MazeCell has a bottomWall.
+     *
+     * @param bottomWall MazeCell's bottomWall.
+     */
+    void setBottomWall(boolean bottomWall) {
         this.bottomWall = bottomWall;
     }
 
-    public boolean isLeftWall() {
+    boolean isLeftWall() {
         return leftWall;
     }
 
-    public void setLeftWall(boolean leftWall) {
+    /**
+     * Sets if the MazeCell has a leftWall.
+     *
+     * @param leftWall MazeCell's leftWall.
+     */
+    void setLeftWall(boolean leftWall) {
         this.leftWall = leftWall;
     }
 
-    public boolean isRightWall() {
+    boolean isRightWall() {
         return rightWall;
     }
 
-    public void setRightWall(boolean rightWall) {
+    /**
+     * Sets if the MazeCell has a rightWall.
+     *
+     * @param rightWall MazeCell's rightWall.
+     */
+    void setRightWall(boolean rightWall) {
         this.rightWall = rightWall;
     }
 
-    public boolean isVisited() {
+    boolean isVisited() {
         return visited;
     }
 
-    public void setVisited(boolean visited) {
+    /**
+     * Sets if the MazeCell has been visited.
+     *
+     * @param visited MazeCell's visit case.
+     */
+    void setVisited(boolean visited) {
         this.visited = visited;
     }
 
@@ -67,6 +92,11 @@ public class MazeCell extends GameObject {
         return cellSize;
     }
 
+    /**
+     * Sets the MazeCell's size.
+     *
+     * @param cellSize the MazeCell's cellSize.
+     */
     public void setCellSize(float cellSize) {
         this.cellSize = cellSize;
     }

@@ -16,7 +16,6 @@ class Character extends Level3Object {
     private int gameScore;
 
     //    private Player user; // referencing from player class for lives
-    private int lives;
 
     int getGamescore(){
         return this.gameScore;
@@ -25,10 +24,6 @@ class Character extends Level3Object {
         this.gameScore = gameScore;
     }
 
-    //    int getGamelives(){
-//        return user.getNumLives();
-//    }
-
 
     Character(int x, int y, int size, PlatformerManager manager){
         super(x,y,size,manager);
@@ -36,7 +31,6 @@ class Character extends Level3Object {
         start = false;
         this.gameScore = 0;
         this.rect = new Rect(x-size/2,(int)(y + size/4),x+size/2,y+size/2);
-        this.lives = 3;
     }
 
     void move() {
@@ -102,10 +96,7 @@ class Character extends Level3Object {
         return true;
     }
     int getLives(){
-        return this.lives;
-    }
-    void setLives(int lives){
-        this.lives = lives;
+        return manager.getPlayer().getNumLives();
     }
     void move_left() {
         if (x - 50 <= 0) {

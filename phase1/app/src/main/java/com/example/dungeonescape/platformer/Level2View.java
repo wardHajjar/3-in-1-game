@@ -23,6 +23,7 @@ public class Level2View extends SurfaceView implements Runnable{
     private Thread thread;
     Canvas canvas;
     private boolean nextLevel;
+    private boolean noLives;
     private long timeThisFrame;
 
     //    private Player user; // referencing from player class for lives
@@ -94,6 +95,10 @@ public class Level2View extends SurfaceView implements Runnable{
         if (finishedLevel) {
             nextLevel = true;
         }
+        boolean dead = manager.death();
+        if (dead){
+            noLives = true;
+        }
     }
 
     public void gameOver(Player player) {
@@ -107,6 +112,10 @@ public class Level2View extends SurfaceView implements Runnable{
 
     public boolean nextLevel() {
         return nextLevel;
+    }
+
+    public boolean dead(){
+        return noLives;
     }
 
     public void pause() {

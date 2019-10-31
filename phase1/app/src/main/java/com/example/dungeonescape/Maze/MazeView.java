@@ -38,9 +38,7 @@ public class MazeView extends View {
     /** Player and exit objects, and their positions. */
 
     private Player player;
-
     private GameObject exit;
-
     private MazeCell playerLoc;
 
     /** The number of columns and rows in this maze. */
