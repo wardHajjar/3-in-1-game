@@ -61,7 +61,7 @@ public class MazeView extends View {
     private MazeManager thisMaze = new MazeManager();
 
     /** Number of times the Player has gone through the maze. */
-    public int mazeIterations = 1;
+    public int mazeIterations = 0;
 
     public MazeView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -76,7 +76,7 @@ public class MazeView extends View {
     }
 
     public boolean doneLevel() {
-        return mazeIterations <= 3;
+        return mazeIterations >= 3;
     }
 
     private void initializePaint() {
@@ -328,9 +328,10 @@ public class MazeView extends View {
 
     private void playerAtExit(){
         // check if the player has arrived at the exit. Create a new maze if this has happened.
-        if(player.getX() == exit.getX() && player.getY()== exit.getY())
+        if(player.getX() == exit.getX() && player.getY()== exit.getY()) {
             createMaze();
             mazeIterations++;
+        }
         Iterator<Coin> itr = coins.iterator();
         while (itr.hasNext()) {
             Coin coin = itr.next();

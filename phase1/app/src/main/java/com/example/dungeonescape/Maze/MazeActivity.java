@@ -107,20 +107,24 @@ public class MazeActivity extends MainActivity {
     }
 
     public void movePlayerUp(View view){
-//        MazeView mazeView = findViewById(R.id.view);
         mazeView.movePlayer("UP");
+        checkDoneLevel(view);
     }
     public void movePlayerDown(View view){
-//        MazeView mazeView = findViewById(R.id.view);
         mazeView.movePlayer("DOWN");
+        checkDoneLevel(view);
     }
     public void movePlayerLeft(View view){
-//        MazeView mazeView = findViewById(R.id.view);
         mazeView.movePlayer("LEFT");
+        checkDoneLevel(view);
     }
     public void movePlayerRight(View view){
-//        MazeView mazeView = findViewById(R.id.view);
         mazeView.movePlayer("RIGHT");
+        checkDoneLevel(view);
+    }
+    public void checkDoneLevel(View view){
+        if (mazeView.doneLevel())
+            nextLevel();
     }
 
     /**
