@@ -36,11 +36,8 @@ public class MazeView extends View {
     private ArrayList<Coin> coins;
 
     /** Player and exit objects, and their positions. */
-
     private GameObject player;
-
     private GameObject exit;
-
     private MazeCell playerLoc;
 
     private MazeManager mazeManager = new MazeManager();
