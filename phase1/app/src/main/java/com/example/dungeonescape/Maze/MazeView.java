@@ -43,6 +43,8 @@ public class MazeView extends View {
 
     private MazeCell playerLoc;
 
+    private MazeManager mazeManager = new MazeManager();
+
     /** The number of columns and rows in this maze. */
     private int numMazeCols = 10;
     private int numMazeRows = 10;
