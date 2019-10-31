@@ -22,22 +22,23 @@ import java.util.concurrent.TimeUnit;
 public class MazeActivity extends MainActivity {
 
     // initial time set in milliseconds
-    public long counter = 120000; // 2 min
-    // public long counter = 6000; // 5s (for testing)
+    //public long counter = 120000; // 2 min
+    public long counter = 6000; // 5s (for testing)
     long minutes;
     long seconds;
-    Player player = new Player("player");
+    Player player;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maze);
 
+        // getting player instance from intent
+        Intent i = getIntent();
+        player = (Player) i.getSerializableExtra("Player");
+
         // go to next game
         configureNextButton();
-
-        // getting player instance from intent
-        Intent playerIntent = getIntent();
 
         // countdown to losing the game
         final TextView countTime=findViewById(R.id.countTime);
@@ -60,12 +61,15 @@ public class MazeActivity extends MainActivity {
                 setContentView(R.layout.activity_maze_game_over);
 
                 // get the number of lives from Brick Breaker
-                Intent playerIntent = getIntent();
-                Bundle playerStats = playerIntent.getExtras();
-                int playerLivesLeft = 0;
-                if (playerStats != null) {
-                    playerLivesLeft = (int) playerStats.get("lives");
-                }
+//                Intent playerIntent = getIntent();
+//                Bundle playerStats = playerIntent.getExtras();
+//                int playerLivesLeft = 0;
+//                if (playerStats != null) {
+//                    playerLivesLeft = (int) playerStats.get("lives");
+//                }
+
+                player.loseLife();
+                int playerLivesLeft = player.getNumLives();
 
                 TextView textView = (TextView) findViewById(R.id.playerLives);
                 textView.setText(String.format(Locale.getDefault(),

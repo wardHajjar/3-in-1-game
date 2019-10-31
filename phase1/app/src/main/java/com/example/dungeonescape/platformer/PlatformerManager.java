@@ -115,7 +115,7 @@ class PlatformerManager {
         character.coin_detection();
         boolean alive = character.isAlive();
         if (!alive) {
-            player.lose_life();
+            player.loseLife();
             return false;
         }
 
