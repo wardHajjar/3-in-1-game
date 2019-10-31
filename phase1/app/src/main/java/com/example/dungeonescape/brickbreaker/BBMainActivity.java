@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.dungeonescape.Maze.MazeActivity;
+import com.example.dungeonescape.Player;
 import com.example.dungeonescape.R;
 import com.example.dungeonescape.Maze.MazeActivity;
 
@@ -20,6 +21,7 @@ public class BBMainActivity extends Activity {
      */
     BBView gameView;
     boolean running;
+    Player player;
     /**
      *
      * @param savedInstanceState Bundle object that passes data between activities.
@@ -31,6 +33,8 @@ public class BBMainActivity extends Activity {
         setContentView(R.layout.activity_brick_breaker_main);
         gameView = findViewById(R.id.BBView2);
         setTitle("Level1: Brick Breaker");
+        Intent i = getIntent();
+        player = (Player) i.getSerializableExtra("Player");
 
         Button nextButton = (Button) findViewById(R.id.nextlvl);
         nextButton.setOnClickListener(new View.OnClickListener() {
@@ -40,6 +44,7 @@ public class BBMainActivity extends Activity {
                 Intent intent = new Intent(BBMainActivity.this, MazeActivity.class);
                 intent.putExtra("lives", gameView.manager.getCharacterLives());
                 intent.putExtra("score", gameView.manager.getCharacterCoins());
+                intent.putExtra("Player", player);
                 startActivity(intent);
             }
         });
@@ -111,6 +116,7 @@ public class BBMainActivity extends Activity {
         Intent intent = new Intent(BBMainActivity.this, MazeActivity.class);
         intent.putExtra("lives", gameView.manager.getCharacterLives());
         intent.putExtra("score", gameView.manager.getCharacterCoins());
+        intent.putExtra("Player", player);
         startActivity(intent);
     }
 }

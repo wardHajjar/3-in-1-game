@@ -22,8 +22,8 @@ import java.util.concurrent.TimeUnit;
 public class MazeActivity extends MainActivity {
 
     // initial time set in milliseconds
-    //public long counter = 120000; // 2 min
-    public long counter = 6000; // 5s (for testing)
+    public long counter = 120000; // 2 min
+    // public long counter = 6000; // 5s (for testing)
     long minutes;
     long seconds;
     Player player;
@@ -60,14 +60,6 @@ public class MazeActivity extends MainActivity {
             public void onFinish() {
                 setContentView(R.layout.activity_maze_game_over);
 
-                // get the number of lives from Brick Breaker
-//                Intent playerIntent = getIntent();
-//                Bundle playerStats = playerIntent.getExtras();
-//                int playerLivesLeft = 0;
-//                if (playerStats != null) {
-//                    playerLivesLeft = (int) playerStats.get("lives");
-//                }
-
                 player.loseLife();
                 int playerLivesLeft = player.getNumLives();
 
@@ -96,12 +88,7 @@ public class MazeActivity extends MainActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MazeActivity.this, PlatformerMainActivity.class);
-
                 intent.putExtra("Player", player);
-
-                intent.putExtra("lives", player.getNumLives());
-                intent.putExtra("score", player.getScore());
-
                 startActivity(intent);
             }
         });
@@ -113,12 +100,8 @@ public class MazeActivity extends MainActivity {
 
             @Override
             public void onClick(View view) {
-                int updatedLives = player.getNumLives() - 1;
-                player.setNumLives(updatedLives);
-
                 Intent intent = new Intent(MazeActivity.this, MazeActivity.class);
-                intent.putExtra("lives", player.getNumLives());
-                intent.putExtra("score", player.getScore());
+                intent.putExtra("Player", player);
                 startActivity(intent);
             }
         });

@@ -36,19 +36,15 @@ public class MazeView extends View {
     private ArrayList<Coin> coins;
 
     /** Player and exit objects, and their positions. */
-
     private GameObject player;
-
     private GameObject exit;
-
     private MazeCell playerLoc;
+
+    private MazeManager mazeManager = new MazeManager();
 
     /** The number of columns and rows in this maze. */
     private int numMazeCols = 10;
     private int numMazeRows = 10;
-
-    /** The line thickness of the walls. */
-    private static final float wallThickness = 4;
 
     /** The horizontal and vertical margin from the edge of the screen to the walls of the maze */
     float cellSize;
@@ -68,15 +64,7 @@ public class MazeView extends View {
 
     public MazeView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        wallPaint = new Paint();
-        wallPaint.setColor(Color.WHITE);
-        wallPaint.setStrokeWidth(wallThickness);
-        playerPaint = new Paint();
-        playerPaint.setColor(Color.RED);
-        exitPaint = new Paint();
-        exitPaint.setColor(Color.BLUE);
-        coinPaint = new Paint();
-        coinPaint.setColor(Color.YELLOW);
+        initializePaint();
         player = new GameObject(0,0,1);
         playerObj = new Player("player");
         //        create 5 coins at random locations.
@@ -86,6 +74,21 @@ public class MazeView extends View {
             coins.add(coin);
         }
         createMaze();
+    }
+
+    private void initializePaint() {
+        wallPaint = new Paint();
+        wallPaint.setColor(Color.WHITE);
+        wallPaint.setStrokeWidth(4);
+
+        playerPaint = new Paint();
+        playerPaint.setColor(Color.RED);
+
+        exitPaint = new Paint();
+        exitPaint.setColor(Color.BLUE);
+
+        coinPaint = new Paint();
+        coinPaint.setColor(Color.YELLOW);
     }
 
     private void createMaze(){
@@ -306,11 +309,11 @@ public class MazeView extends View {
                 }
                 break;
         }
-        checkPos();
+        playerAtExit();
         invalidate();
     }
 
-    private void checkPos(){
+    private void playerAtExit(){
         // check if the player has arrived at the exit. Create a new maze if this has happened.
         if(player.getX() == exit.getX() && player.getY()== exit.getY())
             createMaze();
@@ -322,12 +325,6 @@ public class MazeView extends View {
                 playerObj.addCoin();
             }
         }
-//        for (Coin coin:coins) {
-//            if (player.getX() == coin.getX() && player.getY()== coin.getY()){
-//                player.addCoin();
-//                coins.remove(coin);
-//            }
-//        }
     }
 
     public int getNumMazeCols() {

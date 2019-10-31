@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Represents a Player in the Game.
  */
-public class Player implements Serializable {
+public class Player extends GameObject implements Serializable {
 
     /** The Player's name. */
     private String name;
@@ -19,17 +19,30 @@ public class Player implements Serializable {
     /** The number of coins this Player has. */
     private int numCoins;
 
-    public Player(String name) {
+    public Player(int x,int y,int z, String name) {
+        super(0,0,0);
+        setName(name);
+        setScore(0);
+        setNumLives(5);
+        setNumCoins(0);
+    }
+    public Player(String name){
         setName(name);
         setScore(0);
         setNumLives(5);
         setNumCoins(0);
     }
 
+    /** Adds 1 coin to this Player. */
+    public void addCoin(){
+        setNumCoins(getNumCoins() + 1);
+    }
+
+    /** Causes this Player to lose one life. */
     public void loseLife() {
-        // lose 1 live
         setNumLives(getNumLives() - 1);
     }
+
     public String getName() {
         return name;
     }
@@ -80,9 +93,5 @@ public class Player implements Serializable {
      */
     public void setNumCoins(int numCoins) {
         this.numCoins = numCoins;
-    }
-
-    public void addCoin(){
-        this.numCoins += 1;
     }
 }

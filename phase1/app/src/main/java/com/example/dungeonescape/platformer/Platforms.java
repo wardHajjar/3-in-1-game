@@ -11,7 +11,7 @@ import java.util.Random;
 import androidx.constraintlayout.solver.widgets.Rectangle;
 
 
-public class Platforms extends Rectangle {
+class Platforms extends Rectangle {
     private float x, y;
     private float length;
     private float width;
@@ -82,7 +82,6 @@ public class Platforms extends Rectangle {
     void draw(Canvas canvas) {
         canvas.drawRect(this.rectangle, this.paint);
     }
-
 }
 
 
