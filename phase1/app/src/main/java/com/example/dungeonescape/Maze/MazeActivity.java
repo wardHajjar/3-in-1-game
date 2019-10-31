@@ -23,8 +23,8 @@ public class MazeActivity extends MainActivity {
     private MazeView mazeView;
 
     // initial time set in milliseconds
-//    public long counter = 120000; // 2 min
-     public long counter = 6000; // 5s (for testing)
+    public long counter = 120000; // 2 min
+    // public long counter = 6000; // 5s (for testing)
     long minutes;
     long seconds;
     Player player;
@@ -70,7 +70,6 @@ public class MazeActivity extends MainActivity {
                 configureStartOverButton();
             }
         }.start();
-
     }
 
     private void updateCountDown() {
@@ -122,5 +121,14 @@ public class MazeActivity extends MainActivity {
     public void movePlayerRight(View view){
 //        MazeView mazeView = findViewById(R.id.view);
         mazeView.movePlayer("RIGHT");
+    }
+
+    /**
+     * User has successfully finished Maze and will now move on to Platformer.
+     */
+    protected void nextLevel(){
+        Intent intent = new Intent(MazeActivity.this, PlatformerMainActivity.class);
+        intent.putExtra("Player", player);
+        startActivity(intent);
     }
 }
