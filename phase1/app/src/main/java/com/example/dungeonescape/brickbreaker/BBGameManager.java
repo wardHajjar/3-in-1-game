@@ -3,13 +3,11 @@ package com.example.dungeonescape.brickbreaker;
 import android.graphics.Canvas;
 import android.view.MotionEvent;
 
-import com.example.dungeonescape.GameManager;
-
 import java.util.ArrayList;
 import java.util.Collections;
 
 
-class BBGameManager extends GameManager {
+class BBGameManager {
 
     /**
      * ball - the ball object that bounces around and hits bricks.
@@ -26,7 +24,6 @@ class BBGameManager extends GameManager {
     private int numCoins;
 
     BBGameManager(int screenX, int screenY){
-        super();
 
         // construct the ball
         this.ball = new Ball(screenX/2 - 75 + (screenX/2 - 75)/2 - 25,
@@ -65,8 +62,10 @@ class BBGameManager extends GameManager {
     }
 
     void moveBall(){
-        ball.move();
 
+
+        ball.move();
+//        loseLife();
         // Wall Collision Detection
         char wallCollision = ball.madeWallCollision(screenX, screenY);
         if ( wallCollision == 'x'){
@@ -116,15 +115,18 @@ class BBGameManager extends GameManager {
             ball.setYSpeed(ball.getYSpeed() * -1);
             ball.setRandomXSpeed();
         }
+    }
 
+    boolean loseLife(){
         if (ball.getY() > paddle.getY()){
             if (numLives != 0){
                 numLives -= 1;
                 ball.setX((paddle.getX() + paddle.getWidth()/2));
-                ball.setY(paddle.getY() - 1);
+                ball.setY(paddle.getY() - 26);
             } //TODO: If lives are 0, playing = false + GameOver screen
-
+            return true;
         }
+        return false;
     }
 
     void movePaddle(){
