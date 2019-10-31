@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.dungeonescape.Dead;
 import com.example.dungeonescape.MainActivity;
 import com.example.dungeonescape.Player;
 import com.example.dungeonescape.R;
@@ -80,6 +81,11 @@ public class Level2MainActivity extends AppCompatActivity {
                                         nextLevel();
                                         running = false;
                                     }
+                                    boolean dead = game.dead();
+                                    if (dead){
+                                        deadPage();
+                                        running = false;
+                                    }
                                 }
                             }
                         });
@@ -93,6 +99,10 @@ public class Level2MainActivity extends AppCompatActivity {
     }
     private void nextLevel() {
         Intent intent = new Intent(Level2MainActivity.this, Level3FinishedActivity.class);
+        startActivity(intent);
+    }
+    private void deadPage() {
+        Intent intent = new Intent(Level2MainActivity.this, Dead.class);
         startActivity(intent);
     }
 
