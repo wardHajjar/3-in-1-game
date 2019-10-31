@@ -25,21 +25,10 @@ public class GameManager implements Serializable {
         players.add(new Player(name));
     }
 
-    public void addCoin() {
-        for (Player player: players) {
-            player.setNumCoins(player.getNumCoins() + 1);
-        }
-    }
-    public void loseLife() {
-        for (Player player: players) {
-            player.setNumLives(player.getNumLives() - 1);
-        }
-    }
-
     Player getPlayer(String name) {
         Player p = players.get(0);
         for (Player player: players) {
-            if (player.getName() == name) {
+            if (player.getName().equals(name)) {
                 p = player;
                 break;
             }
