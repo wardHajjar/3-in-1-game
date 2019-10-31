@@ -9,7 +9,7 @@ import android.graphics.RectF;
 import java.util.Random;
 
 
-class Coin extends Level3Object {
+public class Coin extends Level3Object {
 
     Coin(int x, int y, int size, PlatformerManager manager) {
         super(x,y,size,manager);
@@ -17,10 +17,9 @@ class Coin extends Level3Object {
         this.rect = new Rect(x - size / 2, (int) (y - size /2), x + size / 2, y + size / 2);
 
     }
-    Coin(int x, int y, int size) {
-        super(x,y,size);
+    public Coin(int x, int y) {
+        super(x,y);
         paint.setColor(Color.YELLOW);
-        this.rect = new Rect(x - size / 2, (int) (y - size /2), x + size / 2, y + size / 2);
     }
 
     Rect getRect() {

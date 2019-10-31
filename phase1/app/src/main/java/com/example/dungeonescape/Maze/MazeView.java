@@ -9,6 +9,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.example.dungeonescape.Player;
+import com.example.dungeonescape.platformer.Coin;
 
 import java.util.ArrayList;
 import java.util.Stack;
@@ -28,6 +29,9 @@ import java.util.Stack;
 public class MazeView extends View {
     /** A 2D Array of MazeCell cells. */
     private MazeCell[][] cells;
+
+    /** A list of coins that can be collected for score. */
+    private Coin[] coins;
 
     /** Player and exit objects, and their positions. */
     private Player player;
@@ -50,6 +54,7 @@ public class MazeView extends View {
     private Paint wallPaint;
     private Paint playerPaint;
     private Paint exitPaint;
+    private Paint coinPaint;
 
     private Random rand = new Random();
 
@@ -66,6 +71,13 @@ public class MazeView extends View {
         playerPaint.setColor(Color.RED);
         exitPaint = new Paint();
         exitPaint.setColor(Color.BLUE);
+        coinPaint = new Paint();
+        coinPaint.setColor(Color.YELLOW);
+        //        create 5 coins at random locations.
+        coins = new Coin[5];
+        for (int i = 0; i<5; i++) {
+            coins[i] = new Coin(rand.nextInt(numMazeCols), rand.nextInt(numMazeRows));
+        }
         createMaze();
     }
 
@@ -180,7 +192,6 @@ public class MazeView extends View {
         /* Represents the width and height of the available screen in pixels. */
         int screenWidth = getWidth();
         int screenHeight = getHeight();
-
         int mazeCols = getNumMazeCols();
         int mazeRows = getNumMazeRows();
 
@@ -232,6 +243,17 @@ public class MazeView extends View {
         }
         //adding a padding so the player cell and the exit cells don't touch the walls.
         float margin = cellSize/10;
+
+        for(Coin coin:coins){
+            canvas.drawOval(
+                    coin.getX() * cellSize+margin,
+                    coin.getY() * cellSize+margin,
+                    (coin.getX() + 1) * cellSize-margin,
+                    (coin.getY() + 1) * cellSize-margin,
+                    coinPaint
+            );
+        }
+
         canvas.drawRect(
                 playerLoc.getX()*cellSize+margin,
                 playerLoc.getY()*cellSize+margin,
