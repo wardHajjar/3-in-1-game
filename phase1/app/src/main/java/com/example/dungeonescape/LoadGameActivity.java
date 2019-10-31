@@ -24,21 +24,25 @@ public class LoadGameActivity extends AppCompatActivity {
 
     private void buttons() {
 
-
-        Button enter = (Button) findViewById(R.id.Enter);
-        enter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent intent = new Intent(LoadGameActivity.this, MazeActivity.class);
-                intent.putExtra("Player", player);
-                startActivity(intent);
-            }
-        });
-
         EditText name = (EditText) findViewById(R.id.name);
         String nameText = name.getText().toString();
+
         player = gameManager.getPlayer(nameText);
+        if (player == null) {
+            System.out.println("USER DOES NOT EXIST");
+        }
+        else {
+            Button enter = (Button) findViewById(R.id.Enter);
+            enter.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    Intent intent = new Intent(LoadGameActivity.this, MazeActivity.class);
+                    intent.putExtra("Player", player);
+                    startActivity(intent);
+                }
+            });
+        }
     }
 
 }

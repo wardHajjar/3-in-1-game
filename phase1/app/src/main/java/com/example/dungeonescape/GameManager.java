@@ -21,19 +21,25 @@ public class GameManager implements Serializable {
         players = new ArrayList<>();
 
     }
-    public void addPlayer(String name) {
+    void addPlayer(String name) {
         players.add(new Player(name));
     }
 
     Player getPlayer(String name) {
-        Player p = players.get(0);
-        for (Player player: players) {
-            if (player.getName().equals(name)) {
-                p = player;
-                break;
+        if (players.size() != 0) {
+            Player p = players.get(0);
+
+            for (Player player: players) {
+                if (player.getName().equals(name)) {
+                    p = player;
+                    break;
+                }
             }
+            return p;
         }
-        return p;
+        else {
+            return null;
+        }
     }
 
     public int getTotalTime() {
