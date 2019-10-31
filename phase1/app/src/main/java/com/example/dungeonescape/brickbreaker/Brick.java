@@ -10,6 +10,8 @@ public class Brick extends BBObject {
     private int w, h;
     // whether the brick has been hit or not
     private boolean hit;
+    // whether a brick has a coin or not
+    BBCoin coin;
 
 
     Brick(int x, int y, int w, int h) {
@@ -21,6 +23,14 @@ public class Brick extends BBObject {
         hit = false;
     }
 
+    int getWidth() {
+        return this.w;
+    }
+
+    int getHeight() {
+        return this.h;
+    }
+
     @Override
     void draw(Canvas canvas) {
         paintStyle.setStyle(Paint.Style.FILL);
@@ -28,6 +38,14 @@ public class Brick extends BBObject {
         paintStyle.setStrokeWidth(3);
         canvas.drawRect(x, y, x + w, y + h, paintStyle);
         // x is left, y is top
+    }
+
+    void setCoin(BBCoin coin) {
+        this.coin = coin;
+    }
+
+    boolean hasCoin() {
+        return this.coin != null;
     }
 
     /**
