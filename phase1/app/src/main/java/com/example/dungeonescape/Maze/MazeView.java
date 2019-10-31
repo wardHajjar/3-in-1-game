@@ -68,15 +68,7 @@ public class MazeView extends View {
 
     public MazeView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        wallPaint = new Paint();
-        wallPaint.setColor(Color.WHITE);
-        wallPaint.setStrokeWidth(wallThickness);
-        playerPaint = new Paint();
-        playerPaint.setColor(Color.RED);
-        exitPaint = new Paint();
-        exitPaint.setColor(Color.BLUE);
-        coinPaint = new Paint();
-        coinPaint.setColor(Color.YELLOW);
+        initializePaint();
         player = new GameObject(0,0,1);
         playerObj = new Player("player");
         //        create 5 coins at random locations.
@@ -86,6 +78,21 @@ public class MazeView extends View {
             coins.add(coin);
         }
         createMaze();
+    }
+
+    private void initializePaint() {
+        wallPaint = new Paint();
+        wallPaint.setColor(Color.WHITE);
+        wallPaint.setStrokeWidth(wallThickness);
+
+        playerPaint = new Paint();
+        playerPaint.setColor(Color.RED);
+
+        exitPaint = new Paint();
+        exitPaint.setColor(Color.BLUE);
+
+        coinPaint = new Paint();
+        coinPaint.setColor(Color.YELLOW);
     }
 
     private void createMaze(){
