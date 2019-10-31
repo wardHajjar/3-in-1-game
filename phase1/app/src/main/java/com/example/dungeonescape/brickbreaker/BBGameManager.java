@@ -43,7 +43,7 @@ class BBGameManager extends GameManager {
                 bricks.add(new Brick(x, y, brickWidth, brickHeight));
             }
         }
-        // assign coins to random bricks
+//         assign coins to random bricks
         coins = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
             Collections.shuffle(bricks);

@@ -1,5 +1,8 @@
 package com.example.dungeonescape;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+
 /**
  * Represents the Game Manager.
  *
@@ -7,21 +10,39 @@ package com.example.dungeonescape;
  *
  * TODO: Edit this javadoc as this class is updated.
  */
-public class GameManager {
+
+public class GameManager implements Serializable {
+    ArrayList<Player> players;
     private int totalTimePlayed;
-    private Player player = new Player(0, 0, 0, "player 1");
 
     public GameManager() {
         /* Sets the initial total time elapsed in the Game to 0. */
         totalTimePlayed = 0;
+        players = new ArrayList<>();
+
+    }
+    public void addPlayer(String name) {
+        players.add(new Player(name));
     }
     public void addCoin() {
-        int newCoinAmount = player.getNumCoins();
-        player.setNumCoins(newCoinAmount + 1);
+        for (Player player: players) {
+            player.setNumCoins(player.getNumCoins() + 1);
+        }
     }
     public void loseLife() {
-        int currLives = player.getNumLives();
-        player.setNumLives(currLives - 1);
+        for (Player player: players) {
+            player.setNumLives(player.getNumLives() - 1);
+        }
+    }
+    Player getPlayer(String name) {
+        Player p = players.get(0);
+        for (Player player: players) {
+            if (player.getName() == name) {
+                p = player;
+                break;
+            }
+        }
+        return p;
     }
 
     public int getTotalTime() {
