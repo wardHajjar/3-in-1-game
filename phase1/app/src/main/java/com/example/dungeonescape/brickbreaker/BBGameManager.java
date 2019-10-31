@@ -1,10 +1,13 @@
 package com.example.dungeonescape.brickbreaker;
 
+import android.graphics.Canvas;
+import android.view.MotionEvent;
+
 import com.example.dungeonescape.GameManager;
 
 import java.util.ArrayList;
-import android.graphics.Canvas;
-import android.view.MotionEvent;
+import java.util.Collections;
+
 
 class BBGameManager extends GameManager {
 
@@ -16,6 +19,7 @@ class BBGameManager extends GameManager {
     private Ball ball;
     private Paddle paddle;
     private ArrayList<Brick> bricks;
+    private ArrayList<BBCoin> coins;
     private int screenX;
     private int screenY;
 
@@ -37,6 +41,17 @@ class BBGameManager extends GameManager {
                 bricks.add(new Brick(x, y, brickWidth, brickHeight));
             }
         }
+        // assign coins to random bricks
+        coins = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            Collections.shuffle(bricks);
+            Brick curr = bricks.get(0);
+            BBCoin newCoin = new BBCoin(curr.x + curr.getWidth()/2,
+                    curr.y + curr.getHeight()/2);
+            curr.setCoin(newCoin);
+            coins.add(newCoin);
+        }
+
         this.screenX = screenX;
         this.screenY = screenY;
     }
@@ -45,23 +60,23 @@ class BBGameManager extends GameManager {
         ball.move();
 
         // Wall Collision Detection
-        char wall_collision = ball.madeWallCollision(screenX, screenY);
-        if ( wall_collision == 'x'){
+        char wallCollision = ball.madeWallCollision(screenX, screenY);
+        if ( wallCollision == 'x'){
             ball.setXSpeed(ball.getXSpeed() * -1);
         }
-        else if(wall_collision == 'y'){
+        else if(wallCollision == 'y'){
             ball.setYSpeed(ball.getYSpeed() * -1);
         }
 
         // Brick Collision Detection
         for (Brick brick: bricks){
             if (!(brick.getHitStatus())) {
-                String brick_collision = ball.madeRectCollision(brick.getRect());
-                if (brick_collision.equals("x")) {
+                String brickCollision = ball.madeRectCollision(brick.getRect());
+                if (brickCollision.equals("x")) {
                     ball.setXSpeed(ball.getXSpeed() * -1);
                     brick.changeHitStatus();
                     break;
-                } else if (brick_collision.equals("y")) {
+                } else if (brickCollision.equals("y")) {
                     ball.setYSpeed(ball.getYSpeed() * -1);
                     brick.changeHitStatus();
                     break;
@@ -69,9 +84,25 @@ class BBGameManager extends GameManager {
             }
         }
 
+        // Coin Collision Detection
+        for (BBCoin currCoin: coins){
+            if (!currCoin.getCollectStatus()) {
+                String coinCollision = ball.madeRectCollision(currCoin.getRect());
+                if (coinCollision.equals("x")) {
+                    ball.setXSpeed(ball.getXSpeed() * -1);
+                    currCoin.gotCollected();
+                    break;
+                } else if (coinCollision.equals("y")) {
+                    ball.setYSpeed(ball.getYSpeed() * -1);
+                    currCoin.gotCollected();
+                    break;
+                }
+            }
+        }
+
         // Paddle Collision Detection
-        String paddle_collision = ball.madeRectCollision(paddle.getRect());
-        if (!(paddle_collision.equals(" "))) {
+        String paddleCollision = ball.madeRectCollision(paddle.getRect());
+        if (!(paddleCollision.equals(" "))) {
             ball.setYSpeed(ball.getYSpeed() * -1);
             ball.setRandomXSpeed();
         }
@@ -115,8 +146,14 @@ class BBGameManager extends GameManager {
 
         // Bricks
         for (int i = 0; i < bricks.size(); i++) {
-            if (!bricks.get(i).getHitStatus()) {
-                bricks.get(i).draw(canvas);
+            Brick curr = bricks.get(i);
+            // draws the bricks that have not been hit
+            if (!curr.getHitStatus()) {
+                curr.draw(canvas);
+            } else {    // draw if hit brick contains a coin to be collected
+                if (curr.hasCoin() && !curr.coin.getCollectStatus()) {
+                    curr.coin.draw(canvas);
+                }
             }
         }
     }
