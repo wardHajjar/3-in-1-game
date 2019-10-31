@@ -25,6 +25,8 @@ class BBGameManager extends GameManager {
 
     BBGameManager(int screenX, int screenY){
         super();
+        this.screenX = screenX;
+        this.screenY = screenY;
 
         // construct the ball
         this.ball = new Ball(screenX/2 - 75 + (screenX/2 - 75)/2 - 25,
@@ -46,14 +48,15 @@ class BBGameManager extends GameManager {
         for (int i = 0; i < 3; i++) {
             Collections.shuffle(bricks);
             Brick curr = bricks.get(0);
+            while (curr.hasCoin()){     // shuffle again if the current brick has a coin
+                Collections.shuffle(bricks);
+                curr = bricks.get(0);
+            }
             BBCoin newCoin = new BBCoin(curr.x + curr.getWidth()/2,
-                    curr.y + curr.getHeight()/2);
+                        curr.y + curr.getHeight()/2);
             curr.setCoin(newCoin);
             coins.add(newCoin);
         }
-
-        this.screenX = screenX;
-        this.screenY = screenY;
     }
 
     void moveBall(){
