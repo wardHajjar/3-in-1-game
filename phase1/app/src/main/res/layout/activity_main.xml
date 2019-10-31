@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@drawable/dungeon">
 
     <Button
         android:id="@+id/button"
@@ -27,6 +28,7 @@
         android:layout_marginBottom="549dp"
         android:layout_marginTop="163dp"
         android:text="Dungeon Escape"
+        android:textColor="#FFF"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
