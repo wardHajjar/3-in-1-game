@@ -22,12 +22,15 @@ class Level3Object extends RectShape {
         this.oval = new RectF(x - size / 2, y - size / 2, x + size / 2, y + size / 2);
         this.paint = new Paint();
     }
-    Level3Object(int x, int y, int size) {
+    Level3Object(int x, int y) {
         this.x = x;
         this.y = y;
-        this.size = size;
         paint = new Paint();
-        this.oval = new RectF(x - size / 2, y - size / 2, x + size / 2, y + size / 2);
+        this.oval = new RectF(x * size,
+                y * size,
+                (x + 1) * size,
+                (y + 1) * size
+                );
     }
 
     void setX(int x) {
@@ -36,10 +39,10 @@ class Level3Object extends RectShape {
     void setY(int y) {
         this.y = y;
     }
-    int getX() {
+    public int getX() {
         return x;
     }
-    int getY() {
+    public int getY() {
         return y;
     }
 

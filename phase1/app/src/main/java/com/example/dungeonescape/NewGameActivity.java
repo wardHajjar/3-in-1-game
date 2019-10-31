@@ -17,9 +17,9 @@ public class NewGameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_game);
-        buttons();
         Intent i = getIntent();
         gameManager = (GameManager) i.getSerializableExtra("Game Manager");
+        buttons();
     }
 
     private void buttons() {
@@ -38,8 +38,5 @@ public class NewGameActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
-
     }
 }

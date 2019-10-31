@@ -13,6 +13,7 @@ public class BBCoin extends BBObject{
     BBCoin(int x, int y) {
         super(x, y);
         radius = 10; // set appropriate radius
+        collect = false;
     }
 
     @Override

@@ -21,6 +21,9 @@ public class Player implements Serializable {
 
     public Player(String name) {
         this.name = name;
+        this.score = 0;
+        this.numLives = 0;
+        this.numCoins = 0;
     }
 
 
@@ -65,5 +68,9 @@ public class Player implements Serializable {
      */
     public void setNumCoins(int numCoins) {
         this.numCoins = numCoins;
+    }
+
+    public void addCoin(){
+        this.numCoins += 1;
     }
 }
