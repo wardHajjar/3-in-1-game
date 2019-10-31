@@ -26,9 +26,9 @@ public class Player implements Serializable {
         setNumCoins(0);
     }
 
-    public void lose_life() {
+    public void loseLife() {
         // lose 1 live
-        numLives -= 1;
+        setNumLives(getNumLives() - 1);
     }
     public String getName() {
         return name;
