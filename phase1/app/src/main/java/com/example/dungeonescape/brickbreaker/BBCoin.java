@@ -5,14 +5,13 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
-public class BBCoin extends BBObject{
+class BBCoin extends BBObject{
 
     private int radius;
     private boolean collect;
-
-    BBCoin(int x, int y) {
+    BBCoin(int x, int y, int radius) {
         super(x, y);
-        radius = 30; // set appropriate radius
+        this.radius = radius; // set appropriate radius
         collect = false;
     }
 

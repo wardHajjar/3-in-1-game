@@ -3,9 +3,10 @@ package com.example.dungeonescape.brickbreaker;
 import android.graphics.Canvas;
 import android.view.MotionEvent;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Collections;
-
+import com.example.dungeonescape.Player;
 
 class BBGameManager {
 
@@ -20,8 +21,7 @@ class BBGameManager {
     private ArrayList<BBCoin> coins;
     private int screenX;
     private int screenY;
-    private int numLives;
-    private int numCoins;
+    private Player player;
 
     BBGameManager(int screenX, int screenY){
 
@@ -42,8 +42,7 @@ class BBGameManager {
         }
         this.screenX = screenX;
         this.screenY = screenY;
-        this.numLives = 5; //TODO: Change once difficulty level has been set
-        this.numCoins = 0;
+        this.player = null;
 
         // assign coins to random bricks
         coins = new ArrayList<>();
@@ -54,8 +53,9 @@ class BBGameManager {
                 Collections.shuffle(bricks);
                 curr = bricks.get(0);
             }
+            int radius = brickHeight/4;
             BBCoin newCoin = new BBCoin(curr.x + curr.getWidth()/2,
-                        curr.y + curr.getHeight()/2);
+                        curr.y + curr.getHeight()/2, radius);
             curr.setCoin(newCoin);
             coins.add(newCoin);
         }
@@ -63,9 +63,7 @@ class BBGameManager {
 
     void moveBall(){
 
-
         ball.move();
-//        loseLife();
         // Wall Collision Detection
         char wallCollision = ball.madeWallCollision(screenX, screenY);
         if ( wallCollision == 'x'){
@@ -79,15 +77,20 @@ class BBGameManager {
         for (Brick brick: bricks){
             if (!(brick.getHitStatus())) {
                 String brickCollision = ball.madeRectCollision(brick.getRect());
+
                 if (brickCollision.equals("x")) {
+                    System.out.println("BRICK");
                     ball.setXSpeed(ball.getXSpeed() * -1);
                     brick.changeHitStatus();
+
                     break;
                 } else if (brickCollision.equals("y")) {
+                    System.out.println("BRICK");
                     ball.setYSpeed(ball.getYSpeed() * -1);
                     brick.changeHitStatus();
                     break;
                 }
+
             }
         }
 
@@ -96,14 +99,16 @@ class BBGameManager {
             if (!currCoin.getCollectStatus()) {
                 String coinCollision = ball.madeRectCollision(currCoin.getRect());
                 if (coinCollision.equals("x")) {
+                    player.addCoin();
                     ball.setXSpeed(ball.getXSpeed() * -1);
                     currCoin.gotCollected();
-                    this.numCoins += 1;
+
                     break;
                 } else if (coinCollision.equals("y")) {
+                    player.addCoin();
                     ball.setYSpeed(ball.getYSpeed() * -1);
                     currCoin.gotCollected();
-                    this.numCoins += 1;
+
                     break;
                 }
             }
@@ -117,13 +122,15 @@ class BBGameManager {
         }
     }
 
-    boolean loseLife(){
+    boolean checkLifeCondition(){
         if (ball.getY() > paddle.getY()){
-            if (numLives != 0){
-                numLives -= 1;
+            if (player.getNumLives() >= 1){
+                player.loseLife();
                 ball.setX((paddle.getX() + paddle.getWidth()/2));
                 ball.setY(paddle.getY() - 26);
-            } //TODO: If lives are 0, playing = false + GameOver screen
+            }
+
+             //TODO: If lives are 0, playing = false + GameOver screen
             return true;
         }
         return false;
@@ -180,22 +187,6 @@ class BBGameManager {
     }
 
     /**
-     * Returns the number of character lives
-     * @return numLives
-     */
-    int getCharacterLives(){
-        return numLives;
-    }
-
-    /**
-     * Returns the number of coins the character has so far
-     * @return numCoins
-     */
-    int getCharacterCoins(){
-        return numCoins;
-    }
-
-    /**
      * Checks whether all the bricks have been destroyed
      * @return true if all bricks got destroyed.
      */
@@ -208,4 +199,11 @@ class BBGameManager {
         return true;
     }
 
+    /**
+     * Adds the user to the game.
+     * @param player Player object that represents the user's character.
+     */
+    void addPlayer(Player player){
+        this.player = player;
+    }
 }
