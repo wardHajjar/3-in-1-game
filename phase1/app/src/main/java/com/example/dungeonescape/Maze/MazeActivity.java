@@ -1,5 +1,6 @@
 package com.example.dungeonescape.Maze;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -21,10 +22,11 @@ import java.util.concurrent.TimeUnit;
 public class MazeActivity extends MainActivity {
 
     // initial time set in milliseconds
-    public long counter = 120000;
+    // public long counter = 120000;
+    public long counter = 6000;
     long minutes;
     long seconds;
-    Player player;
+    Player player = new Player("player");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,12 +36,11 @@ public class MazeActivity extends MainActivity {
         // go to next game
         configureNextButton();
 
+        // getting player instance from intent
+        Intent playerIntent = getIntent();
+
         // countdown to losing the game
         final TextView countTime=findViewById(R.id.countTime);
-
-        // getting player instance from intent
-        Intent i = getIntent();
-        player = (Player) i.getSerializableExtra("Player");
 
         // countdown code from: https://www.tutorialspoint.com/how-to-make-a-countdown-timer-in-android
         // partially edited
@@ -56,8 +57,21 @@ public class MazeActivity extends MainActivity {
 
             @Override
             public void onFinish() {
-                countTime.setTextColor(Color.WHITE);
-                countTime.setText("Game Over");
+                setContentView(R.layout.activity_maze_game_over);
+
+                // get the number of lives from Brick Breaker
+                Intent playerIntent = getIntent();
+                Bundle playerStats = playerIntent.getExtras();
+                int playerLivesLeft = 0;
+                if (playerStats != null) {
+                    playerLivesLeft = (int) playerStats.get("lives");
+                }
+
+                TextView textView = (TextView) findViewById(R.id.playerLives);
+                textView.setText(String.format(Locale.getDefault(),
+                        "You have %d lives left.", playerLivesLeft));
+
+                configureStartOverButton();
             }
         }.start();
 
@@ -74,11 +88,35 @@ public class MazeActivity extends MainActivity {
     private void configureNextButton() {
         Button nextButton = (Button) findViewById(R.id.nextlvl);
         nextButton.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
-
                 Intent intent = new Intent(MazeActivity.this, PlatformerMainActivity.class);
+<<<<<<< HEAD
                 intent.putExtra("Player", player);
+=======
+
+                intent.putExtra("lives", player.getNumLives());
+                intent.putExtra("score", player.getScore());
+
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void configureStartOverButton() {
+        Button startOver = (Button) findViewById(R.id.startOver);
+        startOver.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                int updatedLives = player.getNumLives() - 1;
+                player.setNumLives(updatedLives);
+
+                Intent intent = new Intent(MazeActivity.this, MazeActivity.class);
+                intent.putExtra("lives", player.getNumLives());
+                intent.putExtra("score", player.getScore());
+>>>>>>> 7192b86e4e27ba23516c368bdb997b28ba59a462
                 startActivity(intent);
             }
         });
