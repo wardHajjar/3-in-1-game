@@ -18,6 +18,8 @@ class BBGameManager extends GameManager {
     private ArrayList<Brick> bricks;
     private int screenX;
     private int screenY;
+    private int numLives;
+    private int numCoins;
 
     BBGameManager(int screenX, int screenY){
         super();
@@ -39,6 +41,8 @@ class BBGameManager extends GameManager {
         }
         this.screenX = screenX;
         this.screenY = screenY;
+        this.numLives = 5; //TODO: Change once difficulty level has been set
+        this.numCoins = 0;
     }
 
     void moveBall(){
@@ -74,6 +78,14 @@ class BBGameManager extends GameManager {
         if (!(paddle_collision.equals(" "))) {
             ball.setYSpeed(ball.getYSpeed() * -1);
             ball.setRandomXSpeed();
+        }
+
+        if (ball.getY() > paddle.getY()){
+            numLives -= 1;
+            if (numLives != 0){
+                ball.setX((paddle.getX() + paddle.getWidth()/2));
+                ball.setY(paddle.getY() - 1);
+            } //TODO: If lives are 0, playing = false + GameOver screen
         }
     }
 
