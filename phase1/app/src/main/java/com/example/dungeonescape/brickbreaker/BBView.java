@@ -34,8 +34,8 @@ public class BBView extends GameView {
 //    Paddle paddle;
 //    ArrayList<Brick> bricks;
     boolean startGame = false;
-
     BBGameManager manager;
+
     /**
      * Initializes the surface in the context environment.
      * @param context the environment
@@ -96,7 +96,6 @@ public class BBView extends GameView {
             return true;
         }
         if (event.getAction() == MotionEvent.ACTION_MOVE) {
-
             manager.movePaddle(event, x);
             return true;
         }
