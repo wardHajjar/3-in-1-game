@@ -1,5 +1,6 @@
 package com.example.dungeonescape.Maze;
 
+import java.util.Iterator;
 import java.util.Random;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -8,6 +9,7 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.example.dungeonescape.GameObject;
 import com.example.dungeonescape.Player;
 import com.example.dungeonescape.platformer.Coin;
 
@@ -31,12 +33,12 @@ public class MazeView extends View {
     private MazeCell[][] cells;
 
     /** A list of coins that can be collected for score. */
-    private Coin[] coins;
+    private ArrayList<Coin> coins;
 
     /** Player and exit objects, and their positions. */
     private Player player;
+    private GameObject exit;
     private MazeCell playerLoc;
-    private MazeCell exitLoc;
 
     /** The number of columns and rows in this maze. */
     private int numMazeCols = 10;
@@ -63,7 +65,6 @@ public class MazeView extends View {
 
     public MazeView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        player = new Player(0,0,1, "PLAYER");
         wallPaint = new Paint();
         wallPaint.setColor(Color.WHITE);
         wallPaint.setStrokeWidth(wallThickness);
@@ -73,10 +74,12 @@ public class MazeView extends View {
         exitPaint.setColor(Color.BLUE);
         coinPaint = new Paint();
         coinPaint.setColor(Color.YELLOW);
+        player = new Player(0,0,1, "PLAYER");
         //        create 5 coins at random locations.
-        coins = new Coin[5];
+        coins = new ArrayList<>();
         for (int i = 0; i<5; i++) {
-            coins[i] = new Coin(rand.nextInt(numMazeCols), rand.nextInt(numMazeRows));
+            Coin coin = new Coin(rand.nextInt(numMazeCols), rand.nextInt(numMazeRows));
+            coins.add(coin);
         }
         createMaze();
     }
@@ -125,7 +128,9 @@ public class MazeView extends View {
             }
         } while (!stack.isEmpty());
         playerLoc = cells[0][0];
-        exitLoc = cells[numMazeCols-1][numMazeRows-1];
+        player.setX(0);
+        player.setY(0);
+        exit = new GameObject(numMazeCols-1, numMazeRows-1, 1);
     }
 
     private MazeCell getNeighbour(MazeCell cell) {
@@ -255,17 +260,17 @@ public class MazeView extends View {
         }
 
         canvas.drawRect(
-                playerLoc.getX()*cellSize+margin,
-                playerLoc.getY()*cellSize+margin,
-                (playerLoc.getX()+1)*cellSize-margin,
-                (playerLoc.getY()+1)*cellSize-margin,
+                player.getX()*cellSize+margin,
+                player.getY()*cellSize+margin,
+                (player.getX()+1)*cellSize-margin,
+                (player.getY()+1)*cellSize-margin,
                 playerPaint);
 
         canvas.drawRect(
-                exitLoc.getX()*cellSize+margin,
-                exitLoc.getY()*cellSize+margin,
-                (exitLoc.getX()+1)*cellSize-margin,
-                (exitLoc.getY()+1)*cellSize-margin,
+                exit.getX()*cellSize+margin,
+                exit.getY()*cellSize+margin,
+                (exit.getX()+1)*cellSize-margin,
+                (exit.getY()+1)*cellSize-margin,
                 exitPaint);
     }
 
@@ -273,30 +278,52 @@ public class MazeView extends View {
         //depending on the given direction, move the player to that cell if it's in the maze.
         switch (direction){
             case "UP":
-                if(!playerLoc.isTopWall())
-                    playerLoc = cells[playerLoc.getX()][playerLoc.getY()-1];
+                if(!playerLoc.isTopWall()) {
+                    playerLoc = cells[player.getX()][player.getY() - 1];
+                    player.setY(player.getY() - 1);
+                }
                 break;
             case "DOWN":
-                if(!playerLoc.isBottomWall())
-                    playerLoc = cells[playerLoc.getX()][playerLoc.getY()+1];
+                if(!playerLoc.isBottomWall()) {
+                    playerLoc = cells[player.getX()][player.getY() + 1];
+                    player.setY(player.getY() + 1);
+                }
                 break;
             case "LEFT":
-                if(!playerLoc.isLeftWall())
-                    playerLoc = cells[playerLoc.getX()-1][playerLoc.getY()];
+                if(!playerLoc.isLeftWall()) {
+                    playerLoc = cells[playerLoc.getX() - 1][playerLoc.getY()];
+                    player.setX(player.getX() - 1);
+                }
                 break;
             case "RIGHT":
-                if(!playerLoc.isRightWall())
-                    playerLoc = cells[playerLoc.getX()+1][playerLoc.getY()];
+                if(!playerLoc.isRightWall()) {
+                    playerLoc = cells[playerLoc.getX() + 1][playerLoc.getY()];
+                    player.setX(player.getX() + 1);
+                }
                 break;
         }
-        checkExit();
+        checkPos();
         invalidate();
     }
 
-    private void checkExit(){
+    private void checkPos(){
         // check if the player has arrived at the exit. Create a new maze if this has happened.
-        if(playerLoc == exitLoc)
+        if(player.getX() == exit.getX() && player.getY()== exit.getY())
             createMaze();
+        Iterator<Coin> itr = coins.iterator();
+        while (itr.hasNext()) {
+            Coin coin = itr.next();
+            if (player.getX() == coin.getX() && player.getY()== coin.getY()) {
+                itr.remove();
+                player.addCoin();
+            }
+        }
+//        for (Coin coin:coins) {
+//            if (player.getX() == coin.getX() && player.getY()== coin.getY()){
+//                player.addCoin();
+//                coins.remove(coin);
+//            }
+//        }
     }
 
     public int getNumMazeCols() {

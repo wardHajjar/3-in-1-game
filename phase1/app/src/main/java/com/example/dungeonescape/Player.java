@@ -20,6 +20,9 @@ public class Player extends GameObject {
     public Player(int x, int y, int z, String name) {
         super(x, y, z);
         this.name = name;
+        this.score = 0;
+        this.numLives = 0;
+        this.numCoins = 0;
     }
 
     public String getName() {
@@ -63,5 +66,9 @@ public class Player extends GameObject {
      */
     public void setNumCoins(int numCoins) {
         this.numCoins = numCoins;
+    }
+
+    public void addCoin(){
+        this.numCoins += 1;
     }
 }
