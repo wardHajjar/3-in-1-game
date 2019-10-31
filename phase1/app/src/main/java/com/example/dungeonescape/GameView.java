@@ -60,7 +60,7 @@ public abstract class GameView extends SurfaceView implements Runnable{
 
             // Capture the current time in milliseconds in startFrameTime
             try {
-                //set time in mili
+                //set time in milli
                 Thread.sleep(1);
 
             }catch (Exception e){
