@@ -24,6 +24,7 @@ public class GameManager implements Serializable {
     public void addPlayer(String name) {
         players.add(new Player(name));
     }
+
     public void addCoin() {
         for (Player player: players) {
             player.setNumCoins(player.getNumCoins() + 1);

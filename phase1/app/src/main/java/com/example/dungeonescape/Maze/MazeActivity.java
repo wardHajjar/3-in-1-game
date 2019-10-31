@@ -68,7 +68,8 @@ public class MazeActivity extends MainActivity {
                 }
 
                 TextView textView = (TextView) findViewById(R.id.playerLives);
-                textView.setText("You have " + playerLivesLeft + " lives left.");
+                textView.setText(String.format(Locale.getDefault(),
+                        "You have %d lives left.", playerLivesLeft));
 
                 configureStartOverButton();
             }
@@ -87,10 +88,14 @@ public class MazeActivity extends MainActivity {
     private void configureNextButton() {
         Button nextButton = (Button) findViewById(R.id.nextlvl);
         nextButton.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
-
                 Intent intent = new Intent(MazeActivity.this, PlatformerMainActivity.class);
+
+                intent.putExtra("lives", player.getNumLives());
+                intent.putExtra("score", player.getScore());
+
                 startActivity(intent);
             }
         });
@@ -99,12 +104,14 @@ public class MazeActivity extends MainActivity {
     private void configureStartOverButton() {
         Button startOver = (Button) findViewById(R.id.startOver);
         startOver.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
                 int updatedLives = player.getNumLives() - 1;
+                player.setNumLives(updatedLives);
 
                 Intent intent = new Intent(MazeActivity.this, MazeActivity.class);
-                intent.putExtra("lives", updatedLives);
+                intent.putExtra("lives", player.getNumLives());
                 intent.putExtra("score", player.getScore());
                 startActivity(intent);
             }
