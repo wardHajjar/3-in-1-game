@@ -92,9 +92,8 @@ public class MazeActivity extends MainActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MazeActivity.this, PlatformerMainActivity.class);
-<<<<<<< HEAD
+
                 intent.putExtra("Player", player);
-=======
 
                 intent.putExtra("lives", player.getNumLives());
                 intent.putExtra("score", player.getScore());
@@ -116,7 +115,6 @@ public class MazeActivity extends MainActivity {
                 Intent intent = new Intent(MazeActivity.this, MazeActivity.class);
                 intent.putExtra("lives", player.getNumLives());
                 intent.putExtra("score", player.getScore());
->>>>>>> 7192b86e4e27ba23516c368bdb997b28ba59a462
                 startActivity(intent);
             }
         });
