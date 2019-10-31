@@ -5,45 +5,41 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.graphics.drawable.shapes.RectShape;
 
 import java.util.Random;
 
-public class Coin extends RectShape {
-    private float x,y,size;
-    private Paint paint;
-    private RectF oval;
-    private PlatformerManager manager;
-    private float bottom;
-    Rect rectangle;
+
+class Coin extends Level3Object {
 
     Coin(int x, int y, int size, PlatformerManager manager) {
-        this.x = x;
-        this.y = y;
-        this.size = size;
-        paint = new Paint();
+        super(x,y,size,manager);
         paint.setColor(Color.YELLOW);
+        this.rect = new Rect(x - size / 2, (int) (y - size /2), x + size / 2, y + size / 2);
 
-        this.manager = manager;
-        this.rectangle = new Rect(x - size / 2, (int) (y - size /2), x + size / 2, y + size / 2);
-        this.oval = new RectF(x - size / 2, y - size / 2, x + size / 2, y + size / 2);
     }
-    void draw(Canvas canvas) {
-        canvas.drawOval(this.oval,this.paint);
+    Coin(int x, int y, int size) {
+        super(x,y,size);
+        paint.setColor(Color.YELLOW);
+        this.rect = new Rect(x - size / 2, (int) (y - size /2), x + size / 2, y + size / 2);
     }
+
+    Rect getRect() {
+        return rect;
+    }
+
     void gotCoin() {
         // Character has gotten the coin, delete this coin and regenerate one at a new y value
         this.y = 0;
         Random r = new Random();
         int a = r.nextInt(1080- 150);
         this.x = a;
-        this.rectangle = new Rect((int)(x - size / 2), (int) (y - size/2), (int) (x + size / 2), (int) (y + size / 2));
+        this.rect = new Rect((int)(x - size / 2), (int) (y - size/2), (int) (x + size / 2), (int) (y + size / 2));
         this.oval = new RectF(x - size / 2, y - size / 2, x + size / 2, y + size / 2);
     }
     void update(int down) {
         // Moves platforms down
         coinDown(down);
-        this.rectangle = new Rect((int)(x - size / 2), (int) (y - size /2), (int) (x + size / 2), (int) (y + size / 2));
+        this.rect = new Rect((int)(x - size / 2), (int) (y - size /2), (int) (x + size / 2), (int) (y + size / 2));
         this.oval = new RectF(x - size / 2, y - size / 2, x + size / 2, y + size / 2);
     }
     private void coinDown(int down) {

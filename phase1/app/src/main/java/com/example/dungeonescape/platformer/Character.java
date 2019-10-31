@@ -4,22 +4,12 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.graphics.drawable.shapes.OvalShape;
-import android.graphics.drawable.shapes.RectShape;
-import android.graphics.drawable.shapes.Shape;
-
-import androidx.constraintlayout.solver.widgets.Rectangle;
 
 
-class Character extends RectShape {
+class Character extends Level3Object {
 
-    private float x,y,size;
     private int speed = 5;
-    private Paint paint;
-    private RectF oval;
-    private PlatformerManager manager;
     private float bottom;
-    private Rect rect;
 
     private boolean start;
 
@@ -39,39 +29,17 @@ class Character extends RectShape {
 //        return user.getNumLives();
 //    }
 
-    int getLives(){
-        return this.lives;
-    }
-    void setLives(int lives){
-        this.lives = lives;
-    }
-
 
     Character(int x, int y, int size, PlatformerManager manager){
-        this.x = x;
-        this.y = y;
-        this.size = size;
-        paint = new Paint();
+        super(x,y,size,manager);
         paint.setColor(Color.BLUE);
         start = false;
-
         this.gameScore = 0;
-        this.manager = manager;
         this.rect = new Rect(x-size/2,(int)(y + size/4),x+size/2,y+size/2);
-        this.oval = new RectF(x-size/2,y-size/2,x+size/2,y+size/2);
-
         this.lives = 3;
 
     }
-    void setY(float y) {
-        this.y = y;
-    }
-    float getX() {
-        return x;
-    }
-    float getY() {
-        return y;
-    }
+
     void move() {
         collision_detection();
 
@@ -106,7 +74,7 @@ class Character extends RectShape {
                         x > platform.getx() && x < platform.getx() + 150)) {
                     System.out.println("hit");
                     this.gameScore += 1;
-                    y = platform.gety() - size/2;
+                    y = (int)platform.gety() - (int)(size/2);
                     speed = -75;
                     y += speed;
                     start = true;
@@ -123,15 +91,11 @@ class Character extends RectShape {
         this.bottom = this.y+ (size/2);
 
         for(Coin coin: manager.getCoins()) {
-            if (this.rect.intersect(coin.rectangle)) {
+            if (this.rect.intersect(coin.getRect())) {
                 coin.gotCoin();
             }
         }
 
-    }
-
-    void draw(Canvas canvas) {
-        canvas.drawOval(this.oval,this.paint);
     }
 
     boolean isAlive() {
@@ -140,7 +104,12 @@ class Character extends RectShape {
         }
         return true;
     }
-
+    int getLives(){
+        return this.lives;
+    }
+    void setLives(int lives){
+        this.lives = lives;
+    }
     void move_left() {
         if (x - 50 <= 0) {
             x = manager.getGridWidth();
@@ -158,4 +127,3 @@ class Character extends RectShape {
         }
     }
 }
-//577 is max height
