@@ -13,6 +13,11 @@ public class GameObject {
         setY(y);
         setDepth(z);
     }
+    GameObject(){
+        setX(0);
+        setY(0);
+        setDepth(0);
+    }
 
     public int getX() {
         return x;

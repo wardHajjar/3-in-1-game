@@ -37,7 +37,7 @@ public class MazeView extends View {
 
     /** Player and exit objects, and their positions. */
 
-    private GameObject player;
+    private Player player;
 
     private GameObject exit;
 
@@ -60,7 +60,6 @@ public class MazeView extends View {
     private Paint playerPaint;
     private Paint exitPaint;
     private Paint coinPaint;
-    private Player playerObj;
     private Random rand = new Random();
 
     /** Instantiates the MazeManager class for this Maze. */
@@ -77,8 +76,7 @@ public class MazeView extends View {
         exitPaint.setColor(Color.BLUE);
         coinPaint = new Paint();
         coinPaint.setColor(Color.YELLOW);
-        player = new GameObject(0,0,1);
-        playerObj = new Player("player");
+        player = new Player(0,0,1, "PLAYER");
         //        create 5 coins at random locations.
         coins = new ArrayList<>();
         for (int i = 0; i<5; i++) {
@@ -319,7 +317,7 @@ public class MazeView extends View {
             Coin coin = itr.next();
             if (player.getX() == coin.getX() && player.getY()== coin.getY()) {
                 itr.remove();
-                playerObj.addCoin();
+                player.addCoin();
             }
         }
     }
