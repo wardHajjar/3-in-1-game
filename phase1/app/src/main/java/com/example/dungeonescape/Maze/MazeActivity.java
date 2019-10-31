@@ -1,5 +1,6 @@
 package com.example.dungeonescape.Maze;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -39,8 +40,15 @@ public class MazeActivity extends MainActivity {
         final TextView countTime=findViewById(R.id.countTime);
 
         // getting player instance from intent
-        Intent i = getIntent();
-        player = (Player) i.getSerializableExtra("Player");
+        Intent playerIntent = getIntent();
+        player = (Player) playerIntent.getSerializableExtra("Player");
+
+        // get the number of lives from Brick Breaker
+        Bundle playerStats = playerIntent.getExtras();
+        int playerLives;
+        if (playerStats != null) {
+            playerLives = (int) playerStats.get("lives");
+        }
 
         // countdown code from: https://www.tutorialspoint.com/how-to-make-a-countdown-timer-in-android
         // partially edited
@@ -57,9 +65,6 @@ public class MazeActivity extends MainActivity {
 
             @Override
             public void onFinish() {
-                countTime.setTextColor(Color.WHITE);
-                countTime.setText("Game Over");
-
                 setContentView(R.layout.activity_maze_game_over);
                 configureStartOverButton();
             }
