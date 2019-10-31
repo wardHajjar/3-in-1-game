@@ -19,10 +19,6 @@ public class MazeCell extends GameObject {
     /** The size of this MazeCell in pixels. */
     private float cellSize;
 
-    /** The inner margins of the MazeCell; prevents player from touching the walls. */
-    private float horizontalPadding;
-    private float verticalPadding;
-
     public MazeCell(int col, int row, int depth) {
         super(col, row, depth);
     }
@@ -73,21 +69,5 @@ public class MazeCell extends GameObject {
 
     public void setCellSize(float cellSize) {
         this.cellSize = cellSize;
-    }
-
-    public float getHorizontalPadding() {
-        return horizontalPadding;
-    }
-
-    public void setHorizontalPadding(float horizontalPadding) {
-        this.horizontalPadding = horizontalPadding;
-    }
-
-    public float getVerticalPadding() {
-        return verticalPadding;
-    }
-
-    public void setVerticalPadding(float verticalPadding) {
-        this.verticalPadding = verticalPadding;
     }
 }
