@@ -36,19 +36,12 @@ public class MazeActivity extends MainActivity {
         // go to next game
         configureNextButton();
 
-        // countdown to losing the game
-        final TextView countTime=findViewById(R.id.countTime);
-
         // getting player instance from intent
         Intent playerIntent = getIntent();
         player = (Player) playerIntent.getSerializableExtra("Player");
 
-        // get the number of lives from Brick Breaker
-        Bundle playerStats = playerIntent.getExtras();
-        int playerLives;
-        if (playerStats != null) {
-            playerLives = (int) playerStats.get("lives");
-        }
+        // countdown to losing the game
+        final TextView countTime=findViewById(R.id.countTime);
 
         // countdown code from: https://www.tutorialspoint.com/how-to-make-a-countdown-timer-in-android
         // partially edited
@@ -66,6 +59,18 @@ public class MazeActivity extends MainActivity {
             @Override
             public void onFinish() {
                 setContentView(R.layout.activity_maze_game_over);
+
+                // get the number of lives from Brick Breaker
+                Intent playerIntent = getIntent();
+                Bundle playerStats = playerIntent.getExtras();
+                int playerLivesLeft = 0;
+                if (playerStats != null) {
+                    playerLivesLeft = (int) playerStats.get("lives");
+                }
+
+                TextView textView = (TextView) findViewById(R.id.playerLives);
+                textView.setText("You have " + playerLivesLeft + " lives left.");
+
                 configureStartOverButton();
             }
         }.start();
