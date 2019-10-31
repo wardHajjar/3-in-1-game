@@ -137,4 +137,6 @@ class PlatformerManager {
         return (character.getGamescore() > 10);
     }
 
+    boolean death(){ return (player.getNumLives() < 0);}
+
 }
