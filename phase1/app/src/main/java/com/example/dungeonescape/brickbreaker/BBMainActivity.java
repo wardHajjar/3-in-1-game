@@ -44,6 +44,7 @@ public class BBMainActivity extends Activity {
                 Intent intent = new Intent(BBMainActivity.this, MazeActivity.class);
                 intent.putExtra("lives", gameView.manager.getCharacterLives());
                 intent.putExtra("score", gameView.manager.getCharacterCoins());
+                intent.putExtra("Player", player);
                 startActivity(intent);
             }
         });
