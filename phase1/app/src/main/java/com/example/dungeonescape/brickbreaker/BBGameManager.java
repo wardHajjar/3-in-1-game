@@ -176,4 +176,20 @@ class BBGameManager extends GameManager {
         }
     }
 
+    /**
+     * Returns the number of character lives
+     * @return numLives
+     */
+    int getCharacterLives(){
+        return numLives;
+    }
+
+    /**
+     * Returns the number of coins the character has so far
+     * @return numCoins
+     */
+    int getCharacterCoins(){
+        return numCoins;
+    }
+
 }
