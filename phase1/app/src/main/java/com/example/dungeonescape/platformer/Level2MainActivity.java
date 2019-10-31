@@ -43,13 +43,13 @@ public class Level2MainActivity extends AppCompatActivity {
                             public void run() {
                                 if (running) {
                                     // Update the score shown
-                                    int score = game.manager.getCharacterScore();
+                                    int score = game.getManager().getCharacterScore();
                                     String scr = String.valueOf(score) ;
                                     String scre = "Score: " + scr;
 
                                     TextView score1 = (TextView) findViewById(R.id.score);
                                     score1.setText(scre);
-                                    int lives = game.manager.getCharacterLives();
+                                    int lives = game.getManager().getCharacterLives();
                                     String life = "Lives: " + String.valueOf(lives);
                                     TextView lifeText = (TextView) findViewById(R.id.lives);
                                     lifeText.setText(life);
@@ -92,7 +92,7 @@ public class Level2MainActivity extends AppCompatActivity {
         left.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                game.manager.left_button();
+                game.getManager().left_button();
             }
         });
 
@@ -100,7 +100,7 @@ public class Level2MainActivity extends AppCompatActivity {
         right.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                game.manager.right_button();
+                game.getManager().right_button();
             }
         });
 

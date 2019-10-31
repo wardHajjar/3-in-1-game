@@ -11,11 +11,14 @@ import android.widget.EditText;
 import com.example.dungeonescape.Maze.MazeActivity;
 
 public class LoadGameActivity extends AppCompatActivity {
-
+    Player player;
+    GameManager gameManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_load_game);
+        Intent i = getIntent();
+        gameManager = (GameManager) i.getSerializableExtra("Game Manager");
         buttons();
     }
 
@@ -28,11 +31,14 @@ public class LoadGameActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 Intent intent = new Intent(LoadGameActivity.this, MazeActivity.class);
+                intent.putExtra("Player", player);
                 startActivity(intent);
             }
         });
 
         EditText name = (EditText) findViewById(R.id.name);
         String nameText = name.getText().toString();
+        player = gameManager.getPlayer(nameText);
     }
+
 }

@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.dungeonescape.GameView;
 import com.example.dungeonescape.MainActivity;
+import com.example.dungeonescape.Player;
 import com.example.dungeonescape.R;
 import com.example.dungeonescape.platformer.PlatformerMainActivity;
 
@@ -23,6 +24,7 @@ public class MazeActivity extends MainActivity {
     public long counter = 120000;
     long minutes;
     long seconds;
+    Player player;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,10 @@ public class MazeActivity extends MainActivity {
 
         // countdown to losing the game
         final TextView countTime=findViewById(R.id.countTime);
+
+        // getting player instance from intent
+        Intent i = getIntent();
+        player = (Player) i.getSerializableExtra("Player");
 
         // countdown code from: https://www.tutorialspoint.com/how-to-make-a-countdown-timer-in-android
         // partially edited
@@ -54,6 +60,7 @@ public class MazeActivity extends MainActivity {
                 countTime.setText("Game Over");
             }
         }.start();
+
     }
 
     private void updateCountDown() {

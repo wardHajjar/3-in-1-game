@@ -1,9 +1,11 @@
 package com.example.dungeonescape;
 
+import java.io.Serializable;
+
 /**
  * Represents a Player in the Game.
  */
-public class Player extends GameObject {
+public class Player implements Serializable {
 
     /** The Player's name. */
     private String name;
@@ -17,10 +19,13 @@ public class Player extends GameObject {
     /** The number of coins this Player has. */
     private int numCoins;
 
-    public Player(int x, int y, int z, String name) {
-        super(x, y, z);
+    public Player(String name) {
         this.name = name;
+        this.score = 0;
+        this.numLives = 0;
+        this.numCoins = 0;
     }
+
 
     public String getName() {
         return name;
@@ -63,5 +68,9 @@ public class Player extends GameObject {
      */
     public void setNumCoins(int numCoins) {
         this.numCoins = numCoins;
+    }
+
+    public void addCoin(){
+        this.numCoins += 1;
     }
 }

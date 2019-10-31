@@ -12,7 +12,7 @@ import android.view.SurfaceView;
 import android.view.View;
 
 public class Level2View extends SurfaceView implements Runnable{
-    PlatformerManager manager;
+    private PlatformerManager manager;
     SurfaceHolder holder;
     boolean playing;
     boolean paused;
@@ -77,7 +77,9 @@ public class Level2View extends SurfaceView implements Runnable{
 
         }
     }
-
+    public PlatformerManager getManager() {
+        return manager;
+    }
     public void update() {
 
         boolean alive = manager.update();
