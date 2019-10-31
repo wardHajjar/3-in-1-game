@@ -71,6 +71,10 @@ public class BBView extends GameView {
         if (startGame){
             manager.moveBall();
             manager.movePaddle();
+            if (manager.loseLife()){
+                System.out.println("WEHERE");
+                startGame = false;
+            }
         }
     }
 
@@ -95,14 +99,15 @@ public class BBView extends GameView {
             // Draws everything to the screen
             holder.unlockCanvasAndPost(canvas);
         }
-
     }
+
     // Dictates the movement of the paddle
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         float x = event.getX();
         if(event.getAction() == MotionEvent.ACTION_DOWN) {
             if (!startGame){
+                System.out.println("GAME STrted; ");
                 startGame = true;
             }
             return true;
@@ -124,5 +129,7 @@ public class BBView extends GameView {
     public boolean doneLevel(){
         return manager.hitAllBricks();
     }
+
+
 
 }

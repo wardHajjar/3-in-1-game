@@ -86,7 +86,6 @@ public class BBMainActivity extends Activity {
         t.start();
     }
 
-
     /**
      * Method executes when the player starts the game.
      */
@@ -105,6 +104,9 @@ public class BBMainActivity extends Activity {
         gameView.pause();
     }
 
+    /**
+     * User has successfully finished Brick Breaker and will now move on to Maze.
+     */
     protected void nextLevel(){
         Intent intent = new Intent(BBMainActivity.this, MazeActivity.class);
         intent.putExtra("lives", gameView.manager.getCharacterLives());
