@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.dungeonescape.Maze.MazeActivity;
+import com.example.dungeonescape.brickbreaker.BBMainActivity;
 
 public class NewGameActivity extends AppCompatActivity {
     GameManager gameManager;
@@ -33,7 +34,7 @@ public class NewGameActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(NewGameActivity.this, MazeActivity.class);
+                Intent intent = new Intent(NewGameActivity.this, BBMainActivity.class);
                 intent.putExtra("Player", player);
                 startActivity(intent);
             }

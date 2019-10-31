@@ -23,9 +23,8 @@ public class PlatformerMainActivity extends AppCompatActivity {
         Intent i = getIntent();
         player = (Player) i.getSerializableExtra("Player");
         configureNextButton();
-
-
     }
+
     private void configureNextButton() {
         Button nextButton = (Button) findViewById(R.id.startButton);
         nextButton.setOnClickListener(new View.OnClickListener() {
