@@ -37,7 +37,7 @@ public class MazeView extends View {
 
     /** Player and exit objects, and their positions. */
 
-    private Player player;
+    private GameObject player;
 
     private GameObject exit;
 
@@ -46,9 +46,6 @@ public class MazeView extends View {
     /** The number of columns and rows in this maze. */
     private int numMazeCols = 10;
     private int numMazeRows = 10;
-
-    /** The line thickness of the walls. */
-    private static final float wallThickness = 4;
 
     /** The horizontal and vertical margin from the edge of the screen to the walls of the maze */
     float cellSize;
@@ -60,6 +57,7 @@ public class MazeView extends View {
     private Paint playerPaint;
     private Paint exitPaint;
     private Paint coinPaint;
+    private Player playerObj;
     private Random rand = new Random();
 
     /** Instantiates the MazeManager class for this Maze. */
@@ -67,16 +65,9 @@ public class MazeView extends View {
 
     public MazeView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        wallPaint = new Paint();
-        wallPaint.setColor(Color.WHITE);
-        wallPaint.setStrokeWidth(wallThickness);
-        playerPaint = new Paint();
-        playerPaint.setColor(Color.RED);
-        exitPaint = new Paint();
-        exitPaint.setColor(Color.BLUE);
-        coinPaint = new Paint();
-        coinPaint.setColor(Color.YELLOW);
-        player = new Player(0,0,1, "PLAYER");
+        initializePaint();
+        player = new GameObject(0,0,1);
+        playerObj = new Player("player");
         //        create 5 coins at random locations.
         coins = new ArrayList<>();
         for (int i = 0; i<5; i++) {
@@ -84,6 +75,21 @@ public class MazeView extends View {
             coins.add(coin);
         }
         createMaze();
+    }
+
+    private void initializePaint() {
+        wallPaint = new Paint();
+        wallPaint.setColor(Color.WHITE);
+        wallPaint.setStrokeWidth(4);
+
+        playerPaint = new Paint();
+        playerPaint.setColor(Color.RED);
+
+        exitPaint = new Paint();
+        exitPaint.setColor(Color.BLUE);
+
+        coinPaint = new Paint();
+        coinPaint.setColor(Color.YELLOW);
     }
 
     private void createMaze(){
@@ -317,7 +323,7 @@ public class MazeView extends View {
             Coin coin = itr.next();
             if (player.getX() == coin.getX() && player.getY()== coin.getY()) {
                 itr.remove();
-                player.addCoin();
+                playerObj.addCoin();
             }
         }
     }
