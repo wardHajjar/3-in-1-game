@@ -47,9 +47,6 @@ public class MazeView extends View {
     private int numMazeCols = 10;
     private int numMazeRows = 10;
 
-    /** The line thickness of the walls. */
-    private static final float wallThickness = 4;
-
     /** The horizontal and vertical margin from the edge of the screen to the walls of the maze */
     float cellSize;
     float horizontalPadding;
@@ -83,7 +80,7 @@ public class MazeView extends View {
     private void initializePaint() {
         wallPaint = new Paint();
         wallPaint.setColor(Color.WHITE);
-        wallPaint.setStrokeWidth(wallThickness);
+        wallPaint.setStrokeWidth(4);
 
         playerPaint = new Paint();
         playerPaint.setColor(Color.RED);
