@@ -1,10 +1,14 @@
 package com.example.dungeonescape.brickbreaker;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.dungeonescape.R;
+import com.example.dungeonescape.Maze.MazeActivity;
 
 /**
  * The main activity of the game (entry point).
@@ -26,6 +30,17 @@ public class BBMainActivity extends Activity {
         setContentView(R.layout.activity_brick_breaker_main);
         gameView = findViewById(R.id.BBView2);
         setTitle("Level1: Brick Breaker");
+
+        Button nextButton = (Button) findViewById(R.id.nextlvl);
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(BBMainActivity.this, MazeActivity.class);
+                startActivity(intent);
+            }
+        });
+
         running = true;
 
         // Thread code is from the following Youtube Video, however, body of run() is original.
