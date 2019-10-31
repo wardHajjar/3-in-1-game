@@ -46,7 +46,7 @@ class BBGameManager {
 
         // assign coins to random bricks
         coins = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 3; i++) {
             Collections.shuffle(bricks);
             Brick curr = bricks.get(0);
             while (curr.hasCoin()){     // shuffle again if the current brick has a coin

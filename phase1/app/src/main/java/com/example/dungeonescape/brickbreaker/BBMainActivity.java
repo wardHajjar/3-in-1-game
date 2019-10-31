@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.example.dungeonescape.Maze.MazeActivity;
 import com.example.dungeonescape.Player;
 import com.example.dungeonescape.R;
+import com.example.dungeonescape.Dead;
 
 /**
  * The main activity of the game (entry point).
@@ -77,6 +78,10 @@ public class BBMainActivity extends Activity {
                                         nextLevel();
                                         running = false;
                                     }
+                                    if (player.getNumLives() == 0){
+                                        endGame();
+                                        running = false;
+                                    }
                                 }
                             }
                         });
@@ -113,6 +118,11 @@ public class BBMainActivity extends Activity {
     protected void nextLevel(){
         Intent intent = new Intent(BBMainActivity.this, MazeActivity.class);
         intent.putExtra("Player", player);
+        startActivity(intent);
+    }
+
+    protected void endGame(){
+        Intent intent = new Intent(BBMainActivity.this, Dead.class);
         startActivity(intent);
     }
 }

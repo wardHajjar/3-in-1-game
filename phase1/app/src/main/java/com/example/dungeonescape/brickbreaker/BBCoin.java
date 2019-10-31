@@ -9,12 +9,10 @@ class BBCoin extends BBObject{
 
     private int radius;
     private boolean collect;
-    private boolean drawn;
     BBCoin(int x, int y, int radius) {
         super(x, y);
         this.radius = radius; // set appropriate radius
         collect = false;
-        drawn = false;
     }
 
     @Override
@@ -36,8 +34,5 @@ class BBCoin extends BBObject{
     boolean getCollectStatus() {
         return this.collect;
     }
-
-    boolean getDrawStatus(){ return this.drawn; }
-    void setVisible(){ this.drawn = true; }
 
 }

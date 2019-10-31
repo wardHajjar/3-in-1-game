@@ -10,10 +10,10 @@
         android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="456dp"
-        android:layout_marginEnd="125dp"
         android:layout_marginStart="137dp"
         android:layout_marginTop="256dp"
+        android:layout_marginEnd="125dp"
+        android:layout_marginBottom="456dp"
         android:text="Please enter your name"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -25,10 +25,10 @@
         android:id="@+id/text1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="52dp"
-        android:layout_marginEnd="163dp"
         android:layout_marginStart="179dp"
         android:layout_marginTop="179dp"
+        android:layout_marginEnd="163dp"
+        android:layout_marginBottom="52dp"
         android:text="New Game"
         android:textColor="@android:color/black"
         android:textSize="36sp"
@@ -42,8 +42,8 @@
         android:id="@+id/txtSub"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="336dp"
         android:layout_marginTop="60dp"
+        android:layout_marginBottom="336dp"
         android:hint="Name"
         android:inputType="text"
         android:textSize="24sp"
@@ -52,18 +52,71 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text" />
 
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="Select player colour"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/Enter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtSub">
+
+        <Button
+            android:id="@+id/colour1"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="#AD0000" />
+
+        <Space
+            android:layout_width="10dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/colour2"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="#4CAF50" />
+
+        <Space
+            android:layout_width="10dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/colour3"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="#FFC107" />
+    </LinearLayout>
+
     <Button
         android:id="@+id/Enter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="219dp"
-        android:layout_marginEnd="162dp"
         android:layout_marginStart="162dp"
-        android:layout_marginTop="72dp"
+        android:layout_marginEnd="162dp"
+        android:layout_marginBottom="120dp"
         android:text="Enter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtSub"
-        app:layout_constraintVertical_bias="0.666" />
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
