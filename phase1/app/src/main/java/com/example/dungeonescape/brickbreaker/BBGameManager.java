@@ -47,7 +47,8 @@ class BBGameManager extends GameManager {
         this.screenY = screenY;
         this.numLives = 5; //TODO: Change once difficulty level has been set
         this.numCoins = 0;
-//         assign coins to random bricks
+
+        // assign coins to random bricks
         coins = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
             Collections.shuffle(bricks);
@@ -98,10 +99,12 @@ class BBGameManager extends GameManager {
                 if (coinCollision.equals("x")) {
                     ball.setXSpeed(ball.getXSpeed() * -1);
                     currCoin.gotCollected();
+                    this.numCoins += 1;
                     break;
                 } else if (coinCollision.equals("y")) {
                     ball.setYSpeed(ball.getYSpeed() * -1);
                     currCoin.gotCollected();
+                    this.numCoins += 1;
                     break;
                 }
             }
@@ -115,8 +118,8 @@ class BBGameManager extends GameManager {
         }
 
         if (ball.getY() > paddle.getY()){
-            numLives -= 1;
             if (numLives != 0){
+                numLives -= 1;
                 ball.setX((paddle.getX() + paddle.getWidth()/2));
                 ball.setY(paddle.getY() - 1);
             } //TODO: If lives are 0, playing = false + GameOver screen
