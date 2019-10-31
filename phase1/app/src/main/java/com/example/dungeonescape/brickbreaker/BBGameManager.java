@@ -41,16 +41,16 @@ class BBGameManager extends GameManager {
                 bricks.add(new Brick(x, y, brickWidth, brickHeight));
             }
         }
-        // assign coins to random bricks
-//        coins = new ArrayList<>();
-//        for (int i = 0; i < 3; i++) {
-//            Collections.shuffle(bricks);
-//            Brick curr = bricks.get(0);
-//            BBCoin newCoin = new BBCoin(curr.x + curr.getWidth()/2,
-//                    curr.y + curr.getHeight()/2);
-//            curr.setCoin(newCoin);
-//            coins.add(newCoin);
-//        }
+//         assign coins to random bricks
+        coins = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            Collections.shuffle(bricks);
+            Brick curr = bricks.get(0);
+            BBCoin newCoin = new BBCoin(curr.x + curr.getWidth()/2,
+                    curr.y + curr.getHeight()/2);
+            curr.setCoin(newCoin);
+            coins.add(newCoin);
+        }
 
         this.screenX = screenX;
         this.screenY = screenY;
@@ -151,9 +151,9 @@ class BBGameManager extends GameManager {
             if (!curr.getHitStatus()) {
                 curr.draw(canvas);
             } else {    // draw if hit brick contains a coin to be collected
-//                if (curr.hasCoin() && !curr.coin.getCollectStatus()) {
-//                    curr.coin.draw(canvas);
-//                }
+                if (curr.hasCoin() && !curr.coin.getCollectStatus()) {
+                    curr.coin.draw(canvas);
+                }
             }
         }
     }
