@@ -32,18 +32,16 @@ public class BBMainActivity extends Activity {
         // Set the View we are using
         setContentView(R.layout.activity_brick_breaker_main);
         gameView = findViewById(R.id.BBView2);
-        setTitle("Level1: Brick Breaker");
+        setTitle("Level 1: Brick Breaker");
         Intent i = getIntent();
         player = (Player) i.getSerializableExtra("Player");
 
-        Button nextButton = (Button) findViewById(R.id.nextlvl);
+        Button nextButton = findViewById(R.id.nextlvl);
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 Intent intent = new Intent(BBMainActivity.this, MazeActivity.class);
-                intent.putExtra("lives", gameView.manager.getCharacterLives());
-                intent.putExtra("score", gameView.manager.getCharacterCoins());
                 intent.putExtra("Player", player);
                 startActivity(intent);
             }
