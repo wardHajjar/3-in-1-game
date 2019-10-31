@@ -2,12 +2,16 @@ package com.example.dungeonescape.brickbreaker;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.AttributeSet;
 import android.view.MotionEvent;
 
 import android.view.Display;
 import android.graphics.Point;
 import android.app.Activity;
+import android.widget.TextView;
+
 import com.example.dungeonescape.GameView;
+import com.example.dungeonescape.R;
 /*
 BBMainActivity and BBView were structured like the following game:
 http://gamecodeschool.com/android/building-a-simple-game-engine/
@@ -30,11 +34,19 @@ public class BBView extends GameView {
      * paddle - the paddle that catches the ball.
      * bricks - list of all the bricks in the game.
      */
-//    Ball ball;
-//    Paddle paddle;
-//    ArrayList<Brick> bricks;
+
     boolean startGame = false;
     BBGameManager manager;
+    public BBView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        Display display = ((Activity)context).getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        this.screenX = size.x;
+        this.screenY = size.y - 200;    // 200 accounts for the buttons above the playing screen.
+        System.out.println(screenY);
+        manager = new BBGameManager(screenX, screenY);
+    }
 
     /**
      * Initializes the surface in the context environment.
@@ -104,4 +116,6 @@ public class BBView extends GameView {
         }
         return super.onTouchEvent(event);
     }
+
+
 }

@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.dungeonescape.Maze.MazeActivity;
+import com.example.dungeonescape.brickbreaker.BBMainActivity;
 import com.example.dungeonescape.platformer.Level2MainActivity;
 import com.example.dungeonescape.platformer.PlatformerMainActivity;
 
@@ -32,7 +33,7 @@ public class MainActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(MainActivity.this, MazeActivity.class);
+                Intent intent = new Intent(MainActivity.this, BBMainActivity.class);
                 startActivity(intent);
             }
         });
