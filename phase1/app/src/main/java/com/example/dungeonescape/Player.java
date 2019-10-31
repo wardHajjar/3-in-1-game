@@ -26,7 +26,10 @@ public class Player implements Serializable {
         setNumCoins(0);
     }
 
-
+    public void lose_life() {
+        // lose 1 live
+        numLives -= 1;
+    }
     public String getName() {
         return name;
     }

@@ -78,6 +78,7 @@ public class MazeActivity extends MainActivity {
             public void onClick(View view) {
 
                 Intent intent = new Intent(MazeActivity.this, PlatformerMainActivity.class);
+                intent.putExtra("Player", player);
                 startActivity(intent);
             }
         });

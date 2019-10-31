@@ -37,7 +37,6 @@ class Character extends Level3Object {
         this.gameScore = 0;
         this.rect = new Rect(x-size/2,(int)(y + size/4),x+size/2,y+size/2);
         this.lives = 3;
-
     }
 
     void move() {
@@ -82,10 +81,8 @@ class Character extends Level3Object {
                     Rect bounds = new Rect();
                     this.oval.roundOut(bounds);
                 }
-
             }
         }
-
     }
     void coin_detection() {
         this.bottom = this.y+ (size/2);
@@ -93,9 +90,9 @@ class Character extends Level3Object {
         for(Coin coin: manager.getCoins()) {
             if (this.rect.intersect(coin.getRect())) {
                 coin.gotCoin();
+                manager.getPlayer().addCoin();
             }
         }
-
     }
 
     boolean isAlive() {
