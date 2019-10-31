@@ -21,7 +21,8 @@ import java.util.concurrent.TimeUnit;
 public class MazeActivity extends MainActivity {
 
     // initial time set in milliseconds
-    public long counter = 120000;
+    // public long counter = 120000;
+    public long counter = 6000;
     long minutes;
     long seconds;
     Player player;
@@ -58,6 +59,9 @@ public class MazeActivity extends MainActivity {
             public void onFinish() {
                 countTime.setTextColor(Color.WHITE);
                 countTime.setText("Game Over");
+
+                setContentView(R.layout.activity_maze_game_over);
+                configureStartOverButton();
             }
         }.start();
 
@@ -78,6 +82,18 @@ public class MazeActivity extends MainActivity {
             public void onClick(View view) {
 
                 Intent intent = new Intent(MazeActivity.this, PlatformerMainActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void configureStartOverButton() {
+        Button startOver = (Button) findViewById(R.id.startOver);
+        startOver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(MazeActivity.this, MazeActivity.class);
                 startActivity(intent);
             }
         });
