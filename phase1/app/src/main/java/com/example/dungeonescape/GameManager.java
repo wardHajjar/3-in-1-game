@@ -28,7 +28,7 @@ public class GameManager implements Serializable {
     Player getPlayer(String name) {
         Player p = players.get(0);
         for (Player player: players) {
-            if (player.getName() == name) {
+            if (player.getName().equals(name)) {
                 p = player;
                 break;
             }
