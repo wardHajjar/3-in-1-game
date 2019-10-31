@@ -20,10 +20,11 @@ import java.util.concurrent.TimeUnit;
 
 
 public class MazeActivity extends MainActivity {
+    private MazeView mazeView;
 
     // initial time set in milliseconds
-    public long counter = 120000; // 2 min
-    // public long counter = 6000; // 5s (for testing)
+//    public long counter = 120000; // 2 min
+     public long counter = 6000; // 5s (for testing)
     long minutes;
     long seconds;
     Player player;
@@ -32,11 +33,10 @@ public class MazeActivity extends MainActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maze);
-
-        // getting player instance from intent
         Intent i = getIntent();
         player = (Player) i.getSerializableExtra("Player");
-
+        mazeView = findViewById(R.id.view);
+        mazeView.setPlayer(player);
         // go to next game
         configureNextButton();
 
@@ -108,19 +108,19 @@ public class MazeActivity extends MainActivity {
     }
 
     public void movePlayerUp(View view){
-        MazeView mazeView = findViewById(R.id.view);
+//        MazeView mazeView = findViewById(R.id.view);
         mazeView.movePlayer("UP");
     }
     public void movePlayerDown(View view){
-        MazeView mazeView = findViewById(R.id.view);
+//        MazeView mazeView = findViewById(R.id.view);
         mazeView.movePlayer("DOWN");
     }
     public void movePlayerLeft(View view){
-        MazeView mazeView = findViewById(R.id.view);
+//        MazeView mazeView = findViewById(R.id.view);
         mazeView.movePlayer("LEFT");
     }
     public void movePlayerRight(View view){
-        MazeView mazeView = findViewById(R.id.view);
+//        MazeView mazeView = findViewById(R.id.view);
         mazeView.movePlayer("RIGHT");
     }
 }

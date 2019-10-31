@@ -37,7 +37,7 @@ public class MazeView extends View {
 
     /** Player and exit objects, and their positions. */
 
-    private GameObject player;
+    private Player player;
 
     private GameObject exit;
 
@@ -57,7 +57,6 @@ public class MazeView extends View {
     private Paint playerPaint;
     private Paint exitPaint;
     private Paint coinPaint;
-    private Player playerObj;
     private Random rand = new Random();
 
     /** Instantiates the MazeManager class for this Maze. */
@@ -66,8 +65,6 @@ public class MazeView extends View {
     public MazeView(Context context, AttributeSet attrs) {
         super(context, attrs);
         initializePaint();
-        player = new GameObject(0,0,1);
-        playerObj = new Player("player");
         //        create 5 coins at random locations.
         coins = new ArrayList<>();
         for (int i = 0; i<5; i++) {
@@ -90,6 +87,17 @@ public class MazeView extends View {
 
         coinPaint = new Paint();
         coinPaint.setColor(Color.YELLOW);
+    }
+
+    public void setPlayer(Player player){
+        this.player = player;
+        relocatePlayer();
+    }
+    public void relocatePlayer(){
+        if(player != null) {
+            player.setY(0);
+            player.setX(0);
+        }
     }
 
     private void createMaze(){
@@ -136,9 +144,8 @@ public class MazeView extends View {
             }
         } while (!stack.isEmpty());
         playerLoc = cells[0][0];
-        player.setX(0);
-        player.setY(0);
         exit = new GameObject(numMazeCols-1, numMazeRows-1, 1);
+        relocatePlayer();
     }
 
     private MazeCell getNeighbour(MazeCell cell) {
@@ -323,7 +330,7 @@ public class MazeView extends View {
             Coin coin = itr.next();
             if (player.getX() == coin.getX() && player.getY()== coin.getY()) {
                 itr.remove();
-                playerObj.addCoin();
+                player.addCoin();
             }
         }
     }
