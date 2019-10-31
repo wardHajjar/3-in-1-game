@@ -26,7 +26,7 @@ public class MazeActivity extends MainActivity {
     public long counter = 6000;
     long minutes;
     long seconds;
-    Player player;
+    Player player = new Player("player");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +38,6 @@ public class MazeActivity extends MainActivity {
 
         // getting player instance from intent
         Intent playerIntent = getIntent();
-        player = (Player) playerIntent.getSerializableExtra("Player");
 
         // countdown to losing the game
         final TextView countTime=findViewById(R.id.countTime);
@@ -102,8 +101,11 @@ public class MazeActivity extends MainActivity {
         startOver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                int updatedLives = player.getNumLives() - 1;
 
                 Intent intent = new Intent(MazeActivity.this, MazeActivity.class);
+                intent.putExtra("lives", updatedLives);
+                intent.putExtra("score", player.getScore());
                 startActivity(intent);
             }
         });
