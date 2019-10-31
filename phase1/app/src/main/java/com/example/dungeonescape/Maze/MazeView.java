@@ -306,11 +306,11 @@ public class MazeView extends View {
                 }
                 break;
         }
-        checkPos();
+        playerAtExit();
         invalidate();
     }
 
-    private void checkPos(){
+    private void playerAtExit(){
         // check if the player has arrived at the exit. Create a new maze if this has happened.
         if(player.getX() == exit.getX() && player.getY()== exit.getY())
             createMaze();
@@ -322,12 +322,6 @@ public class MazeView extends View {
                 playerObj.addCoin();
             }
         }
-//        for (Coin coin:coins) {
-//            if (player.getX() == coin.getX() && player.getY()== coin.getY()){
-//                player.addCoin();
-//                coins.remove(coin);
-//            }
-//        }
     }
 
     public int getNumMazeCols() {
