@@ -20,15 +20,24 @@ public class Player implements Serializable {
     private int numCoins;
 
     public Player(String name) {
-        this.name = name;
-        this.score = 0;
-        this.numLives = 0;
-        this.numCoins = 0;
+        setName(name);
+        setScore(0);
+        setNumLives(5);
+        setNumCoins(0);
     }
 
 
     public String getName() {
         return name;
+    }
+
+    /**
+     * Sets the Player's name.
+     *
+     * @param name the Player's updated name.
+     */
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getScore() {
