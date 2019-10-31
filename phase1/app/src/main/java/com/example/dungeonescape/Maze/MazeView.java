@@ -8,6 +8,7 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.example.dungeonescape.GameObject;
 import com.example.dungeonescape.Player;
 
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ public class MazeView extends View {
     private MazeCell[][] cells;
 
     /** Player and exit objects, and their positions. */
-    private Player player;
+    private GameObject player;
     private MazeCell playerLoc;
     private MazeCell exitLoc;
 
@@ -58,7 +59,7 @@ public class MazeView extends View {
 
     public MazeView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        player = new Player(0,0,1, "PLAYER");
+        player = new GameObject(0,0,1);
         wallPaint = new Paint();
         wallPaint.setColor(Color.WHITE);
         wallPaint.setStrokeWidth(wallThickness);

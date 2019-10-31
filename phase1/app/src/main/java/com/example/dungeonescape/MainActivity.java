@@ -11,14 +11,17 @@ import com.example.dungeonescape.Maze.MazeActivity;
 import com.example.dungeonescape.platformer.Level2MainActivity;
 import com.example.dungeonescape.platformer.PlatformerMainActivity;
 
-public class MainActivity extends AppCompatActivity {
+import java.io.Serializable;
+
+public class MainActivity extends AppCompatActivity{
     public GameManager gameManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        buttons();
+
         gameManager = new GameManager();
+        buttons();
     }
 
 
@@ -40,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 Intent intent = new Intent(MainActivity.this, NewGameActivity.class);
+                intent.putExtra("Game Manager", gameManager);
                 startActivity(intent);
             }
         });
@@ -50,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 Intent intent = new Intent(MainActivity.this, LoadGameActivity.class);
+                intent.putExtra("Game Manager", gameManager);
                 startActivity(intent);
             }
         });
