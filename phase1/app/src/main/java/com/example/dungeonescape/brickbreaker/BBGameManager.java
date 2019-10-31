@@ -123,6 +123,7 @@ class BBGameManager extends GameManager {
                 ball.setX((paddle.getX() + paddle.getWidth()/2));
                 ball.setY(paddle.getY() - 1);
             } //TODO: If lives are 0, playing = false + GameOver screen
+
         }
     }
 
@@ -190,6 +191,19 @@ class BBGameManager extends GameManager {
      */
     int getCharacterCoins(){
         return numCoins;
+    }
+
+    /**
+     * Checks whether all the bricks have been destroyed
+     * @return true if all bricks got destroyed.
+     */
+    boolean hitAllBricks(){
+        for (Brick brick: bricks){
+            if(!brick.getHitStatus()){
+                return false;
+            }
+        }
+        return true;
     }
 
 }

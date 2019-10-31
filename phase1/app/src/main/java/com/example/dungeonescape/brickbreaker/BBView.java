@@ -117,5 +117,12 @@ public class BBView extends GameView {
         return super.onTouchEvent(event);
     }
 
+    /**
+     * Indicates whether the user has succeeded in passing the level
+     * @return true if user passed.
+     */
+    public boolean doneLevel(){
+        return manager.hitAllBricks();
+    }
 
 }

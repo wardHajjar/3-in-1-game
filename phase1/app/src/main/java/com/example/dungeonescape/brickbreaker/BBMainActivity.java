@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.dungeonescape.Maze.MazeActivity;
 import com.example.dungeonescape.R;
 import com.example.dungeonescape.Maze.MazeActivity;
 
@@ -37,6 +38,8 @@ public class BBMainActivity extends Activity {
             public void onClick(View view) {
 
                 Intent intent = new Intent(BBMainActivity.this, MazeActivity.class);
+                intent.putExtra("lives", gameView.manager.getCharacterLives());
+                intent.putExtra("score", gameView.manager.getCharacterCoins());
                 startActivity(intent);
             }
         });
@@ -66,11 +69,11 @@ public class BBMainActivity extends Activity {
                                     String life = "Lives: " + lives;
                                     TextView lifeText = findViewById(R.id.lives);
                                     lifeText.setText(life);
-//                                    boolean doneLevel = gameView.nextLevel();
-//                                    if (doneLevel) {
-//                                        nextLevel();
-//                                        running = false;
-//                                    }
+                                    boolean gameOver = gameView.doneLevel();
+                                    if (gameOver) {
+                                        nextLevel();
+                                        running = false;
+                                    }
                                 }
                             }
                         });
@@ -100,5 +103,12 @@ public class BBMainActivity extends Activity {
     protected void onPause() {
         super.onPause();
         gameView.pause();
+    }
+
+    protected void nextLevel(){
+        Intent intent = new Intent(BBMainActivity.this, MazeActivity.class);
+        intent.putExtra("lives", gameView.manager.getCharacterLives());
+        intent.putExtra("score", gameView.manager.getCharacterCoins());
+        startActivity(intent);
     }
 }
