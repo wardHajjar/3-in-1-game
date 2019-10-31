@@ -33,10 +33,16 @@ public class Player extends GameObject implements Serializable {
         setNumCoins(0);
     }
 
+    /** Adds 1 coin to this Player. */
+    public void addCoin(){
+        setNumCoins(getNumCoins() + 1);
+    }
+
+    /** Causes this Player to lose one life. */
     public void loseLife() {
-        // lose 1 live
         setNumLives(getNumLives() - 1);
     }
+
     public String getName() {
         return name;
     }
@@ -87,9 +93,5 @@ public class Player extends GameObject implements Serializable {
      */
     public void setNumCoins(int numCoins) {
         this.numCoins = numCoins;
-    }
-
-    public void addCoin(){
-        this.numCoins += 1;
     }
 }

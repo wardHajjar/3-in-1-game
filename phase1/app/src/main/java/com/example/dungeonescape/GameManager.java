@@ -35,6 +35,7 @@ public class GameManager implements Serializable {
             player.setNumLives(player.getNumLives() - 1);
         }
     }
+
     Player getPlayer(String name) {
         Player p = players.get(0);
         for (Player player: players) {
