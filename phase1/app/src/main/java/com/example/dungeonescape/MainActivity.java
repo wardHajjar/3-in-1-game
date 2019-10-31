@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity{
             public void onClick(View view) {
 
                 Intent intent = new Intent(MainActivity.this, BBMainActivity.class);
+                intent.putExtra("Game Manager", gameManager);
                 startActivity(intent);
             }
         });

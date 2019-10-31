@@ -4,6 +4,8 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.RectF;
 
+import com.example.dungeonescape.Player;
+
 import java.util.Random;
 
 import java.util.*;
@@ -23,6 +25,7 @@ class PlatformerManager {
     private ArrayList<Platforms> platforms;
     private Character character;
     private ArrayList<Coin> coins;
+    Player player;
 
     int getCharacterLives(){
         return character.getLives();
@@ -30,7 +33,6 @@ class PlatformerManager {
     void setCharacterLives(int lives){
         character.setLives(lives);
     }
-
 
     int getGridWidth() {
         return gridWidth;
@@ -45,9 +47,18 @@ class PlatformerManager {
         return coins;
     }
 
-    Character getCharacter() {
-        return character;
+    void setPlayer(Player player){
+        player.setNumCoins(this.player.getNumCoins() + player.getNumCoins());
+        if (!(this.player.getNumLives() == 5)) {
+            player.setNumLives(player.getNumLives() - (5 - this.player.getNumLives()));
+        }
+        this.player = player;
     }
+
+    public Player getPlayer() {
+        return player;
+    }
+
     int getCharacterScore(){
         return character.getGamescore();
     }
@@ -57,7 +68,7 @@ class PlatformerManager {
      */
     PlatformerManager() {
         character = new Character(50,1000,100, this);
-
+        player = new Player("temp");
         gridHeight = 1684;
         gridWidth = 1080;
         platforms = createPlatforms();
@@ -98,18 +109,13 @@ class PlatformerManager {
     void right_button() {
         character.move_right();
     }
-
-
     boolean update() {
 
         character.move();
-
-
         character.coin_detection();
         boolean alive = character.isAlive();
         if (!alive) {
-            character.setLives(character.getLives()-1);
-//            user.setNumLives(user.getNumLives()-1); //this is for when we'll be able to reference from player class
+            player.lose_life();
             return false;
         }
 
@@ -123,14 +129,12 @@ class PlatformerManager {
             for (int i = 0; i < platforms.size(); i++) {
                 platforms.get(i).update(diff);
             }
-
         }
         return true;
     }
 
     boolean finishedLevel() {
         return (character.getGamescore() > 10);
-
     }
 
 }

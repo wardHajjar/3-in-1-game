@@ -5,11 +5,14 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.os.Bundle;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+
+import com.example.dungeonescape.Player;
 
 public class Level2View extends SurfaceView implements Runnable{
     private PlatformerManager manager;
@@ -42,6 +45,10 @@ public class Level2View extends SurfaceView implements Runnable{
     /**
      * The method that runs the program's while loop.
      */
+    public void setData(Player data)
+    {
+        manager.setPlayer(data);
+    }
 
     @Override
     public void run(){
@@ -55,25 +62,21 @@ public class Level2View extends SurfaceView implements Runnable{
                 update();
             }
             // Draw the frame
-
             draw();
-
             timeThisFrame = System.currentTimeMillis() - startFrameTime;
             if (timeThisFrame >= 1) {   // Calculating the fps
                 fps = 1000 / timeThisFrame;
             }
-
-
         }
     }
 
     public void draw() {
         if (holder.getSurface().isValid()) {
-          // Lock the canvas ready to draw
-          canvas = holder.lockCanvas();
-          canvas.drawColor(Color.WHITE);
-          manager.draw(canvas);
-          holder.unlockCanvasAndPost(canvas);
+            // Lock the canvas ready to draw
+            canvas = holder.lockCanvas();
+            canvas.drawColor(Color.WHITE);
+            manager.draw(canvas);
+            holder.unlockCanvasAndPost(canvas);
 
         }
     }
@@ -84,22 +87,22 @@ public class Level2View extends SurfaceView implements Runnable{
 
         boolean alive = manager.update();
         if (!alive) {
-            //            user.setNumLives(user.getNumLives()-1); //this is for when we'll be able to reference from player class
-            manager.setCharacterLives(manager.getCharacterLives()-1);
-            gameOver();
-
+            gameOver(manager.getPlayer());
         }
+
         boolean finishedLevel = manager.finishedLevel();
         if (finishedLevel) {
             nextLevel = true;
         }
     }
 
-    public void gameOver() {
+    public void gameOver(Player player) {
         manager = new PlatformerManager();
+        manager.setPlayer(player);
         holder = getHolder();
         setFocusable(true);
         setZOrderOnTop(true);
+
     }
 
     public boolean nextLevel() {
@@ -124,4 +127,5 @@ public class Level2View extends SurfaceView implements Runnable{
         thread = new Thread(this);
         thread.start();
     }
+
 }

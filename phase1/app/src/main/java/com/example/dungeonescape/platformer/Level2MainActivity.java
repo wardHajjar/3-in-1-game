@@ -3,28 +3,48 @@ package com.example.dungeonescape.platformer;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Canvas;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.AttributeSet;
+import android.util.Log;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.dungeonescape.MainActivity;
+import com.example.dungeonescape.Player;
 import com.example.dungeonescape.R;
 
+import java.util.logging.Level;
 
 
 public class Level2MainActivity extends AppCompatActivity {
     private Level2View game;
     private boolean running;
+    Player player;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Set the View we are using
+        Intent i = getIntent();
+        player = (Player) i.getSerializableExtra("Player");
+
         setContentView(R.layout.activity_level2_main);
         game = findViewById(R.id.level2);
+
+        // getting player instance from intent
+        //pass player into manager
+        game.getManager().setPlayer(player);
+
         setTitle("Level3: Platformer");
+
+
         // Set Buttons
         buttons();
         running = true;
@@ -42,14 +62,16 @@ public class Level2MainActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 if (running) {
+
                                     // Update the score shown
+
                                     int score = game.getManager().getCharacterScore();
                                     String scr = String.valueOf(score) ;
                                     String scre = "Score: " + scr;
 
                                     TextView score1 = (TextView) findViewById(R.id.score);
                                     score1.setText(scre);
-                                    int lives = game.getManager().getCharacterLives();
+                                    int lives = game.getManager().getPlayer().getNumLives();
                                     String life = "Lives: " + String.valueOf(lives);
                                     TextView lifeText = (TextView) findViewById(R.id.lives);
                                     lifeText.setText(life);
@@ -64,7 +86,6 @@ public class Level2MainActivity extends AppCompatActivity {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-
                 }
             }
         };
