@@ -2,6 +2,8 @@ package com.example.dungeonescape;
 
 import java.io.Serializable;
 
+import android.graphics.Color;
+
 /**
  * Represents a Player in the Game.
  */
@@ -19,18 +21,22 @@ public class Player extends GameObject implements Serializable {
     /** The number of coins this Player has. */
     private int numCoins;
 
+    private int colour;
+
     public Player(int x,int y,int z, String name) {
         super(0,0,0);
         setName(name);
         setScore(0);
         setNumLives(5);
         setNumCoins(0);
+        setColour(Color.WHITE);
     }
     public Player(String name){
         setName(name);
         setScore(0);
         setNumLives(5);
         setNumCoins(0);
+        setColour(Color.WHITE);
     }
 
     /** Adds 1 coin to this Player. */
@@ -94,4 +100,21 @@ public class Player extends GameObject implements Serializable {
     public void setNumCoins(int numCoins) {
         this.numCoins = numCoins;
     }
+
+    /**
+     * Sets the color of the player's character.
+     * @param colour the new color to set the character to.
+     */
+    public void setColour(int colour){
+        this.colour = colour;
+    }
+
+    /**
+     * Returns the player's character colour.
+     * @return integer value of the player's color.
+     */
+    public int getColour(){
+        return this.colour;
+    }
+
 }

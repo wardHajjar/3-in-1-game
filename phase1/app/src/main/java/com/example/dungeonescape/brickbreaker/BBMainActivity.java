@@ -121,8 +121,13 @@ public class BBMainActivity extends Activity {
         startActivity(intent);
     }
 
+    /**
+     * User has lost the Game i.e. no more lives left.
+     */
     protected void endGame(){
         Intent intent = new Intent(BBMainActivity.this, Dead.class);
         startActivity(intent);
     }
+
+
 }
