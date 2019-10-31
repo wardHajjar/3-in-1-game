@@ -22,8 +22,8 @@ import java.util.concurrent.TimeUnit;
 public class MazeActivity extends MainActivity {
 
     // initial time set in milliseconds
-    // public long counter = 120000;
-    public long counter = 6000;
+    public long counter = 120000; // 2 min
+    // public long counter = 6000; // 5s (for testing)
     long minutes;
     long seconds;
     Player player = new Player("player");
