@@ -45,9 +45,6 @@ public class MazeView extends View {
     private int numMazeCols = 5;
     private int numMazeRows = 5;
 
-    /** The MazeCell size in pixels. */
-    float cellSize;
-
     /** The horizontal and vertical margin from the edge of the screen to the walls of the maze */
     float horizontalPadding;
     float verticalPadding;
@@ -188,7 +185,7 @@ public class MazeView extends View {
 
         mazeManager.calculateCellSize(screenWidth, screenHeight,
                 mazeCols, mazeRows);
-        cellSize = mazeManager.getCellSize();
+        float cellSize = mazeManager.getCellSize();
 
         horizontalPadding = mazeManager.calculateCellHorizontalPadding(screenWidth,
                 mazeCols, cellSize);
@@ -201,10 +198,10 @@ public class MazeView extends View {
         float margin = cellSize / 10;
 
         // draws walls, Coins, the Player and the exit square on the screen
-        paintWalls(canvas, mazeCols, mazeRows);
-        paintCoins(canvas, margin);
-        paintPlayer(canvas, margin);
-        paintExit(canvas, margin);
+        paintWalls(canvas, mazeCols, mazeRows, cellSize);
+        paintCoins(canvas, cellSize, margin);
+        paintPlayer(canvas, cellSize, margin);
+        paintExit(canvas, cellSize, margin);
     }
 
     /** Draws walls (borders) for each mazeCell.
@@ -213,7 +210,7 @@ public class MazeView extends View {
      * @param mazeCols the number of columns in this Maze.
      * @param mazeRows the number of rows in this Maze.
      */
-    private void paintWalls(Canvas canvas, int mazeCols, int mazeRows) {
+    private void paintWalls(Canvas canvas, int mazeCols, int mazeRows, float cellSize) {
         Paint mazeWallPaint = mazeManager.getWallPaint();
 
         for(int x = 0; x < mazeCols; x++) {
@@ -259,7 +256,7 @@ public class MazeView extends View {
      * @param canvas the Canvas to draw the Coins on.
      * @param margin the space around the Coin circles.
      */
-    private void paintCoins(Canvas canvas, float margin) {
+    private void paintCoins(Canvas canvas, float cellSize, float margin) {
         Paint mazeCoinPaint = mazeManager.getCoinPaint();
 
         for (Coin coin : coins) {
@@ -277,7 +274,7 @@ public class MazeView extends View {
      * @param canvas the Canvas to draw the Player on.
      * @param margin the space around the Player square.
      */
-    private void paintPlayer(Canvas canvas, float margin) {
+    private void paintPlayer(Canvas canvas, float cellSize, float margin) {
         Paint mazePlayerPaint = mazeManager.getPlayerPaint();
         int playerX = player.getX();
         int playerY = player.getY();
@@ -295,7 +292,7 @@ public class MazeView extends View {
      * @param canvas the Canvas to draw the exit on.
      * @param margin the space around the square.
      */
-    private void paintExit(Canvas canvas, float margin) {
+    private void paintExit(Canvas canvas, float cellSize, float margin) {
         Paint mazeExitPaint = mazeManager.getExitPaint();
         int exitX = exit.getX();
         int exitY = exit.getY();
