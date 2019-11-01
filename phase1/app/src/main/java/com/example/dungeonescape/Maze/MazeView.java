@@ -45,16 +45,14 @@ public class MazeView extends View {
     private int numMazeCols = 5;
     private int numMazeRows = 5;
 
-    /** The horizontal and vertical margin from the edge of the screen to the walls of the maze */
+    /** The MazeCell size in pixels. */
     float cellSize;
+
+    /** The horizontal and vertical margin from the edge of the screen to the walls of the maze */
     float horizontalPadding;
     float verticalPadding;
 
-    /** Represents the colour of the objects to be printed. */
-//    private Paint wallPaint;
-//    private Paint playerPaint;
-//    private Paint exitPaint;
-//    private Paint coinPaint;
+    /** A randomizer. */
     private Random rand = new Random();
 
     /** Instantiates the MazeManager class for this Maze. */
