@@ -274,12 +274,24 @@ public class MazeView extends View {
                 (player.getY()+1)*cellSize-margin,
                 mazePlayerPaint);
 
+        paintExit(canvas, margin);
+    }
+
+    /** Draws the exit square on the screen.
+     *
+     * @param canvas the Canvas to draw the exit on.
+     * @param margin the space around the square.
+     */
+    private void paintExit(Canvas canvas, float margin) {
         Paint mazeExitPaint = mazeManager.getExitPaint();
+        int exitX = exit.getX();
+        int exitY = exit.getY();
+
         canvas.drawRect(
-                exit.getX()*cellSize+margin,
-                exit.getY()*cellSize+margin,
-                (exit.getX()+1)*cellSize-margin,
-                (exit.getY()+1)*cellSize-margin,
+                exitX * cellSize + margin,
+                exitY * cellSize + margin,
+                (exitX + 1) * cellSize - margin,
+                (exitY + 1) * cellSize - margin,
                 mazeExitPaint);
     }
 
