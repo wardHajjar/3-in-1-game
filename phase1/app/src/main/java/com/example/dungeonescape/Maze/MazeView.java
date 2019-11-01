@@ -65,15 +65,21 @@ public class MazeView extends View {
 
     public MazeView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        createMaze();
+        createCoins();
         initializePaint();
+    }
 
-        // create 5 coins at random locations.
+    /** Adds 5 Coins to the coins ArrayList, in random locations. */
+    private void createCoins() {
         coins = new ArrayList<>();
+        int mazeCols = getNumMazeCols();
+        int mazeRows = getNumMazeRows();
+
         for (int i = 0; i < 5; i++) {
-            Coin coin = new Coin(rand.nextInt(numMazeCols), rand.nextInt(numMazeRows));
+            Coin coin = new Coin(rand.nextInt(mazeCols), rand.nextInt(mazeRows));
             coins.add(coin);
         }
-        createMaze();
     }
 
     public boolean doneLevel() {
@@ -332,7 +338,7 @@ public class MazeView extends View {
         }
     }
 
-    /** Checks if this Player has arrived at the exit, create a new maze if true. */
+    /** Checks if this Player has arrived at the exit, create a new Maze if true. */
     private void playerAtExit() {
         if (player.getX() == exit.getX() && player.getY() == exit.getY()) {
             mazeIterations++;
