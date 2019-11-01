@@ -139,7 +139,7 @@ public class BBMainActivity extends Activity {
         // time at which the user has finished the level.
         long endTime = SystemClock.elapsedRealtime();
         long elapsedMilliSeconds = endTime - startTime;
-        gameManager.updateTotalTime(elapsedMilliSeconds);
+        player.updateTotalTime(elapsedMilliSeconds);
         save();
         //Intent intent = new Intent(BBMainActivity.this, MazeActivity.class);
         Intent intent = new Intent(BBMainActivity.this, MazeActivityInstructions.class);
@@ -155,7 +155,7 @@ public class BBMainActivity extends Activity {
         // time at which the user has lost.
         long endTime = SystemClock.elapsedRealtime();
         long elapsedMilliSeconds = endTime - startTime;
-        gameManager.updateTotalTime(elapsedMilliSeconds);
+        player.updateTotalTime(elapsedMilliSeconds);
         Intent intent = new Intent(BBMainActivity.this, Dead.class);
         save();
         intent.putExtra("Player", player);
