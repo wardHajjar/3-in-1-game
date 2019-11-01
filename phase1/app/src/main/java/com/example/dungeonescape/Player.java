@@ -47,6 +47,7 @@ public class Player extends GameObject implements Serializable {
         setColour(Color.WHITE);
         setCurrentLevel(1);
         totalTimePlayed = 0;
+        setDifficulty("Easy");
     }
     public Player(String name){
         setName(name);
@@ -55,6 +56,7 @@ public class Player extends GameObject implements Serializable {
         setNumCoins(0);
         setColour(Color.WHITE);
         setCurrentLevel(1);
+        setDifficulty("Easy");
     }
 
     /** Sets this Player's Current Level. */
