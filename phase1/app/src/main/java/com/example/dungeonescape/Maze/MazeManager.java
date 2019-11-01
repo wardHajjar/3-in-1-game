@@ -8,10 +8,10 @@ import android.graphics.Paint;
  */
 public class MazeManager {
 
-    Paint wallPaint;
-    Paint playerPaint;
-    Paint exitPaint;
-    Paint coinPaint;
+    private Paint wallPaint;
+    private Paint playerPaint;
+    private Paint exitPaint;
+    private Paint coinPaint;
 
     public MazeManager() {
         initializePaint();
@@ -30,6 +30,22 @@ public class MazeManager {
 
         coinPaint = new Paint();
         coinPaint.setColor(Color.YELLOW);
+    }
+
+    public Paint getWallPaint() {
+        return wallPaint;
+    }
+
+    public Paint getPlayerPaint() {
+        return playerPaint;
+    }
+
+    public Paint getExitPaint() {
+        return exitPaint;
+    }
+
+    public Paint getCoinPaint() {
+        return coinPaint;
     }
 
     /** Calculates the cellSize based on the screen's dimensions.

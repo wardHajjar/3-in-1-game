@@ -221,7 +221,7 @@ public class MazeView extends View {
                             y * cellSize,
                             (x + 1) * cellSize,
                             y * cellSize,
-                            mazeManager.wallPaint);
+                            mazeManager.getWallPaint());
                 }
                 if (cells[x][y].isLeftWall()) {
                     canvas.drawLine(
@@ -229,7 +229,7 @@ public class MazeView extends View {
                             y * cellSize,
                             x * cellSize,
                             (y + 1) * cellSize,
-                            mazeManager.wallPaint);
+                            mazeManager.getWallPaint());
                 }
                 if (cells[x][y].isBottomWall()) {
                     canvas.drawLine(
@@ -237,7 +237,7 @@ public class MazeView extends View {
                             (y + 1) * cellSize,
                             (x + 1) * cellSize,
                             (y + 1) * cellSize,
-                            mazeManager.wallPaint);
+                            mazeManager.getWallPaint());
                 }
                 if (cells[x][y].isRightWall()) {
                     canvas.drawLine(
@@ -245,7 +245,7 @@ public class MazeView extends View {
                             y * cellSize,
                             (x + 1) * cellSize,
                             (y + 1) * cellSize,
-                            mazeManager.wallPaint);
+                            mazeManager.getWallPaint());
                 }
             }
         }
@@ -258,7 +258,7 @@ public class MazeView extends View {
                     coin.getY() * cellSize+margin,
                     (coin.getX() + 1) * cellSize-margin,
                     (coin.getY() + 1) * cellSize-margin,
-                    mazeManager.coinPaint
+                    mazeManager.getCoinPaint()
             );
         }
 
@@ -267,14 +267,14 @@ public class MazeView extends View {
                 player.getY()*cellSize+margin,
                 (player.getX()+1)*cellSize-margin,
                 (player.getY()+1)*cellSize-margin,
-                mazeManager.playerPaint);
+                mazeManager.getPlayerPaint());
 
         canvas.drawRect(
                 exit.getX()*cellSize+margin,
                 exit.getY()*cellSize+margin,
                 (exit.getX()+1)*cellSize-margin,
                 (exit.getY()+1)*cellSize-margin,
-                mazeManager.exitPaint);
+                mazeManager.getExitPaint());
     }
 
     void movePlayer(String direction){
