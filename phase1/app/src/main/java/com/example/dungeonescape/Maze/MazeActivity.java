@@ -1,6 +1,5 @@
 package com.example.dungeonescape.Maze;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -10,7 +9,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.dungeonescape.GameManager;
-import com.example.dungeonescape.GameView;
 import com.example.dungeonescape.MainActivity;
 import com.example.dungeonescape.Player;
 import com.example.dungeonescape.R;
@@ -19,7 +17,6 @@ import com.example.dungeonescape.platformer.PlatformerMainActivity;
 
 import java.io.File;
 import java.util.Locale;
-import java.util.concurrent.TimeUnit;
 
 
 public class MazeActivity extends MainActivity {
@@ -62,7 +59,7 @@ public class MazeActivity extends MainActivity {
 
             @Override
             public void onFinish() {
-                setContentView(R.layout.activity_maze_game_over);
+                setContentView(R.layout.activity_maze_lose_life);
 
                 player.loseLife();
                 int playerLivesLeft = player.getNumLives();
