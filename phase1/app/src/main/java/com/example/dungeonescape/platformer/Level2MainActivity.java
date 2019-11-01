@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.SurfaceHolder;
@@ -21,6 +22,7 @@ import com.example.dungeonescape.GameManager;
 import com.example.dungeonescape.GeneralGameActivity;
 import com.example.dungeonescape.MainActivity;
 import com.example.dungeonescape.Player;
+import com.example.dungeonescape.PlayerStats;
 import com.example.dungeonescape.R;
 import com.example.dungeonescape.SaveData;
 
@@ -33,10 +35,13 @@ public class Level2MainActivity extends GeneralGameActivity {
     private boolean running;
     Player player;
     GameManager gameManager;
+    long startTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        startTime = SystemClock.elapsedRealtime();
         // Set the View we are using
         Intent i = getIntent();
         player = (Player) i.getSerializableExtra("Player");
@@ -104,12 +109,20 @@ public class Level2MainActivity extends GeneralGameActivity {
         t.start();
     }
     private void nextLevel() {
-        Intent intent = new Intent(Level2MainActivity.this, Level3FinishedActivity.class);
+        long endTime = SystemClock.elapsedRealtime();
+        long elapsedMilliSeconds = endTime - startTime;
+        player.updateTotalTime(elapsedMilliSeconds);
+        save();
+        Intent intent = new Intent(Level2MainActivity.this, PlayerStats.class);
         intent.putExtra("Player", player);
         intent.putExtra("Game Manager", gameManager);
         startActivity(intent);
     }
     private void deadPage() {
+        long endTime = SystemClock.elapsedRealtime();
+        long elapsedMilliSeconds = endTime - startTime;
+        player.updateTotalTime(elapsedMilliSeconds);
+        save();
         Intent intent = new Intent(Level2MainActivity.this, Dead.class);
         intent.putExtra("Player", player);
         intent.putExtra("Game Manager", gameManager);
