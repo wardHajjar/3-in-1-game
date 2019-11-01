@@ -24,11 +24,7 @@ public class Dead extends AppCompatActivity {
         gameManager = (GameManager) i.getSerializableExtra("Game Manager");
         player = (Player) i.getSerializableExtra("Player");
         buttons();
-        player.setNumCoins(0);
-        player.setNumLives(5);
-        player.setCurrentLevel(1);
-        player.setScore(0);
-        gameManager.updatePlayer(player.getName(), player);
+        player.resetStats();
         save();
     }
 
@@ -46,6 +42,7 @@ public class Dead extends AppCompatActivity {
         });
     }
     private void save() {
+        gameManager.updatePlayer(player.getName(), player);
         try {
             String filePath = this.getFilesDir().getPath() + "/GameState.txt";
             File f = new File(filePath);
@@ -57,6 +54,7 @@ public class Dead extends AppCompatActivity {
     }
 
     private void load() {
+
         try {
             String filePath = this.getFilesDir().getPath() + "/GameState.txt";
             File f = new File(filePath);
