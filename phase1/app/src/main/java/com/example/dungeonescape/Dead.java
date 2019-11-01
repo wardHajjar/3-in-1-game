@@ -13,7 +13,7 @@ import com.example.dungeonescape.brickbreaker.BBMainActivity;
 
 import java.io.File;
 
-public class Dead extends AppCompatActivity {
+public class Dead extends GeneralGameActivity {
     public GameManager gameManager;
     Player player;
 
@@ -26,7 +26,7 @@ public class Dead extends AppCompatActivity {
         player = (Player) i.getSerializableExtra("Player");
         buttons();
         player.resetStats();
-        save();
+        save(gameManager, player);
     }
 
     private void buttons() {
@@ -44,7 +44,7 @@ public class Dead extends AppCompatActivity {
         Button playAgain = findViewById(R.id.restart);
         playAgain.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                save();
+                save(gameManager, player);
                 Intent intent = new Intent(Dead.this, BBMainActivity.class);
                 intent.putExtra("Player", player);
                 intent.putExtra("Game Manager", gameManager);
@@ -53,16 +53,9 @@ public class Dead extends AppCompatActivity {
         });
     }
 
-    private void save() {
-        gameManager.updatePlayer(player.getName(), player);
-        try {
-            String filePath = this.getFilesDir().getPath() + "/GameState.txt";
-            File f = new File(filePath);
-            SaveData.save(gameManager, f);
-        }
-        catch (Exception e) {
-            System.out.println("Couldn't save: " + e.getMessage());
-        }
+    @Override
+    public void save(GameManager gameManager, Player player) {
+        super.save(gameManager, player);
     }
 
     private void load() {
