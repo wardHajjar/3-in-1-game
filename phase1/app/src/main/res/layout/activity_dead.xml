@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Dead">
+    tools:context=".Dead"
+    android:background="@drawable/dungeon">
 
     <TextView
         android:id="@+id/Title"
@@ -24,11 +25,11 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="207dp"
-        android:layout_marginEnd="162dp"
         android:layout_marginStart="162dp"
         android:layout_marginTop="16dp"
-        android:text="RESTART"
+        android:layout_marginEnd="162dp"
+        android:layout_marginBottom="207dp"
+        android:text="Restart"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
