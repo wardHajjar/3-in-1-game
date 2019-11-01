@@ -12,7 +12,7 @@ public class Player extends GameObject implements Serializable {
 
     /** The Player's score. */
     private int score;
-
+    private int currentLevel;
     /** The number of lives this Player has. */
     private int numLives;
 
@@ -25,14 +25,23 @@ public class Player extends GameObject implements Serializable {
         setScore(0);
         setNumLives(5);
         setNumCoins(0);
+        setCurrentLevel(1);
     }
     public Player(String name){
         setName(name);
         setScore(0);
         setNumLives(5);
         setNumCoins(0);
+        setCurrentLevel(1);
     }
-
+    /** Sets this Player's Current Level. */
+    public void setCurrentLevel (int level) {
+        this.currentLevel = level;
+    }
+    /** Gets this Player's Current level. */
+    public int getCurrentLevel () {
+        return this.currentLevel;
+    }
     /** Adds 1 coin to this Player. */
     public void addCoin(){
         setNumCoins(getNumCoins() + 1);

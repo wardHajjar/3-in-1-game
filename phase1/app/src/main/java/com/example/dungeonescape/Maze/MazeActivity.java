@@ -9,12 +9,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.dungeonescape.GameManager;
 import com.example.dungeonescape.GameView;
 import com.example.dungeonescape.MainActivity;
 import com.example.dungeonescape.Player;
 import com.example.dungeonescape.R;
+import com.example.dungeonescape.SaveData;
 import com.example.dungeonescape.platformer.PlatformerMainActivity;
 
+import java.io.File;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
@@ -35,6 +38,7 @@ public class MazeActivity extends MainActivity {
         setContentView(R.layout.activity_maze);
         Intent i = getIntent();
         player = (Player) i.getSerializableExtra("Player");
+        gameManager = (GameManager) i.getSerializableExtra("Game Manager");
         mazeView = findViewById(R.id.view);
         mazeView.setPlayer(player);
         // go to next game
@@ -66,7 +70,6 @@ public class MazeActivity extends MainActivity {
                 TextView textView = (TextView) findViewById(R.id.playerLives);
                 textView.setText(String.format(Locale.getDefault(),
                         "You have %d lives left.", playerLivesLeft));
-
                 configureStartOverButton();
             }
         }.start();
@@ -86,8 +89,10 @@ public class MazeActivity extends MainActivity {
 
             @Override
             public void onClick(View view) {
+                gameManager.updatePlayer(player.getName(), player);
                 Intent intent = new Intent(MazeActivity.this, PlatformerMainActivity.class);
                 intent.putExtra("Player", player);
+                intent.putExtra("Game Manager", gameManager);
                 startActivity(intent);
             }
         });
@@ -99,8 +104,10 @@ public class MazeActivity extends MainActivity {
 
             @Override
             public void onClick(View view) {
+                gameManager.updatePlayer(player.getName(), player);
                 Intent intent = new Intent(MazeActivity.this, MazeActivity.class);
                 intent.putExtra("Player", player);
+                intent.putExtra("Game Manager", gameManager);
                 startActivity(intent);
             }
         });
@@ -131,8 +138,22 @@ public class MazeActivity extends MainActivity {
      * User has successfully finished Maze and will now move on to Platformer.
      */
     protected void nextLevel(){
+        player.setCurrentLevel(3);
+        gameManager.updatePlayer(player.getName(), player);
+        save();
         Intent intent = new Intent(MazeActivity.this, PlatformerMainActivity.class);
         intent.putExtra("Player", player);
+        intent.putExtra("Game Manager", gameManager);
         startActivity(intent);
+    }
+    private void save() {
+        try {
+            String filePath = this.getFilesDir().getPath() + "/GameState.txt";
+            File f = new File(filePath);
+            SaveData.save(gameManager, f);
+        }
+        catch (Exception e) {
+            System.out.println("Couldn't save: " + e.getMessage());
+        }
     }
 }
