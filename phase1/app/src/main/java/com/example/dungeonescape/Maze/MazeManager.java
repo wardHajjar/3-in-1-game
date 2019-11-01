@@ -6,14 +6,20 @@ import android.graphics.Paint;
 /**
  * Managers all (visible) Maze GameObjects
  */
-public class MazeManager {
+class MazeManager {
+
+    private float cellSize;
 
     private Paint wallPaint;
     private Paint playerPaint;
     private Paint exitPaint;
     private Paint coinPaint;
 
-    public MazeManager() {
+    /** The horizontal and vertical margin from the edge of the screen to the walls of the maze */
+    private float horizontalPadding;
+    private float verticalPadding;
+
+    MazeManager() {
         initializePaint();
     }
 
@@ -32,19 +38,19 @@ public class MazeManager {
         coinPaint.setColor(Color.YELLOW);
     }
 
-    public Paint getWallPaint() {
+    Paint getWallPaint() {
         return wallPaint;
     }
 
-    public Paint getPlayerPaint() {
+    Paint getPlayerPaint() {
         return playerPaint;
     }
 
-    public Paint getExitPaint() {
+    Paint getExitPaint() {
         return exitPaint;
     }
 
-    public Paint getCoinPaint() {
+    Paint getCoinPaint() {
         return coinPaint;
     }
 
@@ -54,10 +60,9 @@ public class MazeManager {
      * @param screenHeight the height of the phone screen in pixels.
      * @param numMazeCols the number of columns this Maze has.
      * @param numMazeRows the number of rows this Maze has.
-     * @return the calculated cellSize.
      */
-    public float calculateCellSize(int screenWidth, int screenHeight, int numMazeCols,
-                                   int numMazeRows) {
+    void calculateCellSize(int screenWidth, int screenHeight,
+                           int numMazeCols, int numMazeRows) {
         float newCellSize;
         float screenWidthDivHeight = screenWidth / screenHeight;
         float mazeColsDivRows = numMazeCols / numMazeRows;
@@ -68,7 +73,7 @@ public class MazeManager {
             newCellSize = screenHeight / (numMazeRows + 1);
         }
 
-        return newCellSize;
+        setCellSize(newCellSize);
     }
 
     /**
@@ -77,10 +82,10 @@ public class MazeManager {
      * @param screenWidth the width of the phone screen in pixels.
      * @param numMazeCols the number of columns in this Maze.
      * @param cellSize the calculated size of the MazeCell.
-     * @return the calculated horizontalPadding.
      */
-    public float calculateCellHorizontalPadding(int screenWidth, int numMazeCols, float cellSize) {
-        return (float) ((screenWidth - (numMazeCols * cellSize)) / 2);
+    void calculateCellHorizontalPadding(int screenWidth, int numMazeCols, float cellSize) {
+        float newHorizontalPadding = (screenWidth - (numMazeCols * cellSize)) / 2;
+        setHorizontalPadding(newHorizontalPadding);
     }
 
     /**
@@ -89,9 +94,45 @@ public class MazeManager {
      * @param screenHeight the height of the phone screen in pixels.
      * @param numMazeRows the number of rows in this Maze.
      * @param cellSize the calculated size of the MazeCell.
-     * @return the calculated verticalPadding.
      */
-    public float calculateCellVerticalPadding(int screenHeight, int numMazeRows, float cellSize) {
-        return (float) ((screenHeight - (numMazeRows * cellSize)) / 2);
+    void calculateCellVerticalPadding(int screenHeight, int numMazeRows, float cellSize) {
+        float newVerticalPadding = (screenHeight - (numMazeRows * cellSize)) / 2;
+        setVerticalPadding(newVerticalPadding);
+    }
+
+    float getCellSize() {
+        return cellSize;
+    }
+
+    /** Sets the cellSize in pixel for all MazeCells.
+     *
+     * @param cellSize the new cellSize.
+     */
+    private void setCellSize(float cellSize) {
+        this.cellSize = cellSize;
+    }
+
+    float getHorizontalPadding() {
+        return horizontalPadding;
+    }
+
+    /** Sets the horizontalPadding for this Maze.
+     *
+     * @param horizontalPadding the new horizontalPadding of the Maze.
+     */
+    private void setHorizontalPadding(float horizontalPadding) {
+        this.horizontalPadding = horizontalPadding;
+    }
+
+    float getVerticalPadding() {
+        return verticalPadding;
+    }
+
+    /** Sets the verticalPadding for this Maze.
+     *
+     * @param verticalPadding the new verticalPadding of the Maze.
+     */
+    private void setVerticalPadding(float verticalPadding) {
+        this.verticalPadding = verticalPadding;
     }
 }
