@@ -3,23 +3,38 @@ package com.example.dungeonescape.Maze;
 import android.graphics.Color;
 import android.graphics.Paint;
 
+import androidx.annotation.ArrayRes;
+
+import com.example.dungeonescape.GameObject;
+import com.example.dungeonescape.platformer.Coin;
+
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.Stack;
+
 /**
  * Managers all (visible) Maze GameObjects
  */
 class MazeManager {
-
     private float cellSize;
+
+    private int numMazeCols;
+    private int numMazeRows;
 
     private Paint wallPaint;
     private Paint playerPaint;
     private Paint exitPaint;
     private Paint coinPaint;
 
+    private Random rand = new Random();
+
     /** The horizontal and vertical margin from the edge of the screen to the walls of the maze */
     private float horizontalPadding;
     private float verticalPadding;
 
-    MazeManager() {
+    MazeManager(int cols, int rows) {
+        numMazeCols = cols;
+        numMazeRows = rows;
         initializePaint();
     }
 
@@ -36,6 +51,123 @@ class MazeManager {
 
         coinPaint = new Paint();
         coinPaint.setColor(Color.YELLOW);
+    }
+
+    MazeCell[][] createMaze(){
+        /*
+         * Create a maze using a specific algorithm:
+         * 1. Create a maze with cols X rows of grids, every cell is closed off.
+         * 2. Start at the top left hand corner as the "current" cell, add this cell to a stack,
+         * traverse to a random neighbor cell that has not been visited before,
+         * and knock out the wall in between the two cells.
+         * 3. If all neighbors have been visited, then we traverse back to previous cell and pop a
+         * cell out of the stack, repeat until we arrive at a cell with unvisited neighbor or until
+         * the stack is empty.
+         * 4. Mark the new cell as the "current cell" and repeat until the stack is empty, which
+         * guarantees all cells are visited so all cells have a path through which we can access.
+         */
+        Stack<MazeCell> stack = new Stack<>();
+        MazeCell current, next;
+        int mazeCols = getNumMazeCols();
+        int mazeRows = getNumMazeRows();
+        MazeCell[][] cells = new MazeCell[mazeCols][mazeRows];
+        /*
+         * Creating a maze with cols X rows cells.
+         */
+        for (int x = 0; x < mazeCols; x++) {
+            for (int y = 0; y < mazeRows; y++) {
+                cells[x][y] = new MazeCell(x, y, 1);
+            }
+        }
+
+        current = cells[0][0];
+        current.setVisited(true);
+
+        //check for neighbors and remove walls until all cells are traversed.
+        do {
+            next = getNeighbour(current, cells);
+            if (next != null) {
+                removeWall(current, next);
+                stack.push(current);
+                current = next;
+                current.setVisited(true);
+            } else {
+                current = stack.pop();
+            }
+        } while (!stack.isEmpty());
+        return cells;
+    }
+
+    private MazeCell getNeighbour(MazeCell cell, MazeCell[][] cells) {
+        //get a random neighbor
+        ArrayList<MazeCell> neighbours = new ArrayList<>();
+        int cellX = cell.getX();
+        int cellY = cell.getY();
+        int mazeCols = getNumMazeCols();
+        int mazeRows = getNumMazeRows();
+
+        // left
+        if (cellX - 1 >= 0 && !cells[cellX - 1][cellY].isVisited()) {
+            neighbours.add(cells[cellX - 1][cellY]);
+        }
+
+        // right
+        if (cellX + 1 < mazeCols && !cells[cellX + 1][cellY].isVisited()) {
+            neighbours.add(cells[cellX + 1][cellY]);
+        }
+
+        // bottom
+        if (cellY + 1 < mazeRows && !cells[cellX][cellY + 1].isVisited()) {
+            neighbours.add(cells[cellX][cellY + 1]);
+        }
+
+        // top
+        if (cellY - 1 >= 0 && !cells[cellX][cellY - 1].isVisited()) {
+            neighbours.add(cells[cellX][cellY - 1]);
+        }
+
+        if (neighbours.isEmpty()) {
+            return null;
+        } else {
+            return neighbours.get(rand.nextInt(neighbours.size()));
+        }
+    }
+
+    /** Removes walls between this MazeCell and the next MazeCell, as long as they're not borders.
+     *
+     * @param current the current MazeCell.
+     * @param next the next MazeCell.
+     */
+    private void removeWall(MazeCell current, MazeCell next){
+        /* (x, y) coordinates for the current and next MazeCell. */
+        int currX = current.getX();
+        int currY = current.getY();
+        int nextX = next.getX();
+        int nextY = next.getY();
+
+        if (currX == nextX - 1) {
+            current.setRightWall(false);
+            next.setLeftWall(false);
+        } else if (currX == nextX + 1) {
+            current.setLeftWall(false);
+            next.setRightWall(false);
+        } else if (currY == nextY - 1) {
+            current.setBottomWall(false);
+            next.setTopWall(false);
+        } else {
+            current.setTopWall(false);
+            next.setBottomWall(false);
+        }
+    }
+
+    /** Adds 5 Coins to the coins ArrayList, in random locations. */
+    ArrayList<Coin> createCoins() {
+        ArrayList<Coin> coins = new ArrayList<Coin>();
+        for (int i = 0; i < 5; i++) {
+            Coin coin = new Coin(rand.nextInt(numMazeCols), rand.nextInt(numMazeRows));
+            coins.add(coin);
+        }
+        return coins;
     }
 
     /** Calculates the cellSize based on the screen's dimensions.
@@ -162,5 +294,13 @@ class MazeManager {
      */
     Paint getCoinPaint() {
         return coinPaint;
+    }
+
+    public int getNumMazeCols() {
+        return numMazeCols;
+    }
+
+    public int getNumMazeRows() {
+        return numMazeRows;
     }
 }
