@@ -28,6 +28,12 @@ public class Player extends GameObject implements Serializable {
     private int colour;
 
     /**
+     * The difficulty level that the user has chosen.
+     * Possible inputs: "Easy" or "Hard"
+     */
+    private String difficulty;
+
+    /**
      * The total time that the character has been playing the game for.
      */
     private long totalTimePlayed;
@@ -86,6 +92,14 @@ public class Player extends GameObject implements Serializable {
 
     public int getScore() {
         return score;
+    }
+
+    public String getDifficulty() {
+        return this.difficulty;
+    }
+
+    public void setDifficulty(String diff) {
+        this.difficulty = diff;
     }
 
     /**
@@ -160,8 +174,12 @@ public class Player extends GameObject implements Serializable {
      */
     public void resetStats() {
         setScore(0);
-        setNumLives(5);
         setNumCoins(0);
         setCurrentLevel(1);
+        if (this.getDifficulty().equals("Easy")) {
+            setNumLives(5);
+        } else if (this.getDifficulty().equals("Hard")) {
+            setNumLives(3);
+        }
     }
 }
