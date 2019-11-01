@@ -1,18 +1,16 @@
 package com.example.dungeonescape;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import com.example.dungeonescape.SaveData;
+
 import com.example.dungeonescape.R;
 import com.example.dungeonescape.brickbreaker.BBMainActivity;
 
 import java.io.File;
 
-public class Dead extends AppCompatActivity {
+public class Dead extends GeneralGameActivity {
     public GameManager gameManager;
     Player player;
 
@@ -25,12 +23,12 @@ public class Dead extends AppCompatActivity {
         player = (Player) i.getSerializableExtra("Player");
         buttons();
         player.resetStats();
-        save();
+        save(gameManager, player);
     }
 
     private void buttons() {
 
-        Button restart = (Button) findViewById(R.id.menu);
+        Button restart = findViewById(R.id.menu);
         restart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -43,7 +41,7 @@ public class Dead extends AppCompatActivity {
         Button playAgain = findViewById(R.id.restart);
         playAgain.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                save();
+                save(gameManager, player);
                 Intent intent = new Intent(Dead.this, BBMainActivity.class);
                 intent.putExtra("Player", player);
                 intent.putExtra("Game Manager", gameManager);
@@ -52,20 +50,12 @@ public class Dead extends AppCompatActivity {
         });
     }
 
-    private void save() {
-        gameManager.updatePlayer(player.getName(), player);
-        try {
-            String filePath = this.getFilesDir().getPath() + "/GameState.txt";
-            File f = new File(filePath);
-            SaveData.save(gameManager, f);
-        }
-        catch (Exception e) {
-            System.out.println("Couldn't save: " + e.getMessage());
-        }
+    @Override
+    public void save(GameManager gameManager, Player player) {
+        super.save(gameManager, player);
     }
 
     private void load() {
-
         try {
             String filePath = this.getFilesDir().getPath() + "/GameState.txt";
             File f = new File(filePath);
