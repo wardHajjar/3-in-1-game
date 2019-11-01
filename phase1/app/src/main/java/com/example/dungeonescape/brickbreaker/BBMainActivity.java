@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.dungeonescape.Maze.MazeActivity;
+import com.example.dungeonescape.Maze.MazeActivityInstructions;
 import com.example.dungeonescape.Player;
 import com.example.dungeonescape.R;
 import com.example.dungeonescape.Dead;
@@ -42,7 +43,7 @@ public class BBMainActivity extends Activity {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(BBMainActivity.this, MazeActivity.class);
+                Intent intent = new Intent(BBMainActivity.this, MazeActivityInstructions.class);
                 intent.putExtra("Player", player);
                 startActivity(intent);
             }
@@ -116,7 +117,7 @@ public class BBMainActivity extends Activity {
      * User has successfully finished Brick Breaker and will now move on to Maze.
      */
     protected void nextLevel(){
-        Intent intent = new Intent(BBMainActivity.this, MazeActivity.class);
+        Intent intent = new Intent(BBMainActivity.this, MazeActivityInstructions.class);
         intent.putExtra("Player", player);
         startActivity(intent);
     }
