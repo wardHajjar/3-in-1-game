@@ -8,7 +8,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.dungeonescape.GameManager;
-import com.example.dungeonescape.Maze.MazeActivity;
 import com.example.dungeonescape.Maze.MazeActivityInstructions;
 import com.example.dungeonescape.Player;
 import com.example.dungeonescape.R;
@@ -29,6 +28,9 @@ public class BBMainActivity extends Activity {
     boolean running;
     Player player;
     GameManager gameManager;
+    /**
+     * The time at which the brick breaker game has been started.
+     */
     long startTime;
     /**
      *
@@ -37,8 +39,9 @@ public class BBMainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Set the View we are using
+        // starts the clock
         startTime = SystemClock.elapsedRealtime();
+        // Set the View we are using
         setContentView(R.layout.activity_brick_breaker_main);
         gameView = findViewById(R.id.BBView2);
 
@@ -135,6 +138,7 @@ public class BBMainActivity extends Activity {
     protected void nextLevel(){
         player.setCurrentLevel(2);
         gameManager.updatePlayer(player.getName(), player);
+        // time at which the user has finished the level.
         long endTime = SystemClock.elapsedRealtime();
         long elapsedMilliSeconds = endTime - startTime;
         gameManager.updateTotalTime(elapsedMilliSeconds);
@@ -150,6 +154,7 @@ public class BBMainActivity extends Activity {
      * User has lost the Game i.e. no more lives left.
      */
     protected void endGame(){
+        // time at which the user has lost.
         long endTime = SystemClock.elapsedRealtime();
         long elapsedMilliSeconds = endTime - startTime;
         gameManager.updateTotalTime(elapsedMilliSeconds);
