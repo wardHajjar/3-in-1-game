@@ -36,6 +36,7 @@ public class MazeView extends View {
     private ArrayList<Coin> coins;
 
     /** Player and exit objects, and their positions. */
+
     private Player player;
     private GameObject exit;
     private MazeCell playerLoc;
@@ -44,10 +45,8 @@ public class MazeView extends View {
     private int numMazeCols = 5;
     private int numMazeRows = 5;
 
-    /** The size of each MazeCell in pixels. */
-    float cellSize;
-
     /** The horizontal and vertical margin from the edge of the screen to the walls of the maze */
+    float cellSize;
     float horizontalPadding;
     float verticalPadding;
 
@@ -59,7 +58,7 @@ public class MazeView extends View {
     private Random rand = new Random();
 
     /** Instantiates the MazeManager class for this Maze. */
-    private MazeManager mazeManager = new MazeManager();
+    private MazeManager thisMaze = new MazeManager();
 
     /** Number of times the Player has gone through the maze. */
     public int mazeIterations = 0;
@@ -68,23 +67,13 @@ public class MazeView extends View {
         super(context, attrs);
         initializePaint();
 
-        // Creates the Maze
-        createMaze();
-
-        // Creates the 5 Coins
-        createCoins();
-    }
-
-    /** Creates 5 Coins in the Maze, at random locations, by adding them to the coins ArrayList. */
-    private void createCoins() {
+        // create 5 coins at random locations.
         coins = new ArrayList<>();
-        int mazeCols = getNumMazeCols();
-        int mazeRows = getNumMazeRows();
-
         for (int i = 0; i < 5; i++) {
-            Coin coin = new Coin(rand.nextInt(mazeCols), rand.nextInt(mazeRows));
+            Coin coin = new Coin(rand.nextInt(numMazeCols), rand.nextInt(numMazeRows));
             coins.add(coin);
         }
+        createMaze();
     }
 
     public boolean doneLevel() {
@@ -209,11 +198,11 @@ public class MazeView extends View {
         int mazeCols = getNumMazeCols();
         int mazeRows = getNumMazeRows();
 
-        cellSize = mazeManager.calculateCellSize(screenWidth, screenHeight,
+        cellSize = thisMaze.calculateCellSize(screenWidth, screenHeight,
                 mazeCols, mazeRows);
-        horizontalPadding = mazeManager.calculateCellHorizontalPadding(screenWidth,
+        horizontalPadding = thisMaze.calculateCellHorizontalPadding(screenWidth,
                 mazeCols, cellSize);
-        verticalPadding = mazeManager.calculateCellVerticalPadding(screenHeight,
+        verticalPadding = thisMaze.calculateCellVerticalPadding(screenHeight,
                 mazeRows, cellSize);
         //translate the canvas by our padding values so the maze is always centered on our screen.
         canvas.translate(horizontalPadding, verticalPadding);
@@ -312,7 +301,7 @@ public class MazeView extends View {
                 break;
         }
         playerAtExit();
-        playerOnCoin();
+        // playerOnCoin();
         invalidate();
     }
 
@@ -350,9 +339,18 @@ public class MazeView extends View {
         int exitX = player.getX();
         int exitY = player.getY();
 
-        if (playerX == exitX && playerY == exitY) {
+        if (player.getX() == exit.getX() && player.getY() == exit.getY()) {
             mazeIterations++;
             createMaze();
+        }
+
+        Iterator<Coin> coinIterator = coins.iterator();
+        while (coinIterator.hasNext()) {
+            Coin coin = coinIterator.next();
+            if (player.getX() == coin.getX() && player.getY() == coin.getY()) {
+                coinIterator.remove();
+                player.addCoin();
+            }
         }
     }
 
@@ -360,17 +358,7 @@ public class MazeView extends View {
      * Removes Coin from game & adds it to Player if true.
      */
     private void playerOnCoin() {
-        Iterator<Coin> coinIterator = coins.iterator();
-        int playerX = player.getX();
-        int playerY = player.getY();
 
-        while (coinIterator.hasNext()) {
-            Coin coin = coinIterator.next();
-            if (playerX == coin.getX() && playerY == coin.getY()) {
-                coinIterator.remove();
-                player.addCoin();
-            }
-        }
     }
 
     public int getNumMazeCols() {
