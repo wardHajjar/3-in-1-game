@@ -89,7 +89,7 @@ public class MazeActivity extends MainActivity {
 
             @Override
             public void onClick(View view) {
-                gameManager.updatePlayer(player.getName(), player);
+                save();
                 Intent intent = new Intent(MazeActivity.this, PlatformerMainActivity.class);
                 intent.putExtra("Player", player);
                 intent.putExtra("Game Manager", gameManager);
@@ -104,7 +104,6 @@ public class MazeActivity extends MainActivity {
 
             @Override
             public void onClick(View view) {
-                gameManager.updatePlayer(player.getName(), player);
                 Intent intent = new Intent(MazeActivity.this, MazeActivity.class);
                 intent.putExtra("Player", player);
                 intent.putExtra("Game Manager", gameManager);
@@ -125,28 +124,31 @@ public class MazeActivity extends MainActivity {
         mazeView.movePlayer("LEFT");
         checkDoneLevel(view);
     }
+
     public void movePlayerRight(View view){
         mazeView.movePlayer("RIGHT");
         checkDoneLevel(view);
     }
+
     public void checkDoneLevel(View view){
         if (mazeView.doneLevel())
             nextLevel();
     }
-
     /**
      * User has successfully finished Maze and will now move on to Platformer.
      */
+
     protected void nextLevel(){
-        player.setCurrentLevel(3);
-        gameManager.updatePlayer(player.getName(), player);
         save();
         Intent intent = new Intent(MazeActivity.this, PlatformerMainActivity.class);
         intent.putExtra("Player", player);
         intent.putExtra("Game Manager", gameManager);
         startActivity(intent);
     }
+
     private void save() {
+        player.setCurrentLevel(3);
+        gameManager.updatePlayer(player.getName(), player);
         try {
             String filePath = this.getFilesDir().getPath() + "/GameState.txt";
             File f = new File(filePath);
