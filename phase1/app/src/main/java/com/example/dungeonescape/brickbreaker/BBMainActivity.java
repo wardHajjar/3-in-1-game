@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.dungeonescape.GameManager;
+import com.example.dungeonescape.GeneralGameActivity;
 import com.example.dungeonescape.Maze.MazeActivityInstructions;
 import com.example.dungeonescape.Player;
 import com.example.dungeonescape.R;
@@ -20,7 +21,7 @@ import java.io.File;
 /**
  * The main activity of the game (entry point).
  */
-public class BBMainActivity extends Activity {
+public class BBMainActivity extends GeneralGameActivity {
     /**
      * The game's view that updates and draws the objects within it.
      */
@@ -55,9 +56,7 @@ public class BBMainActivity extends Activity {
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                player.setCurrentLevel(2);
-                save();
+                save(gameManager, player);
                 //Intent intent = new Intent(BBMainActivity.this, MazeActivity.class);
                 Intent intent = new Intent(BBMainActivity.this, MazeActivityInstructions.class);
 
@@ -140,7 +139,7 @@ public class BBMainActivity extends Activity {
         long endTime = SystemClock.elapsedRealtime();
         long elapsedMilliSeconds = endTime - startTime;
         player.updateTotalTime(elapsedMilliSeconds);
-        save();
+        save(gameManager, player);
         //Intent intent = new Intent(BBMainActivity.this, MazeActivity.class);
         Intent intent = new Intent(BBMainActivity.this, MazeActivityInstructions.class);
         intent.putExtra("Player", player);
@@ -157,21 +156,15 @@ public class BBMainActivity extends Activity {
         long elapsedMilliSeconds = endTime - startTime;
         player.updateTotalTime(elapsedMilliSeconds);
         Intent intent = new Intent(BBMainActivity.this, Dead.class);
-        save();
+        save(gameManager, player);
         intent.putExtra("Player", player);
         intent.putExtra("Game Manager", gameManager);
         startActivity(intent);
     }
 
-    private void save() {
-        gameManager.updatePlayer(player.getName(), player);
-        try {
-            String filePath = this.getFilesDir().getPath() + "/GameState.txt";
-            File f = new File(filePath);
-            SaveData.save(gameManager, f);
-        }
-        catch (Exception e) {
-            System.out.println("Couldn't save: " + e.getMessage());
-        }
+    @Override
+    public void save(GameManager gameManager, Player player) {
+        super.save(gameManager, player);
+        player.setCurrentLevel(2);
     }
 }
