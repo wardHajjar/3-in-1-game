@@ -11,15 +11,15 @@
         android:id="@+id/Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="549dp"
         android:layout_marginTop="163dp"
-        android:text="OH OH YOU DIED!!!"
+        android:layout_marginBottom="549dp"
+        android:text="UH OH YOU DIED!!!"
         android:textColor="#FFF"
         android:textSize="36sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/restart"
