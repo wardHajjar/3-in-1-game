@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.example.dungeonescape.Dead;
 import com.example.dungeonescape.GameManager;
+import com.example.dungeonescape.GeneralGameActivity;
 import com.example.dungeonescape.MainActivity;
 import com.example.dungeonescape.Player;
 import com.example.dungeonescape.R;
@@ -27,7 +28,7 @@ import java.io.File;
 import java.util.logging.Level;
 
 
-public class Level2MainActivity extends AppCompatActivity {
+public class Level2MainActivity extends GeneralGameActivity {
     private Level2View game;
     private boolean running;
     Player player;
@@ -82,13 +83,12 @@ public class Level2MainActivity extends AppCompatActivity {
                                     boolean doneLevel = game.nextLevel();
                                     if (doneLevel) {
                                         nextLevel();
-                                        player.setCurrentLevel(3);
-                                        save();
+                                        save(gameManager, player);
                                         running = false;
                                     }
                                     boolean dead = game.dead();
                                     if (dead){
-                                        save();
+                                        save(gameManager, player);
                                         deadPage();
                                         running = false;
                                     }
@@ -154,16 +154,10 @@ public class Level2MainActivity extends AppCompatActivity {
         game.pause();
     }
 
-    private void save() {
-        gameManager.updatePlayer(player.getName(), player);
-        try {
-            String filePath = this.getFilesDir().getPath() + "/GameState.txt";
-            File f = new File(filePath);
-            SaveData.save(gameManager, f);
-        }
-        catch (Exception e) {
-            System.out.println("Couldn't save: " + e.getMessage());
-        }
+    @Override
+    public void save(GameManager gameManager, Player player) {
+        super.save(gameManager, player);
+        player.setCurrentLevel(3);
     }
 
 
