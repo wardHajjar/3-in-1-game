@@ -177,6 +177,10 @@ public class Player extends GameObject implements Serializable {
         totalTimePlayed = totalTimePlayed + timeElapsed;
     }
 
+    public void resetTime() {
+        totalTimePlayed = 0;
+    }
+
     /**
      * Reset the player's coins and lives to default values.
      */
@@ -184,6 +188,7 @@ public class Player extends GameObject implements Serializable {
         setScore(0);
         setNumCoins(0);
         setCurrentLevel(1);
+        resetTime();
         if (this.getDifficulty().equals("Easy")) {
             setNumLives(5);
         } else if (this.getDifficulty().equals("Hard")) {
