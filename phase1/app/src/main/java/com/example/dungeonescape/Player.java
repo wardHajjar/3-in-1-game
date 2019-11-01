@@ -1,6 +1,7 @@
 package com.example.dungeonescape;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import android.graphics.Color;
 
@@ -40,6 +41,7 @@ public class Player extends GameObject implements Serializable {
         setColour(Color.WHITE);
         setCurrentLevel(1);
     }
+
     /** Sets this Player's Current Level. */
     public void setCurrentLevel (int level) {
         this.currentLevel = level;
