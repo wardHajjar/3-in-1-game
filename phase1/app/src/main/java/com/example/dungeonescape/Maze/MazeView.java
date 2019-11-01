@@ -66,12 +66,18 @@ public class MazeView extends View {
     public MazeView(Context context, AttributeSet attrs) {
         super(context, attrs);
         initializePaint();
-        //        create 5 coins at random locations.
+
+        // create 5 coins at random locations.
         coins = new ArrayList<>();
-        for (int i = 0; i<5; i++) {
-            Coin coin = new Coin(rand.nextInt(numMazeCols), rand.nextInt(numMazeRows));
+        int i = 0;
+        int mazeCols = getNumMazeCols();
+        int mazeRows = getNumMazeRows();
+        for (; i < 5; i++) {
+            Coin coin = new Coin(rand.nextInt(mazeCols), rand.nextInt(mazeRows));
             coins.add(coin);
         }
+
+        // Creates the Maze
         createMaze();
     }
 
