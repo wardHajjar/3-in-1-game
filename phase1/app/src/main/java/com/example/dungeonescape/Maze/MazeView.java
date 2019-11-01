@@ -188,29 +188,6 @@ public class MazeView extends View {
         }
     }
 
-    private void removeWall(MazeCell current, MazeCell next){
-        /* remove the walls between current cell and next cell, only if they're not off the grids.
-        (x, y) coordinates for the current and next MazeCell. */
-        int currX = current.getX();
-        int currY = current.getY();
-        int nextX = next.getX();
-        int nextY = next.getY();
-
-        if (currX == nextX - 1) {
-            current.setRightWall(false);
-            next.setLeftWall(false);
-        } else if (currX == nextX + 1) {
-            current.setLeftWall(false);
-            next.setRightWall(false);
-        } else if (currY == nextY - 1) {
-            current.setBottomWall(false);
-            next.setTopWall(false);
-        } else {
-            current.setTopWall(false);
-            next.setBottomWall(false);
-        }
-    }
-
     @Override
     protected void onDraw(Canvas canvas) {
         canvas.drawColor(Color.BLACK);
@@ -325,6 +302,33 @@ public class MazeView extends View {
         playerAtExit();
         playerOnCoin();
         invalidate();
+    }
+
+    /** Removes walls between this MazeCell and the next MazeCell, as long as they're not borders.
+     *
+     * @param current the current MazeCell.
+     * @param next the next MazeCell.
+     */
+    private void removeWall(MazeCell current, MazeCell next){
+        /* (x, y) coordinates for the current and next MazeCell. */
+        int currX = current.getX();
+        int currY = current.getY();
+        int nextX = next.getX();
+        int nextY = next.getY();
+
+        if (currX == nextX - 1) {
+            current.setRightWall(false);
+            next.setLeftWall(false);
+        } else if (currX == nextX + 1) {
+            current.setLeftWall(false);
+            next.setRightWall(false);
+        } else if (currY == nextY - 1) {
+            current.setBottomWall(false);
+            next.setTopWall(false);
+        } else {
+            current.setTopWall(false);
+            next.setBottomWall(false);
+        }
     }
 
     /** Checks if this Player has arrived at the exit, create a new maze if true. */
