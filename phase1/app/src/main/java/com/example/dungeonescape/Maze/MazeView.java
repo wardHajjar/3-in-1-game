@@ -58,7 +58,7 @@ public class MazeView extends View {
     private Random rand = new Random();
 
     /** Instantiates the MazeManager class for this Maze. */
-    private MazeManager thisMaze = new MazeManager();
+    private MazeManager mazeManager = new MazeManager();
 
     /** Number of times the Player has gone through the maze. */
     public int mazeIterations = 0;
@@ -204,11 +204,11 @@ public class MazeView extends View {
         int mazeCols = getNumMazeCols();
         int mazeRows = getNumMazeRows();
 
-        cellSize = thisMaze.calculateCellSize(screenWidth, screenHeight,
+        cellSize = mazeManager.calculateCellSize(screenWidth, screenHeight,
                 mazeCols, mazeRows);
-        horizontalPadding = thisMaze.calculateCellHorizontalPadding(screenWidth,
+        horizontalPadding = mazeManager.calculateCellHorizontalPadding(screenWidth,
                 mazeCols, cellSize);
-        verticalPadding = thisMaze.calculateCellVerticalPadding(screenHeight,
+        verticalPadding = mazeManager.calculateCellVerticalPadding(screenHeight,
                 mazeRows, cellSize);
         //translate the canvas by our padding values so the maze is always centered on our screen.
         canvas.translate(horizontalPadding, verticalPadding);
