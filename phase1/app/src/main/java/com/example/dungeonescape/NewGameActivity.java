@@ -41,6 +41,10 @@ public class NewGameActivity extends AppCompatActivity {
         final EditText name = findViewById(R.id.txtSub);
         final Button enter = findViewById(R.id.Enter);
 
+        String nameText = name.getText().toString();
+        gameManager.addPlayer(nameText);
+        player = gameManager.getPlayer(nameText);
+
         final Button colour1 = findViewById(R.id.colour1);
         colour1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,9 +91,6 @@ public class NewGameActivity extends AppCompatActivity {
         enter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String nameText = name.getText().toString();
-                gameManager.addPlayer(nameText);
-                player = gameManager.getPlayer(nameText);
                 save();
                 Intent intent = new Intent(NewGameActivity.this, BBMainActivity.class);
                 intent.putExtra("Player", player);

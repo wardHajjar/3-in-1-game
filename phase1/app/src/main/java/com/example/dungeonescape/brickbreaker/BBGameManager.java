@@ -1,6 +1,7 @@
 package com.example.dungeonescape.brickbreaker;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.view.MotionEvent;
 
 import java.sql.SQLOutput;
@@ -27,7 +28,7 @@ class BBGameManager {
 
         // construct the ball
         this.ball = new Ball(screenX/2 - 75 + (screenX/2 - 75)/2 - 25,
-                screenY - 100 - 26, 25, -26);
+                screenY - 100 - 26, 25, -26, Color.WHITE);
 
         // construct paddle and bricks
         paddle = new Paddle(screenX/2 - 75, screenY - 100, screenX/3, 40);
@@ -36,7 +37,7 @@ class BBGameManager {
         int brickWidth = screenX / 6;
         int brickHeight = screenY / 20;
         for (int x = 0; x < screenX; x += brickWidth + 5) {
-            for (int y = 10; y < 6 * brickHeight; y += brickHeight + 5) {
+            for (int y = 10; y < 4 * brickHeight; y += brickHeight + 5) {
                 bricks.add(new Brick(x, y, brickWidth, brickHeight));
             }
         }
@@ -204,6 +205,8 @@ class BBGameManager {
      * @param player Player object that represents the user's character.
      */
     void addPlayer(Player player){
+
         this.player = player;
+        this.ball.setColour(player.getColour());
     }
 }
