@@ -9,6 +9,7 @@ import android.widget.Button;
 import com.example.dungeonescape.SaveData;
 
 import com.example.dungeonescape.R;
+import com.example.dungeonescape.brickbreaker.BBMainActivity;
 
 import java.io.File;
 
@@ -30,12 +31,23 @@ public class Dead extends AppCompatActivity {
 
     private void buttons() {
 
-        Button restart = (Button) findViewById(R.id.button);
+        Button restart = (Button) findViewById(R.id.menu);
         restart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 Intent intent = new Intent(Dead.this, MainActivity.class);
+                intent.putExtra("Game Manager", gameManager);
+                startActivity(intent);
+            }
+        });
+
+        Button playAgain = findViewById(R.id.restart);
+        playAgain.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                save();
+                Intent intent = new Intent(Dead.this, BBMainActivity.class);
+                intent.putExtra("Player", player);
                 intent.putExtra("Game Manager", gameManager);
                 startActivity(intent);
             }
