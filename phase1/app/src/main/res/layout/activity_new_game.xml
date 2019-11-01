@@ -7,7 +7,24 @@
     tools:context=".NewGameActivity">
 
     <TextView
-        android:id="@+id/text"
+        android:id="@+id/newGameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="179dp"
+        android:layout_marginTop="179dp"
+        android:layout_marginEnd="163dp"
+        android:layout_marginBottom="52dp"
+        android:text="New Game"
+        android:textColor="@android:color/black"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/enterNameText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.579"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/enterNameText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="137dp"
@@ -21,25 +38,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/text1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="179dp"
-        android:layout_marginTop="179dp"
-        android:layout_marginEnd="163dp"
-        android:layout_marginBottom="52dp"
-        android:text="New Game"
-        android:textColor="@android:color/black"
-        android:textSize="36sp"
-        app:layout_constraintBottom_toTopOf="@+id/text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.579"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <EditText
-        android:id="@+id/txtSub"
+        android:id="@+id/nameInput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
@@ -50,20 +50,31 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text" />
+        app:layout_constraintTop_toBottomOf="@+id/enterNameText" /><![CDATA[
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+    =======
+        android:text="Select player colour"
+        app:layout_constraintBottom_toTopOf="@+id/StatsView"
+>>>>>>> Stashed changes
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent" />
 
+    ]]>
+
+    <TextView
+        android:id="@+id/colorPromptText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
+        app:layout_constraintBottom_toTopOf="@+id/colourSelection"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nameInput" />
+
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/colourSelection"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
@@ -72,7 +83,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtSub">
+        app:layout_constraintTop_toBottomOf="@+id/nameInput">
 
         <Button
             android:id="@+id/colour1"
