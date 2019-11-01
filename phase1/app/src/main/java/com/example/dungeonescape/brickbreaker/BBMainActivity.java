@@ -14,6 +14,7 @@ import com.example.dungeonescape.Player;
 import com.example.dungeonescape.R;
 import com.example.dungeonescape.Dead;
 import com.example.dungeonescape.SaveData;
+import android.os.SystemClock;
 
 import java.io.File;
 
@@ -28,6 +29,7 @@ public class BBMainActivity extends Activity {
     boolean running;
     Player player;
     GameManager gameManager;
+    long startTime;
     /**
      *
      * @param savedInstanceState Bundle object that passes data between activities.
@@ -36,6 +38,7 @@ public class BBMainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Set the View we are using
+        startTime = SystemClock.elapsedRealtime();
         setContentView(R.layout.activity_brick_breaker_main);
         gameView = findViewById(R.id.BBView2);
 
@@ -132,6 +135,9 @@ public class BBMainActivity extends Activity {
     protected void nextLevel(){
         player.setCurrentLevel(2);
         gameManager.updatePlayer(player.getName(), player);
+        long endTime = SystemClock.elapsedRealtime();
+        long elapsedMilliSeconds = endTime - startTime;
+        gameManager.updateTotalTime(elapsedMilliSeconds);
         save();
         //Intent intent = new Intent(BBMainActivity.this, MazeActivity.class);
         Intent intent = new Intent(BBMainActivity.this, MazeActivityInstructions.class);
@@ -144,7 +150,12 @@ public class BBMainActivity extends Activity {
      * User has lost the Game i.e. no more lives left.
      */
     protected void endGame(){
+        long endTime = SystemClock.elapsedRealtime();
+        long elapsedMilliSeconds = endTime - startTime;
+        gameManager.updateTotalTime(elapsedMilliSeconds);
         Intent intent = new Intent(BBMainActivity.this, Dead.class);
+        intent.putExtra("Player", player);
+        intent.putExtra("GameManager", gameManager);
         startActivity(intent);
     }
     private void save() {

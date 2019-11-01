@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class GameManager implements Serializable {
     ArrayList<Player> players;
-    private int totalTimePlayed;
+    private long totalTimePlayed;
 
     public GameManager() {
         /* Sets the initial total time elapsed in the Game to 0. */
@@ -49,7 +49,7 @@ public class GameManager implements Serializable {
         }
     }
 
-    public int getTotalTime() {
+    public long getTotalTime() {
         return totalTimePlayed;
     }
 
@@ -57,7 +57,8 @@ public class GameManager implements Serializable {
      *
      * TODO: Include this in whichever main update() method we use.
      */
-    public void updateTotalTime() {
-        /* TODO: implement time function. */
+    // TODO: implement time function.
+    public void updateTotalTime(long timeElapsed) {
+        totalTimePlayed = totalTimePlayed + timeElapsed;
     }
 }
