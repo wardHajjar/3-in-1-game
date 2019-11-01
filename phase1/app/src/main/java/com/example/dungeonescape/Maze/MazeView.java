@@ -186,8 +186,10 @@ public class MazeView extends View {
         int mazeCols = getNumMazeCols();
         int mazeRows = getNumMazeRows();
 
-        cellSize = mazeManager.calculateCellSize(screenWidth, screenHeight,
+        mazeManager.calculateCellSize(screenWidth, screenHeight,
                 mazeCols, mazeRows);
+        cellSize = mazeManager.getCellSize();
+
         horizontalPadding = mazeManager.calculateCellHorizontalPadding(screenWidth,
                 mazeCols, cellSize);
         verticalPadding = mazeManager.calculateCellVerticalPadding(screenHeight,

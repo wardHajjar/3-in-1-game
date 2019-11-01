@@ -8,6 +8,8 @@ import android.graphics.Paint;
  */
 public class MazeManager {
 
+    private float cellSize;
+
     private Paint wallPaint;
     private Paint playerPaint;
     private Paint exitPaint;
@@ -56,7 +58,7 @@ public class MazeManager {
      * @param numMazeRows the number of rows this Maze has.
      * @return the calculated cellSize.
      */
-    public float calculateCellSize(int screenWidth, int screenHeight, int numMazeCols,
+    public void calculateCellSize(int screenWidth, int screenHeight, int numMazeCols,
                                    int numMazeRows) {
         float newCellSize;
         float screenWidthDivHeight = screenWidth / screenHeight;
@@ -68,7 +70,7 @@ public class MazeManager {
             newCellSize = screenHeight / (numMazeRows + 1);
         }
 
-        return newCellSize;
+        setCellSize(newCellSize);
     }
 
     /**
@@ -94,4 +96,13 @@ public class MazeManager {
     public float calculateCellVerticalPadding(int screenHeight, int numMazeRows, float cellSize) {
         return (float) ((screenHeight - (numMazeRows * cellSize)) / 2);
     }
+
+    public float getCellSize() {
+        return cellSize;
+    }
+
+    private void setCellSize(float cellSize) {
+        this.cellSize = cellSize;
+    }
+
 }
