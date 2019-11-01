@@ -212,6 +212,7 @@ public class MazeView extends View {
         //translate the canvas by our padding values so the maze is always centered on our screen.
         canvas.translate(horizontalPadding, verticalPadding);
 
+        Paint mazeWallPaint = mazeManager.getWallPaint();
         for(int x = 0; x < numMazeCols; x++) {
             //draw out all the walls for every single cell, and remove them as we create the maze.
             for(int y = 0; y < numMazeRows; y++) {
@@ -221,7 +222,7 @@ public class MazeView extends View {
                             y * cellSize,
                             (x + 1) * cellSize,
                             y * cellSize,
-                            mazeManager.getWallPaint());
+                            mazeWallPaint);
                 }
                 if (cells[x][y].isLeftWall()) {
                     canvas.drawLine(
@@ -229,7 +230,7 @@ public class MazeView extends View {
                             y * cellSize,
                             x * cellSize,
                             (y + 1) * cellSize,
-                            mazeManager.getWallPaint());
+                            mazeWallPaint);
                 }
                 if (cells[x][y].isBottomWall()) {
                     canvas.drawLine(
@@ -237,7 +238,7 @@ public class MazeView extends View {
                             (y + 1) * cellSize,
                             (x + 1) * cellSize,
                             (y + 1) * cellSize,
-                            mazeManager.getWallPaint());
+                            mazeWallPaint);
                 }
                 if (cells[x][y].isRightWall()) {
                     canvas.drawLine(
@@ -245,12 +246,15 @@ public class MazeView extends View {
                             y * cellSize,
                             (x + 1) * cellSize,
                             (y + 1) * cellSize,
-                            mazeManager.getWallPaint());
+                            mazeWallPaint);
                 }
             }
         }
+
         //adding a padding so the player cell and the exit cells don't touch the walls.
         float margin = cellSize/10;
+
+        Paint mazeCoinPaint = mazeManager.getCoinPaint();
 
         for(Coin coin:coins){
             canvas.drawOval(
@@ -258,23 +262,25 @@ public class MazeView extends View {
                     coin.getY() * cellSize+margin,
                     (coin.getX() + 1) * cellSize-margin,
                     (coin.getY() + 1) * cellSize-margin,
-                    mazeManager.getCoinPaint()
+                    mazeCoinPaint
             );
         }
 
+        Paint mazePlayerPaint = mazeManager.getPlayerPaint();
         canvas.drawRect(
                 player.getX()*cellSize+margin,
                 player.getY()*cellSize+margin,
                 (player.getX()+1)*cellSize-margin,
                 (player.getY()+1)*cellSize-margin,
-                mazeManager.getPlayerPaint());
+                mazePlayerPaint);
 
+        Paint mazeExitPaint = mazeManager.getExitPaint();
         canvas.drawRect(
                 exit.getX()*cellSize+margin,
                 exit.getY()*cellSize+margin,
                 (exit.getX()+1)*cellSize-margin,
                 (exit.getY()+1)*cellSize-margin,
-                mazeManager.getExitPaint());
+                mazeExitPaint);
     }
 
     void movePlayer(String direction){
