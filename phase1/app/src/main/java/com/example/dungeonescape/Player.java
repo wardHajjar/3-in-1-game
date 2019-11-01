@@ -44,10 +44,12 @@ public class Player extends GameObject implements Serializable {
     public void setCurrentLevel (int level) {
         this.currentLevel = level;
     }
+
     /** Gets this Player's Current level. */
     public int getCurrentLevel () {
         return this.currentLevel;
     }
+
     /** Adds 1 coin to this Player. */
     public void addCoin(){
         setNumCoins(getNumCoins() + 1);
@@ -114,7 +116,7 @@ public class Player extends GameObject implements Serializable {
      * Sets the color of the player's character.
      * @param colour the new color to set the character to.
      */
-    public void setColour(int colour){
+    public void setColour(int colour) {
         this.colour = colour;
     }
 
@@ -122,8 +124,17 @@ public class Player extends GameObject implements Serializable {
      * Returns the player's character colour.
      * @return integer value of the player's color.
      */
-    public int getColour(){
+    public int getColour() {
         return this.colour;
     }
 
+    /**
+     * Reset the player's coins and lives to default values.
+     */
+    public void resetStats() {
+        setScore(0);
+        setNumLives(5);
+        setNumCoins(0);
+        setCurrentLevel(1);
+    }
 }

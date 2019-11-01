@@ -329,8 +329,8 @@ public class MazeView extends View {
     private void playerAtExit(){
         // check if the player has arrived at the exit. Create a new maze if this has happened.
         if(player.getX() == exit.getX() && player.getY()== exit.getY()) {
-            createMaze();
             mazeIterations++;
+            createMaze();
         }
         Iterator<Coin> itr = coins.iterator();
         while (itr.hasNext()) {
