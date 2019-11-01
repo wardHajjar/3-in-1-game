@@ -323,11 +323,12 @@ public class MazeView extends View {
                 break;
         }
         playerAtExit();
+        playerOnCoin();
         invalidate();
     }
 
-    private void playerAtExit(){
-        // check if the player has arrived at the exit. Create a new maze if this has happened.
+    /** Checks if this Player has arrived at the exit, create a new maze if true. */
+    private void playerAtExit() {
         int playerX = player.getX();
         int playerY = player.getY();
         int exitX = player.getX();
@@ -337,13 +338,20 @@ public class MazeView extends View {
             mazeIterations++;
             createMaze();
         }
+    }
 
-        Iterator<Coin> itr = coins.iterator();
+    /** Checks if this Player has the same coordinates as a Coin.
+     * Removes Coin from game & adds it to Player if true.
+     */
+    private void playerOnCoin() {
+        Iterator<Coin> coinIterator = coins.iterator();
+        int playerX = player.getX();
+        int playerY = player.getY();
 
-        while (itr.hasNext()) {
-            Coin coin = itr.next();
+        while (coinIterator.hasNext()) {
+            Coin coin = coinIterator.next();
             if (playerX == coin.getX() && playerY == coin.getY()) {
-                itr.remove();
+                coinIterator.remove();
                 player.addCoin();
             }
         }
