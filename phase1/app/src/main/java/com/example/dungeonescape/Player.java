@@ -22,7 +22,15 @@ public class Player extends GameObject implements Serializable {
     /** The number of coins this Player has. */
     private int numCoins;
 
+    /**
+     * The colour of the user's character
+     */
     private int colour;
+
+    /**
+     * The total time that the character has been playing the game for.
+     */
+    private long totalTimePlayed;
 
     public Player(int x,int y,int z, String name) {
         super(0,0,0);
@@ -32,6 +40,7 @@ public class Player extends GameObject implements Serializable {
         setNumCoins(0);
         setColour(Color.WHITE);
         setCurrentLevel(1);
+        totalTimePlayed = 0;
     }
     public Player(String name){
         setName(name);
@@ -128,6 +137,22 @@ public class Player extends GameObject implements Serializable {
      */
     public int getColour() {
         return this.colour;
+    }
+
+    /**
+     * Returns the total time that the player has been playing for.
+     * @return totalTimePlayed
+     */
+    public long getTotalTime() {
+        return totalTimePlayed;
+    }
+
+    /**
+     * Increments the total time that the player has been playing for.
+     * @param timeElapsed increment to increase time by.
+     */
+    public void updateTotalTime(long timeElapsed) {
+        totalTimePlayed = totalTimePlayed + timeElapsed;
     }
 
     /**

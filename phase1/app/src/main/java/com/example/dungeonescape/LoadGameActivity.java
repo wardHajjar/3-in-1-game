@@ -30,7 +30,6 @@ public class LoadGameActivity extends AppCompatActivity {
         gameManager = (GameManager) i.getSerializableExtra("Game Manager");
         setSpinner();
         buttons();
-
     }
     private void setSpinner() {
         spinner = (Spinner) findViewById(R.id.spinner);
