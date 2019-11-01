@@ -254,27 +254,46 @@ public class MazeView extends View {
         //adding a padding so the player cell and the exit cells don't touch the walls.
         float margin = cellSize/10;
 
+        // draws Coins, the Player and the exit square on the screen
+        paintCoins(canvas, margin);
+        paintPlayer(canvas, margin);
+        paintExit(canvas, margin);
+    }
+
+    /** Draws the Coin circles on the screen.
+     *
+     * @param canvas the Canvas to draw the Coins on.
+     * @param margin the space around the Coin circles.
+     */
+    private void paintCoins(Canvas canvas, float margin) {
         Paint mazeCoinPaint = mazeManager.getCoinPaint();
 
-        for(Coin coin:coins){
+        for (Coin coin : coins) {
             canvas.drawOval(
-                    coin.getX() * cellSize+margin,
-                    coin.getY() * cellSize+margin,
-                    (coin.getX() + 1) * cellSize-margin,
-                    (coin.getY() + 1) * cellSize-margin,
-                    mazeCoinPaint
-            );
+                    coin.getX() * cellSize + margin,
+                    coin.getY() * cellSize + margin,
+                    (coin.getX() + 1) * cellSize - margin,
+                    (coin.getY() + 1) * cellSize - margin,
+                    mazeCoinPaint);
         }
+    }
 
+    /** Draws the Player square on the screen.
+     *
+     * @param canvas the Canvas to draw the Player on.
+     * @param margin the space around the Player square.
+     */
+    private void paintPlayer(Canvas canvas, float margin) {
         Paint mazePlayerPaint = mazeManager.getPlayerPaint();
-        canvas.drawRect(
-                player.getX()*cellSize+margin,
-                player.getY()*cellSize+margin,
-                (player.getX()+1)*cellSize-margin,
-                (player.getY()+1)*cellSize-margin,
-                mazePlayerPaint);
+        int playerX = player.getX();
+        int playerY = player.getY();
 
-        paintExit(canvas, margin);
+        canvas.drawRect(
+                playerX * cellSize + margin,
+                playerY * cellSize + margin,
+                (playerX + 1) * cellSize - margin,
+                (playerY + 1) * cellSize - margin,
+                mazePlayerPaint);
     }
 
     /** Draws the exit square on the screen.
