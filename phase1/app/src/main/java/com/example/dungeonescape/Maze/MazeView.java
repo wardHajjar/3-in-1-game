@@ -51,10 +51,10 @@ public class MazeView extends View {
     float verticalPadding;
 
     /** Represents the colour of the objects to be printed. */
-    private Paint wallPaint;
-    private Paint playerPaint;
-    private Paint exitPaint;
-    private Paint coinPaint;
+//    private Paint wallPaint;
+//    private Paint playerPaint;
+//    private Paint exitPaint;
+//    private Paint coinPaint;
     private Random rand = new Random();
 
     /** Instantiates the MazeManager class for this Maze. */
@@ -67,7 +67,6 @@ public class MazeView extends View {
         super(context, attrs);
         createMaze();
         createCoins();
-        initializePaint();
     }
 
     /** Adds 5 Coins to the coins ArrayList, in random locations. */
@@ -86,20 +85,20 @@ public class MazeView extends View {
         return mazeIterations >= 3;
     }
 
-    private void initializePaint() {
-        wallPaint = new Paint();
-        wallPaint.setColor(Color.WHITE);
-        wallPaint.setStrokeWidth(4);
-
-        playerPaint = new Paint();
-        playerPaint.setColor(Color.RED);
-
-        exitPaint = new Paint();
-        exitPaint.setColor(Color.BLUE);
-
-        coinPaint = new Paint();
-        coinPaint.setColor(Color.YELLOW);
-    }
+//    private void initializePaint() {
+//        wallPaint = new Paint();
+//        wallPaint.setColor(Color.WHITE);
+//        wallPaint.setStrokeWidth(4);
+//
+//        playerPaint = new Paint();
+//        playerPaint.setColor(Color.RED);
+//
+//        exitPaint = new Paint();
+//        exitPaint.setColor(Color.BLUE);
+//
+//        coinPaint = new Paint();
+//        coinPaint.setColor(Color.YELLOW);
+//    }
 
     public void setPlayer(Player player){
         this.player = player;
@@ -222,7 +221,7 @@ public class MazeView extends View {
                             y * cellSize,
                             (x + 1) * cellSize,
                             y * cellSize,
-                            wallPaint);
+                            mazeManager.wallPaint);
                 }
                 if (cells[x][y].isLeftWall()) {
                     canvas.drawLine(
@@ -230,7 +229,7 @@ public class MazeView extends View {
                             y * cellSize,
                             x * cellSize,
                             (y + 1) * cellSize,
-                            wallPaint);
+                            mazeManager.wallPaint);
                 }
                 if (cells[x][y].isBottomWall()) {
                     canvas.drawLine(
@@ -238,7 +237,7 @@ public class MazeView extends View {
                             (y + 1) * cellSize,
                             (x + 1) * cellSize,
                             (y + 1) * cellSize,
-                            wallPaint);
+                            mazeManager.wallPaint);
                 }
                 if (cells[x][y].isRightWall()) {
                     canvas.drawLine(
@@ -246,7 +245,7 @@ public class MazeView extends View {
                             y * cellSize,
                             (x + 1) * cellSize,
                             (y + 1) * cellSize,
-                            wallPaint);
+                            mazeManager.wallPaint);
                 }
             }
         }
@@ -259,7 +258,7 @@ public class MazeView extends View {
                     coin.getY() * cellSize+margin,
                     (coin.getX() + 1) * cellSize-margin,
                     (coin.getY() + 1) * cellSize-margin,
-                    coinPaint
+                    mazeManager.coinPaint
             );
         }
 
@@ -268,14 +267,14 @@ public class MazeView extends View {
                 player.getY()*cellSize+margin,
                 (player.getX()+1)*cellSize-margin,
                 (player.getY()+1)*cellSize-margin,
-                playerPaint);
+                mazeManager.playerPaint);
 
         canvas.drawRect(
                 exit.getX()*cellSize+margin,
                 exit.getY()*cellSize+margin,
                 (exit.getX()+1)*cellSize-margin,
                 (exit.getY()+1)*cellSize-margin,
-                exitPaint);
+                mazeManager.exitPaint);
     }
 
     void movePlayer(String direction){

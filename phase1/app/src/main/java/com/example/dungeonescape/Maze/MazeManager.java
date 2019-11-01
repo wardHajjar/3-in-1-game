@@ -1,12 +1,35 @@
 package com.example.dungeonescape.Maze;
 
+import android.graphics.Color;
+import android.graphics.Paint;
+
 /**
  * Managers all (visible) Maze GameObjects
  */
 public class MazeManager {
 
-    public MazeManager() {
+    Paint wallPaint;
+    Paint playerPaint;
+    Paint exitPaint;
+    Paint coinPaint;
 
+    public MazeManager() {
+        initializePaint();
+    }
+
+    private void initializePaint() {
+        wallPaint = new Paint();
+        wallPaint.setColor(Color.WHITE);
+        wallPaint.setStrokeWidth(4);
+
+        playerPaint = new Paint();
+        playerPaint.setColor(Color.RED);
+
+        exitPaint = new Paint();
+        exitPaint.setColor(Color.BLUE);
+
+        coinPaint = new Paint();
+        coinPaint.setColor(Color.YELLOW);
     }
 
     /** Calculates the cellSize based on the screen's dimensions.
