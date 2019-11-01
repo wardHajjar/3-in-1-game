@@ -2,24 +2,19 @@ package com.example.dungeonescape;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.graphics.Color;
+import android.widget.TextView;
+
 import com.example.dungeonescape.brickbreaker.BBMainActivity;
-import android.text.TextWatcher;
-import android.text.Editable;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
-import java.io.PrintWriter;
 
 public class NewGameActivity extends AppCompatActivity {
     GameManager gameManager;
@@ -37,7 +32,7 @@ public class NewGameActivity extends AppCompatActivity {
     }
 
     private void buttons() {
-        final EditText name = findViewById(R.id.txtSub);
+        final EditText name = findViewById(R.id.nameInput);
         final Button enter = findViewById(R.id.Enter);
 
         final Button colour1 = findViewById(R.id.colour1);
@@ -83,7 +78,7 @@ public class NewGameActivity extends AppCompatActivity {
 
             public void afterTextChanged(Editable s) {
                 if (!(name.getText().toString().matches(""))){
-                    TextView colorPrompt =  (TextView) findViewById(R.id.textView3);
+                    TextView colorPrompt =  (TextView) findViewById(R.id.colorPromptText);
                     colorPrompt.setText((CharSequence)("Select Character Colour:"));
                     colour1.setVisibility(View.VISIBLE);
                     colour2.setVisibility(View.VISIBLE);
