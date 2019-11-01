@@ -45,10 +45,6 @@ public class MazeView extends View {
     private int numMazeCols = 5;
     private int numMazeRows = 5;
 
-    /** The horizontal and vertical margin from the edge of the screen to the walls of the maze */
-    float horizontalPadding;
-    float verticalPadding;
-
     /** A randomizer. */
     private Random rand = new Random();
 
@@ -183,18 +179,24 @@ public class MazeView extends View {
         int mazeCols = getNumMazeCols();
         int mazeRows = getNumMazeRows();
 
+        // calculates MazeCell cellSize in pixels
         mazeManager.calculateCellSize(screenWidth, screenHeight,
                 mazeCols, mazeRows);
         float cellSize = mazeManager.getCellSize();
 
-        horizontalPadding = mazeManager.calculateCellHorizontalPadding(screenWidth,
+        // calculates MazeCell horiztonalPadding and verticalPadding
+        mazeManager.calculateCellHorizontalPadding(screenWidth,
                 mazeCols, cellSize);
-        verticalPadding = mazeManager.calculateCellVerticalPadding(screenHeight,
+        mazeManager.calculateCellVerticalPadding(screenHeight,
                 mazeRows, cellSize);
-        //translate the canvas by our padding values so the maze is always centered on our screen.
+
+        float horizontalPadding = mazeManager.getHorizontalPadding();
+        float verticalPadding = mazeManager.getVerticalPadding();
+
+        // translate the canvas by our padding values so the maze is always centered on our screen.
         canvas.translate(horizontalPadding, verticalPadding);
 
-        //adding a padding so the player cell and the exit cells don't touch the walls.
+        // adding a padding so the player cell and the exit cells don't touch the walls.
         float margin = cellSize / 10;
 
         // draws walls, Coins, the Player and the exit square on the screen
