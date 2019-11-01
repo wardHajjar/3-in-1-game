@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.example.dungeonescape.GameManager;
 import com.example.dungeonescape.Maze.MazeActivity;
+import com.example.dungeonescape.Maze.MazeActivityInstructions;
 import com.example.dungeonescape.Player;
 import com.example.dungeonescape.R;
 import com.example.dungeonescape.Dead;
@@ -48,10 +49,13 @@ public class BBMainActivity extends Activity {
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 player.setCurrentLevel(2);
                 gameManager.updatePlayer(player.getName(), player);
                 save();
-                Intent intent = new Intent(BBMainActivity.this, MazeActivity.class);
+                //Intent intent = new Intent(BBMainActivity.this, MazeActivity.class);
+                Intent intent = new Intent(BBMainActivity.this, MazeActivityInstructions.class);
+
                 intent.putExtra("Player", player);
                 intent.putExtra("Game Manager", gameManager);
                 startActivity(intent);
@@ -129,7 +133,8 @@ public class BBMainActivity extends Activity {
         player.setCurrentLevel(2);
         gameManager.updatePlayer(player.getName(), player);
         save();
-        Intent intent = new Intent(BBMainActivity.this, MazeActivity.class);
+        //Intent intent = new Intent(BBMainActivity.this, MazeActivity.class);
+        Intent intent = new Intent(BBMainActivity.this, MazeActivityInstructions.class);
         intent.putExtra("Player", player);
         intent.putExtra("Game Manager", gameManager);
         startActivity(intent);

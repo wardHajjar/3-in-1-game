@@ -13,6 +13,7 @@
         <activity android:name=".LoadGameActivity"></activity>
         <activity android:name=".Dead"></activity>
         <activity android:name=".NewGameActivity" />
+        <activity android:name=".Maze.MazeActivityInstructions"/>
         <activity android:name=".platformer.Level3FinishedActivity" />
         <activity android:name=".platformer.Level2MainActivity" />
         <activity android:name=".Maze.MazeActivity" />
