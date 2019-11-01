@@ -34,13 +34,13 @@ public class Dead extends AppCompatActivity {
         restart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Intent intent = new Intent(Dead.this, MainActivity.class);
                 intent.putExtra("Game Manager", gameManager);
                 startActivity(intent);
             }
         });
     }
+
     private void save() {
         gameManager.updatePlayer(player.getName(), player);
         try {
