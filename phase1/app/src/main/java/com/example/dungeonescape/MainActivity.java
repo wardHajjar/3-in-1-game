@@ -12,6 +12,7 @@ import com.example.dungeonescape.brickbreaker.BBMainActivity;
 import com.example.dungeonescape.platformer.Level2MainActivity;
 import com.example.dungeonescape.platformer.PlatformerMainActivity;
 
+import java.io.File;
 import java.io.Serializable;
 
 public class MainActivity extends AppCompatActivity{
@@ -21,7 +22,11 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        gameManager = new GameManager();
+        load();
+        if (gameManager == null) {
+            gameManager = new GameManager();
+        }
+
         buttons();
     }
 
@@ -51,5 +56,15 @@ public class MainActivity extends AppCompatActivity{
         });
 
 
+    }
+    private void load() {
+        try {
+            String filePath = this.getFilesDir().getPath() + "/GameState.txt";
+            File f = new File(filePath);
+            gameManager = (GameManager) SaveData.load(f);
+        }
+        catch (Exception e) {
+            System.out.println("Couldn't load load data: " + e.getMessage());
+        }
     }
 }

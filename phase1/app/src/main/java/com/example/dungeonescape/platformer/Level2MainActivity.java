@@ -17,10 +17,13 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.dungeonescape.Dead;
+import com.example.dungeonescape.GameManager;
 import com.example.dungeonescape.MainActivity;
 import com.example.dungeonescape.Player;
 import com.example.dungeonescape.R;
+import com.example.dungeonescape.SaveData;
 
+import java.io.File;
 import java.util.logging.Level;
 
 
@@ -28,6 +31,7 @@ public class Level2MainActivity extends AppCompatActivity {
     private Level2View game;
     private boolean running;
     Player player;
+    GameManager gameManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +39,7 @@ public class Level2MainActivity extends AppCompatActivity {
         // Set the View we are using
         Intent i = getIntent();
         player = (Player) i.getSerializableExtra("Player");
+        gameManager = (GameManager) i.getSerializableExtra("Game Manager");
 
         setContentView(R.layout.activity_level2_main);
         game = findViewById(R.id.level2);
@@ -65,7 +70,8 @@ public class Level2MainActivity extends AppCompatActivity {
                                 if (running) {
 
                                     // Update the score shown
-
+                                    gameManager.updatePlayer(player.getName(), player);
+                                    save();
                                     int score = game.getManager().getCharacterScore();
                                     String scr = String.valueOf(score) ;
                                     String scre = "Score: " + scr;
@@ -79,10 +85,14 @@ public class Level2MainActivity extends AppCompatActivity {
                                     boolean doneLevel = game.nextLevel();
                                     if (doneLevel) {
                                         nextLevel();
+                                        player.setCurrentLevel(3);
+                                        gameManager.updatePlayer(player.getName(), player);
+                                        save();
                                         running = false;
                                     }
                                     boolean dead = game.dead();
                                     if (dead){
+                                        gameManager.updatePlayer(player.getName(), player);
                                         deadPage();
                                         running = false;
                                     }
@@ -134,8 +144,6 @@ public class Level2MainActivity extends AppCompatActivity {
                 game.getManager().right_button();
             }
         });
-
-
     }
     /**
      * Method executes when the player quits the game.
@@ -144,6 +152,17 @@ public class Level2MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         game.pause();
+    }
+
+    private void save() {
+        try {
+            String filePath = this.getFilesDir().getPath() + "/GameState.txt";
+            File f = new File(filePath);
+            SaveData.save(gameManager, f);
+        }
+        catch (Exception e) {
+            System.out.println("Couldn't save: " + e.getMessage());
+        }
     }
 
 

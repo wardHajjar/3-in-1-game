@@ -14,6 +14,7 @@ public class Ball extends BBObject {
      * The ball's speed in the x and y directions, respectively.
      */
     private int xSpeed, ySpeed;
+    private int colour;
 
     /**
      * Initializes the ball at a given centre with a specified speed in the x and y directions.
@@ -23,11 +24,13 @@ public class Ball extends BBObject {
      * @param xSpeed the speed of the ball in the x direction.
      * @param ySpeed the speed of the ball in the y direction.
      */
-    public Ball(int x_loc, int y_loc, int xSpeed, int ySpeed) {
+    public Ball(int x_loc, int y_loc, int xSpeed, int ySpeed, int colour) {
         super(x_loc, y_loc);
         this.xSpeed = xSpeed;
         this.ySpeed = ySpeed;
+        this.colour = colour;
     }
+
 
     /**
      * Setter method that changes the ball's speed in the x direction.
@@ -92,7 +95,7 @@ public class Ball extends BBObject {
     @Override
     public void draw(Canvas canvas) {
         this.paintStyle.setStyle(Paint.Style.FILL);
-        this.paintStyle.setColor(Color.WHITE);
+        this.paintStyle.setColor(colour);
         int radius = 25;
         canvas.drawCircle(this.x, this.y, radius, paintStyle);
     }
@@ -153,5 +156,13 @@ public class Ball extends BBObject {
      */
     Rect getRect(){
         return new Rect(x - 25, y - 25, x + 25, y + 25);
+    }
+
+    /**
+     * Sets the colour of the ball.
+     * @param colour new colour to draw the ball in.
+     */
+    void setColour(int colour){
+        this.colour = colour;
     }
 }

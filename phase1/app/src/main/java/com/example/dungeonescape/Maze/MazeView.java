@@ -42,8 +42,8 @@ public class MazeView extends View {
     private MazeCell playerLoc;
 
     /** The number of columns and rows in this maze. */
-    private int numMazeCols = 10;
-    private int numMazeRows = 10;
+    private int numMazeCols = 5;
+    private int numMazeRows = 5;
 
     /** The horizontal and vertical margin from the edge of the screen to the walls of the maze */
     float cellSize;
@@ -60,6 +60,9 @@ public class MazeView extends View {
     /** Instantiates the MazeManager class for this Maze. */
     private MazeManager thisMaze = new MazeManager();
 
+    /** Number of times the Player has gone through the maze. */
+    public int mazeIterations = 0;
+
     public MazeView(Context context, AttributeSet attrs) {
         super(context, attrs);
         initializePaint();
@@ -70,6 +73,10 @@ public class MazeView extends View {
             coins.add(coin);
         }
         createMaze();
+    }
+
+    public boolean doneLevel() {
+        return mazeIterations >= 3;
     }
 
     private void initializePaint() {
@@ -321,8 +328,10 @@ public class MazeView extends View {
 
     private void playerAtExit(){
         // check if the player has arrived at the exit. Create a new maze if this has happened.
-        if(player.getX() == exit.getX() && player.getY()== exit.getY())
+        if(player.getX() == exit.getX() && player.getY()== exit.getY()) {
             createMaze();
+            mazeIterations++;
+        }
         Iterator<Coin> itr = coins.iterator();
         while (itr.hasNext()) {
             Coin coin = itr.next();

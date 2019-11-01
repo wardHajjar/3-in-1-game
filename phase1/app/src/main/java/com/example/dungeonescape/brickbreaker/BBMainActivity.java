@@ -7,9 +7,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.dungeonescape.Maze.MazeActivity;
+import com.example.dungeonescape.GameManager;
+import com.example.dungeonescape.Maze.MazeActivityInstructions;
 import com.example.dungeonescape.Player;
 import com.example.dungeonescape.R;
+import com.example.dungeonescape.Dead;
+import com.example.dungeonescape.SaveData;
+import android.os.SystemClock;
+
+import java.io.File;
 
 /**
  * The main activity of the game (entry point).
@@ -21,6 +27,11 @@ public class BBMainActivity extends Activity {
     BBView gameView;
     boolean running;
     Player player;
+    GameManager gameManager;
+    /**
+     * The time at which the brick breaker game has been started.
+     */
+    long startTime;
     /**
      *
      * @param savedInstanceState Bundle object that passes data between activities.
@@ -28,6 +39,8 @@ public class BBMainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // starts the clock
+        startTime = SystemClock.elapsedRealtime();
         // Set the View we are using
         setContentView(R.layout.activity_brick_breaker_main);
         gameView = findViewById(R.id.BBView2);
@@ -35,14 +48,22 @@ public class BBMainActivity extends Activity {
         setTitle("Level1: Brick Breaker");
         Intent i = getIntent();
         player = (Player) i.getSerializableExtra("Player");
+        gameManager = (GameManager) i.getSerializableExtra("Game Manager");
         gameView.manager.addPlayer(player);
+
         Button nextButton = (Button) findViewById(R.id.nextlvl);
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(BBMainActivity.this, MazeActivity.class);
+                player.setCurrentLevel(2);
+                gameManager.updatePlayer(player.getName(), player);
+                save();
+                //Intent intent = new Intent(BBMainActivity.this, MazeActivity.class);
+                Intent intent = new Intent(BBMainActivity.this, MazeActivityInstructions.class);
+
                 intent.putExtra("Player", player);
+                intent.putExtra("Game Manager", gameManager);
                 startActivity(intent);
             }
         });
@@ -75,6 +96,10 @@ public class BBMainActivity extends Activity {
                                     boolean doneLevel = gameView.doneLevel();
                                     if (doneLevel) {
                                         nextLevel();
+                                        running = false;
+                                    }
+                                    if (player.getNumLives() == 0){
+                                        endGame();
                                         running = false;
                                     }
                                 }
@@ -111,8 +136,41 @@ public class BBMainActivity extends Activity {
      * User has successfully finished Brick Breaker and will now move on to Maze.
      */
     protected void nextLevel(){
-        Intent intent = new Intent(BBMainActivity.this, MazeActivity.class);
+        player.setCurrentLevel(2);
+        gameManager.updatePlayer(player.getName(), player);
+        // time at which the user has finished the level.
+        long endTime = SystemClock.elapsedRealtime();
+        long elapsedMilliSeconds = endTime - startTime;
+        gameManager.updateTotalTime(elapsedMilliSeconds);
+        save();
+        //Intent intent = new Intent(BBMainActivity.this, MazeActivity.class);
+        Intent intent = new Intent(BBMainActivity.this, MazeActivityInstructions.class);
         intent.putExtra("Player", player);
+        intent.putExtra("Game Manager", gameManager);
         startActivity(intent);
+    }
+
+    /**
+     * User has lost the Game i.e. no more lives left.
+     */
+    protected void endGame(){
+        // time at which the user has lost.
+        long endTime = SystemClock.elapsedRealtime();
+        long elapsedMilliSeconds = endTime - startTime;
+        gameManager.updateTotalTime(elapsedMilliSeconds);
+        Intent intent = new Intent(BBMainActivity.this, Dead.class);
+        intent.putExtra("Player", player);
+        intent.putExtra("GameManager", gameManager);
+        startActivity(intent);
+    }
+    private void save() {
+        try {
+            String filePath = this.getFilesDir().getPath() + "/GameState.txt";
+            File f = new File(filePath);
+            SaveData.save(gameManager, f);
+        }
+        catch (Exception e) {
+            System.out.println("Couldn't save: " + e.getMessage());
+        }
     }
 }

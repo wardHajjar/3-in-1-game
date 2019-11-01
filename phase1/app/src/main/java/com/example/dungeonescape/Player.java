@@ -2,6 +2,8 @@ package com.example.dungeonescape;
 
 import java.io.Serializable;
 
+import android.graphics.Color;
+
 /**
  * Represents a Player in the Game.
  */
@@ -12,12 +14,14 @@ public class Player extends GameObject implements Serializable {
 
     /** The Player's score. */
     private int score;
-
+    private int currentLevel;
     /** The number of lives this Player has. */
     private int numLives;
 
     /** The number of coins this Player has. */
     private int numCoins;
+
+    private int colour;
 
     public Player(int x,int y,int z, String name) {
         super(0,0,0);
@@ -25,14 +29,25 @@ public class Player extends GameObject implements Serializable {
         setScore(0);
         setNumLives(5);
         setNumCoins(0);
+        setColour(Color.WHITE);
+        setCurrentLevel(1);
     }
     public Player(String name){
         setName(name);
         setScore(0);
         setNumLives(5);
         setNumCoins(0);
+        setColour(Color.WHITE);
+        setCurrentLevel(1);
     }
-
+    /** Sets this Player's Current Level. */
+    public void setCurrentLevel (int level) {
+        this.currentLevel = level;
+    }
+    /** Gets this Player's Current level. */
+    public int getCurrentLevel () {
+        return this.currentLevel;
+    }
     /** Adds 1 coin to this Player. */
     public void addCoin(){
         setNumCoins(getNumCoins() + 1);
@@ -94,4 +109,21 @@ public class Player extends GameObject implements Serializable {
     public void setNumCoins(int numCoins) {
         this.numCoins = numCoins;
     }
+
+    /**
+     * Sets the color of the player's character.
+     * @param colour the new color to set the character to.
+     */
+    public void setColour(int colour){
+        this.colour = colour;
+    }
+
+    /**
+     * Returns the player's character colour.
+     * @return integer value of the player's color.
+     */
+    public int getColour(){
+        return this.colour;
+    }
+
 }
