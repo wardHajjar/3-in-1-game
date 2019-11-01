@@ -301,7 +301,7 @@ public class MazeView extends View {
                 break;
         }
         playerAtExit();
-        // playerOnCoin();
+        playerOnCoin();
         invalidate();
     }
 
@@ -334,16 +334,16 @@ public class MazeView extends View {
 
     /** Checks if this Player has arrived at the exit, create a new maze if true. */
     private void playerAtExit() {
-        int playerX = player.getX();
-        int playerY = player.getY();
-        int exitX = player.getX();
-        int exitY = player.getY();
-
         if (player.getX() == exit.getX() && player.getY() == exit.getY()) {
             mazeIterations++;
             createMaze();
         }
+    }
 
+    /** Checks if this Player has the same coordinates as a Coin.
+     * Removes Coin from game & adds it to Player if true.
+     */
+    private void playerOnCoin() {
         Iterator<Coin> coinIterator = coins.iterator();
         while (coinIterator.hasNext()) {
             Coin coin = coinIterator.next();
@@ -352,13 +352,6 @@ public class MazeView extends View {
                 player.addCoin();
             }
         }
-    }
-
-    /** Checks if this Player has the same coordinates as a Coin.
-     * Removes Coin from game & adds it to Player if true.
-     */
-    private void playerOnCoin() {
-
     }
 
     public int getNumMazeCols() {
