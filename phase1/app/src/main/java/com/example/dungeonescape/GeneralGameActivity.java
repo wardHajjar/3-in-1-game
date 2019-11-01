@@ -8,7 +8,13 @@ import com.example.dungeonescape.SaveData;
 
 import java.io.File;
 
-public class GeneralGameActivity extends AppCompatActivity {
+public abstract class GeneralGameActivity extends AppCompatActivity {
+
+    /** Saves the Player data.
+     *
+     * @param gameManager the gameManager in use.
+     * @param player the current Player.
+     */
     public void save(GameManager gameManager, Player player) {
         gameManager.updatePlayer(player.getName(), player);
         try {
