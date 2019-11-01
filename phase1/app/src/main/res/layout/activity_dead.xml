@@ -22,17 +22,31 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/restart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="162dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="162dp"
-        android:layout_marginBottom="207dp"
-        android:text="Restart"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="157dp"
+        android:layout_marginStart="157dp"
+        android:layout_marginTop="148dp"
+        android:text="RESTART"
+        app:layout_constraintBottom_toTopOf="@+id/menu"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/Title" />
+        app:layout_constraintTop_toBottomOf="@+id/Title" />
+
+    <Button
+        android:id="@+id/menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:layout_marginEnd="154dp"
+        android:layout_marginStart="155dp"
+        android:layout_marginTop="8dp"
+        android:text="MENU"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/restart"
+        app:layout_constraintVertical_bias="0.634" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
