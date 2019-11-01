@@ -83,21 +83,6 @@ public class MazeView extends View {
         return mazeIterations >= 3;
     }
 
-//    private void initializePaint() {
-//        wallPaint = new Paint();
-//        wallPaint.setColor(Color.WHITE);
-//        wallPaint.setStrokeWidth(4);
-//
-//        playerPaint = new Paint();
-//        playerPaint.setColor(Color.RED);
-//
-//        exitPaint = new Paint();
-//        exitPaint.setColor(Color.BLUE);
-//
-//        coinPaint = new Paint();
-//        coinPaint.setColor(Color.YELLOW);
-//    }
-
     public void setPlayer(Player player){
         this.player = player;
         relocatePlayer();
@@ -210,10 +195,27 @@ public class MazeView extends View {
         //translate the canvas by our padding values so the maze is always centered on our screen.
         canvas.translate(horizontalPadding, verticalPadding);
 
+        //adding a padding so the player cell and the exit cells don't touch the walls.
+        float margin = cellSize / 10;
+
+        // draws walls, Coins, the Player and the exit square on the screen
+        paintWalls(canvas, mazeCols, mazeRows);
+        paintCoins(canvas, margin);
+        paintPlayer(canvas, margin);
+        paintExit(canvas, margin);
+    }
+
+    /** Draws walls (borders) for each mazeCell.
+     *
+     * @param canvas the Canvas to draw the walls on.
+     * @param mazeCols the number of columns in this Maze.
+     * @param mazeRows the number of rows in this Maze.
+     */
+    private void paintWalls(Canvas canvas, int mazeCols, int mazeRows) {
         Paint mazeWallPaint = mazeManager.getWallPaint();
-        for(int x = 0; x < numMazeCols; x++) {
-            //draw out all the walls for every single cell, and remove them as we create the maze.
-            for(int y = 0; y < numMazeRows; y++) {
+
+        for(int x = 0; x < mazeCols; x++) {
+            for(int y = 0; y < mazeRows; y++) {
                 if (cells[x][y].isTopWall()) {
                     canvas.drawLine(
                             x * cellSize,
@@ -248,14 +250,6 @@ public class MazeView extends View {
                 }
             }
         }
-
-        //adding a padding so the player cell and the exit cells don't touch the walls.
-        float margin = cellSize/10;
-
-        // draws Coins, the Player and the exit square on the screen
-        paintCoins(canvas, margin);
-        paintPlayer(canvas, margin);
-        paintExit(canvas, margin);
     }
 
     /** Draws the Coin circles on the screen.
