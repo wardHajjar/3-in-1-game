@@ -67,18 +67,23 @@ public class MazeView extends View {
         super(context, attrs);
         initializePaint();
 
-        // create 5 coins at random locations.
+        // Creates the Maze
+        createMaze();
+
+        // Creates the 5 Coins
+        createCoins();
+    }
+
+    /** Creates 5 Coins in the Maze, at random locations, by adding them to the coins ArrayList. */
+    private void createCoins() {
         coins = new ArrayList<>();
-        int i = 0;
         int mazeCols = getNumMazeCols();
         int mazeRows = getNumMazeRows();
-        for (; i < 5; i++) {
+
+        for (int i = 0; i < 5; i++) {
             Coin coin = new Coin(rand.nextInt(mazeCols), rand.nextInt(mazeRows));
             coins.add(coin);
         }
-
-        // Creates the Maze
-        createMaze();
     }
 
     public boolean doneLevel() {
