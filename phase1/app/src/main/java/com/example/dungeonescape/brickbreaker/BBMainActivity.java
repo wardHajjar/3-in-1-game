@@ -157,12 +157,15 @@ public class BBMainActivity extends Activity {
         // time at which the user has lost.
         long endTime = SystemClock.elapsedRealtime();
         long elapsedMilliSeconds = endTime - startTime;
+        gameManager.updatePlayer(player.getName(), player);
         gameManager.updateTotalTime(elapsedMilliSeconds);
         Intent intent = new Intent(BBMainActivity.this, Dead.class);
+        save();
         intent.putExtra("Player", player);
-        intent.putExtra("GameManager", gameManager);
+        intent.putExtra("Game Manager", gameManager);
         startActivity(intent);
     }
+
     private void save() {
         try {
             String filePath = this.getFilesDir().getPath() + "/GameState.txt";

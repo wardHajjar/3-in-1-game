@@ -21,8 +21,8 @@ public class GameManager implements Serializable {
         players = new ArrayList<>();
 
     }
-    void addPlayer(String name) {
-        players.add(new Player(name));
+    void addPlayer(Player player) {
+        players.add(player);
     }
 
     public void updatePlayer(String name, Player player) {

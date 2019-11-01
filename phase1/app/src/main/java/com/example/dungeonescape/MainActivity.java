@@ -21,7 +21,8 @@ public class MainActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        Intent i = getIntent();
+        gameManager = (GameManager) i.getSerializableExtra("Game Manager");
         load();
         if (gameManager == null) {
             gameManager = new GameManager();
@@ -29,7 +30,6 @@ public class MainActivity extends AppCompatActivity{
 
         buttons();
     }
-
 
     private void buttons() {
 

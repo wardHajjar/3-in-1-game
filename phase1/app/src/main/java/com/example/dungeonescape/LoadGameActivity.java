@@ -17,41 +17,32 @@ import java.io.File;
 public class LoadGameActivity extends AppCompatActivity {
     Player player;
     GameManager gameManager;
-    GameManager data;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_load_game);
         Intent i = getIntent();
         gameManager = (GameManager) i.getSerializableExtra("Game Manager");
-
-        load();
         buttons();
-
     }
 
     private void buttons() {
-
         final EditText name = (EditText) findViewById(R.id.name);
-
         Button enter = (Button) findViewById(R.id.Enter);
         enter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 String nameText = name.getText().toString();
-
                 player = gameManager.getPlayer(nameText);
                 progress();
-
             }
         });
 
     }
     private void progress() {
         int level = player.getCurrentLevel();
-
-        if (level == 1) {
+        if (level == 1 || level == 0) {
             Intent intent = new Intent(LoadGameActivity.this, BBMainActivity.class);
             intent.putExtra("Player", player);
             intent.putExtra("Game Manager", gameManager);
@@ -68,16 +59,6 @@ public class LoadGameActivity extends AppCompatActivity {
             intent.putExtra("Player", player);
             intent.putExtra("Game Manager", gameManager);
             startActivity(intent);
-        }
-    }
-    private void load() {
-        try {
-            String filePath = this.getFilesDir().getPath() + "/GameState.txt";
-            File f = new File(filePath);
-            gameManager = (GameManager) SaveData.load(f);
-        }
-        catch (Exception e) {
-            System.out.println("Couldn't load save data: " + e.getMessage());
         }
     }
 

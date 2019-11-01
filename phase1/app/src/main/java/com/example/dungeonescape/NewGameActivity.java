@@ -34,21 +34,20 @@ public class NewGameActivity extends AppCompatActivity {
         Intent i = getIntent();
         gameManager = (GameManager) i.getSerializableExtra("Game Manager");
         buttons();
-
     }
 
     private void buttons() {
         final EditText name = findViewById(R.id.txtSub);
         final Button enter = findViewById(R.id.Enter);
 
-        String nameText = name.getText().toString();
-        gameManager.addPlayer(nameText);
-        player = gameManager.getPlayer(nameText);
-
         final Button colour1 = findViewById(R.id.colour1);
         colour1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String nameText = name.getText().toString();
+                player = new Player(nameText);
+                gameManager.addPlayer(player);
+                save();
                 enter.setVisibility(View.VISIBLE);
                 player.setColour(Color.argb(255, 173, 0, 0));
             }
@@ -58,6 +57,10 @@ public class NewGameActivity extends AppCompatActivity {
         colour2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String nameText = name.getText().toString();
+                player = new Player(nameText);
+                gameManager.addPlayer(player);
+                save();
                 enter.setVisibility(View.VISIBLE);
                 player.setColour(Color.argb(255, 76, 175, 80));
             }
@@ -67,31 +70,35 @@ public class NewGameActivity extends AppCompatActivity {
         colour3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String nameText = name.getText().toString();
+                player = new Player(nameText);
+                gameManager.addPlayer(player);
+                save();
                 enter.setVisibility(View.VISIBLE);
                 player.setColour(Color.argb(255, 76, 175, 80));
             }
         });
 
-//        name.addTextChangedListener(new TextWatcher() {
-//
-//            public void afterTextChanged(Editable s) {
-//                if (!(name.getText().toString().matches(""))){
-//                    TextView colorPrompt =  (TextView) findViewById(R.id.textView3);
-//                    colorPrompt.setText((CharSequence)("Select Character Colour:"));
-//                    colour1.setVisibility(View.VISIBLE);
-//                    colour2.setVisibility(View.VISIBLE);
-//                    colour3.setVisibility(View.VISIBLE);
-//                }
-//            }
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-//
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {}
-//        });
+        name.addTextChangedListener(new TextWatcher() {
+
+            public void afterTextChanged(Editable s) {
+                if (!(name.getText().toString().matches(""))){
+                    TextView colorPrompt =  (TextView) findViewById(R.id.textView3);
+                    colorPrompt.setText((CharSequence)("Select Character Colour:"));
+                    colour1.setVisibility(View.VISIBLE);
+                    colour2.setVisibility(View.VISIBLE);
+                    colour3.setVisibility(View.VISIBLE);
+                }
+            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+        });
 
         enter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                save();
+
                 Intent intent = new Intent(NewGameActivity.this, BBMainActivity.class);
                 intent.putExtra("Player", player);
                 intent.putExtra("Game Manager", gameManager);
