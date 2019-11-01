@@ -36,7 +36,6 @@ public class MazeView extends View {
     private ArrayList<Coin> coins;
 
     /** Player and exit objects, and their positions. */
-
     private Player player;
     private GameObject exit;
     private MazeCell playerLoc;
@@ -45,8 +44,10 @@ public class MazeView extends View {
     private int numMazeCols = 5;
     private int numMazeRows = 5;
 
-    /** The horizontal and vertical margin from the edge of the screen to the walls of the maze */
+    /** The size of each MazeCell in pixels. */
     float cellSize;
+
+    /** The horizontal and vertical margin from the edge of the screen to the walls of the maze */
     float horizontalPadding;
     float verticalPadding;
 
