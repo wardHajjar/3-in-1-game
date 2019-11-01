@@ -27,12 +27,6 @@ class PlatformerManager {
     private ArrayList<Coin> coins;
     Player player;
 
-//    int getCharacterLives(){
-//        return character.getLives();
-//    }
-//    void setCharacterLives(int lives){
-//        character.setLives(lives);
-//    }
 
     int getGridWidth() {
         return gridWidth;
@@ -137,6 +131,6 @@ class PlatformerManager {
         return (character.getGamescore() > 10);
     }
 
-    boolean death(){ return (player.getNumLives() < 0);}
+    boolean death(){ return (player.getNumLives() <= 0);}
 
 }

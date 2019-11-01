@@ -50,7 +50,6 @@ public class Level2MainActivity extends AppCompatActivity {
 
         setTitle("Level3: Platformer");
 
-
         // Set Buttons
         buttons();
         running = true;
@@ -70,8 +69,6 @@ public class Level2MainActivity extends AppCompatActivity {
                                 if (running) {
 
                                     // Update the score shown
-                                    gameManager.updatePlayer(player.getName(), player);
-                                    save();
                                     int score = game.getManager().getCharacterScore();
                                     String scr = String.valueOf(score) ;
                                     String scre = "Score: " + scr;
@@ -86,13 +83,12 @@ public class Level2MainActivity extends AppCompatActivity {
                                     if (doneLevel) {
                                         nextLevel();
                                         player.setCurrentLevel(3);
-                                        gameManager.updatePlayer(player.getName(), player);
                                         save();
                                         running = false;
                                     }
                                     boolean dead = game.dead();
                                     if (dead){
-                                        gameManager.updatePlayer(player.getName(), player);
+                                        save();
                                         deadPage();
                                         running = false;
                                     }
@@ -109,10 +105,14 @@ public class Level2MainActivity extends AppCompatActivity {
     }
     private void nextLevel() {
         Intent intent = new Intent(Level2MainActivity.this, Level3FinishedActivity.class);
+        intent.putExtra("Player", player);
+        intent.putExtra("Game Manager", gameManager);
         startActivity(intent);
     }
     private void deadPage() {
         Intent intent = new Intent(Level2MainActivity.this, Dead.class);
+        intent.putExtra("Player", player);
+        intent.putExtra("Game Manager", gameManager);
         startActivity(intent);
     }
 
@@ -155,6 +155,7 @@ public class Level2MainActivity extends AppCompatActivity {
     }
 
     private void save() {
+        gameManager.updatePlayer(player.getName(), player);
         try {
             String filePath = this.getFilesDir().getPath() + "/GameState.txt";
             File f = new File(filePath);

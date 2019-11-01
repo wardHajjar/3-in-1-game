@@ -57,7 +57,6 @@ public class BBMainActivity extends Activity {
             public void onClick(View view) {
 
                 player.setCurrentLevel(2);
-                gameManager.updatePlayer(player.getName(), player);
                 save();
                 //Intent intent = new Intent(BBMainActivity.this, MazeActivity.class);
                 Intent intent = new Intent(BBMainActivity.this, MazeActivityInstructions.class);
@@ -137,7 +136,6 @@ public class BBMainActivity extends Activity {
      */
     protected void nextLevel(){
         player.setCurrentLevel(2);
-        gameManager.updatePlayer(player.getName(), player);
         // time at which the user has finished the level.
         long endTime = SystemClock.elapsedRealtime();
         long elapsedMilliSeconds = endTime - startTime;
@@ -157,7 +155,6 @@ public class BBMainActivity extends Activity {
         // time at which the user has lost.
         long endTime = SystemClock.elapsedRealtime();
         long elapsedMilliSeconds = endTime - startTime;
-        gameManager.updatePlayer(player.getName(), player);
         gameManager.updateTotalTime(elapsedMilliSeconds);
         Intent intent = new Intent(BBMainActivity.this, Dead.class);
         save();
@@ -167,6 +164,7 @@ public class BBMainActivity extends Activity {
     }
 
     private void save() {
+        gameManager.updatePlayer(player.getName(), player);
         try {
             String filePath = this.getFilesDir().getPath() + "/GameState.txt";
             File f = new File(filePath);

@@ -24,6 +24,12 @@ public class Dead extends AppCompatActivity {
         gameManager = (GameManager) i.getSerializableExtra("Game Manager");
         player = (Player) i.getSerializableExtra("Player");
         buttons();
+        player.setNumCoins(0);
+        player.setNumLives(5);
+        player.setCurrentLevel(1);
+        player.setScore(0);
+        gameManager.updatePlayer(player.getName(), player);
+        save();
     }
 
     private void buttons() {
@@ -32,13 +38,7 @@ public class Dead extends AppCompatActivity {
         restart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                player.setNumCoins(0);
-                player.setNumLives(5);
-                player.setCurrentLevel(1);
-                player.setScore(0);
-                gameManager.updatePlayer(player.getName(), player);
-                save();
-                load();
+
                 Intent intent = new Intent(Dead.this, MainActivity.class);
                 intent.putExtra("Game Manager", gameManager);
                 startActivity(intent);

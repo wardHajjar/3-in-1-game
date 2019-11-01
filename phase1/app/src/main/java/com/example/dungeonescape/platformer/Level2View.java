@@ -84,6 +84,7 @@ public class Level2View extends SurfaceView implements Runnable{
     public PlatformerManager getManager() {
         return manager;
     }
+
     public void update() {
 
         boolean alive = manager.update();
