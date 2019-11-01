@@ -56,8 +56,6 @@ public class BBMainActivity extends GeneralGameActivity {
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                player.setCurrentLevel(2);
                 save(gameManager, player);
                 //Intent intent = new Intent(BBMainActivity.this, MazeActivity.class);
                 Intent intent = new Intent(BBMainActivity.this, MazeActivityInstructions.class);
@@ -167,5 +165,6 @@ public class BBMainActivity extends GeneralGameActivity {
     @Override
     public void save(GameManager gameManager, Player player) {
         super.save(gameManager, player);
+        player.setCurrentLevel(2);
     }
 }
