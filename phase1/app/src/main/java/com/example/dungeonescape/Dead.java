@@ -41,6 +41,7 @@ public class Dead extends AppCompatActivity {
             }
         });
     }
+
     private void save() {
         gameManager.updatePlayer(player.getName(), player);
         try {
