@@ -33,8 +33,10 @@ public class NewGameActivity extends AppCompatActivity {
 
     private void buttons() {
         final EditText name = findViewById(R.id.nameInput);
-        final Button enter = findViewById(R.id.Enter);
-
+        final TextView diffPrompt = findViewById(R.id.diffPrompt);
+        final Button enter = findViewById(R.id.enter);
+        final Button easy = findViewById(R.id.easy);
+        final Button hard = findViewById(R.id.hard);
         final Button colour1 = findViewById(R.id.colour1);
         colour1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,8 +45,10 @@ public class NewGameActivity extends AppCompatActivity {
                 player = new Player(nameText);
                 gameManager.addPlayer(player);
                 save();
-                enter.setVisibility(View.VISIBLE);
                 player.setColour(Color.argb(255, 173, 0, 0));
+                diffPrompt.setText((CharSequence)("Chose Difficulty Level:"));
+                easy.setVisibility(View.VISIBLE);
+                hard.setVisibility(View.VISIBLE);
             }
         });
 
@@ -56,8 +60,11 @@ public class NewGameActivity extends AppCompatActivity {
                 player = new Player(nameText);
                 gameManager.addPlayer(player);
                 save();
-                enter.setVisibility(View.VISIBLE);
                 player.setColour(Color.argb(255, 76, 175, 80));
+                diffPrompt.setText((CharSequence)("Chose Difficulty Level:"));
+                easy.setVisibility(View.VISIBLE);
+                hard.setVisibility(View.VISIBLE);
+
             }
         });
 
@@ -69,8 +76,26 @@ public class NewGameActivity extends AppCompatActivity {
                 player = new Player(nameText);
                 gameManager.addPlayer(player);
                 save();
+                player.setColour(Color.argb(255, 255, 193, 7));
+                diffPrompt.setText((CharSequence)("Chose Difficulty Level:"));
+                easy.setVisibility(View.VISIBLE);
+                hard.setVisibility(View.VISIBLE);
+            }
+        });
+
+        easy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                player.setDifficulty("Easy");
                 enter.setVisibility(View.VISIBLE);
-                player.setColour(Color.argb(255, 76, 175, 80));
+            }
+        });
+
+        hard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                player.setDifficulty("Hard");
+                enter.setVisibility(View.VISIBLE);
             }
         });
 

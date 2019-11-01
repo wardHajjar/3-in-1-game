@@ -100,6 +100,12 @@ public class Player extends GameObject implements Serializable {
 
     public void setDifficulty(String diff) {
         this.difficulty = diff;
+        if (difficulty.equals("Easy")){
+            setNumLives(5);
+        }else if (difficulty.equals("Hard")){
+            setNumLives(3);
+        }
+
     }
 
     /**
