@@ -29,6 +29,7 @@ public class Player extends GameObject implements Serializable {
 
     /**
      * The difficulty level that the user has chosen.
+     * Possible inputs: "Easy" or "Hard"
      */
     private String difficulty;
 
