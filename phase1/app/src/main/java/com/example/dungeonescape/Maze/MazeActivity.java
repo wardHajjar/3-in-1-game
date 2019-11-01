@@ -150,14 +150,5 @@ public class MazeActivity extends GeneralGameActivity {
     public void save(GameManager gameManager, Player player) {
         super.save(gameManager, player);
         player.setCurrentLevel(3);
-//        gameManager.updatePlayer(player.getName(), player);
-//        try {
-//            String filePath = this.getFilesDir().getPath() + "/GameState.txt";
-//            File f = new File(filePath);
-//            SaveData.save(gameManager, f);
-//        }
-//        catch (Exception e) {
-//            System.out.println("Couldn't save: " + e.getMessage());
-//        }
     }
 }
