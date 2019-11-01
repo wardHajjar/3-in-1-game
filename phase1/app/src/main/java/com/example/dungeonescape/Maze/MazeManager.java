@@ -38,22 +38,6 @@ class MazeManager {
         coinPaint.setColor(Color.YELLOW);
     }
 
-    Paint getWallPaint() {
-        return wallPaint;
-    }
-
-    Paint getPlayerPaint() {
-        return playerPaint;
-    }
-
-    Paint getExitPaint() {
-        return exitPaint;
-    }
-
-    Paint getCoinPaint() {
-        return coinPaint;
-    }
-
     /** Calculates the cellSize based on the screen's dimensions.
      *
      * @param screenWidth the width of the phone screen in pixels.
@@ -100,6 +84,10 @@ class MazeManager {
         setVerticalPadding(newVerticalPadding);
     }
 
+    /** Returns the Maze's cellSize.
+     *
+     * @return float value for cellSize.
+     */
     float getCellSize() {
         return cellSize;
     }
@@ -112,6 +100,10 @@ class MazeManager {
         this.cellSize = cellSize;
     }
 
+    /** Returns the Maze's horizontalPadding.
+     *
+     * @return float value for horizontalPadding.
+     */
     float getHorizontalPadding() {
         return horizontalPadding;
     }
@@ -124,6 +116,10 @@ class MazeManager {
         this.horizontalPadding = horizontalPadding;
     }
 
+    /** Returns the Maze's verticalPadding.
+     *
+     * @return float value for verticalPadding.
+     */
     float getVerticalPadding() {
         return verticalPadding;
     }
@@ -134,5 +130,37 @@ class MazeManager {
      */
     private void setVerticalPadding(float verticalPadding) {
         this.verticalPadding = verticalPadding;
+    }
+
+    /** Returns the Maze's wall Paint.
+     *
+     * @return Paint object for walls.
+     */
+    Paint getWallPaint() {
+        return wallPaint;
+    }
+
+    /** Returns the Maze's Player Paint.
+     *
+     * @return Paint object for Player.
+     */
+    Paint getPlayerPaint() {
+        return playerPaint;
+    }
+
+    /** Returns the Maze's exit square Paint.
+     *
+     * @return Paint object for exit square.
+     */
+    Paint getExitPaint() {
+        return exitPaint;
+    }
+
+    /** Returns the Maze's coin Paint.
+     *
+     * @return Paint object for coins.
+     */
+    Paint getCoinPaint() {
+        return coinPaint;
     }
 }
