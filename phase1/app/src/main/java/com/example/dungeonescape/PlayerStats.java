@@ -23,8 +23,11 @@ public class PlayerStats extends AppCompatActivity {
 
         buttons();
 
-//        TextView numtimer = findViewById(R.id.numTimerText);
-//        numtimer.setText()
+        TextView congratPlayer = findViewById(R.id.congrats);
+        congratPlayer.setText(String.format("Congratulation, %s!", player.getName()));
+
+        TextView numtimer = findViewById(R.id.numTimerText);
+        numtimer.setText(String.valueOf(player.getTotalTime()));
 
         TextView numcoins = findViewById(R.id.numCoinsText);
         numcoins.setText(String.valueOf(player.getNumCoins()));
@@ -46,6 +49,15 @@ public class PlayerStats extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        Button menu = findViewById(R.id.menu);
+        menu.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                Intent intent = new Intent(PlayerStats.this, MainActivity.class);
+                intent.putExtra("Game Manager", gameManager);
+                startActivity(intent);
+            }
+        });
     }
 
     private void save() {
@@ -58,6 +70,4 @@ public class PlayerStats extends AppCompatActivity {
             System.out.println("Couldn't save: " + e.getMessage());
         }
     }
-
-
 }
