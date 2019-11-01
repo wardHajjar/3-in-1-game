@@ -1,4 +1,4 @@
-package com.example.dungeonescape.platformer;
+package com.example.dungeonescape;
 
 import androidx.appcompat.app.AppCompatActivity;
 
