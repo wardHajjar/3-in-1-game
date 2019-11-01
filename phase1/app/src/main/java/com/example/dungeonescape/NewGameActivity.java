@@ -12,9 +12,7 @@ import android.widget.EditText;
 import android.graphics.Color;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.dungeonescape.brickbreaker.BBMainActivity;
-
 import java.io.File;
 import java.util.ArrayList;
 
