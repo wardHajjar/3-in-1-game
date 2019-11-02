@@ -14,24 +14,13 @@ import com.example.dungeonescape.Player;
 import com.example.dungeonescape.PlayerStats;
 import com.example.dungeonescape.R;
 
-public class Level2MainActivity extends GeneralGameActivity {
-    /**
-     * The game's view that updates and draws the objects within it.
-     */
-    private Level2View game;
+public class Level3MainActivity extends GeneralGameActivity {
+    private Level3View game;
     private boolean running;
     Player player;
     GameManager gameManager;
-
-    /**
-     * The time at which the brick breaker game has been started.
-     */
     long startTime;
 
-    /**
-     *
-     * @param savedInstanceState Bundle object that passes data between activities.
-     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +31,7 @@ public class Level2MainActivity extends GeneralGameActivity {
         player = (Player) i.getSerializableExtra("Player");
         gameManager = (GameManager) i.getSerializableExtra("Game Manager");
 
-        setContentView(R.layout.activity_level2_main);
+        setContentView(R.layout.activity_level3_main);
         game = findViewById(R.id.level2);
 
         // getting player instance from intent
@@ -103,30 +92,22 @@ public class Level2MainActivity extends GeneralGameActivity {
         };
         t.start();
     }
-
-    /**
-     * User has successfully finished Brick Breaker and will now move on to Maze.
-     */
     private void nextLevel() {
         long endTime = SystemClock.elapsedRealtime();
         long elapsedMilliSeconds = endTime - startTime;
         player.updateTotalTime(elapsedMilliSeconds);
         save(gameManager, player);
-        Intent intent = new Intent(Level2MainActivity.this, PlayerStats.class);
+        Intent intent = new Intent(Level3MainActivity.this, PlayerStats.class);
         intent.putExtra("Player", player);
         intent.putExtra("Game Manager", gameManager);
         startActivity(intent);
     }
-
-    /**
-     * User has lost the Game i.e. no more lives left.
-     */
     private void deadPage() {
         long endTime = SystemClock.elapsedRealtime();
         long elapsedMilliSeconds = endTime - startTime;
         player.updateTotalTime(elapsedMilliSeconds);
         save(gameManager, player);
-        Intent intent = new Intent(Level2MainActivity.this, Dead.class);
+        Intent intent = new Intent(Level3MainActivity.this, Dead.class);
         intent.putExtra("Player", player);
         intent.putExtra("Game Manager", gameManager);
         startActivity(intent);

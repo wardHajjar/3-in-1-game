@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.SystemClock;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -32,6 +33,8 @@ public class MazeActivity extends GeneralGameActivity {
     Player player;
     GameManager gameManager;
 
+    long startTime;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +53,9 @@ public class MazeActivity extends GeneralGameActivity {
 
         /* Go to next game. Testing only. */
         configureNextButton();
+
+        // starts the clock
+        startTime = SystemClock.elapsedRealtime();
 
         /* Initializes the countdown to losing the game. */
         final TextView countTime = findViewById(R.id.countTime);
@@ -155,10 +161,14 @@ public class MazeActivity extends GeneralGameActivity {
             nextLevel();
     }
 
-    /**
-     * User has successfully finished Maze and will now move on to Platformer.
-     */
+    /** User has successfully finished Maze and will now move on to Platformer. */
     protected void nextLevel() {
+        /* The time at which the user has finished the level. */
+        long endTime = SystemClock.elapsedRealtime();
+        long elapsedMilliSeconds = endTime - startTime;
+
+        /* Updates the total time elapsed in Player. */
+        player.updateTotalTime(elapsedMilliSeconds);
         save(gameManager, player);
         Intent intent = new Intent(MazeActivity.this, PlatformerMainActivity.class);
         intent.putExtra("Player", player);

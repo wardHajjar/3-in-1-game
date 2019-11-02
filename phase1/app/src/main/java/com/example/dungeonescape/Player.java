@@ -1,7 +1,6 @@
 package com.example.dungeonescape;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 import android.graphics.Color;
 
@@ -16,15 +15,14 @@ public class Player extends GameObject implements Serializable {
     /** The Player's score. */
     private int score;
     private int currentLevel;
+
     /** The number of lives this Player has. */
     private int numLives;
 
     /** The number of coins this Player has. */
     private int numCoins;
 
-    /**
-     * The colour of the user's character
-     */
+    /** The colour of the user's character. */
     private int colour;
 
     /**
@@ -33,13 +31,20 @@ public class Player extends GameObject implements Serializable {
      */
     private String difficulty;
 
-    /**
-     * The total time that the character has been playing the game for.
-     */
+    /** The total time that the character has been playing the game for. */
     private long totalTimePlayed;
 
-    public Player(int x,int y,int z, String name) {
-        super(0,0,0);
+    public Player() {
+        setScore(0);
+        setNumLives(5);
+        setNumCoins(0);
+        setColour(Color.WHITE);
+        setCurrentLevel(1);
+        totalTimePlayed = 0;
+        setDifficulty("Easy");
+    }
+
+    public Player(String name) {
         setName(name);
         setScore(0);
         setNumLives(5);
@@ -49,23 +54,34 @@ public class Player extends GameObject implements Serializable {
         totalTimePlayed = 0;
         setDifficulty("Easy");
     }
-    public Player(String name){
+
+    public Player(int x, int y, int z, String name) {
+        super(x, y, z);
         setName(name);
         setScore(0);
         setNumLives(5);
         setNumCoins(0);
         setColour(Color.WHITE);
         setCurrentLevel(1);
+        totalTimePlayed = 0;
         setDifficulty("Easy");
     }
 
-    /** Sets this Player's Current Level. */
+    /**
+     * Sets this Player's Current Level.
+     *
+     * @param level the new level.
+     */
     public void setCurrentLevel (int level) {
         this.currentLevel = level;
     }
 
-    /** Gets this Player's Current level. */
-    public int getCurrentLevel () {
+    /**
+     * Returns this Player's Current level.
+     *
+     * @return the integer value of the Player's current level.
+     */
+    int getCurrentLevel() {
         return this.currentLevel;
     }
 
@@ -96,18 +112,22 @@ public class Player extends GameObject implements Serializable {
         return score;
     }
 
-    public String getDifficulty() {
+    private String getDifficulty() {
         return this.difficulty;
     }
 
-    public void setDifficulty(String diff) {
-        this.difficulty = diff;
-        if (difficulty.equals("Easy")){
+    /**
+     * Sets the Game difficulty.
+     *
+     * @param difficulty the String difficulty.
+     */
+    void setDifficulty(String difficulty) {
+        this.difficulty = difficulty;
+        if (difficulty.equals("Easy")) {
             setNumLives(5);
-        }else if (difficulty.equals("Hard")){
+        } else {
             setNumLives(3);
         }
-
     }
 
     /**
@@ -147,14 +167,16 @@ public class Player extends GameObject implements Serializable {
 
     /**
      * Sets the color of the player's character.
+     *
      * @param colour the new color to set the character to.
      */
-    public void setColour(int colour) {
+    void setColour(int colour) {
         this.colour = colour;
     }
 
     /**
      * Returns the player's character colour.
+     *
      * @return integer value of the player's color.
      */
     public int getColour() {
@@ -163,28 +185,28 @@ public class Player extends GameObject implements Serializable {
 
     /**
      * Returns the total time that the player has been playing for.
+     *
      * @return totalTimePlayed
      */
-    public long getTotalTime() {
+    long getTotalTime() {
         return totalTimePlayed;
     }
 
     /**
      * Increments the total time that the player has been playing for.
+     *
      * @param timeElapsed increment to increase time by.
      */
     public void updateTotalTime(long timeElapsed) {
         totalTimePlayed = totalTimePlayed + timeElapsed;
     }
 
-    public void resetTime() {
+    private void resetTime() {
         totalTimePlayed = 0;
     }
 
-    /**
-     * Reset the player's coins and lives to default values.
-     */
-    public void resetStats() {
+    /** Reset the player's coins and lives to default values. */
+    void resetStats() {
         setScore(0);
         setNumCoins(0);
         setCurrentLevel(1);
