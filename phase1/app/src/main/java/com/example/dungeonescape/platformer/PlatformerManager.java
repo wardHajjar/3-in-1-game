@@ -144,12 +144,13 @@ class PlatformerManager {
 
         character.move();
         character.coinDetection();
+        /* Checks if player is alive. */
         boolean alive = character.isAlive();
         if (!alive) {
             player.loseLife();
             return false;
         }
-
+        /* Moves coins and platforms when the player gets above a certain height. */
         if (character.getY() < 550) {
             int diff = Math.abs(550 - (int) character.getY());
             character.setY(549);

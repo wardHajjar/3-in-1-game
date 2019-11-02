@@ -20,7 +20,8 @@ public class PlatformerMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_platformer_main);
         setTitle("Level3: Platformer");
-        // getting player instance from intent
+
+        /* Gather Data. */
         Intent i = getIntent();
         player = (Player) i.getSerializableExtra("Player");
         gameManager = (GameManager) i.getSerializableExtra("Game Manager");

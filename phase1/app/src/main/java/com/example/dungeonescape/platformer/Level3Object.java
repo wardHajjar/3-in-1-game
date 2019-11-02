@@ -8,10 +8,16 @@ import android.graphics.RectF;
 import android.graphics.drawable.shapes.RectShape;
 
 class Level3Object extends RectShape {
+
+    /** The x,y positions and circle radius. */
     int x,y,size;
+    /** The Paint used. */
     Paint paint;
+    /** The oval to draw object. */
     RectF oval;
+    /** The Platformer manager for this level. */
     PlatformerManager manager;
+    /** The rectangle that outlines this object. */
     Rect rect;
 
     Level3Object(int x, int y, int size, PlatformerManager manager) {
@@ -22,6 +28,7 @@ class Level3Object extends RectShape {
         this.oval = new RectF(x - size / 2, y - size / 2, x + size / 2, y + size / 2);
         this.paint = new Paint();
     }
+    /** Alternate constructor used when there is no manager. */
     Level3Object(int x, int y) {
         this.x = x;
         this.y = y;
@@ -32,7 +39,7 @@ class Level3Object extends RectShape {
                 (y + 1) * size
                 );
     }
-
+    /** Getters and setters for x,y positions */
     void setX(int x) {
         this.x = x;
     }
@@ -46,6 +53,7 @@ class Level3Object extends RectShape {
         return y;
     }
 
+    /** Draw this object. */
     void draw(Canvas canvas) {
         canvas.drawOval(this.oval,this.paint);
     }
