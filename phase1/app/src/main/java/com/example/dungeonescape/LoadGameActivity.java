@@ -1,22 +1,18 @@
 package com.example.dungeonescape;
 
 import androidx.appcompat.app.AppCompatActivity;
-
+import com.example.dungeonescape.Maze.MazeActivity;
+import com.example.dungeonescape.brickbreaker.BBMainActivity;
+import com.example.dungeonescape.platformer.PlatformerMainActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Spinner;
-
-import com.example.dungeonescape.Maze.MazeActivity;
-import com.example.dungeonescape.brickbreaker.BBMainActivity;
-import com.example.dungeonescape.platformer.PlatformerMainActivity;
-
-import java.io.File;
 import java.util.ArrayList;
 
+/** Loads the game data. */
 public class LoadGameActivity extends AppCompatActivity {
     Player player;
     GameManager gameManager;
@@ -31,8 +27,10 @@ public class LoadGameActivity extends AppCompatActivity {
         setSpinner();
         buttons();
     }
+
+    /** Create and set up the drop-down menu. */
     private void setSpinner() {
-        spinner = (Spinner) findViewById(R.id.spinner);
+        spinner = findViewById(R.id.spinner);
         ArrayList<String> names = gameManager.getPlayerNames();
         String[] arr = names.toArray(new String[names.size()]);
 
@@ -41,9 +39,10 @@ public class LoadGameActivity extends AppCompatActivity {
         myAdapter.setDropDownViewResource(android.R.layout.simple_list_item_1);
         spinner.setAdapter(myAdapter);
     }
-    private void buttons() {
 
-        Button enter = (Button) findViewById(R.id.Enter);
+    /** Creates and sets up button functionality. */
+    private void buttons() {
+        Button enter = findViewById(R.id.Enter);
         enter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -52,8 +51,9 @@ public class LoadGameActivity extends AppCompatActivity {
                 progress();
             }
         });
-
     }
+
+    /** Loads specific game based on player's level. */
     private void progress() {
         int level = player.getCurrentLevel();
         if (level == 1 || level == 0) {
@@ -61,19 +61,16 @@ public class LoadGameActivity extends AppCompatActivity {
             intent.putExtra("Player", player);
             intent.putExtra("Game Manager", gameManager);
             startActivity(intent);
-        }
-        else if(level == 2) {
+        } else if(level == 2) {
             Intent intent = new Intent(LoadGameActivity.this, MazeActivity.class);
             intent.putExtra("Player", player);
             intent.putExtra("Game Manager", gameManager);
             startActivity(intent);
-        }
-        else {
+        } else {
             Intent intent = new Intent(LoadGameActivity.this, PlatformerMainActivity.class);
             intent.putExtra("Player", player);
             intent.putExtra("Game Manager", gameManager);
             startActivity(intent);
         }
     }
-
 }

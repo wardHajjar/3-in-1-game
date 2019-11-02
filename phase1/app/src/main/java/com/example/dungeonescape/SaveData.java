@@ -6,7 +6,10 @@ import java.io.Serializable;
 import java.io.ObjectInputStream;
 import java.nio.file.Files;
 
-// The code in this file is from https://www.youtube.com/watch?v=-xW0pBZqpjU&t=207s
+/**
+ * This class save and load players' data.
+ * The code in this file is from https://www.youtube.com/watch?v=-xW0pBZqpjU&t=207s
+ */
 
 public class SaveData implements Serializable {
 

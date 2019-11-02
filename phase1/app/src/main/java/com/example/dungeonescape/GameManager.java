@@ -10,8 +10,8 @@ import java.util.ArrayList;
  */
 
 public class GameManager implements Serializable {
+    /** Create an ArrayList called players. */
     private ArrayList<Player> players;
-
     public GameManager() {
         players = new ArrayList<>();
     }
@@ -58,7 +58,6 @@ public class GameManager implements Serializable {
     Player getPlayer(String name) {
         if (players.size() != 0) {
             Player p = players.get(0);
-
             for (Player player: players) {
                 if (player.getName().equals(name)) {
                     p = player;

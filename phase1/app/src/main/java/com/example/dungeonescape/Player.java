@@ -1,12 +1,9 @@
 package com.example.dungeonescape;
 
 import java.io.Serializable;
-
 import android.graphics.Color;
 
-/**
- * Represents a Player in the Game.
- */
+/** Represents a Player in the Game. */
 public class Player extends GameObject implements Serializable {
 
     /** The Player's name. */
@@ -27,13 +24,14 @@ public class Player extends GameObject implements Serializable {
 
     /**
      * The difficulty level that the user has chosen.
-     * Possible inputs: "Easy" or "Hard"
+     * Possible inputs: "Easy" or "Hard".
      */
     private String difficulty;
 
     /** The total time that the character has been playing the game for. */
     private long totalTimePlayed;
 
+    /** Constructs a Player. */
     public Player() {
         setScore(0);
         setNumLives(5);
@@ -95,6 +93,7 @@ public class Player extends GameObject implements Serializable {
         setNumLives(getNumLives() - 1);
     }
 
+    /** Returns the Player's name */
     public String getName() {
         return name;
     }
@@ -108,10 +107,7 @@ public class Player extends GameObject implements Serializable {
         this.name = name;
     }
 
-    public int getScore() {
-        return score;
-    }
-
+    /** Returns the difficulty level that the Player has chosen. */
     private String getDifficulty() {
         return this.difficulty;
     }
@@ -139,6 +135,7 @@ public class Player extends GameObject implements Serializable {
         this.score = score;
     }
 
+    /** Returns the number of lives the Player has left. */
     public int getNumLives() {
         return numLives;
     }
@@ -152,6 +149,7 @@ public class Player extends GameObject implements Serializable {
         this.numLives = numLives;
     }
 
+    /** Returns the number of coins the Player has. */
     public int getNumCoins() {
         return numCoins;
     }
@@ -186,7 +184,7 @@ public class Player extends GameObject implements Serializable {
     /**
      * Returns the total time that the player has been playing for.
      *
-     * @return totalTimePlayed
+     * @return long value of totalTimePlayed
      */
     long getTotalTime() {
         return totalTimePlayed;
@@ -201,11 +199,14 @@ public class Player extends GameObject implements Serializable {
         totalTimePlayed = totalTimePlayed + timeElapsed;
     }
 
+    /** Reset the total time played by Player. */
     private void resetTime() {
         totalTimePlayed = 0;
     }
 
-    /** Reset the player's coins and lives to default values. */
+    /** Reset the player's coins and lives to default values based on the player's initial selection
+     * of difficulty level.
+     * */
     void resetStats() {
         setScore(0);
         setNumCoins(0);
