@@ -51,7 +51,6 @@ public class MazeView extends View {
 
     public MazeView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        coins = new ArrayList<>();
         numMazeCols = 5;
         numMazeRows = 5;
         mazeManager = new MazeManager(numMazeCols, numMazeRows);
@@ -64,15 +63,21 @@ public class MazeView extends View {
         return mazeIterations >= 3;
     }
 
-    public void setPlayer(Player player){
+    /**
+     * Sets this Player to the player parameter.
+     *
+     * @param player the Player to set this player as.
+     */
+    public void setPlayer(Player player) {
         this.player = player;
         relocatePlayer();
     }
 
-    public void relocatePlayer(){
+    /** Moves the Player to the start location, (0, 0). */
+    public void relocatePlayer() {
         playerLoc = cells[0][0];
-        exit = new GameObject(numMazeCols-1, numMazeRows-1, 1);
-        if(player != null) {
+        exit = new GameObject(numMazeCols - 1, numMazeRows - 1, 1);
+        if (player != null) {
             player.setY(0);
             player.setX(0);
         }
@@ -87,31 +92,32 @@ public class MazeView extends View {
         int mazeCols = getNumMazeCols();
         int mazeRows = getNumMazeRows();
 
-        // calculates MazeCell cellSize in pixels
+        /* Calculates MazeCell cellSize in pixels. */
         mazeManager.calculateCellSize(screenWidth, screenHeight, mazeCols, mazeRows);
         float cellSize = mazeManager.getCellSize();
 
-        // calculates MazeCell horiztonalPadding and verticalPadding
+        /* Calculates MazeCell horiztonalPadding and verticalPadding. */
         mazeManager.calculateCellHorizontalPadding(screenWidth, mazeCols, cellSize);
         mazeManager.calculateCellVerticalPadding(screenHeight, mazeRows, cellSize);
 
         float horizontalPadding = mazeManager.getHorizontalPadding();
         float verticalPadding = mazeManager.getVerticalPadding();
 
-        // translate the canvas by our padding values so the maze is always centered on our screen.
+        /* Translate the canvas by padding values so the maze is always centered on our screen. */
         canvas.translate(horizontalPadding, verticalPadding);
 
-        // adding a padding so the player cell and the exit cells don't touch the walls.
+        /* Margin to prevent Player, Coins, and exit square from touching the Maze walls. */
         float margin = cellSize / 10;
 
-        // draws walls, Coins, the Player and the exit square on the screen
+        /* Draws walls, Coins, the Player and the exit square on the screen. */
         paintWalls(canvas, mazeCols, mazeRows, cellSize);
         paintCoins(canvas, cellSize, margin);
         paintPlayer(canvas, cellSize, margin);
         paintExit(canvas, cellSize, margin);
     }
 
-    /** Draws walls (borders) for each mazeCell.
+    /**
+     * Draws walls (borders) for each mazeCell.
      *
      * @param canvas the Canvas to draw the walls on.
      * @param mazeCols the number of columns in this Maze.
@@ -120,7 +126,7 @@ public class MazeView extends View {
     private void paintWalls(Canvas canvas, int mazeCols, int mazeRows, float cellSize) {
         Paint mazeWallPaint = mazeManager.getWallPaint();
 
-        for(int x = 0; x < mazeCols; x++) {
+        for (int x = 0; x < mazeCols; x++) {
             for(int y = 0; y < mazeRows; y++) {
                 if (cells[x][y].isTopWall()) {
                     canvas.drawLine(
@@ -130,6 +136,7 @@ public class MazeView extends View {
                             y * cellSize,
                             mazeWallPaint);
                 }
+
                 if (cells[x][y].isLeftWall()) {
                     canvas.drawLine(
                             x * cellSize,
@@ -138,6 +145,7 @@ public class MazeView extends View {
                             (y + 1) * cellSize,
                             mazeWallPaint);
                 }
+
                 if (cells[x][y].isBottomWall()) {
                     canvas.drawLine(
                             x * cellSize,
@@ -146,6 +154,7 @@ public class MazeView extends View {
                             (y + 1) * cellSize,
                             mazeWallPaint);
                 }
+
                 if (cells[x][y].isRightWall()) {
                     canvas.drawLine(
                             (x + 1) * cellSize,
@@ -158,7 +167,8 @@ public class MazeView extends View {
         }
     }
 
-    /** Draws the Coin circles on the screen.
+    /**
+     * Draws the Coin circles on the screen.
      *
      * @param canvas the Canvas to draw the Coins on.
      * @param margin the space around the Coin circles.
@@ -176,7 +186,8 @@ public class MazeView extends View {
         }
     }
 
-    /** Draws the Player square on the screen.
+    /**
+     * Draws the Player square on the screen.
      *
      * @param canvas the Canvas to draw the Player on.
      * @param margin the space around the Player square.
@@ -194,7 +205,8 @@ public class MazeView extends View {
                 mazePlayerPaint);
     }
 
-    /** Draws the exit square on the screen.
+    /**
+     * Draws the exit square on the screen.
      *
      * @param canvas the Canvas to draw the exit on.
      * @param margin the space around the square.
@@ -212,36 +224,40 @@ public class MazeView extends View {
                 mazeExitPaint);
     }
 
+    /** Moves the Player by the specified direction. */
     void movePlayer(String direction){
-        //depending on the given direction, move the player to that cell if it's in the maze.
         switch (direction){
             case "UP":
-                if(!playerLoc.isTopWall()) {
+                if (!playerLoc.isTopWall()) {
                     playerLoc = cells[player.getX()][player.getY() - 1];
                     player.setY(player.getY() - 1);
                 }
                 break;
             case "DOWN":
-                if(!playerLoc.isBottomWall()) {
+                if (!playerLoc.isBottomWall()) {
                     playerLoc = cells[player.getX()][player.getY() + 1];
                     player.setY(player.getY() + 1);
                 }
                 break;
             case "LEFT":
-                if(!playerLoc.isLeftWall()) {
+                if (!playerLoc.isLeftWall()) {
                     playerLoc = cells[playerLoc.getX() - 1][playerLoc.getY()];
                     player.setX(player.getX() - 1);
                 }
                 break;
             case "RIGHT":
-                if(!playerLoc.isRightWall()) {
+                if (!playerLoc.isRightWall()) {
                     playerLoc = cells[playerLoc.getX() + 1][playerLoc.getY()];
                     player.setX(player.getX() + 1);
                 }
                 break;
         }
+
+        /* Checks if the Player is at the exit or was on a Coin. */
         playerAtExit();
         playerOnCoin();
+
+        /* Repaints the screen. */
         invalidate();
     }
 
@@ -255,7 +271,8 @@ public class MazeView extends View {
         }
     }
 
-    /** Checks if this Player has the same coordinates as a Coin.
+    /**
+     * Checks if this Player has the same coordinates as a Coin.
      * Removes Coin from game & adds it to Player if true.
      */
     private void playerOnCoin() {
