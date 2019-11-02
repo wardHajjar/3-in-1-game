@@ -11,6 +11,8 @@ import com.example.dungeonescape.brickbreaker.BBMainActivity;
 import java.io.File;
 
 public class Dead extends GeneralGameActivity {
+
+    /** Initializes a gameManager and Player. */
     public GameManager gameManager;
     Player player;
 
@@ -26,8 +28,8 @@ public class Dead extends GeneralGameActivity {
         save(gameManager, player);
     }
 
+    /** Creates Menu and Restart buttons. */
     private void buttons() {
-
         Button restart = findViewById(R.id.menu);
         restart.setOnClickListener(new View.OnClickListener() {
             @Override

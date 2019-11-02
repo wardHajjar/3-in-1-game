@@ -54,7 +54,7 @@ public class MazeActivity extends GeneralGameActivity {
         /* Go to next game. Testing only. */
         configureNextButton();
 
-        // starts the clock
+        /* Starts the clock. */
         startTime = SystemClock.elapsedRealtime();
 
         /* Initializes the countdown to losing the game. */
@@ -83,7 +83,7 @@ public class MazeActivity extends GeneralGameActivity {
 
                 /* Change UI to Lose Life screen. */
                 setContentView(R.layout.activity_maze_lose_life);
-                TextView textView = (TextView) findViewById(R.id.playerLives);
+                TextView textView = findViewById(R.id.playerLives);
                 textView.setText(String.format(Locale.getDefault(),
                         "You have %d lives left.", playerLivesLeft));
                 configureStartOverButton();
@@ -101,6 +101,7 @@ public class MazeActivity extends GeneralGameActivity {
         seconds = (counter / 1000) % 60;
     }
 
+    /** Creates a "next level" button; testing only. */
     private void configureNextButton() {
         Button nextButton = findViewById(R.id.nextlvl);
         nextButton.setOnClickListener(new View.OnClickListener() {
@@ -117,6 +118,7 @@ public class MazeActivity extends GeneralGameActivity {
         });
     }
 
+    /** Creates the "Try Again" button for the Lose Life screen. */
     private void configureStartOverButton() {
         Button startOver = findViewById(R.id.startOver);
         startOver.setOnClickListener(new View.OnClickListener() {

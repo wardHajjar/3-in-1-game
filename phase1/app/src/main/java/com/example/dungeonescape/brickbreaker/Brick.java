@@ -78,9 +78,7 @@ class Brick extends BBObject {
         return new Rect(x, y, x + w,  y + h);
     }
 
-    /**
-     * Method changes hit status to true to indicate that the brick has been hit by the ball.
-     */
+    /** Method changes hit status to true to indicate that the brick has been hit by the ball.*/
     void changeHitStatus(){
         hit = true;
     }
