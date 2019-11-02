@@ -34,6 +34,16 @@ public class Player extends GameObject implements Serializable {
     /** The total time that the character has been playing the game for. */
     private long totalTimePlayed;
 
+    public Player() {
+        setScore(0);
+        setNumLives(5);
+        setNumCoins(0);
+        setColour(Color.WHITE);
+        setCurrentLevel(1);
+        totalTimePlayed = 0;
+        setDifficulty("Easy");
+    }
+
     public Player(String name) {
         setName(name);
         setScore(0);

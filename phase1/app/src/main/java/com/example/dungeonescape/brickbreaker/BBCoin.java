@@ -5,9 +5,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
-/**
- * Creates a coin that the user can collect upon ball collision with the coin.
- */
+/** Creates a coin that the user can collect upon ball collision with the coin. */
 class BBCoin extends BBObject{
 
     private int radius;
@@ -37,9 +35,7 @@ class BBCoin extends BBObject{
         return new Rect(x - radius, y - radius, x + radius, y+ radius);
     }
 
-    /**
-     * Sets the coin's collect status to true.
-     */
+    /** Sets the coin's collect status to true. */
     void gotCollected () {
         collect = true;
     }
