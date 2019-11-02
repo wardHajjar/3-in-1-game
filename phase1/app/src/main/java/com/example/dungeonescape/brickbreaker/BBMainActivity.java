@@ -86,6 +86,7 @@ public class BBMainActivity extends GeneralGameActivity {
                                     String scre = "Score: " + scr;
 
                                     TextView score1 = findViewById(R.id.score);
+
                                     score1.setText(scre);
                                     int lives = player.getNumLives();
                                     String life = "Lives: " + lives;
