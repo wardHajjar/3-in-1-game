@@ -8,16 +8,11 @@ import android.graphics.Rect;
  * Creates a paddle object that "catches" the ball within the Brick Breaker game.
  */
 class Paddle extends BBObject {
-    /**
-     * Width and height of the paddle, respectively.
-     */
+    /** Width and height of the paddle, respectively.*/
     private int w, h;
 
-    /**
-     * Whether the paddle is moving left or right.
-     */
-    boolean movingLeft;
-    boolean movingRight;
+    /** Whether the paddle is moving left or right.*/
+    boolean movingLeft,  movingRight;
 
     /**
      * Construct a new Paddle at location (x, y).
@@ -75,18 +70,12 @@ class Paddle extends BBObject {
     }
 
     /**
-     * Returns the height of the paddle.
-     * @return integer value of height dimension.
-     */
-    int getHeight(){
-        return h;
-    }
-
-    /**
      * Returns the width of the paddle
-     * @return integer valye of width dimension.
+     * @return integer value of width dimension.
      */
     int getWidth(){
         return w;
     }
+
+
 }
