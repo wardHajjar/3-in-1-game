@@ -24,14 +24,14 @@ public class PlayerStats extends GeneralGameActivity {
         TextView congratPlayer = findViewById(R.id.congrats);
         congratPlayer.setText(String.format("Congratulation, %s!", player.getName()));
 
-        TextView numtimer = findViewById(R.id.numTimerText);
-        numtimer.setText(String.valueOf(player.getTotalTime()));
+        TextView numTimer = findViewById(R.id.numTimerText);
+        numTimer.setText(String.valueOf(player.getTotalTime()));
 
-        TextView numcoins = findViewById(R.id.numCoinsText);
-        numcoins.setText(String.valueOf(player.getNumCoins()));
+        TextView numCoins = findViewById(R.id.numCoinsText);
+        numCoins.setText(String.valueOf(player.getNumCoins()));
 
-        TextView numlives = findViewById(R.id.numLivesText);
-        numlives.setText(String.valueOf(player.getNumLives()));
+        TextView numLives = findViewById(R.id.numLivesText);
+        numLives.setText(String.valueOf(player.getNumLives()));
     }
 
 
@@ -51,6 +51,8 @@ public class PlayerStats extends GeneralGameActivity {
         Button menu = findViewById(R.id.menu);
         menu.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
+                player.resetStats();
+                save(gameManager, player);
                 Intent intent = new Intent(PlayerStats.this, MainActivity.class);
                 intent.putExtra("Game Manager", gameManager);
                 startActivity(intent);
