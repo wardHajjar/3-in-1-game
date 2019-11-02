@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.example.dungeonescape.GameManager;
 import com.example.dungeonescape.GeneralGameActivity;
+import com.example.dungeonescape.Maze.MazeActivity;
 import com.example.dungeonescape.Maze.MazeActivityInstructions;
 import com.example.dungeonescape.Player;
 import com.example.dungeonescape.R;
@@ -128,7 +129,7 @@ public class BBMainActivity extends GeneralGameActivity {
 
         /* Advances to next level (maze), displays instructions first. */
         Intent intent = new Intent(BBMainActivity.this,
-                MazeActivityInstructions.class);
+                MazeActivity.class);
         intent.putExtra("Player", player);
         intent.putExtra("Game Manager", gameManager);
         startActivity(intent);
