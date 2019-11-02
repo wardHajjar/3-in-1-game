@@ -14,8 +14,8 @@ import com.example.dungeonescape.Player;
 import com.example.dungeonescape.PlayerStats;
 import com.example.dungeonescape.R;
 
-public class Level2MainActivity extends GeneralGameActivity {
-    private Level2View game;
+public class Level3MainActivity extends GeneralGameActivity {
+    private Level3View game;
     private boolean running;
     Player player;
     GameManager gameManager;
@@ -31,7 +31,7 @@ public class Level2MainActivity extends GeneralGameActivity {
         player = (Player) i.getSerializableExtra("Player");
         gameManager = (GameManager) i.getSerializableExtra("Game Manager");
 
-        setContentView(R.layout.activity_level2_main);
+        setContentView(R.layout.activity_level3_main);
         game = findViewById(R.id.level2);
 
         // getting player instance from intent
@@ -97,7 +97,7 @@ public class Level2MainActivity extends GeneralGameActivity {
         long elapsedMilliSeconds = endTime - startTime;
         player.updateTotalTime(elapsedMilliSeconds);
         save(gameManager, player);
-        Intent intent = new Intent(Level2MainActivity.this, PlayerStats.class);
+        Intent intent = new Intent(Level3MainActivity.this, PlayerStats.class);
         intent.putExtra("Player", player);
         intent.putExtra("Game Manager", gameManager);
         startActivity(intent);
@@ -107,7 +107,7 @@ public class Level2MainActivity extends GeneralGameActivity {
         long elapsedMilliSeconds = endTime - startTime;
         player.updateTotalTime(elapsedMilliSeconds);
         save(gameManager, player);
-        Intent intent = new Intent(Level2MainActivity.this, Dead.class);
+        Intent intent = new Intent(Level3MainActivity.this, Dead.class);
         intent.putExtra("Player", player);
         intent.putExtra("Game Manager", gameManager);
         startActivity(intent);

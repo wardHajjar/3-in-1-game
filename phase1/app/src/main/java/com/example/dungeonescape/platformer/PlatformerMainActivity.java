@@ -8,12 +8,8 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.dungeonescape.GameManager;
-import com.example.dungeonescape.MainActivity;
 import com.example.dungeonescape.Player;
 import com.example.dungeonescape.R;
-import com.example.dungeonescape.SaveData;
-
-import java.io.File;
 
 public class PlatformerMainActivity extends AppCompatActivity {
 
@@ -37,7 +33,7 @@ public class PlatformerMainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(PlatformerMainActivity.this, Level2MainActivity.class);
+                Intent intent = new Intent(PlatformerMainActivity.this, Level3MainActivity.class);
                 intent.putExtra("Player", player);
                 intent.putExtra("Game Manager", gameManager);
                 startActivity(intent);

@@ -14,7 +14,7 @@
         <activity android:name=".Dead"></activity>
         <activity android:name=".NewGameActivity" />
         <activity android:name=".Maze.MazeActivityInstructions"/>
-        <activity android:name=".platformer.Level2MainActivity" />
+        <activity android:name=".platformer.Level3MainActivity" />
         <activity android:name=".Maze.MazeActivity" />
         <activity android:name=".brickbreaker.BBMainActivity">
             <intent-filter>
