@@ -1,15 +1,13 @@
 package com.example.dungeonescape;
 import com.example.dungeonescape.brickbreaker.BBMainActivity;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import java.io.File;
 
 
-public class PlayerStats extends AppCompatActivity {
+public class PlayerStats extends GeneralGameActivity {
     GameManager gameManager;
     Player player;
 
@@ -26,14 +24,14 @@ public class PlayerStats extends AppCompatActivity {
         TextView congratPlayer = findViewById(R.id.congrats);
         congratPlayer.setText(String.format("Congratulation, %s!", player.getName()));
 
-        TextView numtimer = findViewById(R.id.numTimerText);
-        numtimer.setText(String.valueOf(player.getTotalTime()));
+        TextView numTimer = findViewById(R.id.numTimerText);
+        numTimer.setText(String.valueOf(player.getTotalTime()));
 
-        TextView numcoins = findViewById(R.id.numCoinsText);
-        numcoins.setText(String.valueOf(player.getNumCoins()));
+        TextView numCoins = findViewById(R.id.numCoinsText);
+        numCoins.setText(String.valueOf(player.getNumCoins()));
 
-        TextView numlives = findViewById(R.id.numLivesText);
-        numlives.setText(String.valueOf(player.getNumLives()));
+        TextView numLives = findViewById(R.id.numLivesText);
+        numLives.setText(String.valueOf(player.getNumLives()));
     }
 
 
@@ -42,7 +40,7 @@ public class PlayerStats extends AppCompatActivity {
         playAgain.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 player.resetStats();
-                save();
+                save(gameManager, player);
                 Intent intent = new Intent(PlayerStats.this, BBMainActivity.class);
                 intent.putExtra("Player", player);
                 intent.putExtra("Game Manager", gameManager);
@@ -53,6 +51,8 @@ public class PlayerStats extends AppCompatActivity {
         Button menu = findViewById(R.id.menu);
         menu.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
+                player.resetStats();
+                save(gameManager, player);
                 Intent intent = new Intent(PlayerStats.this, MainActivity.class);
                 intent.putExtra("Game Manager", gameManager);
                 startActivity(intent);
@@ -60,14 +60,8 @@ public class PlayerStats extends AppCompatActivity {
         });
     }
 
-    private void save() {
-        try {
-            String filePath = this.getFilesDir().getPath() + "/GameState.txt";
-            File f = new File(filePath);
-            SaveData.save(gameManager, f);
-        }
-        catch (Exception e) {
-            System.out.println("Couldn't save: " + e.getMessage());
-        }
+    @Override
+    public void save(GameManager gameManager, Player player) {
+        super.save(gameManager, player);
     }
 }

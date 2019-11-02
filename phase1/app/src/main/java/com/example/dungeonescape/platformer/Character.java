@@ -36,7 +36,8 @@ class Character extends Level3Object {
 
         start = false;
         this.gameScore = 0;
-        this.rect = new Rect(x-size/2,(int)(y + size/4),x+size/2,y+size/2);
+        this.rect = new Rect(x - size / 2, (y + size / 4),
+                x + size / 2,y + size / 2);
     }
 
     /** Returns the GameScore.
@@ -67,7 +68,7 @@ class Character extends Level3Object {
             speed += gravity;
         }
 
-        if (y+ size/2 + speed - manager.getGridHeight() > 0 && !start) {
+        if (y + size / 2 + speed - manager.getGridHeight() > 0 && !start) {
             y = manager.getGridHeight();
             speed = - 75;
             y += speed;
@@ -75,8 +76,9 @@ class Character extends Level3Object {
             y += speed;
         }
 
-        this.oval = new RectF(x - size / 2,y - size / 2,x + size / 2,y + size / 2 + 5);
-        this.rect = new Rect((int)(x - size / 3),(int)(y + size / 4),(int)(x + size / 2),(int)(y + size / 3));
+        this.oval = new RectF(x - size / 2,y - size / 2,
+                x + size / 2,y + size / 2);
+        this.rect = new Rect((x - size / 3), (y + size / 4), (x + size / 2), (y + size / 3));
         Rect bounds = new Rect();
         this.oval.roundOut(bounds);
     }
@@ -95,7 +97,8 @@ class Character extends Level3Object {
                     speed = -75;
                     y += speed;
                     start = true;
-                    this.oval = new RectF(x - size / 2,(int)(y + size / 4),x + size / 2,y + size / 2 + 5);
+                    this.oval = new RectF(x - size / 2,(int)(y + size / 4),
+                            x + size / 2,y + size / 2);
                     Rect bounds = new Rect();
                     this.oval.roundOut(bounds);
                 }
