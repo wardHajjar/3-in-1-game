@@ -97,7 +97,7 @@ public class NewGameActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (isValid) {
-                    setText(color, "easy");
+                    setText(color, "Easy");
                     enter.setVisibility(View.VISIBLE);
                 }
             }
@@ -107,7 +107,7 @@ public class NewGameActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (isValid) {
-                    setText(color, "hard");
+                    setText(color, "Hard");
                     enter.setVisibility(View.VISIBLE);
                 }
 
@@ -130,6 +130,7 @@ public class NewGameActivity extends AppCompatActivity {
 
             public void onTextChanged(CharSequence s, int start, int before, int count) {}
         });
+
         if (!(enter == null)) {
             enter.setOnClickListener(new View.OnClickListener() {
                 @Override
