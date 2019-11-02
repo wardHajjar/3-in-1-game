@@ -9,17 +9,15 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.dungeonescape.GameManager;
-import com.example.dungeonescape.MainActivity;
 import com.example.dungeonescape.Player;
 import com.example.dungeonescape.R;
-import com.example.dungeonescape.SaveData;
+import com.example.dungeonescape.GeneralGameActivity;
 import com.example.dungeonescape.platformer.PlatformerMainActivity;
 
-import java.io.File;
 import java.util.Locale;
 
 
-public class MazeActivity extends MainActivity {
+public class MazeActivity extends GeneralGameActivity {
     private MazeView mazeView;
 
     // initial time set in milliseconds
@@ -28,6 +26,7 @@ public class MazeActivity extends MainActivity {
     long minutes;
     long seconds;
     Player player;
+    GameManager gameManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +85,7 @@ public class MazeActivity extends MainActivity {
 
             @Override
             public void onClick(View view) {
-                save();
+                save(gameManager, player);
                 Intent intent = new Intent(MazeActivity.this, PlatformerMainActivity.class);
                 intent.putExtra("Player", player);
                 intent.putExtra("Game Manager", gameManager);
@@ -136,23 +135,16 @@ public class MazeActivity extends MainActivity {
      */
 
     protected void nextLevel(){
-        save();
+        save(gameManager, player);
         Intent intent = new Intent(MazeActivity.this, PlatformerMainActivity.class);
         intent.putExtra("Player", player);
         intent.putExtra("Game Manager", gameManager);
         startActivity(intent);
     }
 
-    private void save() {
+    @Override
+    public void save(GameManager gameManager, Player player) {
+        super.save(gameManager, player);
         player.setCurrentLevel(3);
-        gameManager.updatePlayer(player.getName(), player);
-        try {
-            String filePath = this.getFilesDir().getPath() + "/GameState.txt";
-            File f = new File(filePath);
-            SaveData.save(gameManager, f);
-        }
-        catch (Exception e) {
-            System.out.println("Couldn't save: " + e.getMessage());
-        }
     }
 }

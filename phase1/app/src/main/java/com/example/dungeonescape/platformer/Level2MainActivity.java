@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.SurfaceHolder;
@@ -18,8 +19,10 @@ import android.widget.TextView;
 
 import com.example.dungeonescape.Dead;
 import com.example.dungeonescape.GameManager;
+import com.example.dungeonescape.GeneralGameActivity;
 import com.example.dungeonescape.MainActivity;
 import com.example.dungeonescape.Player;
+import com.example.dungeonescape.PlayerStats;
 import com.example.dungeonescape.R;
 import com.example.dungeonescape.SaveData;
 
@@ -27,15 +30,18 @@ import java.io.File;
 import java.util.logging.Level;
 
 
-public class Level2MainActivity extends AppCompatActivity {
+public class Level2MainActivity extends GeneralGameActivity {
     private Level2View game;
     private boolean running;
     Player player;
     GameManager gameManager;
+    long startTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        startTime = SystemClock.elapsedRealtime();
         // Set the View we are using
         Intent i = getIntent();
         player = (Player) i.getSerializableExtra("Player");
@@ -82,13 +88,12 @@ public class Level2MainActivity extends AppCompatActivity {
                                     boolean doneLevel = game.nextLevel();
                                     if (doneLevel) {
                                         nextLevel();
-                                        player.setCurrentLevel(3);
-                                        save();
+                                        save(gameManager, player);
                                         running = false;
                                     }
                                     boolean dead = game.dead();
                                     if (dead){
-                                        save();
+                                        save(gameManager, player);
                                         deadPage();
                                         running = false;
                                     }
@@ -104,12 +109,20 @@ public class Level2MainActivity extends AppCompatActivity {
         t.start();
     }
     private void nextLevel() {
-        Intent intent = new Intent(Level2MainActivity.this, Level3FinishedActivity.class);
+        long endTime = SystemClock.elapsedRealtime();
+        long elapsedMilliSeconds = endTime - startTime;
+        player.updateTotalTime(elapsedMilliSeconds);
+        save(gameManager, player);
+        Intent intent = new Intent(Level2MainActivity.this, PlayerStats.class);
         intent.putExtra("Player", player);
         intent.putExtra("Game Manager", gameManager);
         startActivity(intent);
     }
     private void deadPage() {
+        long endTime = SystemClock.elapsedRealtime();
+        long elapsedMilliSeconds = endTime - startTime;
+        player.updateTotalTime(elapsedMilliSeconds);
+        save(gameManager, player);
         Intent intent = new Intent(Level2MainActivity.this, Dead.class);
         intent.putExtra("Player", player);
         intent.putExtra("Game Manager", gameManager);
@@ -154,16 +167,10 @@ public class Level2MainActivity extends AppCompatActivity {
         game.pause();
     }
 
-    private void save() {
-        gameManager.updatePlayer(player.getName(), player);
-        try {
-            String filePath = this.getFilesDir().getPath() + "/GameState.txt";
-            File f = new File(filePath);
-            SaveData.save(gameManager, f);
-        }
-        catch (Exception e) {
-            System.out.println("Couldn't save: " + e.getMessage());
-        }
+    @Override
+    public void save(GameManager gameManager, Player player) {
+        super.save(gameManager, player);
+        player.setCurrentLevel(3);
     }
 
 
