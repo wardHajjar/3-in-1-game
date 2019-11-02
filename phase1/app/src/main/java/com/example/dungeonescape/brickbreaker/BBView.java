@@ -109,11 +109,11 @@ public class BBView extends GameView {
             return true;
         }
         if (event.getAction() == MotionEvent.ACTION_MOVE) {
-            manager.movePaddle(event, x);
+            manager.setPaddleDirection(event, x);
             return true;
         }
         if (event.getAction() == MotionEvent.ACTION_UP) {
-            manager.movePaddle(event, x);
+            manager.setPaddleDirection(event, x);
         }
         return super.onTouchEvent(event);
     }
