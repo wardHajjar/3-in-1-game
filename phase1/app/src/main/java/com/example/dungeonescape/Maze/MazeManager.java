@@ -167,7 +167,7 @@ class MazeManager {
         ArrayList<Coin> coins = new ArrayList<>();
         SparseIntArray coordinates = new SparseIntArray();
         coordinates.append(0,0);
-        coordinates.append(numMazeCols, numMazeRows);
+        coordinates.append(numMazeCols-1, numMazeRows-1);
         while(coordinates.size()<4){
             int x = rand.nextInt(numMazeCols);
             if(coordinates.get(x, -1) == -1) {
