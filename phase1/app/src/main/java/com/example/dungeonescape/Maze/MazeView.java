@@ -60,14 +60,6 @@ public class MazeView extends View {
         coins = mazeManager.createCoins();
     }
 
-//    /** Adds 5 Coins to the coins ArrayList, in random locations. */
-//    private void createCoins() {
-//        for (int i = 0; i < 5; i++) {
-//            Coin coin = new Coin(rand.nextInt(numMazeCols), rand.nextInt(numMazeRows));
-//            coins.add(coin);
-//        }
-//    }
-
     public boolean doneLevel() {
         return mazeIterations >= 3;
     }

@@ -112,7 +112,7 @@ public class Level2MainActivity extends GeneralGameActivity {
         long endTime = SystemClock.elapsedRealtime();
         long elapsedMilliSeconds = endTime - startTime;
         player.updateTotalTime(elapsedMilliSeconds);
-        save();
+        save(gameManager, player);
         Intent intent = new Intent(Level2MainActivity.this, PlayerStats.class);
         intent.putExtra("Player", player);
         intent.putExtra("Game Manager", gameManager);
@@ -122,7 +122,7 @@ public class Level2MainActivity extends GeneralGameActivity {
         long endTime = SystemClock.elapsedRealtime();
         long elapsedMilliSeconds = endTime - startTime;
         player.updateTotalTime(elapsedMilliSeconds);
-        save();
+        save(gameManager, player);
         Intent intent = new Intent(Level2MainActivity.this, Dead.class);
         intent.putExtra("Player", player);
         intent.putExtra("Game Manager", gameManager);

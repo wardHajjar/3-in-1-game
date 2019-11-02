@@ -2,13 +2,13 @@ package com.example.dungeonescape.Maze;
 
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.util.SparseIntArray;
 
-import androidx.annotation.ArrayRes;
-
-import com.example.dungeonescape.GameObject;
 import com.example.dungeonescape.platformer.Coin;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 import java.util.Stack;
 
@@ -162,9 +162,29 @@ class MazeManager {
 
     /** Adds 5 Coins to the coins ArrayList, in random locations. */
     ArrayList<Coin> createCoins() {
-        ArrayList<Coin> coins = new ArrayList<Coin>();
-        for (int i = 0; i < 5; i++) {
-            Coin coin = new Coin(rand.nextInt(numMazeCols), rand.nextInt(numMazeRows));
+        ArrayList<Coin> coins = new ArrayList<>();
+        SparseIntArray coordinates = new SparseIntArray();
+        coordinates.append(0,0);
+        coordinates.append(numMazeCols, numMazeRows);
+        while(coordinates.size()<4){
+            int x = rand.nextInt(numMazeCols);
+            if(coordinates.get(x, -1) == -1) {
+                coordinates.append(x, rand.nextInt(numMazeRows + 1));
+            } else
+                {
+                int y = rand.nextInt(numMazeRows+1);
+                while(coordinates.get(x)==y){
+                    y = rand.nextInt(numMazeRows+1);
+                }
+                coordinates.append(x,y);
+            }
+        }
+        coordinates.delete(0);
+        coordinates.delete(numMazeCols);
+        for (int i = 0; i < 2; i++) {
+            int x = coordinates.keyAt(i);
+            int y = coordinates.get(x);
+            Coin coin = new Coin(x, y);
             coins.add(coin);
         }
         return coins;
