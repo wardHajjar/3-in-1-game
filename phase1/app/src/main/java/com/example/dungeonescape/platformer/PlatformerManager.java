@@ -47,6 +47,7 @@ class PlatformerManager {
             player.setNumLives(player.getNumLives() - (5 - this.player.getNumLives()));
         }
         this.player = player;
+        character.setColour(player.getColour());
     }
 
     public Player getPlayer() {
@@ -63,6 +64,7 @@ class PlatformerManager {
     PlatformerManager() {
         character = new Character(50,1000,100, this);
         player = new Player("temp");
+        character.setColour(player.getColour());
         gridHeight = 1684;
         gridWidth = 1080;
         platforms = createPlatforms();

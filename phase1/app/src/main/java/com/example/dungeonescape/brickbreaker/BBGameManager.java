@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import com.example.dungeonescape.Player;
 
+/**
+ * Instantiates and controls game objects.
+ */
 class BBGameManager {
 
     /**
@@ -26,11 +29,11 @@ class BBGameManager {
 
     BBGameManager(int screenX, int screenY){
 
-        // construct the ball
+        /* Construct the ball. */
         this.ball = new Ball(screenX/2 - 75 + (screenX/2 - 75)/2 - 25,
                 screenY - 100 - 26, 25, -26, Color.WHITE);
 
-        // construct paddle and bricks
+        /* Construct paddle and bricks. */
         paddle = new Paddle(screenX/2 - 75, screenY - 100, screenX/3, 40);
 
         bricks = new ArrayList<>();
@@ -45,12 +48,12 @@ class BBGameManager {
         this.screenY = screenY;
         this.player = null;
 
-        // assign coins to random bricks
+        /* Random assignment of coins to bricks. */
         coins = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
             Collections.shuffle(bricks);
             Brick curr = bricks.get(0);
-            while (curr.hasCoin()){     // shuffle again if the current brick has a coin
+            while (curr.hasCoin()){     /* Shuffle again if the current brick has a coin. */
                 Collections.shuffle(bricks);
                 curr = bricks.get(0);
             }
@@ -62,20 +65,22 @@ class BBGameManager {
         }
     }
 
+    /**
+     * Determines the physics of the ball in reaction to collisions.
+     */
     void moveBall(){
-
         ball.move();
-        // Wall Collision Detection
+
+        /* Wall Collision Detection. */
         String wallCollision = ball.madeWallCollision(screenX, screenY);
         if ( wallCollision.equals("x")){
             ball.setXSpeed(ball.getXSpeed() * -1);
         }
         else if(wallCollision.equals("y")){
             ball.setYSpeed(ball.getYSpeed() * -1);
-
         }
 
-        // Brick Collision Detection
+        /* Brick Collision Detection. */
         for (Brick brick: bricks){
             if (!(brick.getHitStatus())) {
                 String brickCollision = ball.madeRectCollision(brick.getRect());
@@ -96,7 +101,7 @@ class BBGameManager {
             }
         }
 
-        // Coin Collision Detection
+        /* Coin Collision Detection. */
         for (BBCoin currCoin: coins){
             if (!currCoin.getCollectStatus()) {
                 String coinCollision = ball.madeRectCollision(currCoin.getRect());
@@ -116,7 +121,7 @@ class BBGameManager {
             }
         }
 
-        // Paddle Collision Detection
+        /* Paddle Collision Detection. */
         String paddleCollision = ball.madeRectCollision(paddle.getRect());
         if (!(paddleCollision.equals(" "))) {
             ball.setYSpeed(ball.getYSpeed() * -1);
@@ -124,9 +129,14 @@ class BBGameManager {
         }
     }
 
-    boolean checkLifeCondition(){
+    /**
+     * Checks if the player still has lives left after they've lost the ball.
+     * If player still has lives left, the ball is reset.
+     * @return boolean whether player still has lives left.
+     */
+    boolean checkLifeCondition() {
         if (ball.getY() > paddle.getY()){
-            if (player.getNumLives() >= 1){
+            if (player.getNumLives() >= 1) {
                 player.loseLife();
                 ball.setX((paddle.getX() + paddle.getWidth()/2));
                 ball.setY(paddle.getY() - 26);
@@ -136,49 +146,58 @@ class BBGameManager {
         return false;
     }
 
+    /**
+     * Move the paddle according to the direction.
+     */
     void movePaddle(){
         if (paddle.movingLeft) {
             paddle.move(-20);
         } else if (paddle.movingRight) {
             paddle.move(20);
         }
-
-        if (paddle.getX() <= 0){
+        if (paddle.getX() <= 0) {
             paddle.setX(0);
-        }else if (paddle.getX() + paddle.getWidth() >= screenX){
+        } else if (paddle.getX() + paddle.getWidth() >= screenX){
             paddle.setX(screenX - paddle.getWidth());
         }
-
     }
 
-    void movePaddle(MotionEvent event, float xPos){
+    /**
+     * Set paddle movement direction left or right in response to touch event.
+     * Calculates the relative position of the touch to paddle and determines the paddle's new
+     * movement direction.
+     */
+    void setPaddleDirection(MotionEvent event, float xPos){
         if (event.getAction() == MotionEvent.ACTION_MOVE) {
             if (xPos < paddle.x){
                 paddle.setMovementDir("left", true);
             } else if (xPos > paddle.x) {
                 paddle.setMovementDir("right", true);
             }
-        }
-        if (event.getAction() == MotionEvent.ACTION_UP) {
+        } else if (event.getAction() == MotionEvent.ACTION_UP) {
             paddle.setMovementDir("right", false);
             paddle.setMovementDir("left", false);
         }
     }
 
+    /**
+     * Draws all the game objects: Ball, Paddle, Bricks, Coins.
+     * @param canvas the Canvas which the objects are drawn on
+     */
     void drawGame(Canvas canvas){
-        // Ball
+        /* Ball. */
         ball.draw(canvas);
 
-        // Paddle
+        /* Paddle. */
         paddle.draw(canvas);
 
-        // Bricks
+        /* Bricks. */
         for (int i = 0; i < bricks.size(); i++) {
             Brick curr = bricks.get(i);
-            // draws the bricks that have not been hit
+            /* Draws the bricks that have not been hit. */
             if (!curr.getHitStatus()) {
                 curr.draw(canvas);
-            } else {    // draw if hit brick contains a coin to be collected
+            } else {    /* Draw if hit brick contains a coin to be collected. */
                 if (curr.hasCoin() && !curr.coin.getCollectStatus()) {
                     curr.coin.draw(canvas);
                 }
@@ -187,15 +206,18 @@ class BBGameManager {
     }
 
     /**
-     * Checks whether all the bricks have been destroyed
-     * @return true if all bricks got destroyed.
+     * Checks if the ball collides the top boarder/top of the screen.
+     * @return true if ball collides with the top of the screen.
      */
-
     boolean passedBorder() {
         String wallCollision = ball.madeWallCollision(screenX, screenY);
         return wallCollision.equals("win");
     }
 
+    /**
+     * Checks whether all the bricks have been destroyed.
+     * @return true if all bricks got destroyed.
+     */
     boolean hitAllBricks(){
         for (Brick brick: bricks){
             if(!brick.getHitStatus()){
@@ -210,7 +232,6 @@ class BBGameManager {
      * @param player Player object that represents the user's character.
      */
     void addPlayer(Player player){
-
         this.player = player;
         this.ball.setColour(player.getColour());
     }

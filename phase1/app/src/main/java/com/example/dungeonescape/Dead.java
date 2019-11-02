@@ -41,6 +41,7 @@ public class Dead extends GeneralGameActivity {
         Button playAgain = findViewById(R.id.restart);
         playAgain.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
+
                 save(gameManager, player);
                 Intent intent = new Intent(Dead.this, BBMainActivity.class);
                 intent.putExtra("Player", player);
