@@ -107,15 +107,18 @@ public class Ball extends BBObject {
      * @param height the screen height
      * @return character which represents which movement direction to reverse.
      */
-    char madeWallCollision(int width, int height) {
+    String madeWallCollision(int width, int height) {
         int newXPos = x + xSpeed;
         int newYPos = y + ySpeed;
         if (newXPos <= 0 || newXPos >= width) {
-            return 'x';
-        } else if (newYPos <= 0 || newYPos >= height) {
-            return 'y';
+            return "x";
+        } else if (newYPos >= height) {
+            return "y";
+        } else if(newYPos <= 0) {
+            return "win";
         }
-        return ' ';
+        return " ";
+
     }
 
     /** Determines if the ball made a collision with a rectangular obstacle.

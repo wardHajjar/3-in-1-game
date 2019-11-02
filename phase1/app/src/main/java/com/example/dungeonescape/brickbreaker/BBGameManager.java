@@ -37,7 +37,7 @@ class BBGameManager {
         int brickWidth = screenX / 6;
         int brickHeight = screenY / 20;
         for (int x = 0; x < screenX; x += brickWidth + 5) {
-            for (int y = 10; y < 4 * brickHeight; y += brickHeight + 5) {
+            for (int y = 10; y < 3 * brickHeight; y += brickHeight + 5) {
                 bricks.add(new Brick(x, y, brickWidth, brickHeight));
             }
         }
@@ -66,12 +66,13 @@ class BBGameManager {
 
         ball.move();
         // Wall Collision Detection
-        char wallCollision = ball.madeWallCollision(screenX, screenY);
-        if ( wallCollision == 'x'){
+        String wallCollision = ball.madeWallCollision(screenX, screenY);
+        if ( wallCollision.equals("x")){
             ball.setXSpeed(ball.getXSpeed() * -1);
         }
-        else if(wallCollision == 'y'){
+        else if(wallCollision.equals("y")){
             ball.setYSpeed(ball.getYSpeed() * -1);
+
         }
 
         // Brick Collision Detection
@@ -130,8 +131,6 @@ class BBGameManager {
                 ball.setX((paddle.getX() + paddle.getWidth()/2));
                 ball.setY(paddle.getY() - 26);
             }
-
-             //TODO: If lives are 0, playing = false + GameOver screen
             return true;
         }
         return false;
@@ -191,6 +190,12 @@ class BBGameManager {
      * Checks whether all the bricks have been destroyed
      * @return true if all bricks got destroyed.
      */
+
+    boolean passedBorder() {
+        String wallCollision = ball.madeWallCollision(screenX, screenY);
+        return wallCollision.equals("win");
+    }
+
     boolean hitAllBricks(){
         for (Brick brick: bricks){
             if(!brick.getHitStatus()){

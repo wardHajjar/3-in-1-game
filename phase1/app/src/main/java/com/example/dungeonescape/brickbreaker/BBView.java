@@ -104,7 +104,6 @@ public class BBView extends GameView {
         float x = event.getX();
         if(event.getAction() == MotionEvent.ACTION_DOWN) {
             if (!startGame){
-                System.out.println("GAME STrted; ");
                 startGame = true;
             }
             return true;
@@ -124,7 +123,7 @@ public class BBView extends GameView {
      * @return true if user passed.
      */
     public boolean doneLevel(){
-        return manager.hitAllBricks();
+        return manager.hitAllBricks() || manager.passedBorder();
     }
 
 }
