@@ -5,28 +5,34 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
-public class Brick extends BBObject {
-    // width and height of each brick
+class Brick extends BBObject {
+    /* Width and height of each brick. */
     private int w, h;
-    // whether the brick has been hit or not
+    /* Whether the brick has been hit or not. */
     private boolean hit;
-    // whether a brick has a coin or not
+    /* Whether a brick has a coin or not. */
     BBCoin coin;
 
-
+    /**
+     * Construct a Paddle at location x, y, with width w and height h.
+     * @param x the x location of the paddle.
+     * @param y the y location of the paddle.
+     * @param w width of the brick.
+     * @param h height of the brick.
+     */
     Brick(int x, int y, int w, int h) {
-    // construct a Paddle at location x, y
-    // width and height of the canvas are passed into the constructor
         super(x, y);
         this.w = w;
         this.h = h;
         hit = false;
     }
 
+    /** Return the width of the brick. */
     int getWidth() {
         return this.w;
     }
 
+    /** Return the height of the brick. */
     int getHeight() {
         return this.h;
     }
@@ -37,13 +43,14 @@ public class Brick extends BBObject {
         paintStyle.setColor(Color.LTGRAY);
         paintStyle.setStrokeWidth(3);
         canvas.drawRect(x, y, x + w, y + h, paintStyle);
-        // x is left, y is top
     }
 
+    /** Set a coin to the brick. */
     void setCoin(BBCoin coin) {
         this.coin = coin;
     }
 
+    /** Returns whether the brick contains a coin. */
     boolean hasCoin() {
         return this.coin != null;
     }

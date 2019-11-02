@@ -10,8 +10,8 @@ class Paddle extends BBObject {
     private int w, h;
 
     /** Whether the paddle is moving left or right. */
-    boolean movingLeft;
-    boolean movingRight;
+    private boolean movingLeft;
+    private boolean movingRight;
 
     /**
      * Construct a new Paddle at location (x, y).
@@ -35,7 +35,6 @@ class Paddle extends BBObject {
         paintStyle.setColor(Color.WHITE);
         paintStyle.setStrokeWidth(3);
         canvas.drawRect(x, y, x + w, y + h, paintStyle);
-        // x is left, y is top
     }
 
     /**
@@ -47,14 +46,25 @@ class Paddle extends BBObject {
     }
 
     /**
+     *
+     */
+    boolean isMovingLeft() {
+        return movingLeft;
+    }
+
+    boolean isMovingRight() {
+        return this.movingRight;
+    }
+
+    /**
      * Changes the direction of movement of the paddle.
      * @param dir the direction to change.
      * @param val the value to change the direction to.
      */
-    void setMovementDir(String dir, boolean val){
-        if (dir.equals("left")){
+    void setMovementDir(String dir, boolean val) {
+        if (dir.equals("left")) {
             movingLeft = val;
-        }else if (dir.equals("right")){
+        } else if (dir.equals("right")) {
             movingRight = val;
         }
     }
@@ -63,24 +73,15 @@ class Paddle extends BBObject {
      * Returns a rectangular representation of the object.
      * @return Rect object.
      */
-    Rect getRect(){
+    Rect getRect() {
         return new Rect(x, y, x + w, y + h);
-
     }
 
     /**
-     * Returns the height of the paddle.
-     * @return integer value of height dimension.
+     * Returns the width of the paddle.
+     * @return integer value of width dimension.
      */
-    int getHeight(){
-        return h;
-    }
-
-    /**
-     * Returns the width of the paddle
-     * @return integer valye of width dimension.
-     */
-    int getWidth(){
+    int getWidth() {
         return w;
     }
 }

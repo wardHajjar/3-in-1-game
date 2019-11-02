@@ -49,7 +49,7 @@ class BBGameManager {
         for (int i = 0; i < 3; i++) {
             Collections.shuffle(bricks);
             Brick curr = bricks.get(0);
-            while (curr.hasCoin()){     /* Shuffle again if the current brick has a coin. */
+            while (curr.hasCoin()) {     /* Shuffle again if the current brick has a coin. */
                 Collections.shuffle(bricks);
                 curr = bricks.get(0);
             }
@@ -62,7 +62,7 @@ class BBGameManager {
     }
 
     /** Determines the physics of the ball in reaction to collisions. */
-    void moveBall(){
+    void moveBall() {
         ball.move();
 
         /* Wall Collision Detection. */
@@ -95,7 +95,7 @@ class BBGameManager {
         }
 
         /* Coin Collision Detection. */
-        for (BBCoin currCoin: coins){
+        for (BBCoin currCoin: coins) {
             if (!currCoin.getCollectStatus()) {
                 String coinCollision = ball.madeRectCollision(currCoin.getRect());
                 if (coinCollision.equals("x")) {
@@ -126,7 +126,7 @@ class BBGameManager {
      * @return boolean whether player still has lives left.
      */
     boolean checkLifeCondition() {
-        if (ball.getY() > paddle.getY()){
+        if (ball.getY() > paddle.getY()) {
             if (player.getNumLives() >= 1) {
                 player.loseLife();
                 ball.setX((paddle.getX() + paddle.getWidth()/2));
@@ -138,15 +138,15 @@ class BBGameManager {
     }
 
     /** Move the paddle according to the direction. */
-    void movePaddle(){
-        if (paddle.movingLeft) {
+    void movePaddle() {
+        if (paddle.isMovingLeft()) {
             paddle.move(-20);
-        } else if (paddle.movingRight) {
+        } else if (paddle.isMovingRight()) {
             paddle.move(20);
         }
         if (paddle.getX() <= 0) {
             paddle.setX(0);
-        } else if (paddle.getX() + paddle.getWidth() >= screenX){
+        } else if (paddle.getX() + paddle.getWidth() >= screenX) {
             paddle.setX(screenX - paddle.getWidth());
         }
     }
@@ -186,7 +186,7 @@ class BBGameManager {
             /* Draws the bricks that have not been hit. */
             if (!curr.getHitStatus()) {
                 curr.draw(canvas);
-            } else {    /* Draw if hit brick contains a coin to be collected. */
+            } else {    // Draw if hit brick contains a coin to be collected
                 if (curr.hasCoin() && !curr.coin.getCollectStatus()) {
                     curr.coin.draw(canvas);
                 }
