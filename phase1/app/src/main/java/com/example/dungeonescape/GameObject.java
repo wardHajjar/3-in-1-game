@@ -1,8 +1,6 @@
 package com.example.dungeonescape;
 
-/**
- * Represents any Object in the Game that contains an (x, y, z) coordinate.
- */
+/** Represents any Object in the Game that contains an (x, y, z) coordinate. */
 public class GameObject {
     private int x;
     private int y;
@@ -19,8 +17,14 @@ public class GameObject {
         setDepth(0);
     }
 
+    /** Returns the x position of the game object. */
     public int getX() {
         return x;
+    }
+
+    /** Returns the y position of the game object.*/
+    public int getY() {
+        return y;
     }
 
     /**
@@ -32,10 +36,6 @@ public class GameObject {
         this.x = x;
     }
 
-    public int getY() {
-        return y;
-    }
-
     /**
      * Sets the Game Object's vertical position to the given value.
      *
@@ -43,10 +43,6 @@ public class GameObject {
      */
     public void setY(int y) {
         this.y = y;
-    }
-
-    public int getZ() {
-        return z;
     }
 
     /**
