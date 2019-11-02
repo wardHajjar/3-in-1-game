@@ -148,6 +148,10 @@ class MazeManager {
         return playerPaint;
     }
 
+    void setPlayerPaint(int newColour) {
+        playerPaint.setColor(newColour);
+    }
+
     /** Returns the Maze's exit square Paint.
      *
      * @return Paint object for exit square.
