@@ -189,9 +189,9 @@ public class Player extends GameObject implements Serializable {
         setNumCoins(0);
         setCurrentLevel(1);
         resetTime();
-        if (this.getDifficulty().equals("Easy")) {
+        if (getDifficulty().equals("Easy")) {
             setNumLives(5);
-        } else if (this.getDifficulty().equals("Hard")) {
+        } else if (getDifficulty().equals("Hard")) {
             setNumLives(3);
         }
     }
