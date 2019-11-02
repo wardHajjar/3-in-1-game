@@ -11,16 +11,22 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.graphics.Color;
 import android.widget.TextView;
-
+import android.widget.Toast;
 import com.example.dungeonescape.brickbreaker.BBMainActivity;
-
 import java.io.File;
+import java.util.ArrayList;
+
+import static android.text.TextUtils.isEmpty;
 
 public class NewGameActivity extends AppCompatActivity {
     GameManager gameManager;
     GameManager data;
     Player player;
     EditText name;
+    String nameText;
+    Boolean isValid;
+    int color;
+    Button enter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,24 +34,27 @@ public class NewGameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_new_game);
         Intent i = getIntent();
         gameManager = (GameManager) i.getSerializableExtra("Game Manager");
+        isValid = false;
+        name = findViewById(R.id.nameInput);
         buttons();
     }
 
     private void buttons() {
+        final Button enter = findViewById(R.id.enter);
         final EditText name = findViewById(R.id.nameInput);
         final TextView diffPrompt = findViewById(R.id.diffPrompt);
-        final Button enter = findViewById(R.id.enter);
         final Button easy = findViewById(R.id.easy);
         final Button hard = findViewById(R.id.hard);
         final Button colour1 = findViewById(R.id.colour1);
         colour1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String nameText = name.getText().toString();
-                player = new Player(nameText);
-                gameManager.addPlayer(player);
-                save();
-                player.setColour(Color.argb(255, 173, 0, 0));
+
+                checkName();
+                if (isValid) {
+                    color = Color.argb(255, 173, 0, 0);
+                    enter.setVisibility(View.VISIBLE);
+                }
                 diffPrompt.setText((CharSequence)("Chose Difficulty Level:"));
                 easy.setVisibility(View.VISIBLE);
                 hard.setVisibility(View.VISIBLE);
@@ -56,15 +65,15 @@ public class NewGameActivity extends AppCompatActivity {
         colour2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String nameText = name.getText().toString();
-                player = new Player(nameText);
-                gameManager.addPlayer(player);
-                save();
-                player.setColour(Color.argb(255, 76, 175, 80));
+                checkName();
+                if (isValid) {
+                    color = Color.argb(255, 76, 175, 80);
+                    enter.setVisibility(View.VISIBLE);
+
+                }
                 diffPrompt.setText((CharSequence)("Chose Difficulty Level:"));
                 easy.setVisibility(View.VISIBLE);
                 hard.setVisibility(View.VISIBLE);
-
             }
         });
 
@@ -72,11 +81,12 @@ public class NewGameActivity extends AppCompatActivity {
         colour3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String nameText = name.getText().toString();
-                player = new Player(nameText);
-                gameManager.addPlayer(player);
-                save();
-                player.setColour(Color.argb(255, 255, 193, 7));
+
+                if (isValid) {
+                    color = Color.argb(255, 255, 193, 7);
+                    enter.setVisibility(View.VISIBLE);
+                }
+
                 diffPrompt.setText((CharSequence)("Chose Difficulty Level:"));
                 easy.setVisibility(View.VISIBLE);
                 hard.setVisibility(View.VISIBLE);
@@ -86,16 +96,21 @@ public class NewGameActivity extends AppCompatActivity {
         easy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                player.setDifficulty("Easy");
-                enter.setVisibility(View.VISIBLE);
+                if (isValid) {
+                    setText(color, "easy");
+                    enter.setVisibility(View.VISIBLE);
+                }
             }
         });
 
         hard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                player.setDifficulty("Hard");
-                enter.setVisibility(View.VISIBLE);
+                if (isValid) {
+                    setText(color, "hard");
+                    enter.setVisibility(View.VISIBLE);
+                }
+
             }
         });
 
@@ -108,24 +123,60 @@ public class NewGameActivity extends AppCompatActivity {
                     colour1.setVisibility(View.VISIBLE);
                     colour2.setVisibility(View.VISIBLE);
                     colour3.setVisibility(View.VISIBLE);
+                    enter.setVisibility(View.VISIBLE);
                 }
             }
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             public void onTextChanged(CharSequence s, int start, int before, int count) {}
         });
+        if (!(enter == null)) {
+            enter.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
 
-        enter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent intent = new Intent(NewGameActivity.this, BBMainActivity.class);
-                intent.putExtra("Player", player);
-                intent.putExtra("Game Manager", gameManager);
-                startActivity(intent);
-            }
-        });
+                    if (isValid) {
+                        Intent intent = new Intent(NewGameActivity.this, BBMainActivity.class);
+                        intent.putExtra("Player", player);
+                        intent.putExtra("Game Manager", gameManager);
+                        startActivity(intent);
+                    }
+                }
+            });
+        }
     }
+    void checkName() {
+        nameText = name.getText().toString();
+        isValid = true;
+        ArrayList<String> names = gameManager.getPlayerNames();
+        if (isEmpty(nameText)) {
+            Toast t = Toast.makeText(this, "Please Enter a Name", Toast.LENGTH_SHORT);
+            isValid = false;
+            t.show();
+        }
+        else if (names.contains(nameText)) {
+            Toast t = Toast.makeText(this, "There is already a player saved with " +
+                    "this name", Toast.LENGTH_SHORT);
+            isValid = false;
+            t.show();
+        }
+    }
+
+    private void setText(int color) {
+        player = new Player(nameText);
+        player.setColour(color);
+        gameManager.addPlayer(player);
+        save();
+    }
+    private void setText(int color, String diff) {
+
+        player = new Player(nameText);
+        player.setColour(color);
+        player.setDifficulty(diff);
+        gameManager.addPlayer(player);
+        save();
+    }
+
     private void save() {
         try {
             String filePath = this.getFilesDir().getPath() + "/GameState.txt";
@@ -136,5 +187,4 @@ public class NewGameActivity extends AppCompatActivity {
             System.out.println("Couldn't save: " + e.getMessage());
         }
     }
-
 }
