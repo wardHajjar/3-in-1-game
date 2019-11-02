@@ -22,11 +22,18 @@ class Character extends Level3Object {
     /** The number of platforms this Character has bounced off of. */
     private int gameScore;
 
+    private int colour;
+
     //    private Player user; // referencing from player class for lives
+    void setColour(int colour){
+        this.colour = colour;
+        paint.setColor(this.colour);
+    }
+
 
     Character(int x, int y, int size, PlatformerManager manager){
         super(x,y,size,manager);
-        paint.setColor(Color.BLUE);
+
         start = false;
         this.gameScore = 0;
         this.rect = new Rect(x-size/2,(int)(y + size/4),x+size/2,y+size/2);
