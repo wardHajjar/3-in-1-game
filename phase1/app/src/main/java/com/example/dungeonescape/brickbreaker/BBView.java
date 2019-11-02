@@ -43,7 +43,7 @@ public class BBView extends GameView {
         Point size = new Point();
         display.getSize(size);
         this.screenX = size.x;
-        this.screenY = size.y - 500;    // 300 accounts for the buttons above the playing screen.
+        this.screenY = size.y - 350;    // 300 accounts for the buttons above the playing screen.
         manager = new BBGameManager(screenX, screenY);
     }
 
@@ -58,7 +58,7 @@ public class BBView extends GameView {
         Point size = new Point();
         display.getSize(size);
         this.screenX = size.x;
-        this.screenY = size.y;
+        this.screenY = size.y - 350;
         manager = new BBGameManager(screenX, screenY);
     }
 

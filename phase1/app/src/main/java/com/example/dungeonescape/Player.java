@@ -47,6 +47,7 @@ public class Player extends GameObject implements Serializable {
         setColour(Color.WHITE);
         setCurrentLevel(1);
         totalTimePlayed = 0;
+        setDifficulty("Easy");
     }
     public Player(String name){
         setName(name);
@@ -55,6 +56,7 @@ public class Player extends GameObject implements Serializable {
         setNumCoins(0);
         setColour(Color.WHITE);
         setCurrentLevel(1);
+        setDifficulty("Easy");
     }
 
     /** Sets this Player's Current Level. */
@@ -100,6 +102,12 @@ public class Player extends GameObject implements Serializable {
 
     public void setDifficulty(String diff) {
         this.difficulty = diff;
+        if (difficulty.equals("Easy")){
+            setNumLives(5);
+        }else if (difficulty.equals("Hard")){
+            setNumLives(3);
+        }
+
     }
 
     /**
@@ -169,6 +177,10 @@ public class Player extends GameObject implements Serializable {
         totalTimePlayed = totalTimePlayed + timeElapsed;
     }
 
+    public void resetTime() {
+        totalTimePlayed = 0;
+    }
+
     /**
      * Reset the player's coins and lives to default values.
      */
@@ -176,6 +188,7 @@ public class Player extends GameObject implements Serializable {
         setScore(0);
         setNumCoins(0);
         setCurrentLevel(1);
+        resetTime();
         if (this.getDifficulty().equals("Easy")) {
             setNumLives(5);
         } else if (this.getDifficulty().equals("Hard")) {
