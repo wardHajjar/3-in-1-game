@@ -13,27 +13,37 @@ import java.util.*;
 
 class PlatformerManager {
 
-    /**
-     * The width of canvas.
-     */
-    private int lives;
+    /** The width of canvas.*/
     private int gridWidth;
-    /**
-     * The height of canvas.
-     */
+
+    /** The height of canvas.*/
     private int gridHeight;
+
+    /** Gets the arraylist of platfroms.*/
     private ArrayList<Platforms> platforms;
+
+    /** Instantiates the manager.*/
     private Character character;
+
+    /** Gets the arraylist of coins.*/
     private ArrayList<Coin> coins;
-    Player player;
 
+    /** Instantiates the players.*/
+    private Player player;
 
+    /**
+     * @return gets the grid width.
+     * */
     int getGridWidth() {
         return gridWidth;
     }
     ArrayList<Platforms> getPlatforms() {
         return platforms;
     }
+
+    /**
+     * @return gets the grid height.
+     * */
     int getGridHeight() {
         return gridHeight;
     }
@@ -41,6 +51,9 @@ class PlatformerManager {
         return coins;
     }
 
+    /**
+     * Sets the player and his attributes
+     * */
     void setPlayer(Player player){
         player.setNumCoins(this.player.getNumCoins() + player.getNumCoins());
         if (!(this.player.getNumLives() == 5)) {
@@ -50,10 +63,17 @@ class PlatformerManager {
         character.setColour(player.getColour());
     }
 
+    /**
+     * @return the player
+     * */
     public Player getPlayer() {
         return player;
     }
 
+
+    /**
+     * @return the character scores
+     * */
     int getCharacterScore(){
         return character.getGameScore();
     }
@@ -74,6 +94,9 @@ class PlatformerManager {
 
     }
 
+    /**
+     * Creates platforms.
+     */
     private ArrayList<Platforms> createPlatforms() {
         int h = gridHeight;
 
@@ -99,22 +122,35 @@ class PlatformerManager {
             coins.get(i).draw(canvas);
         }
     }
+
+    /**
+     * Moves character to the left
+     */
     void left_button() {
         character.moveLeft();
     }
+
+    /**
+     * Moves character to the right
+     */
     void right_button() {
         character.moveRight();
     }
+
+    /**
+     * Updates information about the platforms
+     */
     boolean update() {
 
         character.move();
         character.coinDetection();
+        /* Checks if player is alive. */
         boolean alive = character.isAlive();
         if (!alive) {
             player.loseLife();
             return false;
         }
-
+        /* Moves coins and platforms when the player gets above a certain height. */
         if (character.getY() < 550) {
             int diff = Math.abs(550 - (int) character.getY());
             character.setY(549);
@@ -129,10 +165,16 @@ class PlatformerManager {
         return true;
     }
 
+    /**
+     * Finishes theb level when the player has a score greater than the given value.
+     */
     boolean finishedLevel() {
         return (character.getGameScore() > 10);
     }
 
+    /**
+     * Dies when the number of lives is lesser than 0.
+     */
     boolean death(){ return (player.getNumLives() <= 0);}
 
 }

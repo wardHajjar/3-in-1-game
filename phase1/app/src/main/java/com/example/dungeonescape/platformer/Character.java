@@ -1,7 +1,4 @@
 package com.example.dungeonescape.platformer;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
 
@@ -22,9 +19,10 @@ class Character extends Level3Object {
     /** The number of platforms this Character has bounced off of. */
     private int gameScore;
 
+    /** colour of the ball. */
     private int colour;
 
-    //    private Player user; // referencing from player class for lives
+    /** sets characters colour. */
     void setColour(int colour){
         this.colour = colour;
         paint.setColor(this.colour);
@@ -46,14 +44,6 @@ class Character extends Level3Object {
      */
     int getGameScore(){
         return this.gameScore;
-    }
-
-    /** Sets the GameScore.
-     *
-     * @param gameScore the new GameScore.
-     */
-    void setGameScore(int gameScore){
-        this.gameScore = gameScore;
     }
 
     /** Moves the Character. */
@@ -90,10 +80,10 @@ class Character extends Level3Object {
         if (speed > 10) {
             for (Platforms platform: manager.getPlatforms()) {
                 if (this.rect.intersect(platform.rectangle) ||
-                        (Math.abs((int)bottom - (int)platform.gety()) < 20 && x > platform.getx() &&
-                                x < platform.getx() + 150)) {
+                        (Math.abs((int)bottom - (int)platform.getY()) < 20 && x > platform.getX() &&
+                                x < platform.getX() + 150)) {
                     this.gameScore += 1;
-                    y = (int) platform.gety() - (size / 2);
+                    y = (int) platform.getY() - (size / 2);
                     speed = -75;
                     y += speed;
                     start = true;

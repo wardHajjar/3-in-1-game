@@ -25,22 +25,22 @@ public class Level3MainActivity extends GeneralGameActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        /* Gather saved data. */
         startTime = SystemClock.elapsedRealtime();
-        // Set the View we are using
         Intent i = getIntent();
         player = (Player) i.getSerializableExtra("Player");
         gameManager = (GameManager) i.getSerializableExtra("Game Manager");
 
+        /* Set content view. */
         setContentView(R.layout.activity_level3_main);
         game = findViewById(R.id.level2);
 
-        // getting player instance from intent
-        //pass player into manager
+        /* Set the player in platform manager */
         game.getManager().setPlayer(player);
 
         setTitle("Level3: Platformer");
 
-        // Set Buttons
+        /* Set Buttons */
         buttons();
         running = true;
 
@@ -62,19 +62,22 @@ public class Level3MainActivity extends GeneralGameActivity {
                                     int score = game.getManager().getCharacterScore();
                                     String scr = String.valueOf(score) ;
                                     String scre = "Score: " + scr;
-
                                     TextView score1 = (TextView) findViewById(R.id.score);
                                     score1.setText(scre);
+
+                                    // Update the lives shown
                                     int lives = game.getManager().getPlayer().getNumLives();
                                     String life = "Lives: " + String.valueOf(lives);
                                     TextView lifeText = (TextView) findViewById(R.id.lives);
                                     lifeText.setText(life);
+                                    // Checks if player is done level
                                     boolean doneLevel = game.nextLevel();
                                     if (doneLevel) {
                                         nextLevel();
                                         save(gameManager, player);
                                         running = false;
                                     }
+                                    // Checks if player has no lives
                                     boolean dead = game.dead();
                                     if (dead){
                                         save(gameManager, player);
@@ -92,6 +95,8 @@ public class Level3MainActivity extends GeneralGameActivity {
         };
         t.start();
     }
+
+    /** Updates player statistics and moves game to the next level */
     private void nextLevel() {
         long endTime = SystemClock.elapsedRealtime();
         long elapsedMilliSeconds = endTime - startTime;
@@ -102,6 +107,7 @@ public class Level3MainActivity extends GeneralGameActivity {
         intent.putExtra("Game Manager", gameManager);
         startActivity(intent);
     }
+    /** Updates player statistics and moves game to the dead page */
     private void deadPage() {
         long endTime = SystemClock.elapsedRealtime();
         long elapsedMilliSeconds = endTime - startTime;
@@ -111,15 +117,6 @@ public class Level3MainActivity extends GeneralGameActivity {
         intent.putExtra("Player", player);
         intent.putExtra("Game Manager", gameManager);
         startActivity(intent);
-    }
-
-    /**
-     * Method executes when the player starts the game.
-     */
-    @Override
-    protected void onResume() {
-        super.onResume();
-        game.resume();
     }
 
     /**
@@ -144,12 +141,9 @@ public class Level3MainActivity extends GeneralGameActivity {
         });
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        game.pause();
-    }
-
+    /**
+     * Method for saving the current game state to file.
+     */
     @Override
     public void save(GameManager gameManager, Player player) {
         super.save(gameManager, player);
