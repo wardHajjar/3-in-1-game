@@ -54,7 +54,7 @@ class PlatformerManager {
     }
 
     int getCharacterScore(){
-        return character.getGamescore();
+        return character.getGameScore();
     }
 
     /**
@@ -98,15 +98,15 @@ class PlatformerManager {
         }
     }
     void left_button() {
-        character.move_left();
+        character.moveLeft();
     }
     void right_button() {
-        character.move_right();
+        character.moveRight();
     }
     boolean update() {
 
         character.move();
-        character.coin_detection();
+        character.coinDetection();
         boolean alive = character.isAlive();
         if (!alive) {
             player.loseLife();
@@ -128,7 +128,7 @@ class PlatformerManager {
     }
 
     boolean finishedLevel() {
-        return (character.getGamescore() > 10);
+        return (character.getGameScore() > 10);
     }
 
     boolean death(){ return (player.getNumLives() <= 0);}

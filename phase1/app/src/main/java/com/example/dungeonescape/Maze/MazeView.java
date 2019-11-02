@@ -275,4 +275,8 @@ public class MazeView extends View {
     public int getNumMazeRows() {
         return numMazeRows;
     }
+
+    public MazeManager getMazeManager() {
+        return mazeManager;
+    }
 }

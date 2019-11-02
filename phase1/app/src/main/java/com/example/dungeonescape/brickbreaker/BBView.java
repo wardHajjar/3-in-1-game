@@ -43,7 +43,7 @@ public class BBView extends GameView {
         Point size = new Point();
         display.getSize(size);
         this.screenX = size.x;
-        this.screenY = size.y - 500;    // 300 accounts for the buttons above the playing screen.
+        this.screenY = size.y - 350;    // 300 accounts for the buttons above the playing screen.
         manager = new BBGameManager(screenX, screenY);
     }
 
@@ -58,7 +58,7 @@ public class BBView extends GameView {
         Point size = new Point();
         display.getSize(size);
         this.screenX = size.x;
-        this.screenY = size.y;
+        this.screenY = size.y - 350;
         manager = new BBGameManager(screenX, screenY);
     }
 
@@ -104,7 +104,6 @@ public class BBView extends GameView {
         float x = event.getX();
         if(event.getAction() == MotionEvent.ACTION_DOWN) {
             if (!startGame){
-                System.out.println("GAME STrted; ");
                 startGame = true;
             }
             return true;
@@ -124,7 +123,7 @@ public class BBView extends GameView {
      * @return true if user passed.
      */
     public boolean doneLevel(){
-        return manager.hitAllBricks();
+        return manager.hitAllBricks() || manager.passedBorder();
     }
 
 }
