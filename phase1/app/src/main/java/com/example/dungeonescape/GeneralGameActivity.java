@@ -1,11 +1,6 @@
 package com.example.dungeonescape;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.dungeonescape.GameManager;
-import com.example.dungeonescape.Player;
-import com.example.dungeonescape.SaveData;
-
 import java.io.File;
 
 public abstract class GeneralGameActivity extends AppCompatActivity {

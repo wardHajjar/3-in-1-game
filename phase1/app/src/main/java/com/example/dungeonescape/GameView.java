@@ -8,16 +8,14 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-/*
-GameView was structured like the following game:
-http://gamecodeschool.com/android/building-a-simple-game-engine/
- */
-
 /**
  * Class that controls the logic of the game by handling collisions, updating the objects' stats and
  * drawing the new states onto the canvas.
+ *
+ * GameView was structured like the following game:
+ * http://gamecodeschool.com/android/building-a-simple-game-engine/
  */
-public abstract class GameView extends SurfaceView implements Runnable{
+public abstract class GameView extends SurfaceView implements Runnable {
     /**
      * gameThread - the main game thread that gets executed by the program.
      * holder - contains the canvas on which objects are drawn.
@@ -38,14 +36,14 @@ public abstract class GameView extends SurfaceView implements Runnable{
      * Initializes the surface in the context environment.
      * @param context the environment
      */
-    public GameView(Context context){
+    public GameView(Context context) {
         super(context);
         holder = getHolder();
         paint = new Paint();
 
     }
 
-    public GameView(Context context, AttributeSet attributeSet){
+    public GameView(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
         holder = getHolder();
         paint = new Paint();
@@ -55,40 +53,32 @@ public abstract class GameView extends SurfaceView implements Runnable{
      * The method that runs the program's while loop.
      */
     @Override
-    public void run(){
+    public void run() {
         while (playing) {
-
-            // Capture the current time in milliseconds in startFrameTime
+            /* Capture the current time in milliseconds in startFrameTime. */
             try {
-                //set time in milli
+                /* Set time in millisecond. */
                 Thread.sleep(1);
-
-            }catch (Exception e){
+            }
+            catch (Exception e){
                 e.printStackTrace();
             }
-//             Updating the frame
+            /* Updating the frame. */
             if(!paused){
                 update();
             }
-
-            // Draw the frame
+            /* Draw the frame. */
             draw();
         }
     }
 
-    /**
-     * Method updates the state of the objects within the game based on user events.
-     */
+    /** Method updates the state of the objects within the game based on user events. */
     public abstract void update();
 
-    /**
-     * Method draws all the objects onto the screen.
-     */
+    /** Method draws all the objects onto the screen. */
     public abstract void draw();
 
-    /**
-     * If Activity is paused/stopped, the thread must stop as well.
-     */
+    /** If Activity is paused/stopped, the thread must stop as well. */
     public void pause() {
         playing = false;
         try {
@@ -99,17 +89,12 @@ public abstract class GameView extends SurfaceView implements Runnable{
 
     }
 
-    /**
-     * If Activity is started then thread must start as well.
-     */
+    /** If Activity is started then thread must start as well. */
     public void resume() {
         paused = false;
         playing = true;
         gameThread = new Thread(this);
         gameThread.start();
     }
-
-
-
 }
 

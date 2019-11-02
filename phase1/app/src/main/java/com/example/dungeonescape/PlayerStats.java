@@ -6,7 +6,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-
+/**
+ * This class controls the end-of-game view once the player has successfully "escaped" the dungeon
+ * and won the game. The player's statistics – time lapsed, number of lives remaining, number of
+ * coins collected – are displayed.
+ *
+ * The player has the option to play again, or go back to the main menu.
+ */
 public class PlayerStats extends GeneralGameActivity {
     GameManager gameManager;
     Player player;
@@ -34,7 +40,7 @@ public class PlayerStats extends GeneralGameActivity {
         numLives.setText(String.valueOf(player.getNumLives()));
     }
 
-
+    /** Create and assign functions to buttons. */
     private void buttons() {
         Button playAgain = findViewById(R.id.playAgain);
         playAgain.setOnClickListener(new View.OnClickListener() {
