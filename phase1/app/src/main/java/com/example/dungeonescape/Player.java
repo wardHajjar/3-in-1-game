@@ -7,7 +7,7 @@ import android.graphics.Color;
 /**
  * Represents a Player in the Game.
  */
-public class Player implements Serializable {
+public class Player extends GameObject implements Serializable {
 
     /** The Player's name. */
     private String name;
@@ -35,6 +35,18 @@ public class Player implements Serializable {
     private long totalTimePlayed;
 
     public Player(String name) {
+        setName(name);
+        setScore(0);
+        setNumLives(5);
+        setNumCoins(0);
+        setColour(Color.WHITE);
+        setCurrentLevel(1);
+        totalTimePlayed = 0;
+        setDifficulty("Easy");
+    }
+
+    public Player(int x, int y, int z, String name) {
+        super(x, y, z);
         setName(name);
         setScore(0);
         setNumLives(5);
