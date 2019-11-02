@@ -1,18 +1,8 @@
 package com.example.dungeonescape.platformer;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Canvas;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.util.AttributeSet;
-import android.util.Log;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -20,15 +10,9 @@ import android.widget.TextView;
 import com.example.dungeonescape.Dead;
 import com.example.dungeonescape.GameManager;
 import com.example.dungeonescape.GeneralGameActivity;
-import com.example.dungeonescape.MainActivity;
 import com.example.dungeonescape.Player;
 import com.example.dungeonescape.PlayerStats;
 import com.example.dungeonescape.R;
-import com.example.dungeonescape.SaveData;
-
-import java.io.File;
-import java.util.logging.Level;
-
 
 public class Level2MainActivity extends GeneralGameActivity {
     private Level2View game;
@@ -137,6 +121,7 @@ public class Level2MainActivity extends GeneralGameActivity {
         super.onResume();
         game.resume();
     }
+
     /**
      * Method for initializing left and right buttons.
      */
@@ -158,9 +143,7 @@ public class Level2MainActivity extends GeneralGameActivity {
             }
         });
     }
-    /**
-     * Method executes when the player quits the game.
-     */
+
     @Override
     protected void onPause() {
         super.onPause();

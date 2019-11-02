@@ -1,6 +1,7 @@
 package com.example.dungeonescape.platformer;
-
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
 
@@ -21,9 +22,18 @@ class Character extends Level3Object {
     /** The number of platforms this Character has bounced off of. */
     private int gameScore;
 
+    private int colour;
+
+    //    private Player user; // referencing from player class for lives
+    void setColour(int colour){
+        this.colour = colour;
+        paint.setColor(this.colour);
+    }
+
+
     Character(int x, int y, int size, PlatformerManager manager){
-        super(x, y, size,manager);
-        paint.setColor(Color.BLUE);
+        super(x,y,size,manager);
+
         start = false;
         this.gameScore = 0;
         this.rect = new Rect(x - size / 2, (y + size / 4),
