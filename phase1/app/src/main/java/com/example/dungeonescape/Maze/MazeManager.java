@@ -169,12 +169,12 @@ class MazeManager {
         while(coordinates.size()<4){
             int x = rand.nextInt(numMazeCols);
             if(coordinates.get(x, -1) == -1) {
-                coordinates.append(x, rand.nextInt(numMazeRows + 1));
+                coordinates.append(x, rand.nextInt(numMazeRows));
             } else
                 {
-                int y = rand.nextInt(numMazeRows+1);
+                int y = rand.nextInt(numMazeRows);
                 while(coordinates.get(x)==y){
-                    y = rand.nextInt(numMazeRows+1);
+                    y = rand.nextInt(numMazeRows);
                 }
                 coordinates.append(x,y);
             }

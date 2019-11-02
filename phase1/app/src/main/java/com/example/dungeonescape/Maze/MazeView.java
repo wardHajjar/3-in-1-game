@@ -250,6 +250,7 @@ public class MazeView extends View {
         if (player.getX() == exit.getX() && player.getY() == exit.getY()) {
             mazeIterations++;
             cells = mazeManager.createMaze();
+            coins = mazeManager.createCoins();
             relocatePlayer();
         }
     }
