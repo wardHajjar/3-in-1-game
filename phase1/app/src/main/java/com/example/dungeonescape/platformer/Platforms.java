@@ -12,27 +12,52 @@ import androidx.constraintlayout.solver.widgets.Rectangle;
 
 
 class Platforms extends Rectangle {
+    /** x,y coordinate of the platfroms. */
     private float x, y;
+
+    /** length of the platfroms. */
     private float length;
+
+    /** width of the platfroms. */
     private float width;
+
+    /** height of the platfroms. */
     private int height;
+
+    /** colour of the platfroms. */
     private Paint paint;
+
+    /** manger for the platfroms. */
     private PlatformerManager manager;
+
+    /** shape of the platfroms. */
     Rect rectangle;
 
-    void setx(float x) {
+    /** sets x coordinate. */
+    void setX(float x) {
         this.x = x;
     }
 
-    float getx() {
+    /** gets x coordinate.
+     *
+     * @return a float x coordinate
+     *
+     * */
+    float getX() {
         return this.x;
     }
 
-    void sety(float y) {
+    /** sets x coordinate. */
+    void setY(float y) {
         this.y = y;
     }
 
-    float gety() {
+    /** gets y coordinate.
+     *
+     * @return a float y coordinate
+     *
+     * */
+    float getY() {
         return this.y;
     }
 
@@ -48,7 +73,7 @@ class Platforms extends Rectangle {
         this.rectangle = new Rect((int) this.x, (int) this.y, (int) (this.length + x),
                 (int) (y+this.width));
     }
-
+    /** Updates the platfrom, moving the platfroms down when the ball surpasses them. */
     void update(int down) {
         // Moves platforms down
         platformDown(down);
@@ -56,29 +81,31 @@ class Platforms extends Rectangle {
                 (int) (y+this.width));
     }
 
+    /** Moves the platdrom down, i.e when the ball surpasses the platfroms they get moved to their
+     * new location above the character. */
     private void platformDown(int down) {
         if (this.y + down > manager.getGridHeight()) {
             // Move it to the top
             int diff = Math.abs((int)this.y + down - manager.getGridHeight());
             if (diff > 400) {
-                this.sety(0);
+                this.setY(0);
             }
             else if (diff > 200) {
-                this.sety(-200);
+                this.setY(-200);
             }
             else {
-                this.sety(-diff);
+                this.setY(-diff);
             }
             Random r = new Random();
             int a = r.nextInt(1080- 150);
-            this.setx(a);
+            this.setX(a);
         }
         else {
-            this.sety(this.y + down);
+            this.setY(this.y + down);
 
         }
     }
-
+    /** Draws the rectangle*/
     void draw(Canvas canvas) {
         canvas.drawRect(this.rectangle, this.paint);
     }

@@ -15,12 +15,23 @@ import com.example.dungeonescape.PlayerStats;
 import com.example.dungeonescape.R;
 
 public class Level2MainActivity extends GeneralGameActivity {
+    /**
+     * The game's view that updates and draws the objects within it.
+     */
     private Level2View game;
     private boolean running;
     Player player;
     GameManager gameManager;
+
+    /**
+     * The time at which the brick breaker game has been started.
+     */
     long startTime;
 
+    /**
+     *
+     * @param savedInstanceState Bundle object that passes data between activities.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,6 +103,10 @@ public class Level2MainActivity extends GeneralGameActivity {
         };
         t.start();
     }
+
+    /**
+     * User has successfully finished Brick Breaker and will now move on to Maze.
+     */
     private void nextLevel() {
         long endTime = SystemClock.elapsedRealtime();
         long elapsedMilliSeconds = endTime - startTime;
@@ -102,6 +117,10 @@ public class Level2MainActivity extends GeneralGameActivity {
         intent.putExtra("Game Manager", gameManager);
         startActivity(intent);
     }
+
+    /**
+     * User has lost the Game i.e. no more lives left.
+     */
     private void deadPage() {
         long endTime = SystemClock.elapsedRealtime();
         long elapsedMilliSeconds = endTime - startTime;
