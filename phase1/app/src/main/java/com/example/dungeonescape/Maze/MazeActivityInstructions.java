@@ -32,11 +32,10 @@ public class MazeActivityInstructions extends AppCompatActivity {
 
     /** Creates the Start button to play the Maze. */
     private void configureNextButton() {
-        Button nextButton = (Button) findViewById(R.id.start);
+        Button nextButton = findViewById(R.id.start);
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Intent intent = new Intent(MazeActivityInstructions.this, MazeActivity.class);
                 intent.putExtra("Player", player);
                 intent.putExtra("Game Manager", gameManager);

@@ -84,13 +84,13 @@ public class BBMainActivity extends GeneralGameActivity {
                                     TextView lifeText = findViewById(R.id.lives);
                                     lifeText.setText(life);
                                     boolean doneLevel = gameView.doneLevel();
-                                    if (doneLevel) { // if level has been won
+                                    if (doneLevel) { // If level has been won
                                         nextLevel();
                                         running = false;
                                     }
-                                    if (player.getNumLives() == 0){ // if level has been lost.
+                                    if (player.getNumLives() == 0){ // If level has been lost.
                                         endGame();
-                                        running = false;    // stops the game.
+                                        running = false;    // Stops the game.
                                     }
                                 }
                             }
@@ -116,9 +116,7 @@ public class BBMainActivity extends GeneralGameActivity {
         gameView.pause();
     }
 
-    /**
-     * User has successfully finished Brick Breaker and will now move on to Maze.
-     */
+    /** User has successfully finished Brick Breaker and will now move on to Maze. */
     protected void nextLevel() {
         player.setCurrentLevel(2);
         /* time at which the user has finished the level. */
@@ -135,9 +133,7 @@ public class BBMainActivity extends GeneralGameActivity {
         startActivity(intent);
     }
 
-    /**
-     * User has lost the Game i.e. no more lives left.
-     */
+    /** User has lost the Game i.e. no more lives left. */
     protected void endGame(){
         /* time at which the user has lost. */
         long endTime = SystemClock.elapsedRealtime();
