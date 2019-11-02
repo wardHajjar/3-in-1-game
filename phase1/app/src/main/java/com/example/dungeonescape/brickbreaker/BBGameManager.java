@@ -3,15 +3,11 @@ package com.example.dungeonescape.brickbreaker;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.view.MotionEvent;
-
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Collections;
 import com.example.dungeonescape.Player;
 
-/**
- * Instantiates and controls game objects.
- */
+/** Instantiates and controls game objects. */
 class BBGameManager {
 
     /**
@@ -27,7 +23,7 @@ class BBGameManager {
     private int screenY;
     private Player player;
 
-    BBGameManager(int screenX, int screenY){
+    BBGameManager(int screenX, int screenY) {
 
         /* Construct the ball. */
         this.ball = new Ball(screenX/2 - 75 + (screenX/2 - 75)/2 - 25,
@@ -65,18 +61,16 @@ class BBGameManager {
         }
     }
 
-    /**
-     * Determines the physics of the ball in reaction to collisions.
-     */
+    /** Determines the physics of the ball in reaction to collisions. */
     void moveBall(){
         ball.move();
 
         /* Wall Collision Detection. */
         String wallCollision = ball.madeWallCollision(screenX, screenY);
-        if ( wallCollision.equals("x")){
+        if ( wallCollision.equals("x")) {
             ball.setXSpeed(ball.getXSpeed() * -1);
         }
-        else if(wallCollision.equals("y")){
+        else if(wallCollision.equals("y")) {
             ball.setYSpeed(ball.getYSpeed() * -1);
         }
 
@@ -97,7 +91,6 @@ class BBGameManager {
                     brick.changeHitStatus();
                     break;
                 }
-
             }
         }
 
@@ -109,13 +102,11 @@ class BBGameManager {
                     player.addCoin();
                     ball.setXSpeed(ball.getXSpeed() * -1);
                     currCoin.gotCollected();
-
                     break;
                 } else if (coinCollision.equals("y")) {
                     player.addCoin();
                     ball.setYSpeed(ball.getYSpeed() * -1);
                     currCoin.gotCollected();
-
                     break;
                 }
             }
@@ -146,9 +137,7 @@ class BBGameManager {
         return false;
     }
 
-    /**
-     * Move the paddle according to the direction.
-     */
+    /** Move the paddle according to the direction. */
     void movePaddle(){
         if (paddle.movingLeft) {
             paddle.move(-20);
@@ -167,9 +156,9 @@ class BBGameManager {
      * Calculates the relative position of the touch to paddle and determines the paddle's new
      * movement direction.
      */
-    void setPaddleDirection(MotionEvent event, float xPos){
+    void setPaddleDirection(MotionEvent event, float xPos) {
         if (event.getAction() == MotionEvent.ACTION_MOVE) {
-            if (xPos < paddle.x){
+            if (xPos < paddle.x) {
                 paddle.setMovementDir("left", true);
             } else if (xPos > paddle.x) {
                 paddle.setMovementDir("right", true);
@@ -184,7 +173,7 @@ class BBGameManager {
      * Draws all the game objects: Ball, Paddle, Bricks, Coins.
      * @param canvas the Canvas which the objects are drawn on
      */
-    void drawGame(Canvas canvas){
+    void drawGame(Canvas canvas) {
         /* Ball. */
         ball.draw(canvas);
 
@@ -218,9 +207,9 @@ class BBGameManager {
      * Checks whether all the bricks have been destroyed.
      * @return true if all bricks got destroyed.
      */
-    boolean hitAllBricks(){
-        for (Brick brick: bricks){
-            if(!brick.getHitStatus()){
+    boolean hitAllBricks() {
+        for (Brick brick: bricks) {
+            if(!brick.getHitStatus()) {
                 return false;
             }
         }
@@ -231,7 +220,7 @@ class BBGameManager {
      * Adds the user to the game.
      * @param player Player object that represents the user's character.
      */
-    void addPlayer(Player player){
+    void addPlayer(Player player) {
         this.player = player;
         this.ball.setColour(player.getColour());
     }
