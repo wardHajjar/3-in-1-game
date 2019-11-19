@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">DungeonEscape</string>
+    <string name="enter">ENTER</string>
+    <string name="time">Time</string>
+    <string name="congratulations">Congratulations!</string>
+    <string name="you_ve_escaped">You\'ve escaped.</string>
+    <string name="numtimer">numTimer</string>
+    <string name="coins">Coins</string>
+    <string name="lives">Lives</string>
+    <string name="play_again">Play Again</string>
+    <string name="menu">Menu</string>
+</resources>
