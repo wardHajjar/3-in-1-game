@@ -1,22 +1,19 @@
 package com.example.dungeonescape.brickbreaker;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.dungeonescape.GameManager;
+import com.example.dungeonescape.PlayerManager;
 import com.example.dungeonescape.GeneralGameActivity;
 import com.example.dungeonescape.Maze.MazeActivityInstructions;
 import com.example.dungeonescape.Player;
 import com.example.dungeonescape.R;
 import com.example.dungeonescape.Dead;
-import com.example.dungeonescape.SaveData;
-import android.os.SystemClock;
 
-import java.io.File;
+import android.os.SystemClock;
 
 /**
  * The main activity of the game (entry point).
@@ -28,7 +25,7 @@ public class BBMainActivity extends GeneralGameActivity {
     BBView gameView;
     boolean running;
     Player player;
-    GameManager gameManager;
+    PlayerManager playerManager;
     /**
      * The time at which the brick breaker game has been started.
      */
@@ -49,19 +46,19 @@ public class BBMainActivity extends GeneralGameActivity {
         setTitle("Level1: Brick Breaker");
         Intent i = getIntent();
         player = (Player) i.getSerializableExtra("Player");
-        gameManager = (GameManager) i.getSerializableExtra("Game Manager");
+        playerManager = (PlayerManager) i.getSerializableExtra("Game Manager");
         gameView.manager.addPlayer(player);
 
         Button nextButton = (Button) findViewById(R.id.nextlvl);
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                save(gameManager, player);
+                save(playerManager, player);
                 //Intent intent = new Intent(BBMainActivity.this, MazeActivity.class);
                 Intent intent = new Intent(BBMainActivity.this, MazeActivityInstructions.class);
 
                 intent.putExtra("Player", player);
-                intent.putExtra("Game Manager", gameManager);
+                intent.putExtra("Game Manager", playerManager);
                 startActivity(intent);
             }
         });
@@ -140,11 +137,11 @@ public class BBMainActivity extends GeneralGameActivity {
         long endTime = SystemClock.elapsedRealtime();
         long elapsedMilliSeconds = endTime - startTime;
         player.updateTotalTime(elapsedMilliSeconds);
-        save(gameManager, player);
+        save(playerManager, player);
         //Intent intent = new Intent(BBMainActivity.this, MazeActivity.class);
         Intent intent = new Intent(BBMainActivity.this, MazeActivityInstructions.class);
         intent.putExtra("Player", player);
-        intent.putExtra("Game Manager", gameManager);
+        intent.putExtra("Game Manager", playerManager);
         startActivity(intent);
     }
 
@@ -157,15 +154,15 @@ public class BBMainActivity extends GeneralGameActivity {
         long elapsedMilliSeconds = endTime - startTime;
         player.updateTotalTime(elapsedMilliSeconds);
         Intent intent = new Intent(BBMainActivity.this, Dead.class);
-        save(gameManager, player);
+        save(playerManager, player);
         intent.putExtra("Player", player);
-        intent.putExtra("Game Manager", gameManager);
+        intent.putExtra("Game Manager", playerManager);
         startActivity(intent);
     }
 
     @Override
-    public void save(GameManager gameManager, Player player) {
-        super.save(gameManager, player);
+    public void save(PlayerManager playerManager, Player player) {
+        super.save(playerManager, player);
         player.setCurrentLevel(2);
     }
 }

@@ -8,7 +8,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.dungeonescape.Dead;
-import com.example.dungeonescape.GameManager;
+import com.example.dungeonescape.PlayerManager;
 import com.example.dungeonescape.GeneralGameActivity;
 import com.example.dungeonescape.Player;
 import com.example.dungeonescape.PlayerStats;
@@ -18,7 +18,7 @@ public class Level3MainActivity extends GeneralGameActivity {
     private Level3View game;
     private boolean running;
     Player player;
-    GameManager gameManager;
+    PlayerManager playerManager;
     long startTime;
 
     @Override
@@ -29,7 +29,7 @@ public class Level3MainActivity extends GeneralGameActivity {
         // Set the View we are using
         Intent i = getIntent();
         player = (Player) i.getSerializableExtra("Player");
-        gameManager = (GameManager) i.getSerializableExtra("Game Manager");
+        playerManager = (PlayerManager) i.getSerializableExtra("Game Manager");
 
         setContentView(R.layout.activity_level3_main);
         game = findViewById(R.id.level2);
@@ -72,12 +72,12 @@ public class Level3MainActivity extends GeneralGameActivity {
                                     boolean doneLevel = game.nextLevel();
                                     if (doneLevel) {
                                         nextLevel();
-                                        save(gameManager, player);
+                                        save(playerManager, player);
                                         running = false;
                                     }
                                     boolean dead = game.dead();
                                     if (dead){
-                                        save(gameManager, player);
+                                        save(playerManager, player);
                                         deadPage();
                                         running = false;
                                     }
@@ -96,20 +96,20 @@ public class Level3MainActivity extends GeneralGameActivity {
         long endTime = SystemClock.elapsedRealtime();
         long elapsedMilliSeconds = endTime - startTime;
         player.updateTotalTime(elapsedMilliSeconds);
-        save(gameManager, player);
+        save(playerManager, player);
         Intent intent = new Intent(Level3MainActivity.this, PlayerStats.class);
         intent.putExtra("Player", player);
-        intent.putExtra("Game Manager", gameManager);
+        intent.putExtra("Game Manager", playerManager);
         startActivity(intent);
     }
     private void deadPage() {
         long endTime = SystemClock.elapsedRealtime();
         long elapsedMilliSeconds = endTime - startTime;
         player.updateTotalTime(elapsedMilliSeconds);
-        save(gameManager, player);
+        save(playerManager, player);
         Intent intent = new Intent(Level3MainActivity.this, Dead.class);
         intent.putExtra("Player", player);
-        intent.putExtra("Game Manager", gameManager);
+        intent.putExtra("Game Manager", playerManager);
         startActivity(intent);
     }
 
@@ -151,8 +151,8 @@ public class Level3MainActivity extends GeneralGameActivity {
     }
 
     @Override
-    public void save(GameManager gameManager, Player player) {
-        super.save(gameManager, player);
+    public void save(PlayerManager playerManager, Player player) {
+        super.save(playerManager, player);
         player.setCurrentLevel(3);
     }
 

@@ -19,8 +19,8 @@ import java.util.ArrayList;
 import static android.text.TextUtils.isEmpty;
 
 public class NewGameActivity extends AppCompatActivity {
-    GameManager gameManager;
-    GameManager data;
+    PlayerManager playerManager;
+    PlayerManager data;
     Player player;
     EditText name;
     String nameText;
@@ -33,7 +33,7 @@ public class NewGameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_game);
         Intent i = getIntent();
-        gameManager = (GameManager) i.getSerializableExtra("Game Manager");
+        playerManager = (PlayerManager) i.getSerializableExtra("Game Manager");
         isValid = false;
         name = findViewById(R.id.nameInput);
         buttons();
@@ -139,7 +139,7 @@ public class NewGameActivity extends AppCompatActivity {
                     if (isValid) {
                         Intent intent = new Intent(NewGameActivity.this, BBMainActivity.class);
                         intent.putExtra("Player", player);
-                        intent.putExtra("Game Manager", gameManager);
+                        intent.putExtra("Game Manager", playerManager);
                         startActivity(intent);
                     }
                 }
@@ -149,7 +149,7 @@ public class NewGameActivity extends AppCompatActivity {
     void checkName() {
         nameText = name.getText().toString();
         isValid = true;
-        ArrayList<String> names = gameManager.getPlayerNames();
+        ArrayList<String> names = playerManager.getPlayerNames();
         if (isEmpty(nameText)) {
             Toast t = Toast.makeText(this, "Please Enter a Name", Toast.LENGTH_SHORT);
             isValid = false;
@@ -166,7 +166,7 @@ public class NewGameActivity extends AppCompatActivity {
     private void setText(int color) {
         player = new Player(nameText);
         player.setColour(color);
-        gameManager.addPlayer(player);
+        playerManager.addPlayer(player);
         save();
     }
     private void setText(int color, String diff) {
@@ -174,7 +174,7 @@ public class NewGameActivity extends AppCompatActivity {
         player = new Player(nameText);
         player.setColour(color);
         player.setDifficulty(diff);
-        gameManager.addPlayer(player);
+        playerManager.addPlayer(player);
         save();
     }
 
@@ -182,7 +182,7 @@ public class NewGameActivity extends AppCompatActivity {
         try {
             String filePath = this.getFilesDir().getPath() + "/GameState.txt";
             File f = new File(filePath);
-            SaveData.save(gameManager, f);
+            SaveData.save(playerManager, f);
         }
         catch (Exception e) {
             System.out.println("Couldn't save: " + e.getMessage());

@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 
 public class PlayerStats extends GeneralGameActivity {
-    GameManager gameManager;
+    PlayerManager playerManager;
     Player player;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,7 +17,7 @@ public class PlayerStats extends GeneralGameActivity {
 
         Intent i = getIntent();
         player = (Player) i.getSerializableExtra("Player");
-        gameManager = (GameManager) i.getSerializableExtra("Game Manager");
+        playerManager = (PlayerManager) i.getSerializableExtra("Game Manager");
 
         buttons();
 
@@ -40,10 +40,10 @@ public class PlayerStats extends GeneralGameActivity {
         playAgain.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 player.resetStats();
-                save(gameManager, player);
+                save(playerManager, player);
                 Intent intent = new Intent(PlayerStats.this, BBMainActivity.class);
                 intent.putExtra("Player", player);
-                intent.putExtra("Game Manager", gameManager);
+                intent.putExtra("Game Manager", playerManager);
                 startActivity(intent);
             }
         });
@@ -52,16 +52,16 @@ public class PlayerStats extends GeneralGameActivity {
         menu.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 player.resetStats();
-                save(gameManager, player);
+                save(playerManager, player);
                 Intent intent = new Intent(PlayerStats.this, MainActivity.class);
-                intent.putExtra("Game Manager", gameManager);
+                intent.putExtra("Game Manager", playerManager);
                 startActivity(intent);
             }
         });
     }
 
     @Override
-    public void save(GameManager gameManager, Player player) {
-        super.save(gameManager, player);
+    public void save(PlayerManager playerManager, Player player) {
+        super.save(playerManager, player);
     }
 }

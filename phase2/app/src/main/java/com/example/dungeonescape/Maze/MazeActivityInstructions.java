@@ -5,15 +5,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import com.example.dungeonescape.GameManager;
+import com.example.dungeonescape.PlayerManager;
 import com.example.dungeonescape.Player;
 import com.example.dungeonescape.R;
 
 public class MazeActivityInstructions extends AppCompatActivity {
 
-    /** Initializes a Player and GameManager. */
+    /** Initializes a Player and PlayerManager. */
     Player player;
-    GameManager gameManager;
+    PlayerManager playerManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +24,7 @@ public class MazeActivityInstructions extends AppCompatActivity {
         /* Gather saved data. */
         Intent i = getIntent();
         player = (Player) i.getSerializableExtra("Player");
-        gameManager = (GameManager) i.getSerializableExtra("Game Manager");
+        playerManager = (PlayerManager) i.getSerializableExtra("Game Manager");
 
         /* Button to start the Maze. */
         configureNextButton();
@@ -40,7 +40,7 @@ public class MazeActivityInstructions extends AppCompatActivity {
                         com.example.dungeonescape.Maze.MazeActivityInstructions.this,
                         MazeActivity.class);
                 intent.putExtra("Player", player);
-                intent.putExtra("Game Manager", gameManager);
+                intent.putExtra("Game Manager", playerManager);
                 startActivity(intent);
             }
         });

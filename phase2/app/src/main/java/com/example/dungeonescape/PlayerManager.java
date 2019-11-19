@@ -11,11 +11,11 @@ import java.util.ArrayList;
  * TODO: Edit this javadoc as this class is updated.
  */
 
-public class GameManager implements Serializable {
+public class PlayerManager implements Serializable {
     ArrayList<Player> players;
 
 
-    public GameManager() {
+    public PlayerManager() {
         /* Sets the initial total time elapsed in the Game to 0. */
         players = new ArrayList<>();
 

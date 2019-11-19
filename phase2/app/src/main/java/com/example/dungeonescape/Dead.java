@@ -5,13 +5,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.dungeonescape.R;
 import com.example.dungeonescape.brickbreaker.BBMainActivity;
 
 import java.io.File;
 
 public class Dead extends GeneralGameActivity {
-    public GameManager gameManager;
+    public PlayerManager playerManager;
     Player player;
 
     @Override
@@ -19,11 +18,11 @@ public class Dead extends GeneralGameActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dead);
         Intent i = getIntent();
-        gameManager = (GameManager) i.getSerializableExtra("Game Manager");
+        playerManager = (PlayerManager) i.getSerializableExtra("Game Manager");
         player = (Player) i.getSerializableExtra("Player");
         buttons();
         player.resetStats();
-        save(gameManager, player);
+        save(playerManager, player);
     }
 
     private void buttons() {
@@ -33,7 +32,7 @@ public class Dead extends GeneralGameActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Dead.this, MainActivity.class);
-                intent.putExtra("Game Manager", gameManager);
+                intent.putExtra("Game Manager", playerManager);
                 startActivity(intent);
             }
         });
@@ -42,25 +41,25 @@ public class Dead extends GeneralGameActivity {
         playAgain.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
 
-                save(gameManager, player);
+                save(playerManager, player);
                 Intent intent = new Intent(Dead.this, BBMainActivity.class);
                 intent.putExtra("Player", player);
-                intent.putExtra("Game Manager", gameManager);
+                intent.putExtra("Game Manager", playerManager);
                 startActivity(intent);
             }
         });
     }
 
     @Override
-    public void save(GameManager gameManager, Player player) {
-        super.save(gameManager, player);
+    public void save(PlayerManager playerManager, Player player) {
+        super.save(playerManager, player);
     }
 
     private void load() {
         try {
             String filePath = this.getFilesDir().getPath() + "/GameState.txt";
             File f = new File(filePath);
-            gameManager = (GameManager) SaveData.load(f);
+            playerManager = (PlayerManager) SaveData.load(f);
         }
         catch (Exception e) {
             System.out.println("Couldn't load load data: " + e.getMessage());

@@ -10,16 +10,16 @@ import android.widget.Button;
 import java.io.File;
 
 public class MainActivity extends AppCompatActivity{
-    public GameManager gameManager;
+    public PlayerManager playerManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Intent i = getIntent();
-        gameManager = (GameManager) i.getSerializableExtra("Game Manager");
+        playerManager = (PlayerManager) i.getSerializableExtra("Game Manager");
         load();
-        if (gameManager == null) {
-            gameManager = new GameManager();
+        if (playerManager == null) {
+            playerManager = new PlayerManager();
         }
 
         buttons();
@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity{
             public void onClick(View view) {
 
                 Intent intent = new Intent(MainActivity.this, NewGameActivity.class);
-                intent.putExtra("Game Manager", gameManager);
+                intent.putExtra("Game Manager", playerManager);
                 startActivity(intent);
             }
         });
@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity{
             public void onClick(View view) {
 
                 Intent intent = new Intent(MainActivity.this, LoadGameActivity.class);
-                intent.putExtra("Game Manager", gameManager);
+                intent.putExtra("Game Manager", playerManager);
                 startActivity(intent);
             }
         });
@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity{
         try {
             String filePath = this.getFilesDir().getPath() + "/GameState.txt";
             File f = new File(filePath);
-            gameManager = (GameManager) SaveData.load(f);
+            playerManager = (PlayerManager) SaveData.load(f);
         }
         catch (Exception e) {
             System.out.println("Couldn't load load data: " + e.getMessage());
