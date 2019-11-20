@@ -6,17 +6,14 @@ package com.example.dungeonescape;
 public class GameObject {
     private int x;
     private int y;
-    private int z;
 
-    public GameObject(int x, int y, int z) {
+    public GameObject(int x, int y) {
         setX(x);
         setY(y);
-        setDepth(z);
     }
     GameObject(){
         setX(0);
         setY(0);
-        setDepth(0);
     }
 
     public int getX() {
@@ -43,18 +40,5 @@ public class GameObject {
      */
     public void setY(int y) {
         this.y = y;
-    }
-
-    public int getZ() {
-        return z;
-    }
-
-    /**
-     * Sets the Game Object's depth to the given value.
-     *
-     * @param z the z-coordinate of the game object's location.
-     */
-    public void setDepth(int z) {
-        this.z = z;
     }
 }

@@ -45,8 +45,8 @@ public class Player extends GameObject implements Serializable {
         setDifficulty("Easy");
     }
 
-    public Player(int x, int y, int z, String name) {
-        super(x, y, z);
+    public Player(int x, int y, String name) {
+        super(x, y);
         setName(name);
         setScore(0);
         setNumLives(5);
