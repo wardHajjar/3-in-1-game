@@ -1,4 +1,4 @@
-package com.example.dungeonescape.Maze;
+package com.example.dungeonescape.maze;
 
 import com.example.dungeonescape.GameObject;
 

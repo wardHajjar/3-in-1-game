@@ -1,4 +1,4 @@
-package com.example.dungeonescape.Maze;
+package com.example.dungeonescape.maze;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
@@ -37,7 +37,7 @@ public class MazeActivityInstructions extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(
-                        com.example.dungeonescape.Maze.MazeActivityInstructions.this,
+                        com.example.dungeonescape.maze.MazeActivityInstructions.this,
                         MazeActivity.class);
                 intent.putExtra("Player", player);
                 intent.putExtra("Game Manager", playerManager);

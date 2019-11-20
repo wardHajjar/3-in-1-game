@@ -9,7 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
-import com.example.dungeonescape.Maze.MazeActivity;
+import com.example.dungeonescape.maze.MazeActivity;
 import com.example.dungeonescape.brickbreaker.BBMainActivity;
 import com.example.dungeonescape.platformer.PlatformerMainActivity;
 
