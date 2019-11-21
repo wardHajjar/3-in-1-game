@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".LoadGameActivity"></activity>
-        <activity android:name=".Dead"></activity>
+        <activity android:name=".DeadActivity"></activity>
         <activity android:name=".NewGameActivity" />
         <activity android:name=".Maze.MazeActivityInstructions"/>
         <activity android:name=".platformer.Level3MainActivity" />
@@ -40,7 +40,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PlayerStats" />
+        <activity android:name=".EndGameActivity" />
     </application>
 
 </manifest>

@@ -11,7 +11,7 @@ import com.example.dungeonescape.GeneralGameActivity;
 import com.example.dungeonescape.Maze.MazeActivityInstructions;
 import com.example.dungeonescape.Player;
 import com.example.dungeonescape.R;
-import com.example.dungeonescape.Dead;
+import com.example.dungeonescape.DeadActivity;
 
 import android.os.SystemClock;
 
@@ -49,7 +49,7 @@ public class BBMainActivity extends GeneralGameActivity {
         playerManager = (PlayerManager) i.getSerializableExtra("Game Manager");
         gameView.manager.addPlayer(player);
 
-        Button nextButton = (Button) findViewById(R.id.nextlvl);
+        Button nextButton = findViewById(R.id.nextlvl);
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -153,7 +153,7 @@ public class BBMainActivity extends GeneralGameActivity {
         long endTime = SystemClock.elapsedRealtime();
         long elapsedMilliSeconds = endTime - startTime;
         player.updateTotalTime(elapsedMilliSeconds);
-        Intent intent = new Intent(BBMainActivity.this, Dead.class);
+        Intent intent = new Intent(BBMainActivity.this, DeadActivity.class);
         save(playerManager, player);
         intent.putExtra("Player", player);
         intent.putExtra("Game Manager", playerManager);

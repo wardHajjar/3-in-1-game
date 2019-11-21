@@ -9,7 +9,7 @@ import com.example.dungeonescape.brickbreaker.BBMainActivity;
 
 import java.io.File;
 
-public class Dead extends GeneralGameActivity {
+public class DeadActivity extends GeneralGameActivity {
     public PlayerManager playerManager;
     Player player;
 
@@ -31,7 +31,7 @@ public class Dead extends GeneralGameActivity {
         restart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Dead.this, MainActivity.class);
+                Intent intent = new Intent(DeadActivity.this, MainActivity.class);
                 intent.putExtra("Game Manager", playerManager);
                 startActivity(intent);
             }
@@ -42,7 +42,7 @@ public class Dead extends GeneralGameActivity {
             public void onClick(View view) {
 
                 save(playerManager, player);
-                Intent intent = new Intent(Dead.this, BBMainActivity.class);
+                Intent intent = new Intent(DeadActivity.this, BBMainActivity.class);
                 intent.putExtra("Player", player);
                 intent.putExtra("Game Manager", playerManager);
                 startActivity(intent);

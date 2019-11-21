@@ -7,11 +7,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.dungeonescape.Dead;
+import com.example.dungeonescape.DeadActivity;
 import com.example.dungeonescape.PlayerManager;
 import com.example.dungeonescape.GeneralGameActivity;
 import com.example.dungeonescape.Player;
-import com.example.dungeonescape.PlayerStats;
+import com.example.dungeonescape.EndGameActivity;
 import com.example.dungeonescape.R;
 
 public class Level3MainActivity extends GeneralGameActivity {
@@ -97,7 +97,7 @@ public class Level3MainActivity extends GeneralGameActivity {
         long elapsedMilliSeconds = endTime - startTime;
         player.updateTotalTime(elapsedMilliSeconds);
         save(playerManager, player);
-        Intent intent = new Intent(Level3MainActivity.this, PlayerStats.class);
+        Intent intent = new Intent(Level3MainActivity.this, EndGameActivity.class);
         intent.putExtra("Player", player);
         intent.putExtra("Game Manager", playerManager);
         startActivity(intent);
@@ -107,7 +107,7 @@ public class Level3MainActivity extends GeneralGameActivity {
         long elapsedMilliSeconds = endTime - startTime;
         player.updateTotalTime(elapsedMilliSeconds);
         save(playerManager, player);
-        Intent intent = new Intent(Level3MainActivity.this, Dead.class);
+        Intent intent = new Intent(Level3MainActivity.this, DeadActivity.class);
         intent.putExtra("Player", player);
         intent.putExtra("Game Manager", playerManager);
         startActivity(intent);

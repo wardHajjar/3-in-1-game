@@ -7,7 +7,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 
-public class PlayerStats extends GeneralGameActivity {
+public class EndGameActivity extends GeneralGameActivity {
     PlayerManager playerManager;
     Player player;
 
@@ -41,7 +41,7 @@ public class PlayerStats extends GeneralGameActivity {
             public void onClick(View view) {
                 player.resetStats();
                 save(playerManager, player);
-                Intent intent = new Intent(PlayerStats.this, BBMainActivity.class);
+                Intent intent = new Intent(EndGameActivity.this, BBMainActivity.class);
                 intent.putExtra("Player", player);
                 intent.putExtra("Game Manager", playerManager);
                 startActivity(intent);
@@ -53,7 +53,7 @@ public class PlayerStats extends GeneralGameActivity {
             public void onClick(View view) {
                 player.resetStats();
                 save(playerManager, player);
-                Intent intent = new Intent(PlayerStats.this, MainActivity.class);
+                Intent intent = new Intent(EndGameActivity.this, MainActivity.class);
                 intent.putExtra("Game Manager", playerManager);
                 startActivity(intent);
             }
