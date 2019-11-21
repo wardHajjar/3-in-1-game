@@ -1,4 +1,4 @@
-package com.example.dungeonescape.Maze;
+package com.example.dungeonescape.maze;
 
 import com.example.dungeonescape.GameObject;
 
@@ -19,8 +19,8 @@ public class MazeCell extends GameObject {
     /** The size of this MazeCell in pixels. */
     private float cellSize;
 
-    MazeCell(int col, int row, int depth) {
-        super(col, row, depth);
+    MazeCell(int col, int row) {
+        super(col, row);
     }
 
     boolean isTopWall() {

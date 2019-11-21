@@ -1,4 +1,4 @@
-package com.example.dungeonescape.Maze;
+package com.example.dungeonescape.maze;
 
 import java.util.Iterator;
 import android.content.Context;
@@ -71,7 +71,7 @@ public class MazeView extends View {
 
     public void relocatePlayer(){
         playerLoc = cells[0][0];
-        exit = new GameObject(numMazeCols-1, numMazeRows-1, 1);
+        exit = new GameObject(numMazeCols-1, numMazeRows-1);
         if(player != null) {
             player.setY(0);
             player.setX(0);

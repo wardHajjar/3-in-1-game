@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.example.dungeonescape.PlayerManager;
 import com.example.dungeonescape.GeneralGameActivity;
-import com.example.dungeonescape.Maze.MazeActivityInstructions;
+import com.example.dungeonescape.maze.MazeActivityInstructions;
 import com.example.dungeonescape.Player;
 import com.example.dungeonescape.R;
 import com.example.dungeonescape.DeadActivity;

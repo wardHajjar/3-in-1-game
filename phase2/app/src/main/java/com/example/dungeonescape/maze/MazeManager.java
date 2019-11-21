@@ -1,4 +1,4 @@
-package com.example.dungeonescape.Maze;
+package com.example.dungeonescape.maze;
 
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -75,7 +75,7 @@ class MazeManager {
         //Creating a maze with cols X rows cells.
         for (int x = 0; x < mazeCols; x++) {
             for (int y = 0; y < mazeRows; y++) {
-                cells[x][y] = new MazeCell(x, y, 1);
+                cells[x][y] = new MazeCell(x, y);
             }
         }
 

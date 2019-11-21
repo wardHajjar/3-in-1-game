@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Maze.MazeActivity">
+    tools:context=".maze.MazeActivity">
 
     <!-- Code from https://codinginflow.com/tutorials/android/countdowntimer/part-1-countdown-timer
     slightly edited -->
@@ -23,7 +23,7 @@
 
     <view
         android:id="@+id/view"
-        class="com.example.dungeonescape.Maze.MazeView"
+        class="com.example.dungeonescape.maze.MazeView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
