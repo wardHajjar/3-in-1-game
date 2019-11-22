@@ -1,6 +1,10 @@
-package com.example.dungeonescape;
+package com.example.dungeonescape.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.dungeonescape.player.Player;
+import com.example.dungeonescape.player.PlayerManager;
+import com.example.dungeonescape.game.SaveData;
 
 import java.io.File;
 

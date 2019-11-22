@@ -1,4 +1,4 @@
-package com.example.dungeonescape;
+package com.example.dungeonescape.game;
 
 /**
  * Represents any Object in the Game that contains an (x, y, z) coordinate.
@@ -11,7 +11,8 @@ public class GameObject {
         setX(x);
         setY(y);
     }
-    GameObject(){
+
+    public GameObject(){
         setX(0);
         setY(0);
     }

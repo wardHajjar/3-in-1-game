@@ -1,10 +1,8 @@
 package com.example.dungeonescape.platformer;
 
 import android.graphics.Canvas;
-import android.graphics.Rect;
-import android.graphics.RectF;
 
-import com.example.dungeonescape.Player;
+import com.example.dungeonescape.player.Player;
 
 import java.util.Random;
 

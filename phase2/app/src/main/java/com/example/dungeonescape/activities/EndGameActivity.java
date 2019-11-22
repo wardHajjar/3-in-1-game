@@ -1,4 +1,7 @@
-package com.example.dungeonescape;
+package com.example.dungeonescape.activities;
+import com.example.dungeonescape.player.Player;
+import com.example.dungeonescape.player.PlayerManager;
+import com.example.dungeonescape.R;
 import com.example.dungeonescape.brickbreaker.BBMainActivity;
 import android.os.Bundle;
 import android.content.Intent;

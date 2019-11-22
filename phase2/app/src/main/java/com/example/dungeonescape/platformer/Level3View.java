@@ -1,12 +1,10 @@
 package com.example.dungeonescape.platformer;
 import android.content.Context;
-import android.graphics.Canvas;
 import android.graphics.Color;
 import android.util.AttributeSet;
-import android.view.SurfaceHolder;
 
-import com.example.dungeonescape.GameView;
-import com.example.dungeonescape.Player;
+import com.example.dungeonescape.game.GameView;
+import com.example.dungeonescape.player.Player;
 
 /**
  * This class is responsible for drawing out the game objects of the level, as well as

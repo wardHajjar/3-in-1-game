@@ -8,8 +8,8 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.example.dungeonescape.GameObject;
-import com.example.dungeonescape.Player;
+import com.example.dungeonescape.game.GameObject;
+import com.example.dungeonescape.player.Player;
 import com.example.dungeonescape.platformer.Coin;
 
 import java.util.ArrayList;

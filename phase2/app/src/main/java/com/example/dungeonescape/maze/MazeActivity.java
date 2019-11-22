@@ -9,10 +9,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.dungeonescape.PlayerManager;
-import com.example.dungeonescape.Player;
+import com.example.dungeonescape.player.PlayerManager;
+import com.example.dungeonescape.player.Player;
 import com.example.dungeonescape.R;
-import com.example.dungeonescape.GeneralGameActivity;
+import com.example.dungeonescape.activities.GeneralGameActivity;
 import com.example.dungeonescape.platformer.PlatformerMainActivity;
 
 import java.util.Locale;

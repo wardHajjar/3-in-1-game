@@ -7,11 +7,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.dungeonescape.DeadActivity;
-import com.example.dungeonescape.PlayerManager;
-import com.example.dungeonescape.GeneralGameActivity;
-import com.example.dungeonescape.Player;
-import com.example.dungeonescape.EndGameActivity;
+import com.example.dungeonescape.activities.DeadActivity;
+import com.example.dungeonescape.player.PlayerManager;
+import com.example.dungeonescape.activities.GeneralGameActivity;
+import com.example.dungeonescape.player.Player;
+import com.example.dungeonescape.activities.EndGameActivity;
 import com.example.dungeonescape.R;
 
 public class Level3MainActivity extends GeneralGameActivity {

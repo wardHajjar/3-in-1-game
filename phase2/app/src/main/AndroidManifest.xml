@@ -10,9 +10,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LoadGameActivity"></activity>
-        <activity android:name=".DeadActivity"></activity>
-        <activity android:name=".NewGameActivity" />
+        <activity android:name=".activities.LoadGameActivity"></activity>
+        <activity android:name=".activities.DeadActivity"></activity>
+        <activity android:name=".activities.NewGameActivity" />
         <activity android:name=".maze.MazeActivityInstructions"/>
         <activity android:name=".platformer.Level3MainActivity" />
         <activity android:name=".maze.MazeActivity" />
@@ -32,7 +32,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
@@ -40,7 +40,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".EndGameActivity" />
+        <activity android:name=".activities.EndGameActivity" />
     </application>
 
 </manifest>

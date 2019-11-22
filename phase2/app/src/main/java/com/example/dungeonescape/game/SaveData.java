@@ -1,4 +1,4 @@
-package com.example.dungeonescape;
+package com.example.dungeonescape.game;
 
 import android.content.Context;
 import android.util.Log;

@@ -1,4 +1,4 @@
-package com.example.dungeonescape;
+package com.example.dungeonescape.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,6 +9,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
+import com.example.dungeonescape.player.Player;
+import com.example.dungeonescape.player.PlayerManager;
+import com.example.dungeonescape.R;
 import com.example.dungeonescape.maze.MazeActivity;
 import com.example.dungeonescape.brickbreaker.BBMainActivity;
 import com.example.dungeonescape.platformer.PlatformerMainActivity;

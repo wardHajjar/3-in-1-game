@@ -1,4 +1,6 @@
-package com.example.dungeonescape;
+package com.example.dungeonescape.player;
+
+import com.example.dungeonescape.player.Player;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -21,14 +23,14 @@ public class PlayerManager implements Serializable {
 
 
     }
-    ArrayList<String> getPlayerNames() {
+    public ArrayList<String> getPlayerNames() {
         ArrayList<String> arr = new ArrayList<>();
         for (Player player: players) {
             arr.add(player.getName());
         }
         return arr;
     }
-    void addPlayer(Player player) {
+    public void addPlayer(Player player) {
         players.add(player);
     }
 

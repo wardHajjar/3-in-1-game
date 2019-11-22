@@ -1,8 +1,10 @@
-package com.example.dungeonescape;
+package com.example.dungeonescape.player;
 
 import java.io.Serializable;
 
 import android.graphics.Color;
+
+import com.example.dungeonescape.game.GameObject;
 
 /**
  * Represents a Player in the Game.
@@ -71,7 +73,7 @@ public class Player extends GameObject implements Serializable {
      *
      * @return the integer value of the Player's current level.
      */
-    int getCurrentLevel() {
+    public int getCurrentLevel() {
         return this.currentLevel;
     }
 
@@ -111,7 +113,7 @@ public class Player extends GameObject implements Serializable {
      *
      * @param difficulty the String difficulty.
      */
-    void setDifficulty(String difficulty) {
+    public void setDifficulty(String difficulty) {
         this.difficulty = difficulty;
         if (difficulty.equals("Easy")) {
             setNumLives(5);
@@ -160,7 +162,7 @@ public class Player extends GameObject implements Serializable {
      *
      * @param colour the new color to set the character to.
      */
-    void setColour(int colour) {
+    public void setColour(int colour) {
         this.colour = colour;
     }
 
@@ -178,7 +180,7 @@ public class Player extends GameObject implements Serializable {
      *
      * @return totalTimePlayed
      */
-    long getTotalTime() {
+    public long getTotalTime() {
         return totalTimePlayed;
     }
 
@@ -196,7 +198,7 @@ public class Player extends GameObject implements Serializable {
     }
 
     /** Reset the player's coins and lives to default values. */
-    void resetStats() {
+    public void resetStats() {
         setScore(0);
         setNumCoins(0);
         setCurrentLevel(1);

@@ -1,6 +1,6 @@
 package com.example.dungeonescape.maze;
 
-import com.example.dungeonescape.GameObject;
+import com.example.dungeonescape.game.GameObject;
 
 /**
  * Represents a MazeCell GameObject which is a square cell in the Maze.

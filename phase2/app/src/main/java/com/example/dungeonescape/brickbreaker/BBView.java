@@ -7,7 +7,7 @@ import android.view.MotionEvent;
 import android.view.Display;
 import android.graphics.Point;
 import android.app.Activity;
-import com.example.dungeonescape.GameView;
+import com.example.dungeonescape.game.GameView;
 
 /**
  * BBMainActivity and BBView were structured like the following game:

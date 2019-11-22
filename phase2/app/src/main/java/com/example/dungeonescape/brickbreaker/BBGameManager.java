@@ -5,7 +5,7 @@ import android.graphics.Color;
 import android.view.MotionEvent;
 import java.util.ArrayList;
 import java.util.Collections;
-import com.example.dungeonescape.Player;
+import com.example.dungeonescape.player.Player;
 
 /** Instantiates and controls game objects. */
 class BBGameManager {

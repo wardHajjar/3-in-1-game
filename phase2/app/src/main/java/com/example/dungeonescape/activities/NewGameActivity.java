@@ -1,4 +1,4 @@
-package com.example.dungeonescape;
+package com.example.dungeonescape.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,6 +12,11 @@ import android.widget.EditText;
 import android.graphics.Color;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.dungeonescape.player.Player;
+import com.example.dungeonescape.player.PlayerManager;
+import com.example.dungeonescape.R;
+import com.example.dungeonescape.game.SaveData;
 import com.example.dungeonescape.brickbreaker.BBMainActivity;
 import java.io.File;
 import java.util.ArrayList;
