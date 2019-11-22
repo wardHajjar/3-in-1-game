@@ -1,20 +1,19 @@
 package com.example.dungeonescape.game;
 
+import android.graphics.drawable.shapes.RectShape;
+
 /**
- * Represents any Object in the Game that contains an (x, y, z) coordinate.
+ * Represents any Object in the Game that contains an (x, y) coordinate.
  */
-public class GameObject {
+public class GameObject extends RectShape {
     private int x;
     private int y;
+
+    public GameObject(){}
 
     public GameObject(int x, int y) {
         setX(x);
         setY(y);
-    }
-
-    public GameObject(){
-        setX(0);
-        setY(0);
     }
 
     public int getX() {

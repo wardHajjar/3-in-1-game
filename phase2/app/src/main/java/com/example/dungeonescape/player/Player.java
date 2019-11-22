@@ -48,7 +48,6 @@ public class Player extends GameObject implements Serializable {
     }
 
     public Player(int x, int y, String name) {
-        super(x, y);
         setName(name);
         setScore(0);
         setNumLives(5);
@@ -57,6 +56,8 @@ public class Player extends GameObject implements Serializable {
         setCurrentLevel(1);
         totalTimePlayed = 0;
         setDifficulty("Easy");
+        setX(x);
+        setY(y);
     }
 
     /**
