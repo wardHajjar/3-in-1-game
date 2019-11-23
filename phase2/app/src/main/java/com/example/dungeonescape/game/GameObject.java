@@ -29,6 +29,15 @@ public class GameObject extends RectShape {
     }
 
     /**
+     * Sets the Game Object Paint's stroke width.
+     *
+     * @param width the stroke width of the Game Object's Paint.
+     */
+    public void setPaintStrokeWidth(int width) {
+        paint.setStrokeWidth(width);
+    }
+
+    /**
      * Sets the Game Object's Paint.
      *
      * @param paint the Paint of the Game Object.
