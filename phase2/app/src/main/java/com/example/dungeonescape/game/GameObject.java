@@ -28,6 +28,10 @@ public class GameObject extends RectShape {
         paint.setColor(colour);
     }
 
+    public int getPaintColour() {
+        return paint.getColor();
+    }
+
     /**
      * Sets the Game Object Paint's stroke width.
      *
