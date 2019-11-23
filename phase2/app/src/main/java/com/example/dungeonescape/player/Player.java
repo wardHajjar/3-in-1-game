@@ -9,7 +9,7 @@ import com.example.dungeonescape.game.GameObject;
 /**
  * Represents a Player in the Game.
  */
-public class Player extends GameObject implements Serializable {
+public class Player implements Serializable {
 
     /** The Player's name. */
     private String name;
@@ -45,19 +45,6 @@ public class Player extends GameObject implements Serializable {
         setCurrentLevel(1);
         totalTimePlayed = 0;
         setDifficulty("Easy");
-    }
-
-    public Player(int x, int y, String name) {
-        setName(name);
-        setScore(0);
-        setNumLives(5);
-        setNumCoins(0);
-        setColour(Color.WHITE);
-        setCurrentLevel(1);
-        totalTimePlayed = 0;
-        setDifficulty("Easy");
-        setX(x);
-        setY(y);
     }
 
     /**

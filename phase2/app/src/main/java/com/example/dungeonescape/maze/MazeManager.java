@@ -15,17 +15,20 @@ import java.util.Stack;
  * are created in this class and then passed to MazeView to be drawn out on screen.
  */
 class MazeManager {
-//  size of each cell
+    /** The size of each MazeCell */
     private float cellSize;
-//  number of columns and rows of the maze, passed in from MazeView.
+
+    /** The number of columns and rows in the Maze, passed in from MazeView. */
     private int numMazeCols;
     private int numMazeRows;
-//  paint of all the objects on the screen.
+
+    /** Paint of all the GameObjects on screen. */
     private Paint wallPaint;
     private Paint playerPaint;
     private Paint exitPaint;
     private Paint coinPaint;
-//  a Random instance used to randomize coin locations.
+
+    /** a Random instance used to randomize Coin locations. */
     private Random rand = new Random();
 
     /** The horizontal and vertical margin from the edge of the screen to the walls of the maze */
