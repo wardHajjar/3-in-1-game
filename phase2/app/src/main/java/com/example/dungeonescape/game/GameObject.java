@@ -1,5 +1,6 @@
 package com.example.dungeonescape.game;
 
+import android.graphics.Paint;
 import android.graphics.drawable.shapes.RectShape;
 
 /**
@@ -8,12 +9,14 @@ import android.graphics.drawable.shapes.RectShape;
 public class GameObject extends RectShape {
     private int x;
     private int y;
+    private Paint paint;
 
     public GameObject(){}
 
     public GameObject(int x, int y) {
         setX(x);
         setY(y);
+        setPaint(new Paint());
     }
 
     public int getX() {
@@ -40,5 +43,18 @@ public class GameObject extends RectShape {
      */
     public void setY(int y) {
         this.y = y;
+    }
+
+    /**
+     * Sets the Game Object's Paint.
+     *
+     * @param paint the Paint of the Game Object.
+     */
+    private void setPaint(Paint paint) {
+        this.paint = paint;
+    }
+
+    public Paint getPaint() {
+        return paint;
     }
 }
