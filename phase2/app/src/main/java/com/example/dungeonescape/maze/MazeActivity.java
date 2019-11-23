@@ -32,6 +32,7 @@ public class MazeActivity extends GeneralGameActivity {
     /** Initializes a Player and PlayerManager. */
     Player player;
     PlayerManager playerManager;
+    PlayerSprite playerSprite = new PlayerSprite();
 
     long startTime;
 
@@ -46,6 +47,7 @@ public class MazeActivity extends GeneralGameActivity {
         playerManager = (PlayerManager) i.getSerializableExtra("Game Manager");
         mazeView = findViewById(R.id.view);
         mazeView.setPlayer(player);
+        mazeView.setPlayerSprite(playerSprite);
 
         /* Sets the Player colour to the input choice from the New Game page. */
         MazeManager mazeManager = mazeView.getMazeManager();

@@ -35,6 +35,8 @@ public class MazeView extends View {
 
     /** Player and exit objects, and their positions. */
 
+    private PlayerSprite playerSprite;
+
     private Player player;
     private GameObject exit;
     private MazeCell playerLoc;
@@ -56,7 +58,8 @@ public class MazeView extends View {
         numMazeRows = 5;
         mazeManager = new MazeManager(numMazeCols, numMazeRows);
         cells = mazeManager.createMaze();
-        relocatePlayer();
+        // relocatePlayer();
+        relocatePlayerSprite();
         coins = mazeManager.createCoins();
     }
 
@@ -64,19 +67,38 @@ public class MazeView extends View {
         return mazeIterations >= 3;
     }
 
+    /* player */
     public void setPlayer(Player player){
         this.player = player;
-        relocatePlayer();
+        // relocatePlayer();
     }
 
-    public void relocatePlayer(){
+    /*player sprite*/
+    public void setPlayerSprite(PlayerSprite playerSprite) {
+        this.playerSprite = playerSprite;
+        relocatePlayerSprite();
+    }
+
+    /* player*/
+//    public void relocatePlayer(){
+//        playerLoc = cells[0][0];
+//        exit = new GameObject(numMazeCols-1, numMazeRows-1);
+//        if(player != null) {
+//            player.setY(0);
+//            player.setX(0);
+//        }
+//    }
+
+    /*player sprite */
+    public void relocatePlayerSprite() {
         playerLoc = cells[0][0];
-        exit = new GameObject(numMazeCols-1, numMazeRows-1);
-        if(player != null) {
-            player.setY(0);
-            player.setX(0);
+        exit = new GameObject(numMazeCols - 1, numMazeRows - 1);
+        if (playerSprite != null) {
+            playerSprite.setX(0);
+            playerSprite.setY(0);
         }
     }
+
 
     @Override
     protected void onDraw(Canvas canvas) {
@@ -107,7 +129,10 @@ public class MazeView extends View {
         // draws walls, Coins, the Player and the exit square on the screen
         paintWalls(canvas, mazeCols, mazeRows, cellSize);
         paintCoins(canvas, cellSize, margin);
-        paintPlayer(canvas, cellSize, margin);
+        // paintPlayer(canvas, cellSize, margin);
+
+        paintPlayerSprite(canvas, cellSize, margin);
+
         paintExit(canvas, cellSize, margin);
     }
 
@@ -181,10 +206,23 @@ public class MazeView extends View {
      * @param canvas the Canvas to draw the Player on.
      * @param margin the space around the Player square.
      */
-    private void paintPlayer(Canvas canvas, float cellSize, float margin) {
+//    private void paintPlayer(Canvas canvas, float cellSize, float margin) {
+//        Paint mazePlayerPaint = mazeManager.getPlayerPaint();
+//        int playerX = player.getX();
+//        int playerY = player.getY();
+//
+//        canvas.drawRect(
+//                playerX * cellSize + margin,
+//                playerY * cellSize + margin,
+//                (playerX + 1) * cellSize - margin,
+//                (playerY + 1) * cellSize - margin,
+//                mazePlayerPaint);
+//    }
+
+    private void paintPlayerSprite(Canvas canvas, float cellSize, float margin) {
         Paint mazePlayerPaint = mazeManager.getPlayerPaint();
-        int playerX = player.getX();
-        int playerY = player.getY();
+        int playerX = playerSprite.getX();
+        int playerY = playerSprite.getY();
 
         canvas.drawRect(
                 playerX * cellSize + margin,
@@ -217,26 +255,32 @@ public class MazeView extends View {
         switch (direction){
             case "UP":
                 if(!playerLoc.isTopWall()) {
-                    playerLoc = cells[player.getX()][player.getY() - 1];
-                    player.setY(player.getY() - 1);
+                    // playerLoc = cells[player.getX()][player.getY() - 1];
+                    playerLoc = cells[playerSprite.getX()][playerSprite.getY() - 1];
+                    // player.setY(player.getY() - 1);
+                    playerSprite.setY(playerSprite.getY() - 1);
                 }
                 break;
             case "DOWN":
                 if(!playerLoc.isBottomWall()) {
-                    playerLoc = cells[player.getX()][player.getY() + 1];
-                    player.setY(player.getY() + 1);
+//                    playerLoc = cells[player.getX()][player.getY() + 1];
+                    playerLoc = cells[playerSprite.getX()][playerSprite.getY() + 1];
+                    // player.setY(player.getY() + 1);
+                    playerSprite.setY(playerSprite.getY() + 1);
                 }
                 break;
             case "LEFT":
                 if(!playerLoc.isLeftWall()) {
                     playerLoc = cells[playerLoc.getX() - 1][playerLoc.getY()];
-                    player.setX(player.getX() - 1);
+//                    player.setX(player.getX() - 1);
+                    playerSprite.setX(playerSprite.getX() - 1);
                 }
                 break;
             case "RIGHT":
                 if(!playerLoc.isRightWall()) {
                     playerLoc = cells[playerLoc.getX() + 1][playerLoc.getY()];
-                    player.setX(player.getX() + 1);
+//                    player.setX(player.getX() + 1);
+                    playerSprite.setX(playerSprite.getX() + 1);
                 }
                 break;
         }
@@ -247,11 +291,18 @@ public class MazeView extends View {
 
     /** Checks if this Player has arrived at the exit, create a new Maze if true. */
     private void playerAtExit() {
-        if (player.getX() == exit.getX() && player.getY() == exit.getY()) {
+//        if (player.getX() == exit.getX() && player.getY() == exit.getY()) {
+//            mazeIterations++;
+//            cells = mazeManager.createMaze();
+//            coins = mazeManager.createCoins();
+//            relocatePlayer();
+//        }
+
+        if (playerSprite.getX() == exit.getX() && playerSprite.getY() == exit.getY()) {
             mazeIterations++;
             cells = mazeManager.createMaze();
             coins = mazeManager.createCoins();
-            relocatePlayer();
+            relocatePlayerSprite();
         }
     }
 
@@ -262,7 +313,12 @@ public class MazeView extends View {
         Iterator<Coin> coinIterator = coins.iterator();
         while (coinIterator.hasNext()) {
             Coin coin = coinIterator.next();
-            if (player.getX() == coin.getX() && player.getY() == coin.getY()) {
+//            if (player.getX() == coin.getX() && player.getY() == coin.getY()) {
+//                coinIterator.remove();
+//                player.addCoin();
+//            }
+
+            if (playerSprite.getX() == coin.getX() && playerSprite.getY() == coin.getY()) {
                 coinIterator.remove();
                 player.addCoin();
             }
