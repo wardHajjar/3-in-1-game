@@ -4,15 +4,13 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.RectF;
+
 import java.lang.Math;
 import java.util.Random;
 
-import androidx.constraintlayout.solver.widgets.Rectangle;
 
-
-class Platforms extends Rectangle {
-    /** x,y coordinate of the platforms. */
-    private float x, y;
+class Platforms extends PlatformerObject {
 
     /** length of the platforms. */
     private float length;
@@ -29,55 +27,21 @@ class Platforms extends Rectangle {
     /** manger for the platforms. */
     private PlatformerManager manager;
 
-    /** shape of the platforms. */
-    Rect rectangle;
 
-    /** sets x coordinate. */
-    void setX(float x) {
-        this.x = x;
-    }
-
-    /** gets x coordinate.
-     *
-     * @return a float x coordinate
-     *
-     * */
-    float getX() {
-        return this.x;
-    }
-
-    /** sets x coordinate. */
-    void setY(float y) {
-        this.y = y;
-    }
-
-    /** gets y coordinate.
-     *
-     * @return a float y coordinate
-     *
-     * */
-    float getY() {
-        return this.y;
-    }
-
-
-    Platforms(float x, float y, float length, float width, PlatformerManager manager) {
-        this.x = x;
-        this.y = y;
+    Platforms(int x, int y, int length, int width, PlatformerManager manager) {
+        super(x,y);
         this.length = length;
         this.width = width;
         paint = new Paint();
         paint.setColor(Color.GREEN);
         this.manager = manager;
-        this.rectangle = new Rect((int) this.x, (int) this.y, (int) (this.length + x),
-                (int) (y+this.width));
+        setShape();
     }
     /** Updates the platforms, moving the platforms down when the ball surpasses them. */
     void update(int down) {
         // Moves platforms down
         platformDown(down);
-        this.rectangle = new Rect((int) this.x, (int) this.y, (int) (this.length + x),
-                (int) (y+this.width));
+        setShape();
     }
 
     /** Moves the platforms down, i.e when the ball surpasses the platforms they get moved to their
@@ -101,12 +65,16 @@ class Platforms extends Rectangle {
         }
         else {
             this.setY(this.y + down);
-
         }
     }
     /** Draws the rectangle*/
     void draw(Canvas canvas) {
-        canvas.drawRect(this.rectangle, this.paint);
+        canvas.drawRect(this.shape, this.paint);
+    }
+
+    void setShape() {
+        this.shape = new RectF( this.x, this.y, (int) (this.length + x),
+                (int) (y+this.width));
     }
 }
 

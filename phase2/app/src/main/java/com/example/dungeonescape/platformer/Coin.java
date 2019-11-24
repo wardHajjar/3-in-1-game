@@ -12,16 +12,8 @@ public class Coin extends PlatformerObject {
     Coin(int x, int y, int size, PlatformerManager manager) {
         super(x,y,size,manager);
         paint.setColor(Color.YELLOW);
-        this.rect = new Rect(x - size / 2, (y - size / 2),
-                x + size / 2, y + size / 2);
-
     }
 
-    /** Alternate constructor for Coin that is used in Maze. */
-    public Coin(int x, int y) {
-        super(x,y);
-        paint.setColor(Color.YELLOW);
-    }
 
     /** Deletes a Coin that the Character has already collected.
      * Creates a new Coin at a new y value.
@@ -30,17 +22,13 @@ public class Coin extends PlatformerObject {
         this.y = 0;
         Random r = new Random();
         this.x = r.nextInt(1080- 150);
-        this.rect = new Rect((x - size / 2), (y - size / 2), (x + size / 2), (y + size / 2));
-        this.oval = new RectF(x - size / 2, y - size / 2,
-                x + size / 2, y + size / 2);
+        setShape();
     }
 
     /** Moves the Platforms down. */
     void update(int down) {
         coinDown(down);
-        this.rect = new Rect((x - size / 2), (y - size /2), (x + size / 2), (y + size / 2));
-        this.oval = new RectF(x - size / 2, y - size / 2,
-                x + size / 2, y + size / 2);
+        setShape();
     }
 
     /** Moves the Coin down when the Character jumps up. */
@@ -66,7 +54,7 @@ public class Coin extends PlatformerObject {
      *
      * @return the Rect object of the Coin.
      */
-    Rect getRect() {
-        return rect;
+    RectF getShape() {
+        return shape;
     }
 }

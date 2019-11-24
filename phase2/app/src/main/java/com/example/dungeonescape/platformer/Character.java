@@ -30,11 +30,8 @@ class Character extends PlatformerObject {
 
     Character(int x, int y, int size, PlatformerManager manager){
         super(x,y,size,manager);
-
         start = false;
         this.gameScore = 0;
-        this.rect = new Rect(x - size / 2, (y + size / 4),
-                x + size / 2,y + size / 2);
     }
 
     /** Returns the GameScore.
@@ -73,11 +70,9 @@ class Character extends PlatformerObject {
             y += speed;
         }
 
-        this.oval = new RectF(x - size / 2,y - size / 2,
-                x + size / 2,y + size / 2);
-        this.rect = new Rect((x - size / 3), (y + size / 4), (x + size / 2), (y + size / 3));
+        setShape();
         Rect bounds = new Rect();
-        this.oval.roundOut(bounds);
+        this.shape.roundOut(bounds);
     }
 
     /** Checks if the Character touches a platform. */
@@ -86,7 +81,7 @@ class Character extends PlatformerObject {
 
         if (speed > 10) {
             for (Platforms platform: manager.getPlatforms()) {
-                if (this.rect.intersect(platform.rectangle) ||
+                if (this.shape.intersect(platform.shape) ||
                         (Math.abs((int)bottom - (int)platform.getY()) < 20 && x > platform.getX() &&
                                 x < platform.getX() + 150)) {
                     this.gameScore += 1;
@@ -94,10 +89,10 @@ class Character extends PlatformerObject {
                     speed = -75;
                     y += speed;
                     start = true;
-                    this.oval = new RectF(x - size / 2,(int)(y + size / 4),
+                    this.shape = new RectF(x - size / 2,y + size / 2,
                             x + size / 2,y + size / 2);
                     Rect bounds = new Rect();
-                    this.oval.roundOut(bounds);
+                    this.shape.roundOut(bounds);
                 }
             }
         }
@@ -108,7 +103,7 @@ class Character extends PlatformerObject {
         this.bottom = this.y + (size / 2);
 
         for (Coin coin: manager.getCoins()) {
-            if (this.rect.intersect(coin.getRect())) {
+            if (this.shape.intersect(coin.getShape())) {
                 coin.gotCoin();
                 manager.getPlayer().addCoin();
             }
