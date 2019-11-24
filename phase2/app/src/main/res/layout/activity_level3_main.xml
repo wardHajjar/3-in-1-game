@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".platformer.Level3MainActivity">
+    tools:context=".platformer.PlatformerMainActivity">
 
     <TextView
         android:id="@+id/score"
@@ -22,7 +22,7 @@
         android:text="Lives"
         android:textSize="24sp" />
 
-    <com.example.dungeonescape.platformer.Level3View
+    <com.example.dungeonescape.platformer.PlatformerView
         android:id="@+id/level2"
         android:layout_width="411dp"
         android:layout_height="600dp"

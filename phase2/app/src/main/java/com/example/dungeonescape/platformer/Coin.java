@@ -7,7 +7,7 @@ import android.graphics.RectF;
 import java.util.Random;
 
 
-public class Coin extends Level3Object {
+public class Coin extends PlatformerObject {
 
     Coin(int x, int y, int size, PlatformerManager manager) {
         super(x,y,size,manager);

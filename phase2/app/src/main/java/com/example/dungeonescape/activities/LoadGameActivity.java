@@ -14,7 +14,7 @@ import com.example.dungeonescape.player.PlayerManager;
 import com.example.dungeonescape.R;
 import com.example.dungeonescape.maze.MazeActivity;
 import com.example.dungeonescape.brickbreaker.BBMainActivity;
-import com.example.dungeonescape.platformer.PlatformerMainActivity;
+import com.example.dungeonescape.platformer.PlatformerInstructions;
 
 import java.util.ArrayList;
 
@@ -70,7 +70,7 @@ public class LoadGameActivity extends AppCompatActivity {
             startActivity(intent);
         }
         else {
-            Intent intent = new Intent(LoadGameActivity.this, PlatformerMainActivity.class);
+            Intent intent = new Intent(LoadGameActivity.this, PlatformerInstructions.class);
             intent.putExtra("Player", player);
             intent.putExtra("Game Manager", playerManager);
             startActivity(intent);

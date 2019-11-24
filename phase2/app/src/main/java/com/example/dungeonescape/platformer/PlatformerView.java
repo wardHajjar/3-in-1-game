@@ -10,21 +10,21 @@ import com.example.dungeonescape.player.Player;
  * This class is responsible for drawing out the game objects of the level, as well as
  * as well as updating player state.
  */
-public class Level3View extends GameView implements Runnable{
+public class PlatformerView extends GameView implements Runnable{
 
     private PlatformerManager manager;
     private boolean nextLevel;
     private boolean noLives;
 
 
-    public Level3View(Context context, AttributeSet attrs) {
+    public PlatformerView(Context context, AttributeSet attrs) {
         super(context, attrs);
         manager = new PlatformerManager();
         setFocusable(true);
         setZOrderOnTop(true);
 
     }
-    public Level3View(Context context) {
+    public PlatformerView(Context context) {
         super(context);
         manager = new PlatformerManager();
         setFocusable(true);
