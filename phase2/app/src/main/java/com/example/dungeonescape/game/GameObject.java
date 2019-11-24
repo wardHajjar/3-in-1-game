@@ -11,7 +11,9 @@ public class GameObject extends RectShape {
     private int y;
     private Paint paint;
 
-    public GameObject(){}
+    public GameObject(){
+        setPaint(new Paint());
+    }
 
     public GameObject(int x, int y) {
         setX(x);

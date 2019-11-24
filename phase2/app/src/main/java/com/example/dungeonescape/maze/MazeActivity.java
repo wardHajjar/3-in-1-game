@@ -45,13 +45,15 @@ public class MazeActivity extends GeneralGameActivity {
         Intent i = getIntent();
         player = (Player) i.getSerializableExtra("Player");
         playerManager = (PlayerManager) i.getSerializableExtra("Game Manager");
+        playerSprite.setPaintColour(player.getColour());
         mazeView = findViewById(R.id.view);
         mazeView.setPlayer(player);
         mazeView.setPlayerSprite(playerSprite);
 
         /* Sets the Player colour to the input choice from the New Game page. */
         MazeManager mazeManager = mazeView.getMazeManager();
-        mazeManager.setPlayerPaint(player.getColour());
+//        mazeManager.setPlayerSpritePaint(player.getColour());
+//        playerSprite.setPaintColour(player.getColour());
 
         /* Go to next game. Testing only. */
         configureNextButton();

@@ -57,7 +57,6 @@ public class MazeView extends View {
         numMazeRows = 5;
         mazeManager = new MazeManager(numMazeCols, numMazeRows);
         cells = mazeManager.createMaze();
-        // relocatePlayer();
         relocatePlayerSprite();
         coins = mazeManager.createCoins();
     }
@@ -78,6 +77,7 @@ public class MazeView extends View {
     public void relocatePlayerSprite() {
         playerLoc = cells[0][0];
         exit = new GameObject(numMazeCols - 1, numMazeRows - 1);
+        exit.setPaintColour(Color.BLUE);
         if (playerSprite != null) {
             playerSprite.setX(0);
             playerSprite.setY(0);
@@ -124,17 +124,16 @@ public class MazeView extends View {
      * @param mazeRows the number of rows in this Maze.
      */
     private void paintWalls(Canvas canvas, int mazeCols, int mazeRows, float cellSize) {
-        Paint mazeWallPaint = mazeManager.getWallPaint();
-
         for(int x = 0; x < mazeCols; x++) {
             for(int y = 0; y < mazeRows; y++) {
+                MazeCell currentCell = cells[x][y];
                 if (cells[x][y].isTopWall()) {
                     canvas.drawLine(
                             x * cellSize,
                             y * cellSize,
                             (x + 1) * cellSize,
                             y * cellSize,
-                            mazeWallPaint);
+                            currentCell.getPaint());
                 }
                 if (cells[x][y].isLeftWall()) {
                     canvas.drawLine(
@@ -142,7 +141,7 @@ public class MazeView extends View {
                             y * cellSize,
                             x * cellSize,
                             (y + 1) * cellSize,
-                            mazeWallPaint);
+                            currentCell.getPaint());
                 }
                 if (cells[x][y].isBottomWall()) {
                     canvas.drawLine(
@@ -150,7 +149,7 @@ public class MazeView extends View {
                             (y + 1) * cellSize,
                             (x + 1) * cellSize,
                             (y + 1) * cellSize,
-                            mazeWallPaint);
+                            currentCell.getPaint());
                 }
                 if (cells[x][y].isRightWall()) {
                     canvas.drawLine(
@@ -158,7 +157,7 @@ public class MazeView extends View {
                             y * cellSize,
                             (x + 1) * cellSize,
                             (y + 1) * cellSize,
-                            mazeWallPaint);
+                            currentCell.getPaint());
                 }
             }
         }
@@ -188,9 +187,11 @@ public class MazeView extends View {
      * @param margin the space around the PlayerSprite square.
      */
     private void paintPlayerSprite(Canvas canvas, float cellSize, float margin) {
-        Paint mazePlayerPaint = mazeManager.getPlayerPaint();
+        //Paint mazePlayerPaint = mazeManager.getPlayerSpritePaint();
         int playerX = playerSprite.getX();
         int playerY = playerSprite.getY();
+
+        Paint mazePlayerPaint = playerSprite.getPaint();
 
         canvas.drawRect(
                 playerX * cellSize + margin,
@@ -206,9 +207,10 @@ public class MazeView extends View {
      * @param margin the space around the square.
      */
     private void paintExit(Canvas canvas, float cellSize, float margin) {
-        Paint mazeExitPaint = mazeManager.getExitPaint();
         int exitX = exit.getX();
         int exitY = exit.getY();
+
+        Paint mazeExitPaint = exit.getPaint();
 
         canvas.drawRect(
                 exitX * cellSize + margin,

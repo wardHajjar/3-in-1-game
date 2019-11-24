@@ -23,9 +23,9 @@ class MazeManager {
     private int numMazeRows;
 
     /** Paint of all the GameObjects on screen. */
-    private Paint wallPaint;
-    private Paint playerPaint;
-    private Paint exitPaint;
+//    private Paint wallPaint;
+//    private Paint playerSpritePaint;
+//    private Paint exitPaint;
     private Paint coinPaint;
 
     /** a Random instance used to randomize Coin locations. */
@@ -42,15 +42,15 @@ class MazeManager {
     }
 
     private void initializePaint() {
-        wallPaint = new Paint();
-        wallPaint.setColor(Color.WHITE);
-        wallPaint.setStrokeWidth(4);
+//        wallPaint = new Paint();
+//        wallPaint.setColor(Color.WHITE);
+//        wallPaint.setStrokeWidth(4);
+//
+//        playerSpritePaint = new Paint();
+//        playerSpritePaint.setColor(Color.RED);
 
-        playerPaint = new Paint();
-        playerPaint.setColor(Color.RED);
-
-        exitPaint = new Paint();
-        exitPaint.setColor(Color.BLUE);
+//        exitPaint = new Paint();
+//        exitPaint.setColor(Color.BLUE);
 
         coinPaint = new Paint();
         coinPaint.setColor(Color.YELLOW);
@@ -78,7 +78,11 @@ class MazeManager {
         //Creating a maze with cols X rows cells.
         for (int x = 0; x < mazeCols; x++) {
             for (int y = 0; y < mazeRows; y++) {
-                cells[x][y] = new MazeCell(x, y);
+                // cells[x][y] = new MazeCell(x, y);
+                MazeCell newMazeCell = new MazeCell(x, y);
+                cells[x][y] = newMazeCell;
+                newMazeCell.setPaintColour(Color.WHITE);
+                newMazeCell.setPaintStrokeWidth(4);
             }
         }
 
@@ -293,29 +297,29 @@ class MazeManager {
      *
      * @return Paint object for walls.
      */
-    Paint getWallPaint() {
-        return wallPaint;
-    }
+//    Paint getWallPaint() {
+//        return wallPaint;
+//    }
 
     /** Returns the Maze's Player Paint.
      *
      * @return Paint object for Player.
      */
-    Paint getPlayerPaint() {
-        return playerPaint;
-    }
+//    Paint getPlayerSpritePaint() {
+//        return playerSpritePaint;
+//    }
 
-    void setPlayerPaint(int newColour) {
-        playerPaint.setColor(newColour);
-    }
+//    void setPlayerSpritePaint(int newColour) {
+//        playerSpritePaint.setColor(newColour);
+//    }
 
     /** Returns the Maze's exit square Paint.
      *
      * @return Paint object for exit square.
      */
-    Paint getExitPaint() {
-        return exitPaint;
-    }
+//    Paint getExitPaint() {
+//        return exitPaint;
+//    }
 
     /** Returns the Maze's coin Paint.
      *
