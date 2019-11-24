@@ -21,17 +21,17 @@ class Character extends PlatformerObject {
 
     private int colour;
 
-    //    private Player user; // referencing from player class for lives
-    void setColour(int colour){
-        this.colour = colour;
-        paint.setColor(this.colour);
-    }
-
-
     Character(int x, int y, int size, PlatformerManager manager){
         super(x,y,size,manager);
+        setShape();
         start = false;
         this.gameScore = 0;
+    }
+
+    void setColour(int colour){
+        this.colour = colour;
+        this.bottom = getY() + (getSize() / 2);
+        getPaint().setColor(this.colour);
     }
 
     /** Returns the GameScore.
@@ -62,37 +62,35 @@ class Character extends PlatformerObject {
             speed += gravity;
         }
 
-        if (y + size / 2 + speed - manager.getGridHeight() > 0 && !start) {
-            y = manager.getGridHeight();
+        if (getY() + getSize() / 2 + speed - manager.getGridHeight() > 0 && !start) {
+            setY(manager.getGridHeight());
             speed = - 75;
-            y += speed;
+            incY(speed);
         } else{
-            y += speed;
+            incY(speed);
         }
 
         setShape();
         Rect bounds = new Rect();
-        this.shape.roundOut(bounds);
+        getShape().roundOut(bounds);
     }
 
     /** Checks if the Character touches a platform. */
     private void collisionDetection() {
-        this.bottom = this.y + (size / 2);
 
         if (speed > 10) {
             for (Platforms platform: manager.getPlatforms()) {
-                if (this.shape.intersect(platform.shape) ||
-                        (Math.abs((int)bottom - (int)platform.getY()) < 20 && x > platform.getX() &&
-                                x < platform.getX() + 150)) {
+                if (getShape().intersect(platform.getShape()) ||
+                        (Math.abs((int)bottom - (int)platform.getY()) < 20 && getX() > platform.getX() &&
+                                getX() < platform.getX() + 150)) {
                     this.gameScore += 1;
-                    y = (int) platform.getY() - (size / 2);
+                    setY(platform.getY() - (getSize() / 2));
                     speed = -75;
-                    y += speed;
+                    incY(speed);
                     start = true;
-                    this.shape = new RectF(x - size / 2,y + size / 2,
-                            x + size / 2,y + size / 2);
+                    setShape();
                     Rect bounds = new Rect();
-                    this.shape.roundOut(bounds);
+                    getShape().roundOut(bounds);
                 }
             }
         }
@@ -100,10 +98,8 @@ class Character extends PlatformerObject {
 
     /** Checks if there's a Coin at the same coordinate as Character. */
     void coinDetection() {
-        this.bottom = this.y + (size / 2);
-
         for (Coin coin: manager.getCoins()) {
-            if (this.shape.intersect(coin.getShape())) {
+            if (getShape().intersect(coin.getShape())) {
                 coin.gotCoin();
                 manager.getPlayer().addCoin();
             }
@@ -115,7 +111,7 @@ class Character extends PlatformerObject {
      * @return boolean if the Player is alive.
      */
     boolean isAlive() {
-        return !start || y <= manager.getGridHeight();
+        return !start || getY() <= manager.getGridHeight();
     }
 
     /** The number of lives this Player has.
@@ -128,19 +124,19 @@ class Character extends PlatformerObject {
 
     /** Moves the Character 50 units to the left. */
     void moveLeft() {
-        if (x - 100 <= 0) {
-            x = manager.getGridWidth() - 50;
+        if (getX() - 100 <= 0) {
+            setX(manager.getGridWidth() - 50);
         } else {
-            x -= 50;
+            incX(-50);
         }
     }
 
     /** Moves the Character 50 units to the right. */
     void moveRight() {
-        if (x + 100 >= manager.getGridWidth()) {
-            x = 0;
+        if (getX() + 100 >= manager.getGridWidth()) {
+            setX(0);
         } else {
-            x += 50;
+            incX(50);
         }
     }
 }

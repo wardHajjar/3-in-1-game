@@ -81,4 +81,11 @@ public class GameObject extends RectShape {
     public void setY(int y) {
         this.y = y;
     }
+
+    protected void incY(int y)  {
+        this.y += y;
+    }
+    protected void incX(int x)  {
+        this.x += x;
+    }
 }
