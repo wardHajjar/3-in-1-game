@@ -56,10 +56,6 @@ class Platforms extends PlatformerObject {
             incY(down);
         }
     }
-    /** Draws the rectangle*/
-    void draw(Canvas canvas) {
-        canvas.drawRect(getShape(), getPaint());
-    }
 
 }
 

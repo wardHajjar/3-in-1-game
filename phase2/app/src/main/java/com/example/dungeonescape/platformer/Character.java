@@ -71,8 +71,6 @@ class Character extends PlatformerObject {
         }
 
         setShape();
-        Rect bounds = new Rect();
-        getShape().roundOut(bounds);
     }
 
     /** Checks if the Character touches a platform. */
@@ -89,8 +87,6 @@ class Character extends PlatformerObject {
                     incY(speed);
                     start = true;
                     setShape();
-                    Rect bounds = new Rect();
-                    getShape().roundOut(bounds);
                 }
             }
         }

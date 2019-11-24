@@ -1,15 +1,14 @@
 package com.example.dungeonescape.platformer;
 
 import android.graphics.Canvas;
-import android.graphics.RectF;
+import android.graphics.Rect;
 
 import com.example.dungeonescape.game.GameObject;
 
 class PlatformerObject extends GameObject {
     private int size;
-    private RectF shape;
+    private Rect shape;
     PlatformerManager manager;
-
 
     PlatformerObject(int x, int y, int size, PlatformerManager manager) {
         super(x,y);
@@ -21,19 +20,25 @@ class PlatformerObject extends GameObject {
         return this.size;
     }
     void setShape() {
-        this.shape = new RectF(getX() - size / 2, getY() - size / 2,
+        this.shape = new Rect(getX() - size / 2, getY() - size / 2,
                 getX() + size / 2, getY() + size / 2);
     }
     void setShape(int length, int width) {
-        this.shape = new RectF(getX(), getY(), length + getX(),
+        this.shape = new Rect(getX(), getY(), length + getX(),
                 getY()+ width);
     }
-    RectF getShape() {
+    Rect getShape() {
         return this.shape;
     }
     void draw(Canvas canvas) {
-        canvas.drawOval(this.shape, getPaint());
-    }
+        if (this instanceof Platforms) {
+            canvas.drawRect(getShape(), getPaint());
+        }
+        else {
+            canvas.drawOval(getX() - size / 2, getY() - size / 2, getX() + size / 2,
+                    getY() + size / 2, getPaint());
+        }
 
+    }
 
 }
