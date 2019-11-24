@@ -1,6 +1,8 @@
 package com.example.dungeonescape.player;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import android.graphics.Color;
 
@@ -27,6 +29,9 @@ public class Player implements Serializable {
     /** The colour of the user's character. */
     private int colour;
 
+    /** An ArrayList of the Collectable GameObjects this Player has. */
+    private List<GameObject> satchel = new ArrayList<GameObject>();
+
     /**
      * The difficulty level that the user has chosen.
      * Possible inputs: "Easy" or "Hard"
@@ -45,6 +50,11 @@ public class Player implements Serializable {
         setCurrentLevel(1);
         totalTimePlayed = 0;
         setDifficulty("Easy");
+    }
+
+    /** Adds a Collectable GameObject to the Player's satchel. */
+    public void addToSatchel(GameObject object) {
+        satchel.add(object);
     }
 
     /**
@@ -196,5 +206,9 @@ public class Player implements Serializable {
         } else if (getDifficulty().equals("Hard")) {
             setNumLives(3);
         }
+    }
+
+    public List getSatchel() {
+        return satchel;
     }
 }
