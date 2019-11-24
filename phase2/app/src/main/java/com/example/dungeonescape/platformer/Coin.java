@@ -31,9 +31,9 @@ class Coin extends PlatformerObject {
 
     /** Moves the Coin down when the Character jumps up. */
     private void coinDown(int down) {
-        if (getY() + down > manager.getGridHeight()) {
+        if (getY() + down > getManager().getGridHeight()) {
             /* Moves coin up if the Character moves down without collection the Coin. */
-            int diff = Math.abs(getY() + down - manager.getGridHeight());
+            int diff = Math.abs(getY() + down - getManager().getGridHeight());
             if (diff > 400) {
                 setY(0);
             }
@@ -44,7 +44,7 @@ class Coin extends PlatformerObject {
                 setY(-diff);
             }
             Random r = new Random();
-            int a = r.nextInt(manager.getGridWidth() - 150);
+            int a = r.nextInt(getManager().getGridWidth() - 150);
             this.setX(a);
         }
         else {

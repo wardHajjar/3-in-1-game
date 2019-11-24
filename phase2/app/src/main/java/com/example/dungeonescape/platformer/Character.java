@@ -62,8 +62,8 @@ class Character extends PlatformerObject {
             speed += gravity;
         }
 
-        if (getY() + getSize() / 2 + speed - manager.getGridHeight() > 0 && !start) {
-            setY(manager.getGridHeight());
+        if (getY() + getSize() / 2 + speed - getManager().getGridHeight() > 0 && !start) {
+            setY(getManager().getGridHeight());
             speed = - 75;
             incY(speed);
         } else{
@@ -77,7 +77,7 @@ class Character extends PlatformerObject {
     private void collisionDetection() {
 
         if (speed > 10) {
-            for (Platforms platform: manager.getPlatforms()) {
+            for (Platforms platform: getManager().getPlatforms()) {
                 if (getShape().intersect(platform.getShape()) ||
                         (Math.abs((int)bottom - (int)platform.getY()) < 20 && getX() > platform.getX() &&
                                 getX() < platform.getX() + 150)) {
@@ -94,10 +94,10 @@ class Character extends PlatformerObject {
 
     /** Checks if there's a Coin at the same coordinate as Character. */
     void coinDetection() {
-        for (Coin coin: manager.getCoins()) {
+        for (Coin coin: getManager().getCoins()) {
             if (getShape().intersect(coin.getShape())) {
                 coin.gotCoin();
-                manager.getPlayer().addCoin();
+                getManager().getPlayer().addCoin();
             }
         }
     }
@@ -107,7 +107,7 @@ class Character extends PlatformerObject {
      * @return boolean if the Player is alive.
      */
     boolean isAlive() {
-        return !start || getY() <= manager.getGridHeight();
+        return !start || getY() <= getManager().getGridHeight();
     }
 
     /** The number of lives this Player has.
@@ -115,13 +115,13 @@ class Character extends PlatformerObject {
      * @return the int number of lives.
      */
     int getLives(){
-        return manager.getPlayer().getNumLives();
+        return getManager().getPlayer().getNumLives();
     }
 
     /** Moves the Character 50 units to the left. */
     void moveLeft() {
         if (getX() - 100 <= 0) {
-            setX(manager.getGridWidth() - 50);
+            setX(getManager().getGridWidth() - 50);
         } else {
             incX(-50);
         }
@@ -129,7 +129,7 @@ class Character extends PlatformerObject {
 
     /** Moves the Character 50 units to the right. */
     void moveRight() {
-        if (getX() + 100 >= manager.getGridWidth()) {
+        if (getX() + 100 >= getManager().getGridWidth()) {
             setX(0);
         } else {
             incX(50);

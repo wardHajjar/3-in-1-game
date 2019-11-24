@@ -8,7 +8,7 @@ import com.example.dungeonescape.game.GameObject;
 class PlatformerObject extends GameObject {
     private int size;
     private Rect shape;
-    PlatformerManager manager;
+    private PlatformerManager manager;
 
     PlatformerObject(int x, int y, int size, PlatformerManager manager) {
         super(x,y);
@@ -39,6 +39,9 @@ class PlatformerObject extends GameObject {
                     getY() + size / 2, getPaint());
         }
 
+    }
+    PlatformerManager getManager() {
+        return this.manager;
     }
 
 }
