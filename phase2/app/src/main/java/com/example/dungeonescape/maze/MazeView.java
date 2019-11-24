@@ -169,15 +169,13 @@ public class MazeView extends View {
      * @param margin the space around the Coin circles.
      */
     private void paintCoins(Canvas canvas, float cellSize, float margin) {
-        Paint mazeCoinPaint = mazeManager.getCoinPaint();
-
         for (Coin coin : coins) {
             canvas.drawOval(
                     coin.getX() * cellSize + margin,
                     coin.getY() * cellSize + margin,
                     (coin.getX() + 1) * cellSize - margin,
                     (coin.getY() + 1) * cellSize - margin,
-                    mazeCoinPaint);
+                    coin.getPaint());
         }
     }
 
@@ -187,7 +185,6 @@ public class MazeView extends View {
      * @param margin the space around the PlayerSprite square.
      */
     private void paintPlayerSprite(Canvas canvas, float cellSize, float margin) {
-        //Paint mazePlayerPaint = mazeManager.getPlayerSpritePaint();
         int playerX = playerSprite.getX();
         int playerY = playerSprite.getY();
 
@@ -207,10 +204,9 @@ public class MazeView extends View {
      * @param margin the space around the square.
      */
     private void paintExit(Canvas canvas, float cellSize, float margin) {
+        Paint mazeExitPaint = exit.getPaint();
         int exitX = exit.getX();
         int exitY = exit.getY();
-
-        Paint mazeExitPaint = exit.getPaint();
 
         canvas.drawRect(
                 exitX * cellSize + margin,
@@ -221,7 +217,7 @@ public class MazeView extends View {
     }
 
     void movePlayer(String direction){
-        //depending on the given direction, move the player to that cell if it's in the maze.
+        // depending on the given direction, move the player to that cell if it's in the maze.
         switch (direction){
             case "UP":
                 if(!playerLoc.isTopWall()) {
