@@ -24,7 +24,7 @@ public class GameObject extends RectShape {
     /**
      * Sets the Game Object Paint's colour.
      *
-     * @param colour the RBG value for the Game Obeject's Paint.
+     * @param colour the RBG value for the Game Object's Paint.
      */
     public void setPaintColour(int colour) {
         paint.setColor(colour);
