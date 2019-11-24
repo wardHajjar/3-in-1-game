@@ -71,7 +71,7 @@ public class PlatformerView extends GameView implements Runnable{
     }
 
     public void gameOver(Player player) {
-        manager = new PlatformerManager(size.x, size.y);
+        manager = new PlatformerManager(size.y, size.x);
         manager.setPlayer(player);
         holder = getHolder();
         setFocusable(true);

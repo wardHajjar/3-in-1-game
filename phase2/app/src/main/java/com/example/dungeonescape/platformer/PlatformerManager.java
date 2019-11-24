@@ -47,8 +47,10 @@ class PlatformerManager {
         character = new Character(50,1000,100, this);
         player = new Player("temp");
         character.setColour(player.getColour());
-        gridHeight = h; //1684
-        System.out.println(h);
+        gridHeight = h - 344; //1684
+
+        System.out.println(gridHeight);
+        System.out.println(w);
         gridWidth = w; //1080
         platforms = createPlatforms();
         coins = new ArrayList<>(2);

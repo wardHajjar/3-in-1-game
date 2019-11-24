@@ -19,9 +19,9 @@ import com.example.dungeonescape.platformer.PlatformerInstructions;
 import java.util.ArrayList;
 
 public class LoadGameActivity extends AppCompatActivity {
-    Player player;
-    PlayerManager playerManager;
-    Spinner spinner;
+    private Player player;
+    private PlayerManager playerManager;
+    private Spinner spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
