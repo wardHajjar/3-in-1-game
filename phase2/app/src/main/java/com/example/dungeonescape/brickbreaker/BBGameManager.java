@@ -97,7 +97,7 @@ class BBGameManager {
         /* Coin Collision Detection. */
         for (BBCoin currCoin: coins){
             if (!currCoin.getCollectStatus()) {
-                String coinCollision = ball.madeRectCollision(currCoin.getRect());
+                String coinCollision = ball.madeRectCollision(currCoin.getCoinShape());
                 if (coinCollision.equals("x")) {
                     player.addCoin();
                     ball.setXSpeed(ball.getXSpeed() * -1);
