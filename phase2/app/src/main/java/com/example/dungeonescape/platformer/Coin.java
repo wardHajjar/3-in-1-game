@@ -1,9 +1,7 @@
 package com.example.dungeonescape.platformer;
 
 import android.graphics.Color;
-import android.graphics.Rect;
 import android.graphics.RectF;
-
 import java.util.Random;
 
 

@@ -128,8 +128,8 @@ class Character extends PlatformerObject {
 
     /** Moves the Character 50 units to the left. */
     void moveLeft() {
-        if (x - 50 <= 0) {
-            x = manager.getGridWidth();
+        if (x - 100 <= 0) {
+            x = manager.getGridWidth() - 50;
         } else {
             x -= 50;
         }
@@ -137,7 +137,7 @@ class Character extends PlatformerObject {
 
     /** Moves the Character 50 units to the right. */
     void moveRight() {
-        if (x + 50 >= manager.getGridWidth()) {
+        if (x + 100 >= manager.getGridWidth()) {
             x = 0;
         } else {
             x += 50;

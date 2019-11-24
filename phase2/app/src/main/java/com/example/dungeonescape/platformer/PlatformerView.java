@@ -1,7 +1,10 @@
 package com.example.dungeonescape.platformer;
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.util.AttributeSet;
+import android.view.Display;
 
 import com.example.dungeonescape.game.GameView;
 import com.example.dungeonescape.player.Player;
@@ -15,20 +18,20 @@ public class PlatformerView extends GameView implements Runnable{
     private PlatformerManager manager;
     private boolean nextLevel;
     private boolean noLives;
+    private Point size;
 
 
     public PlatformerView(Context context, AttributeSet attrs) {
+
         super(context, attrs);
-        manager = new PlatformerManager();
+        Display display = ((Activity)context).getWindowManager().getDefaultDisplay();
+        size = new Point();
+        display.getSize(size);
+
+        manager = new PlatformerManager(size.y, size.x);
         setFocusable(true);
         setZOrderOnTop(true);
 
-    }
-    public PlatformerView(Context context) {
-        super(context);
-        manager = new PlatformerManager();
-        setFocusable(true);
-        setZOrderOnTop(true);
     }
 
     public void setData(Player data)
@@ -61,14 +64,14 @@ public class PlatformerView extends GameView implements Runnable{
         if (finishedLevel) {
             nextLevel = true;
         }
-        boolean dead = manager.death();
+        boolean dead = manager.isDead();
         if (dead){
             noLives = true;
         }
     }
 
     public void gameOver(Player player) {
-        manager = new PlatformerManager();
+        manager = new PlatformerManager(size.x, size.y);
         manager.setPlayer(player);
         holder = getHolder();
         setFocusable(true);

@@ -60,7 +60,7 @@ class Platforms extends PlatformerObject {
                 this.setY(-diff);
             }
             Random r = new Random();
-            int a = r.nextInt(1080- 150);
+            int a = r.nextInt(manager.getGridWidth() - 150);
             this.setX(a);
         }
         else {
