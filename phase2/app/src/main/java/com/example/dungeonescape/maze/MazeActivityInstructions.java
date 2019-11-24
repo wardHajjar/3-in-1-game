@@ -12,8 +12,8 @@ import com.example.dungeonescape.R;
 public class MazeActivityInstructions extends AppCompatActivity {
 
     /** Initializes a Player and PlayerManager. */
-    Player player;
-    PlayerManager playerManager;
+    private Player player;
+    private PlayerManager playerManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
