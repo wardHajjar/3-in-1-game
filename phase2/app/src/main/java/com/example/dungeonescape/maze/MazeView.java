@@ -10,7 +10,7 @@ import android.view.View;
 
 import com.example.dungeonescape.game.GameObject;
 import com.example.dungeonescape.player.Player;
-import com.example.dungeonescape.platformer.Coin;
+import com.example.dungeonescape.game.collectable.Coin;
 
 import java.util.ArrayList;
 

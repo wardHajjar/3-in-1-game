@@ -4,7 +4,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.SparseIntArray;
 
-import com.example.dungeonescape.platformer.Coin;
+import com.example.dungeonescape.game.collectable.Coin;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -194,6 +194,7 @@ class MazeManager {
             int x = coordinates.keyAt(i);
             int y = coordinates.get(x);
             Coin coin = new Coin(x, y);
+            coin.setCoinShape();
             coins.add(coin);
         }
         return coins;
