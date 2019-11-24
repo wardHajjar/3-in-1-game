@@ -9,4 +9,6 @@
     <string name="lives">Lives</string>
     <string name="play_again">Play Again</string>
     <string name="menu">Menu</string>
+    <string name="about">About</string>
+    <string name="help">Help</string>
 </resources>
