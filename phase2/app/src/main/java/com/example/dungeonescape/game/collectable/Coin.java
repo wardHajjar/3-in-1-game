@@ -1,13 +1,13 @@
 package com.example.dungeonescape.game.collectable;
 
 import android.graphics.Color;
-import android.graphics.RectF;
+import android.graphics.Rect;
 import android.graphics.drawable.shapes.RectShape;
 
 import com.example.dungeonescape.game.GameObject;
 
 public class Coin extends GameObject {
-    private RectF coinShape;
+    private Rect coinShape;
 
     public Coin() {
         super();
@@ -22,10 +22,10 @@ public class Coin extends GameObject {
     public void setCoinShape() {
         int x = getX();
         int y = getY();
-        this.coinShape = new RectF(x, y, (x + 1), (y + 1));
+        this.coinShape = new Rect(x, y, (x + 1), (y + 1));
     }
 
-    public RectF getCoinShape() {
+    public Rect getCoinShape() {
         return coinShape;
     }
 }

@@ -24,7 +24,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".platformer.PlatformerInstructions">
+        <activity android:name=".platformer.PlatformerInstructionsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
@@ -41,6 +41,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.EndGameActivity" />
+        <activity android:name=".activities.MenuActivity" />
     </application>
 
 </manifest>

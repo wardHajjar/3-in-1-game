@@ -2,10 +2,16 @@ package com.example.dungeonescape.brickbreaker;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.dungeonescape.activities.MainActivity;
+import com.example.dungeonescape.activities.MenuActivity;
+import com.example.dungeonescape.maze.MazeActivity;
 import com.example.dungeonescape.player.PlayerManager;
 import com.example.dungeonescape.activities.GeneralGameActivity;
 import com.example.dungeonescape.maze.MazeActivityInstructions;
@@ -30,6 +36,10 @@ public class BBMainActivity extends GeneralGameActivity {
      * The time at which the brick breaker game has been started.
      */
     long startTime;
+
+    /** Instantiates a MenuActivity class for Menu related functions. */
+    private MenuActivity menuActivity = new MenuActivity();
+
     /**
      *
      * @param savedInstanceState Bundle object that passes data between activities.
@@ -108,6 +118,32 @@ public class BBMainActivity extends GeneralGameActivity {
             }
         };
         t.start();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.game_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.about:
+                // TODO: Make a Dialog box with the premise of the game
+                System.out.println("about");
+            case R.id.help:
+                // TODO: Make a Dialog box with
+                System.out.println("help");
+            case R.id.main_menu: // save game and return to main menu
+                save(playerManager, player);
+                Intent intent = menuActivity.createIntent(BBMainActivity.this,
+                        MainActivity.class, playerManager, player);
+                startActivity(intent);
+            default:
+                return super.onContextItemSelected(item);
+        }
     }
 
     /**

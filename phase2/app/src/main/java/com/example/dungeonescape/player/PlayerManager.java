@@ -4,6 +4,7 @@ import com.example.dungeonescape.player.Player;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents the Game Manager.
@@ -14,17 +15,16 @@ import java.util.ArrayList;
  */
 
 public class PlayerManager implements Serializable {
-    ArrayList<Player> players;
+    private List<Player> players;
 
 
     public PlayerManager() {
         /* Sets the initial total time elapsed in the Game to 0. */
         players = new ArrayList<>();
 
-
     }
-    public ArrayList<String> getPlayerNames() {
-        ArrayList<String> arr = new ArrayList<>();
+    public List<String> getPlayerNames() {
+        List<String> arr = new ArrayList<>();
         for (Player player: players) {
             arr.add(player.getName());
         }

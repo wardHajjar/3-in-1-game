@@ -6,7 +6,7 @@ import android.graphics.drawable.shapes.RectShape;
 /**
  * Represents any Object in the Game that contains an (x, y) coordinate.
  */
-public class GameObject extends RectShape {
+public class GameObject{
     private int x;
     private int y;
     private Paint paint;
@@ -80,5 +80,12 @@ public class GameObject extends RectShape {
      */
     public void setY(int y) {
         this.y = y;
+    }
+
+    protected void incY(int y)  {
+        this.y += y;
+    }
+    protected void incX(int x)  {
+        this.x += x;
     }
 }

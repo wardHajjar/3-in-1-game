@@ -20,6 +20,7 @@ import com.example.dungeonescape.game.SaveData;
 import com.example.dungeonescape.brickbreaker.BBMainActivity;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import static android.text.TextUtils.isEmpty;
 
@@ -165,7 +166,7 @@ public class NewGameActivity extends AppCompatActivity {
     void checkName() {
         nameText = name.getText().toString();
         isValid = true;
-        ArrayList<String> names = playerManager.getPlayerNames();
+        List<String> names = playerManager.getPlayerNames();
         if (isEmpty(nameText)) {
             Toast t = Toast.makeText(this, "Please Enter a Name", Toast.LENGTH_SHORT);
             isValid = false;
