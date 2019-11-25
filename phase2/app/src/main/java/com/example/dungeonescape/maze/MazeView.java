@@ -53,9 +53,18 @@ public class MazeView extends View {
     public MazeView(Context context, AttributeSet attrs) {
         super(context, attrs);
         coins = new ArrayList<>();
-        numMazeCols = 5;
-        numMazeRows = 5;
-        mazeManager = new MazeManager(numMazeCols, numMazeRows);
+        if(player.getDifficulty().equals("Easy")) {
+            MMBuilder builder = new EasyMMBuilder();
+            MazeManagerEngineer MMEgineer = new MazeManagerEngineer(builder);
+            mazeManager = MMEgineer.getManager();
+        }
+        else{
+            MMBuilder builder = new HardMMBuilder();
+            MazeManagerEngineer MMEgineer = new MazeManagerEngineer(builder);
+            mazeManager = MMEgineer.getManager();
+        }
+        numMazeCols = mazeManager.getNumMazeCols();
+        numMazeRows = mazeManager.getNumMazeRows();
         cells = mazeManager.createMaze();
         relocatePlayerSprite();
         coins = mazeManager.createCoins();
