@@ -3,11 +3,17 @@ package com.example.dungeonescape.platformer;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.dungeonescape.activities.DeadActivity;
+import com.example.dungeonescape.activities.MainActivity;
+import com.example.dungeonescape.activities.MenuActivity;
+import com.example.dungeonescape.maze.MazeActivity;
 import com.example.dungeonescape.player.PlayerManager;
 import com.example.dungeonescape.activities.GeneralGameActivity;
 import com.example.dungeonescape.player.Player;
@@ -22,6 +28,8 @@ public class PlatformerMainActivity extends GeneralGameActivity {
     Player player;
     PlayerManager playerManager;
     long startTime;
+
+    private MenuActivity menuActivity = new MenuActivity();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +102,33 @@ public class PlatformerMainActivity extends GeneralGameActivity {
         };
         t.start();
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.game_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.about:
+                // TODO: Make a Dialog box with the premise of the game
+                System.out.println("about");
+            case R.id.help:
+                // TODO: Make a Dialog box with
+                System.out.println("help");
+            case R.id.main_menu: // save game and return to main menu
+                save(playerManager, player);
+                Intent intent = menuActivity.createIntent(PlatformerMainActivity.this,
+                        MainActivity.class, playerManager, player);
+                startActivity(intent);
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }
+
     /**
      * User has successfully finished Platformer and will now move to the EndGamePage.
      */
