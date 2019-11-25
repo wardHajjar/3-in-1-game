@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.dungeonescape.activities.MainActivity;
 import com.example.dungeonescape.player.PlayerManager;
 import com.example.dungeonescape.player.Player;
 import com.example.dungeonescape.R;
@@ -112,6 +113,12 @@ public class MazeActivity extends GeneralGameActivity {
                 System.out.println("about");
             case R.id.help:
                 System.out.println("help");
+            case R.id.main_menu:
+                save(playerManager, player);
+                Intent intent = new Intent(MazeActivity.this, MainActivity.class);
+                intent.putExtra("Player", player);
+                intent.putExtra("Game Manager", playerManager);
+                startActivity(intent);
             default:
                 return super.onContextItemSelected(item);
         }
