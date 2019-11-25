@@ -24,7 +24,7 @@ class PlatformerManager {
     /**
      * The list of platforms.
      */
-    private ArrayList<Platforms> platforms;
+    private List<Platforms> platforms;
     /**
      * The character for this game.
      */
@@ -32,7 +32,7 @@ class PlatformerManager {
     /**
      * A list of coins.
      */
-    private ArrayList<Coin> coins;
+    private List<Coin> coins;
     /**
      * The player user.
      */
@@ -45,12 +45,8 @@ class PlatformerManager {
      */
     PlatformerManager(int h, int w) {
         character = new Character(50,1000,100, this);
-        player = new Player("temp");
-        character.setColour(player.getColour());
+        player = null;
         gridHeight = h - 344; //1684
-
-        System.out.println(gridHeight);
-        System.out.println(w);
         gridWidth = w; //1080
         platforms = createPlatforms();
         coins = new ArrayList<>(2);
@@ -64,7 +60,7 @@ class PlatformerManager {
     int getGridWidth() {
         return gridWidth;
     }
-    ArrayList<Platforms> getPlatforms() {
+    List<Platforms> getPlatforms() {
         return platforms;
     }
 
@@ -74,7 +70,7 @@ class PlatformerManager {
     int getGridHeight() {
         return gridHeight;
     }
-    ArrayList<Coin> getCoins() {
+    List<Coin> getCoins() {
         return coins;
     }
 
@@ -82,10 +78,6 @@ class PlatformerManager {
      * Sets the player and his attributes
      * */
     void setPlayer(Player player){
-        player.setNumCoins(this.player.getNumCoins() + player.getNumCoins());
-        if (!(this.player.getNumLives() == 5)) {
-            player.setNumLives(player.getNumLives() - (5 - this.player.getNumLives()));
-        }
         this.player = player;
         character.setColour(player.getColour());
     }
@@ -108,8 +100,8 @@ class PlatformerManager {
     /**
      * Creates platforms.
      */
-    private ArrayList<Platforms> createPlatforms() {
-        ArrayList<Platforms> arr = new ArrayList<>(15);
+    private List<Platforms> createPlatforms() {
+        List<Platforms> arr = new ArrayList<>(15);
         for (int i = 1; i <= 8; i++) {
             Random random = new Random();
             int a = random.nextInt(gridWidth - 150);
