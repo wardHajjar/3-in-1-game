@@ -7,11 +7,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.dungeonescape.activities.GeneralGameActivity;
 import com.example.dungeonescape.player.PlayerManager;
 import com.example.dungeonescape.player.Player;
 import com.example.dungeonescape.R;
 
-public class PlatformerInstructions extends AppCompatActivity {
+public class PlatformerInstructions extends GeneralGameActivity {
 
     Player player;
     PlayerManager playerManager;
