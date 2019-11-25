@@ -19,7 +19,7 @@ import com.example.dungeonescape.player.PlayerManager;
 import com.example.dungeonescape.player.Player;
 import com.example.dungeonescape.R;
 import com.example.dungeonescape.activities.GeneralGameActivity;
-import com.example.dungeonescape.platformer.PlatformerInstructions;
+import com.example.dungeonescape.platformer.PlatformerInstructionsActivity;
 
 import java.util.Locale;
 
@@ -147,7 +147,7 @@ public class MazeActivity extends GeneralGameActivity {
             public void onClick(View view) {
                 save(playerManager, player);
                 Intent intent = new Intent(MazeActivity.this,
-                        PlatformerInstructions.class);
+                        PlatformerInstructionsActivity.class);
                 intent.putExtra("Player", player);
                 intent.putExtra("Game Manager", playerManager);
                 startActivity(intent);
@@ -208,7 +208,7 @@ public class MazeActivity extends GeneralGameActivity {
         /* Updates the total time elapsed in Player. */
         player.updateTotalTime(elapsedMilliSeconds);
         save(playerManager, player);
-        Intent intent = new Intent(MazeActivity.this, PlatformerInstructions.class);
+        Intent intent = new Intent(MazeActivity.this, PlatformerInstructionsActivity.class);
         intent.putExtra("Player", player);
         intent.putExtra("Game Manager", playerManager);
         startActivity(intent);

@@ -14,9 +14,9 @@ import com.example.dungeonescape.player.PlayerManager;
 import com.example.dungeonescape.R;
 import com.example.dungeonescape.maze.MazeActivity;
 import com.example.dungeonescape.brickbreaker.BBMainActivity;
-import com.example.dungeonescape.platformer.PlatformerInstructions;
+import com.example.dungeonescape.platformer.PlatformerInstructionsActivity;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class LoadGameActivity extends AppCompatActivity {
     private Player player;
@@ -34,7 +34,7 @@ public class LoadGameActivity extends AppCompatActivity {
     }
     private void setSpinner() {
         spinner = (Spinner) findViewById(R.id.spinner);
-        ArrayList<String> names = playerManager.getPlayerNames();
+        List<String> names = playerManager.getPlayerNames();
         String[] arr = names.toArray(new String[names.size()]);
 
         ArrayAdapter<String> myAdapter = new ArrayAdapter<>(LoadGameActivity.this,
@@ -70,7 +70,7 @@ public class LoadGameActivity extends AppCompatActivity {
             startActivity(intent);
         }
         else {
-            Intent intent = new Intent(LoadGameActivity.this, PlatformerInstructions.class);
+            Intent intent = new Intent(LoadGameActivity.this, PlatformerInstructionsActivity.class);
             intent.putExtra("Player", player);
             intent.putExtra("Game Manager", playerManager);
             startActivity(intent);
