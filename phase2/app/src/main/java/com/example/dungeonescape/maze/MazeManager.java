@@ -172,7 +172,6 @@ class MazeManager {
             int x = coordinates.keyAt(i);
             int y = coordinates.get(x);
             Coin coin = new Coin(x, y);
-            coin.setCoinShape();
             coins.add(coin);
         }
         return coins;

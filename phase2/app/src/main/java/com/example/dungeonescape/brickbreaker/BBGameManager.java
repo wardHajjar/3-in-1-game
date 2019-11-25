@@ -54,8 +54,8 @@ class BBGameManager {
                 curr = bricks.get(0);
             }
             int radius = brickHeight/4;
-            BBCoin newCoin = new BBCoin(curr.x + curr.getWidth()/2,
-                        curr.y + curr.getHeight()/2, radius);
+            BBCoin newCoin = new BBCoin(curr.getX() + curr.getWidth()/2,
+                        curr.getY() + curr.getHeight()/2, radius);
             curr.setCoin(newCoin);
             coins.add(newCoin);
         }
