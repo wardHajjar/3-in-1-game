@@ -4,8 +4,9 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import com.example.dungeonescape.game.GameObject;
 
-public class Brick extends BBObject {
+class Brick extends GameObject {
     // width and height of each brick
     private int w, h;
     // whether the brick has been hit or not
@@ -31,12 +32,12 @@ public class Brick extends BBObject {
         return this.h;
     }
 
-    @Override
     void draw(Canvas canvas) {
-        paintStyle.setStyle(Paint.Style.FILL);
-        paintStyle.setColor(Color.LTGRAY);
-        paintStyle.setStrokeWidth(3);
-        canvas.drawRect(x, y, x + w, y + h, paintStyle);
+        Paint paint = getPaint();
+        paint.setStyle(Paint.Style.FILL);
+        paint.setColor(Color.LTGRAY);
+        paint.setStrokeWidth(3);
+        canvas.drawRect(getX(), getY(), getX() + w, getY() + h, paint);
         // x is left, y is top
     }
 
@@ -53,6 +54,8 @@ public class Brick extends BBObject {
      * @return a rectangle representation of the brick.
      */
     Rect getRect(){
+        int x = getX();
+        int y = getY();
         return new Rect(x, y, x + w,  y + h);
     }
 
