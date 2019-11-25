@@ -41,6 +41,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.EndGameActivity" />
+        <activity android:name=".activities.MenuActivity" />
     </application>
 
 </manifest>

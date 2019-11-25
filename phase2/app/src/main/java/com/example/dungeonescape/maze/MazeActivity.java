@@ -12,6 +12,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.dungeonescape.activities.MainActivity;
+import com.example.dungeonescape.activities.MenuActivity;
+import com.example.dungeonescape.activities.NewGameActivity;
 import com.example.dungeonescape.player.PlayerManager;
 import com.example.dungeonescape.player.Player;
 import com.example.dungeonescape.R;
@@ -38,6 +41,8 @@ public class MazeActivity extends GeneralGameActivity {
     PlayerSprite playerSprite = new PlayerSprite();
 
     long startTime;
+
+    private MenuActivity menuActivity = new MenuActivity();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,9 +114,16 @@ public class MazeActivity extends GeneralGameActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.about:
+                // TODO: Make a Dialog box with the premise of the game
                 System.out.println("about");
             case R.id.help:
+                // TODO: Make a Dialog box with
                 System.out.println("help");
+            case R.id.main_menu: // save game and return to main menu
+                save(playerManager, player);
+                Intent intent = menuActivity.createIntent(MazeActivity.this,
+                        MainActivity.class, playerManager, player);
+                startActivity(intent);
             default:
                 return super.onContextItemSelected(item);
         }
