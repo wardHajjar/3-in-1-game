@@ -1,4 +1,5 @@
 package com.example.dungeonescape.brickbreaker;
+
 import com.example.dungeonescape.game.collectable.Coin;
 import android.graphics.Canvas;
 
