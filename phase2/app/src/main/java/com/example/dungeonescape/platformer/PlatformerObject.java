@@ -5,6 +5,8 @@ import android.graphics.Rect;
 
 import com.example.dungeonescape.game.GameObject;
 
+import java.util.Random;
+
 class PlatformerObject extends GameObject {
     private int size;
     private Rect shape;
@@ -14,11 +16,13 @@ class PlatformerObject extends GameObject {
         super(x,y);
         this.size = size;
         this.manager = manager;
-
     }
+
+
     int getSize() {
         return this.size;
     }
+
     void setShape() {
         this.shape = new Rect(getX() - size / 2, getY() - size / 2,
                 getX() + size / 2, getY() + size / 2);
@@ -30,6 +34,7 @@ class PlatformerObject extends GameObject {
     Rect getShape() {
         return this.shape;
     }
+
     void draw(Canvas canvas) {
         if (this instanceof Platforms) {
             canvas.drawRect(getShape(), getPaint());
@@ -43,5 +48,7 @@ class PlatformerObject extends GameObject {
     PlatformerManager getManager() {
         return this.manager;
     }
+
+
 
 }

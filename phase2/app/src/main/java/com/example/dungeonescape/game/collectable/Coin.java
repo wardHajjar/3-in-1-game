@@ -23,4 +23,9 @@ public class Coin extends GameObject {
         int y = getY();
         return new Rect(x, y, (x + 1), (y + 1));
     }
+    protected Rect getCoinShape(int radius) {
+        return new Rect(getX() - radius / 2, getY() - radius / 2,
+                getX() + radius / 2, getY() + radius / 2);
+    }
+
 }

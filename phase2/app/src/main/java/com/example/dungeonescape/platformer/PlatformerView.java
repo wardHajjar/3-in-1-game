@@ -3,6 +3,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.Display;
 
@@ -19,6 +20,8 @@ public class PlatformerView extends GameView implements Runnable{
     private boolean nextLevel;
     private boolean noLives;
     private Point size;
+    private boolean enterPortal;
+    private Drawable portalImage;
 
 
     public PlatformerView(Context context, AttributeSet attrs) {
@@ -49,16 +52,15 @@ public class PlatformerView extends GameView implements Runnable{
 
         }
     }
+    public void setPortalImage(Drawable drawable) {
+        portalImage = drawable;
+        manager.setImage(drawable);
+    }
     public PlatformerManager getManager() {
         return manager;
     }
 
     public void update() {
-
-        boolean alive = manager.update();
-        if (!alive) {
-            gameOver(manager.getPlayer());
-        }
 
         boolean finishedLevel = manager.finishedLevel();
         if (finishedLevel) {
@@ -68,17 +70,27 @@ public class PlatformerView extends GameView implements Runnable{
         if (dead){
             noLives = true;
         }
+        if (manager.getCharacterScore() >= 2) {
+            enterPortal = manager.enterPortal();
+        }
+        boolean alive = manager.update();
+        if (!alive) {
+            gameOver(manager.getPlayer());
+        }
     }
 
     public void gameOver(Player player) {
         manager = new PlatformerManager(size.y, size.x);
+        manager.setImage(portalImage);
         manager.setPlayer(player);
         holder = getHolder();
         setFocusable(true);
         setZOrderOnTop(true);
 
     }
-
+    public boolean enterPortal() {
+        return enterPortal;
+    }
     public boolean nextLevel() {
         return nextLevel;
     }

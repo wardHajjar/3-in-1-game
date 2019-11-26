@@ -1,6 +1,7 @@
 package com.example.dungeonescape.platformer;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.view.Menu;
@@ -47,6 +48,8 @@ public class PlatformerMainActivity extends GeneralGameActivity {
         // getting player instance from intent
         //pass player into manager
         game.getManager().setPlayer(player);
+        // get Resource file for portal
+        game.setPortalImage(this.getResources().getDrawable(R.drawable.portal, null));
 
         setTitle("Level3: Platformer");
 
@@ -80,13 +83,19 @@ public class PlatformerMainActivity extends GeneralGameActivity {
                                     TextView lifeText = (TextView) findViewById(R.id.lives);
                                     lifeText.setText(life);
                                     boolean doneLevel = game.nextLevel();
+                                    boolean enterPortal = game.enterPortal();
+                                    boolean dead = game.dead();
                                     if (doneLevel) {
                                         nextLevel();
                                         save(playerManager, player);
                                         running = false;
                                     }
-                                    boolean dead = game.dead();
-                                    if (dead){
+                                    else if (enterPortal) {
+                                        nextLevel();
+                                        save(playerManager, player);
+                                        running = false;
+                                    }
+                                    else if (dead){
                                         save(playerManager, player);
                                         deadPage();
                                         running = false;

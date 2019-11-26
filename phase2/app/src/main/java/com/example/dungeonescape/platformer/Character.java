@@ -1,6 +1,4 @@
 package com.example.dungeonescape.platformer;
-import android.graphics.Rect;
-import android.graphics.RectF;
 
 /**
  * Represents the ball that bounces on the platforms.
@@ -92,14 +90,19 @@ class Character extends PlatformerObject {
         }
     }
 
-    /** Checks if there's a Coin at the same coordinate as Character. */
+    /** Checks if there's a PlatformerCoin at the same coordinate as Character. */
     void coinDetection() {
-        for (Coin coin: getManager().getCoins()) {
+        for (PlatformerCoin coin: getManager().getCoins()) {
             if (getShape().intersect(coin.getShape())) {
                 coin.gotCoin();
                 getManager().getPlayer().addCoin();
             }
         }
+    }
+
+    boolean portalDetection() {
+        Portal p = getManager().getPortal();
+        return getShape().intersect(p.getShape());
     }
 
     /** Checks if your Player is alive.
