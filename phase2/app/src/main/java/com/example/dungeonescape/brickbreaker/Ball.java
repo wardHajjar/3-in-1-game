@@ -129,7 +129,6 @@ public class Ball extends GameObject {
         Rect ballRect = getRect();
         Rect intersection = null;
         // calculating the rectangle of intersection between the obstacle and the ball.
-        System.out.printf("RECTANGLE %s",  ballRect);
         int leftX = Math.max(ballRect.left, obstacle.left);
         int rightX = Math.min(ballRect.right, obstacle.right);
         int topY = Math.max(ballRect.top, obstacle.top);

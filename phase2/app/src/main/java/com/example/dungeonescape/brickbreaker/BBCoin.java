@@ -13,6 +13,7 @@ class BBCoin extends Coin {
         super(x, y);
         this.radius = radius;
         collect = false;
+        setCoinShape(x, y, radius);
     }
 
     /** Draws coin onto the canvas.
