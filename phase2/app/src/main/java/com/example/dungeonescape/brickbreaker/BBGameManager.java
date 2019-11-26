@@ -54,8 +54,8 @@ class BBGameManager {
                 curr = bricks.get(0);
             }
             int radius = brickHeight/4;
-            BBCoin newCoin = new BBCoin(curr.x + curr.getWidth()/2,
-                        curr.y + curr.getHeight()/2, radius);
+            BBCoin newCoin = new BBCoin(curr.getX() + curr.getWidth()/2,
+                        curr.getY() + curr.getHeight()/2, radius);
             curr.setCoin(newCoin);
             coins.add(newCoin);
         }
@@ -138,10 +138,10 @@ class BBGameManager {
     }
 
     /** Move the paddle according to the direction. */
-    void movePaddle(){
-        if (paddle.movingLeft) {
+    void movePaddle() {
+        if (paddle.getMovingLeft()) {
             paddle.move(-20);
-        } else if (paddle.movingRight) {
+        } else if (paddle.getMovingRight()) {
             paddle.move(20);
         }
         if (paddle.getX() <= 0) {
@@ -158,9 +158,9 @@ class BBGameManager {
      */
     void setPaddleDirection(MotionEvent event, float xPos) {
         if (event.getAction() == MotionEvent.ACTION_MOVE) {
-            if (xPos < paddle.x) {
+            if (xPos < paddle.getX()) {
                 paddle.setMovementDir("left", true);
-            } else if (xPos > paddle.x) {
+            } else if (xPos > paddle.getX()) {
                 paddle.setMovementDir("right", true);
             }
         } else if (event.getAction() == MotionEvent.ACTION_UP) {

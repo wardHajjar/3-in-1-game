@@ -98,11 +98,13 @@ public class Player implements Serializable {
         this.name = name;
     }
 
+    //return the score of the player.
     public int getScore() {
         return score;
     }
 
-    private String getDifficulty() {
+    //return the difficulty chosen by the player.
+    public String getDifficulty() {
         return this.difficulty;
     }
 

@@ -1,17 +1,18 @@
 package com.example.dungeonescape.brickbreaker;
 
+import com.example.dungeonescape.game.GameObject;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Rect;
 
 /** Creates a paddle object that "catches" the ball within the Brick Breaker game. */
-class Paddle extends BBObject {
+class Paddle extends GameObject {
     /** Width and height of the paddle, respectively. */
     private int w, h;
 
     /** Whether the paddle is moving left or right. */
-    boolean movingLeft;
-    boolean movingRight;
+    private boolean movingLeft;
+    private boolean movingRight;
 
     /**
      * Construct a new Paddle at location (x, y).
@@ -30,11 +31,12 @@ class Paddle extends BBObject {
      * Draws the paddle object on screen.
      * @param canvas the graphic context on which the object is drawn.
      */
-    @Override
     void draw(Canvas canvas) {
-        paintStyle.setColor(Color.WHITE);
-        paintStyle.setStrokeWidth(3);
-        canvas.drawRect(x, y, x + w, y + h, paintStyle);
+        this.getPaint().setColor(Color.WHITE);
+        this.getPaint().setStrokeWidth(3);
+        int x = this.getX();
+        int y = this.getY();
+        canvas.drawRect(x, y, x + w, y + h, this.getPaint());
         // x is left, y is top
     }
 
@@ -43,27 +45,38 @@ class Paddle extends BBObject {
      * @param step the number of pixels to move the paddle by.
      */
     void move(int step) {
-        x += step;
+        int x = this.getX();
+        this.setX(x += step);
     }
 
     /**
      * Changes the direction of movement of the paddle.
      * @param dir the direction to change.
-     * @param val the value to change the direction to.
+     * @param val the boolean value to change the direction to.
      */
     void setMovementDir(String dir, boolean val){
         if (dir.equals("left")){
             movingLeft = val;
-        }else if (dir.equals("right")){
+        } else if (dir.equals("right")){
             movingRight = val;
         }
+    }
+
+    Boolean getMovingLeft() {
+        return movingLeft;
+    }
+
+    Boolean getMovingRight() {
+        return movingRight;
     }
 
     /**
      * Returns a rectangular representation of the object.
      * @return Rect object.
      */
-    Rect getRect(){
+    Rect getRect() {
+        int x = this.getX();
+        int y = this.getY();
         return new Rect(x, y, x + w, y + h);
 
     }

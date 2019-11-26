@@ -63,7 +63,7 @@ public abstract class GameView extends SurfaceView implements Runnable{
                 //set time in milli
                 Thread.sleep(1);
 
-            }catch (Exception e){
+            } catch (Exception e){
                 e.printStackTrace();
             }
 //             Updating the frame

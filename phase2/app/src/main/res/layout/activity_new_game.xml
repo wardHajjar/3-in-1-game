@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.NewGameActivity">
+    tools:context=".NewGameActivity">
 
     <TextView
         android:id="@+id/newGameText"
@@ -47,6 +47,22 @@
         app:layout_constraintHorizontal_bias="0.482"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/enterNameText" />
+
+    <TextView
+        android:id="@+id/welcomeDisplay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="200dp"
+        android:layout_marginEnd="70dp"
+        android:layout_marginBottom="25dp"
+        android:textAlignment="center"
+        android:textSize="36dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/colorPromptText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/colorPromptText"
@@ -159,5 +175,15 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/checkName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="31dp"
+        android:text="Enter Name"
+        app:layout_constraintStart_toEndOf="@+id/nameInput"
+        app:layout_constraintTop_toBottomOf="@+id/enterNameText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

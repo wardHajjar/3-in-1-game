@@ -28,11 +28,11 @@ class MazeManager {
     /** The horizontal and vertical margin from the edge of the screen to the walls of the maze */
     private float horizontalPadding;
     private float verticalPadding;
-
-    MazeManager(int cols, int rows) {
-        numMazeCols = cols;
-        numMazeRows = rows;
-    }
+//
+//    MazeManager(int cols, int rows) {
+//        numMazeCols = cols;
+//        numMazeRows = rows;
+//    }
 
     /*
      * Create a maze using a specific algorithm:
@@ -172,7 +172,6 @@ class MazeManager {
             int x = coordinates.keyAt(i);
             int y = coordinates.get(x);
             Coin coin = new Coin(x, y);
-            coin.setCoinShape();
             coins.add(coin);
         }
         return coins;
@@ -275,8 +274,10 @@ class MazeManager {
     public int getNumMazeCols() {
         return numMazeCols;
     }
+    public void setNumMazeCols(int cols){this.numMazeCols = cols;}
 
     public int getNumMazeRows() {
         return numMazeRows;
     }
+    public void setNumMazeRows(int rows){this.numMazeRows = rows;}
 }

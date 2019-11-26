@@ -12,9 +12,9 @@ import android.widget.TextView;
 import com.example.dungeonescape.activities.MainActivity;
 import com.example.dungeonescape.activities.MenuActivity;
 import com.example.dungeonescape.maze.MazeActivity;
+import com.example.dungeonescape.maze.MazeInstructionsActivity;
 import com.example.dungeonescape.player.PlayerManager;
 import com.example.dungeonescape.activities.GeneralGameActivity;
-import com.example.dungeonescape.maze.MazeActivityInstructions;
 import com.example.dungeonescape.player.Player;
 import com.example.dungeonescape.R;
 import com.example.dungeonescape.activities.DeadActivity;
@@ -65,8 +65,8 @@ public class BBMainActivity extends GeneralGameActivity {
             public void onClick(View view) {
                 save(playerManager, player);
                 //Intent intent = new Intent(BBMainActivity.this, MazeActivity.class);
-                Intent intent = new Intent(BBMainActivity.this, MazeActivityInstructions.class);
-
+                Intent intent = new Intent(BBMainActivity.this, MazeInstructionsActivity.class);
+                System.out.println("HERE");
                 intent.putExtra("Player", player);
                 intent.putExtra("Game Manager", playerManager);
                 startActivity(intent);
@@ -175,7 +175,7 @@ public class BBMainActivity extends GeneralGameActivity {
         player.updateTotalTime(elapsedMilliSeconds);
         save(playerManager, player);
         //Intent intent = new Intent(BBMainActivity.this, MazeActivity.class);
-        Intent intent = new Intent(BBMainActivity.this, MazeActivityInstructions.class);
+        Intent intent = new Intent(BBMainActivity.this, MazeInstructionsActivity.class);
         intent.putExtra("Player", player);
         intent.putExtra("Game Manager", playerManager);
         startActivity(intent);

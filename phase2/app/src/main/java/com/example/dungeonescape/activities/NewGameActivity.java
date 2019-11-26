@@ -26,13 +26,10 @@ import static android.text.TextUtils.isEmpty;
 
 public class NewGameActivity extends AppCompatActivity {
     PlayerManager playerManager;
-    PlayerManager data;
     Player player;
     EditText name;
     String nameText;
     Boolean isValid;
-    int color;
-    Button enter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,56 +43,85 @@ public class NewGameActivity extends AppCompatActivity {
     }
 
     private void buttons() {
+        final TextView newGameText = findViewById(R.id.newGameText);
         final Button enter = findViewById(R.id.enter);
         final EditText name = findViewById(R.id.nameInput);
         final TextView diffPrompt = findViewById(R.id.diffPrompt);
         final Button easy = findViewById(R.id.easy);
         final Button hard = findViewById(R.id.hard);
         final Button colour1 = findViewById(R.id.colour1);
+        final Button colour2 = findViewById(R.id.colour2);
+        final Button enterName = findViewById(R.id.checkName);
+        final Button colour3 = findViewById(R.id.colour3);
+        final TextView namePrompt = findViewById(R.id.enterNameText);
+        final TextView welcomeDisplay = findViewById(R.id.welcomeDisplay);
+
+        enterName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                checkName();
+                if (isValid){
+                    player = new Player(nameText);
+                    playerManager.addPlayer(player);
+                    enter.setVisibility(View.INVISIBLE);
+                    name.setVisibility(View.INVISIBLE);
+                    namePrompt.setVisibility(View.INVISIBLE);
+                    newGameText.setVisibility(View.INVISIBLE);
+                    welcomeDisplay.setVisibility(View.VISIBLE);
+                    String welcomeMessage = "Welcome " + nameText;
+                    welcomeDisplay.setText(welcomeMessage);
+                    TextView colorPrompt =  (TextView) findViewById(R.id.colorPromptText);
+                    enterName.setVisibility(View.INVISIBLE);
+                    colorPrompt.setText((CharSequence)("Select Character Colour:"));
+                    colour1.setVisibility(View.VISIBLE);
+                    colour2.setVisibility(View.VISIBLE);
+                    colour3.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
         colour1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                checkName();
                 if (isValid) {
-                    color = Color.argb(255, 173, 0, 0);
-                    enter.setVisibility(View.VISIBLE);
+                    int color = Color.argb(255, 173, 0, 0);
+                    player.setColour(color);
+                    save();
+                    diffPrompt.setText(("Chose Difficulty Level:"));
+                    easy.setVisibility(View.VISIBLE);
+                    hard.setVisibility(View.VISIBLE);
                 }
-                diffPrompt.setText((CharSequence)("Chose Difficulty Level:"));
-                easy.setVisibility(View.VISIBLE);
-                hard.setVisibility(View.VISIBLE);
             }
         });
 
-        final Button colour2 = findViewById(R.id.colour2);
         colour2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                checkName();
                 if (isValid) {
-                    color = Color.argb(255, 76, 175, 80);
-                    enter.setVisibility(View.VISIBLE);
+                    int color = Color.argb(255, 76, 175, 80);
+                    player.setColour(color);
+                    save();
+                    diffPrompt.setText(("Chose Difficulty Level:"));
+                    easy.setVisibility(View.VISIBLE);
+                    hard.setVisibility(View.VISIBLE);
 
                 }
-                diffPrompt.setText((CharSequence)("Chose Difficulty Level:"));
-                easy.setVisibility(View.VISIBLE);
-                hard.setVisibility(View.VISIBLE);
             }
         });
 
-        final Button colour3 = findViewById(R.id.colour3);
+
         colour3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 if (isValid) {
-                    color = Color.argb(255, 255, 193, 7);
-                    enter.setVisibility(View.VISIBLE);
+                    int color = Color.argb(255, 255, 193, 7);
+                    player.setColour(color);
+                    save();
+                    diffPrompt.setText(("Chose Difficulty Level:"));
+                    easy.setVisibility(View.VISIBLE);
+                    hard.setVisibility(View.VISIBLE);
                 }
-
-                diffPrompt.setText((CharSequence)("Chose Difficulty Level:"));
-                easy.setVisibility(View.VISIBLE);
-                hard.setVisibility(View.VISIBLE);
             }
         });
 
@@ -103,9 +129,12 @@ public class NewGameActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (isValid) {
-                    setText(color, "Easy");
+                    player.setDifficulty("Easy");
+                    save();
                     enter.setVisibility(View.VISIBLE);
+
                 }
+
             }
         });
 
@@ -113,44 +142,26 @@ public class NewGameActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (isValid) {
-                    setText(color, "Hard");
+                    player.setDifficulty("Hard");
+                    save();
                     enter.setVisibility(View.VISIBLE);
                 }
 
             }
         });
 
-        name.addTextChangedListener(new TextWatcher() {
-
-            public void afterTextChanged(Editable s) {
-                if (!(name.getText().toString().matches(""))){
-                    TextView colorPrompt =  (TextView) findViewById(R.id.colorPromptText);
-                    colorPrompt.setText((CharSequence)("Select Character Colour:"));
-                    colour1.setVisibility(View.VISIBLE);
-                    colour2.setVisibility(View.VISIBLE);
-                    colour3.setVisibility(View.VISIBLE);
-                    enter.setVisibility(View.VISIBLE);
+        enter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isValid) {
+                    Intent intent = new Intent(NewGameActivity.this, BBMainActivity.class);
+                    intent.putExtra("Player", player);
+                    intent.putExtra("Game Manager", playerManager);
+                    startActivity(intent);
                 }
             }
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
         });
 
-        if (!(enter == null)) {
-            enter.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                    if (isValid) {
-                        Intent intent = new Intent(NewGameActivity.this, BBMainActivity.class);
-                        intent.putExtra("Player", player);
-                        intent.putExtra("Game Manager", playerManager);
-                        startActivity(intent);
-                    }
-                }
-            });
-        }
     }
     void checkName() {
         nameText = name.getText().toString();
@@ -169,22 +180,8 @@ public class NewGameActivity extends AppCompatActivity {
         }
     }
 
-    private void setText(int color) {
-        player = new Player(nameText);
-        player.setColour(color);
-        playerManager.addPlayer(player);
-        save();
-    }
-    private void setText(int color, String diff) {
-
-        player = new Player(nameText);
-        player.setColour(color);
-        player.setDifficulty(diff);
-        playerManager.addPlayer(player);
-        save();
-    }
-
     private void save() {
+        playerManager.updatePlayer(player.getName(), player);
         try {
             String filePath = this.getFilesDir().getPath() + "/GameState.txt";
             File f = new File(filePath);

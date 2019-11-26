@@ -7,7 +7,6 @@ import android.graphics.drawable.shapes.RectShape;
 import com.example.dungeonescape.game.GameObject;
 
 public class Coin extends GameObject {
-    private Rect coinShape;
 
     public Coin() {
         super();
@@ -19,13 +18,9 @@ public class Coin extends GameObject {
         setPaintColour(Color.YELLOW);
     }
 
-    public void setCoinShape() {
+    public Rect getCoinShape() {
         int x = getX();
         int y = getY();
-        this.coinShape = new Rect(x, y, (x + 1), (y + 1));
-    }
-
-    public Rect getCoinShape() {
-        return coinShape;
+        return new Rect(x, y, (x + 1), (y + 1));
     }
 }
