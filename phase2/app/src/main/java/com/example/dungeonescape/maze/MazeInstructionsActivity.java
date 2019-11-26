@@ -1,6 +1,6 @@
 package com.example.dungeonescape.maze;
 
-import androidx.appcompat.app.AppCompatActivity;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -16,7 +16,7 @@ import com.example.dungeonescape.player.PlayerManager;
 import com.example.dungeonescape.player.Player;
 import com.example.dungeonescape.R;
 
-public class MazeActivityInstructions extends GeneralGameActivity {
+public class MazeInstructionsActivity extends GeneralGameActivity {
 
     /** Initializes a Player and PlayerManager. */
     private Player player;
@@ -57,7 +57,7 @@ public class MazeActivityInstructions extends GeneralGameActivity {
                 System.out.println("help");
             case R.id.main_menu: // save game and return to main menu
                 save(playerManager, player);
-                Intent intent = menuActivity.createIntent(MazeActivityInstructions.this,
+                Intent intent = menuActivity.createIntent(MazeInstructionsActivity.this,
                         MainActivity.class, playerManager, player);
                 startActivity(intent);
             default:
@@ -71,9 +71,17 @@ public class MazeActivityInstructions extends GeneralGameActivity {
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+//                try {
+//                    Intent intent = new Intent(
+//                            MazeInstructionsActivity.this, MazeActivity.class);
+//                    intent.putExtra("Player", player);
+//                    intent.putExtra("Game Manager", playerManager);
+//                    startActivity(intent);
+//                } catch ( ActivityNotFoundException e) {
+//                    e.printStackTrace();
+//                }
                 Intent intent = new Intent(
-                        com.example.dungeonescape.maze.MazeActivityInstructions.this,
-                        MazeActivity.class);
+                        MazeInstructionsActivity.this, MazeActivity.class);
                 intent.putExtra("Player", player);
                 intent.putExtra("Game Manager", playerManager);
                 startActivity(intent);

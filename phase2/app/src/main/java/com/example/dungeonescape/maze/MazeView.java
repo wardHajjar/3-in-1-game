@@ -36,7 +36,7 @@ public class MazeView extends View {
     /** Player and exit objects, and their positions. */
 
     private Player player;
-    private PlayerSprite playerSprite;
+    private PlayerSprite playerSprite = new PlayerSprite();
     private GameObject exit;
     private MazeCell playerLoc;
 
@@ -52,21 +52,13 @@ public class MazeView extends View {
 
     public MazeView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        numMazeCols = 10;
+        numMazeRows = 10;
+        mazeManager = new MazeManager();
+        mazeManager.setNumMazeRows(numMazeRows);
+        mazeManager.setNumMazeCols(numMazeCols);
         coins = new ArrayList<>();
-        if(player.getDifficulty().equals("Easy")) {
-            MMBuilder builder = new EasyMMBuilder();
-            MazeManagerEngineer MMEgineer = new MazeManagerEngineer(builder);
-            mazeManager = MMEgineer.getManager();
-        }
-        else{
-            MMBuilder builder = new HardMMBuilder();
-            MazeManagerEngineer MMEgineer = new MazeManagerEngineer(builder);
-            mazeManager = MMEgineer.getManager();
-        }
-        numMazeCols = mazeManager.getNumMazeCols();
-        numMazeRows = mazeManager.getNumMazeRows();
         cells = mazeManager.createMaze();
-        relocatePlayerSprite();
         coins = mazeManager.createCoins();
     }
 
@@ -78,12 +70,8 @@ public class MazeView extends View {
         this.player = player;
     }
 
-    public void setPlayerSprite(PlayerSprite playerSprite) {
-        this.playerSprite = playerSprite;
-        relocatePlayerSprite();
-    }
-
     public void relocatePlayerSprite() {
+        playerSprite.setPaintColour(player.getColour());
         playerLoc = cells[0][0];
         exit = new GameObject(numMazeCols - 1, numMazeRows - 1);
         exit.setPaintColour(Color.BLUE);
@@ -92,6 +80,19 @@ public class MazeView extends View {
             playerSprite.setY(0);
         }
     }
+//
+//    public void setMazeManager(){
+//        if(player.getDifficulty().equals("Easy")) {
+//            MMBuilder builder = new EasyMMBuilder();
+//            MazeManagerEngineer MMEgineer = new MazeManagerEngineer(builder);
+//            mazeManager = MMEgineer.getManager();
+//        }
+//        else{
+//            MMBuilder builder = new HardMMBuilder();
+//            MazeManagerEngineer MMEgineer = new MazeManagerEngineer(builder);
+//            mazeManager = MMEgineer.getManager();
+//        }
+//    }
 
     @Override
     protected void onDraw(Canvas canvas) {
