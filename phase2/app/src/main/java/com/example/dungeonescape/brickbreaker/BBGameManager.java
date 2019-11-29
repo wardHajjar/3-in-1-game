@@ -6,6 +6,7 @@ import android.view.MotionEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import com.example.dungeonescape.game.collectable.Coin;
 import com.example.dungeonescape.game.collectable.Gem;
 import com.example.dungeonescape.game.collectable.Potion;
 import com.example.dungeonescape.player.Player;
@@ -21,7 +22,9 @@ class BBGameManager {
     private Ball ball;
     private Paddle paddle;
     private ArrayList<Brick> bricks;
-    private ArrayList<BBCoin> coins;
+    private ArrayList<Coin> coins;
+    private Gem gem;
+    private Potion potion;
     private int screenX;
     private int screenY;
     private Player player;
@@ -57,7 +60,7 @@ class BBGameManager {
                 curr = bricks.get(0);
             }
             int radius = brickHeight/4;
-            BBCoin newCoin = new BBCoin(curr.getX() + curr.getWidth()/2,
+            Coin newCoin = new Coin(curr.getX() + curr.getWidth()/2,
                         curr.getY() + curr.getHeight()/2, radius);
             curr.setItem(newCoin);
             coins.add(newCoin);
@@ -71,6 +74,7 @@ class BBGameManager {
             curr = bricks.get(0);
         }
         Gem newGem = new Gem(curr.getX(), curr.getY());
+        this.gem = newGem;
         curr.setItem(newGem);
 
         Collections.shuffle(bricks);
@@ -80,6 +84,7 @@ class BBGameManager {
             curr = bricks.get(0);
         }
         Potion newPotion = new Potion(curr.getX(), curr.getY());
+        this.potion = newPotion;
         curr.setItem(newPotion);
 
     }
@@ -118,7 +123,7 @@ class BBGameManager {
         }
 
         /* Coin Collision Detection. */
-        for (BBCoin currCoin: coins) {
+        for (Coin currCoin: coins) {
             if (currCoin.getAvailableStatus()) {
                 String coinCollision = ball.madeRectCollision(currCoin.getCoinShape());
                 if (coinCollision.equals("x")) {
