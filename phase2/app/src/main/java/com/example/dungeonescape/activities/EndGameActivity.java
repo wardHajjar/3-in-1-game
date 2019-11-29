@@ -24,8 +24,8 @@ public class EndGameActivity extends GeneralGameActivity {
 
         configureActionButtons();
 
-        TextView congratPlayer = findViewById(R.id.congrats);
-        congratPlayer.setText(String.format("Congratulation, %s!", player.getName()));
+        TextView congratulatePlayer = findViewById(R.id.congratulatePlayer);
+        congratulatePlayer.setText(String.format("Congratulation, %s!", player.getName()));
 
         populatePlayerStats();
     }

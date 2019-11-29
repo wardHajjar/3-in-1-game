@@ -186,6 +186,7 @@ public class NewGameActivity extends AppCompatActivity {
         });
 
     }
+
     void checkName() {
         nameText = name.getText().toString();
         isValid = true;
