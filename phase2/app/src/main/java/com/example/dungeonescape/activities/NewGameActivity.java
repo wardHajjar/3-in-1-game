@@ -45,7 +45,7 @@ public class NewGameActivity extends GeneralGameActivity {
         playerManager = (PlayerManager) i.getSerializableExtra("Game Manager");
         isValid = false;
         name = findViewById(R.id.nameInput);
-        buttons();
+        configureActionButtons();
     }
 
     @Override
@@ -67,7 +67,7 @@ public class NewGameActivity extends GeneralGameActivity {
         }
     }
 
-    private void buttons() {
+    private void configureActionButtons() {
         createPlayerColourChoices();
         configureEnterPlayerNameButton();
         configureEnterGameButton();
