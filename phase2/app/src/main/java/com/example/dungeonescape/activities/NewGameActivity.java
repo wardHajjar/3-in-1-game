@@ -74,17 +74,10 @@ public class NewGameActivity extends GeneralGameActivity {
     }
 
     private void buttons() {
-        final TextView newGameText = findViewById(R.id.newGameText);
-        final EditText name = findViewById(R.id.nameInput);
-        final Button enterName = findViewById(R.id.checkName);
-        final TextView namePrompt = findViewById(R.id.enterNameText);
+        Button enterName = findViewById(R.id.checkName);
         final TextView welcomeDisplay = findViewById(R.id.welcomeDisplay);
 
-        playerNameData.add(newGameText);
-        playerNameData.add(name);
-        playerNameData.add(enterName);
-        playerNameData.add(namePrompt);
-
+        setPlayerNameData(createPlayerNameData());
         setGameDifficulties(createDifficultyButtons());
         setPlayerColourChoices(createPlayerColourChoices());
 
@@ -100,7 +93,6 @@ public class NewGameActivity extends GeneralGameActivity {
                     String welcomeMessage = "Welcome " + nameText;
                     welcomeDisplay.setText(welcomeMessage);
                     TextView colorPrompt =  (TextView) findViewById(R.id.colorPromptText);
-                    enterName.setVisibility(View.INVISIBLE);
                     colorPrompt.setText((CharSequence)("Select Character Colour:"));
                     setListVisibility(playerColourChoices, View.VISIBLE);
                 }
@@ -134,6 +126,30 @@ public class NewGameActivity extends GeneralGameActivity {
         for (TextView item: textViewList) {
             item.setVisibility(visibility);
         }
+    }
+
+    /** Sets the playerNameData list to the new inputted list.
+     *
+     * @param playerNameData the new list of Player Name Data (TextView) elements.
+     */
+    private void setPlayerNameData(List<TextView> playerNameData) {
+        this.playerNameData = playerNameData;
+    }
+
+    /** Creates the Player Name Data for the Game. The TextView elements match up with the
+     * corresponding ID from the activity_new_game.xml file.
+     *
+     * @return a List of TextView elements representing Player Name Data.
+     */
+    private List<TextView> createPlayerNameData() {
+        List<TextView> nameData = new ArrayList<>();
+
+        nameData.add((TextView) findViewById(R.id.newGameText));
+        nameData.add((EditText) findViewById(R.id.nameInput));
+        nameData.add((Button) findViewById(R.id.checkName));
+        nameData.add((TextView) findViewById(R.id.enterNameText));
+
+        return nameData;
     }
 
     /** Sets the gameDifficulties list to the new inputted list.
