@@ -11,8 +11,8 @@ import android.widget.TextView;
 
 
 public class EndGameActivity extends GeneralGameActivity {
-    PlayerManager playerManager;
-    Player player;
+    private PlayerManager playerManager;
+    private Player player;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
