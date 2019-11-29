@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.dungeonescape.player.Player;
 import com.example.dungeonescape.player.PlayerManager;
@@ -34,8 +35,16 @@ public class LoadGameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_load_game);
         Intent i = getIntent();
         playerManager = (PlayerManager) i.getSerializableExtra("Game Manager");
-        setSpinner();
-        configureActionButtons();
+        backButton();
+        if (playerManager.getPlayerNames().size() == 0) {
+            Toast t = Toast.makeText(this, "No players have been saved",
+                    Toast.LENGTH_LONG);
+            t.show();
+        }
+        else {
+            setSpinner();
+            configureActionButtons();
+        }
     }
 
     @Override
@@ -73,17 +82,29 @@ public class LoadGameActivity extends AppCompatActivity {
     }
 
     private void configureEnterGameButton() {
+
         Button enterGame = findViewById(R.id.enterGame);
+        enterGame.setVisibility(View.VISIBLE);
         enterGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String playerName = spinner.getSelectedItem().toString();
-                player = playerManager.getPlayer(playerName);
+                String text = spinner.getSelectedItem().toString();
+                player = playerManager.getPlayer(text);
                 progress();
             }
         });
     }
 
+    private void backButton() {
+        Button back = (Button) findViewById(R.id.backButton);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoadGameActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
     private void progress() {
         int level = player.getCurrentLevel();
         if (level == 1 || level == 0) {
