@@ -1,5 +1,7 @@
 package com.example.dungeonescape.brickbreaker;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -11,7 +13,6 @@ import android.widget.TextView;
 
 import com.example.dungeonescape.activities.MainActivity;
 import com.example.dungeonescape.activities.MenuActivity;
-import com.example.dungeonescape.maze.MazeActivity;
 import com.example.dungeonescape.maze.MazeInstructionsActivity;
 import com.example.dungeonescape.player.PlayerManager;
 import com.example.dungeonescape.activities.GeneralGameActivity;
@@ -129,20 +130,14 @@ public class BBMainActivity extends GeneralGameActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.about:
-                // TODO: Make a Dialog box with the premise of the game
-                System.out.println("about");
-            case R.id.help:
-                // TODO: Make a Dialog box with
-                System.out.println("help");
-            case R.id.main_menu: // save game and return to main menu
-                save(playerManager, player);
-                Intent intent = menuActivity.createIntent(BBMainActivity.this,
-                        MainActivity.class, playerManager, player);
-                startActivity(intent);
-            default:
-                return super.onContextItemSelected(item);
+        if (item.getItemId() == R.id.main_menu) {
+            save(playerManager, player);
+            Intent intent = menuActivity.createIntent(BBMainActivity.this,
+                    MainActivity.class, playerManager, player);
+            startActivity(intent);
+            return true;
+        } else {
+            return super.onContextItemSelected(item);
         }
     }
 

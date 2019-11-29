@@ -136,20 +136,14 @@ public class PlatformerMainActivity extends GeneralGameActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.about:
-                // TODO: Make a Dialog box with the premise of the game
-                System.out.println("about");
-            case R.id.help:
-                // TODO: Make a Dialog box with
-                System.out.println("help");
-            case R.id.main_menu: // save game and return to main menu
-                save(playerManager, player);
-                Intent intent = menuActivity.createIntent(PlatformerMainActivity.this,
-                        MainActivity.class, playerManager, player);
-                startActivity(intent);
-            default:
-                return super.onContextItemSelected(item);
+        if (item.getItemId() == R.id.main_menu) {
+            save(playerManager, player);
+            Intent intent = menuActivity.createIntent(PlatformerMainActivity.this,
+                    MainActivity.class, playerManager, player);
+            startActivity(intent);
+            return true;
+        } else {
+            return super.onContextItemSelected(item);
         }
     }
 

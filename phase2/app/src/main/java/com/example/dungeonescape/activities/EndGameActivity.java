@@ -11,8 +11,8 @@ import android.widget.TextView;
 
 
 public class EndGameActivity extends GeneralGameActivity {
-    PlayerManager playerManager;
-    Player player;
+    private PlayerManager playerManager;
+    private Player player;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,23 +22,20 @@ public class EndGameActivity extends GeneralGameActivity {
         player = (Player) i.getSerializableExtra("Player");
         playerManager = (PlayerManager) i.getSerializableExtra("Game Manager");
 
-        buttons();
+        configureActionButtons();
 
-        TextView congratPlayer = findViewById(R.id.congrats);
-        congratPlayer.setText(String.format("Congratulation, %s!", player.getName()));
+        TextView congratulatePlayer = findViewById(R.id.congratulatePlayer);
+        congratulatePlayer.setText(String.format("Congratulation, %s!", player.getName()));
 
-        TextView numTimer = findViewById(R.id.numTimerText);
-        numTimer.setText(String.valueOf(player.getTotalTime()));
-
-        TextView numCoins = findViewById(R.id.numCoinsText);
-        numCoins.setText(String.valueOf(player.getNumCoins()));
-
-        TextView numLives = findViewById(R.id.numLivesText);
-        numLives.setText(String.valueOf(player.getNumLives()));
+        populatePlayerStats();
     }
 
+    private void configureActionButtons() {
+        configurePlayAgainButton();
+        configureMenuButton();
+    }
 
-    private void buttons() {
+    private void configurePlayAgainButton() {
         Button playAgain = findViewById(R.id.playAgain);
         playAgain.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
@@ -50,8 +47,10 @@ public class EndGameActivity extends GeneralGameActivity {
                 startActivity(intent);
             }
         });
+    }
 
-        Button menu = findViewById(R.id.menu);
+    private void configureMenuButton() {
+        Button menu = findViewById(R.id.mainMenu);
         menu.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 player.resetStats();
@@ -61,6 +60,17 @@ public class EndGameActivity extends GeneralGameActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    private void populatePlayerStats() {
+        TextView playerTimeElapsed = findViewById(R.id.playerTimeElapsed);
+        playerTimeElapsed.setText(String.valueOf(player.getTotalTime()));
+
+        TextView playerNumCoins = findViewById(R.id.playerNumCoins);
+        playerNumCoins.setText(String.valueOf(player.getNumCoins()));
+
+        TextView playerNumLives = findViewById(R.id.playerNumLives);
+        playerNumLives.setText(String.valueOf(player.getNumLives()));
     }
 
     @Override

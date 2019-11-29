@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,6 +33,7 @@ public class NewGameActivity extends AppCompatActivity {
     EditText name;
     String nameText;
     Boolean isValid;
+    private MenuActivity menuActivity = new MenuActivity();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +44,25 @@ public class NewGameActivity extends AppCompatActivity {
         isValid = false;
         name = findViewById(R.id.nameInput);
         buttons();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.game_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.main_menu) {
+            Intent intent = menuActivity.createIntent(NewGameActivity.this,
+                    MainActivity.class, playerManager, player);
+            startActivity(intent);
+            return true;
+        } else {
+            return super.onContextItemSelected(item);
+        }
     }
 
     private void buttons() {
@@ -163,6 +186,7 @@ public class NewGameActivity extends AppCompatActivity {
         });
 
     }
+
     void checkName() {
         nameText = name.getText().toString();
         isValid = true;
