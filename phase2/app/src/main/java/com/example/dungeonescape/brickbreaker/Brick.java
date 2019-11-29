@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import com.example.dungeonescape.game.GameObject;
+import com.example.dungeonescape.game.collectable.Collectable;
 
 class Brick extends GameObject {
     // width and height of each brick
@@ -12,7 +13,7 @@ class Brick extends GameObject {
     // whether the brick has been hit or not
     private boolean hit;
     // whether a brick has a coin or not
-    BBCoin coin;
+    Collectable item;
 
 
     Brick(int x, int y, int w, int h) {
@@ -41,12 +42,16 @@ class Brick extends GameObject {
         // x is left, y is top
     }
 
-    void setCoin(BBCoin coin) {
-        this.coin = coin;
+    void setItem(Collectable item) {
+        this.item = item;
     }
 
-    boolean hasCoin() {
-        return this.coin != null;
+    Collectable getItem() {
+        return this.item;
+    }
+
+    boolean hasItem() {
+        return this.item != null;
     }
 
     /**

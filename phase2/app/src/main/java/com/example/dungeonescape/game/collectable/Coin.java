@@ -12,14 +12,11 @@ public class Coin extends GameObject implements Collectable {
     private Rect coinShape;
     private Boolean available;
 
-    public Coin(int x, int y) {
+    public Coin(int x, int y, int size) {
         super(x, y);
         setPaintColour(Color.YELLOW);
-        available = true;
-    }
-
-    public void setCoinShape(int x, int y, int radius){
-        coinShape = new Rect(x, y, x + radius, y + radius);
+        this.available = true;
+        this.coinShape = new Rect(x, y, x + size, y + size);
     }
 
     public void updateCoinLocation(int x, int y) {
@@ -31,9 +28,14 @@ public class Coin extends GameObject implements Collectable {
         return coinShape;
     }
 
+    protected Rect getCoinShape(int radius) {
+        return new Rect(getX() - radius / 2, getY() - radius / 2,
+                getX() + radius / 2, getY() + radius / 2);
+    }
+
     @Override
     public void draw(Canvas canvas) {
-        canvas.drawCircle(this.getX(), this.getY(), this.coinShape.width(), this.getPaint());
+        canvas.drawCircle(this.getX(), this.getY(), this.coinShape.width()/2, this.getPaint());
     }
 
     @Override
@@ -45,9 +47,7 @@ public class Coin extends GameObject implements Collectable {
     public void gotCollected() {
         this.available = false;
     }
-    protected Rect getCoinShape(int radius) {
-        return new Rect(getX() - radius / 2, getY() - radius / 2,
-                getX() + radius / 2, getY() + radius / 2);
-    }
+
+
 
 }
