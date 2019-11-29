@@ -27,16 +27,8 @@ public class EndGameActivity extends GeneralGameActivity {
         TextView congratPlayer = findViewById(R.id.congrats);
         congratPlayer.setText(String.format("Congratulation, %s!", player.getName()));
 
-        TextView numTimer = findViewById(R.id.numTimerText);
-        numTimer.setText(String.valueOf(player.getTotalTime()));
-
-        TextView numCoins = findViewById(R.id.numCoinsText);
-        numCoins.setText(String.valueOf(player.getNumCoins()));
-
-        TextView numLives = findViewById(R.id.numLivesText);
-        numLives.setText(String.valueOf(player.getNumLives()));
+        populatePlayerStats();
     }
-
 
     private void configureActionButtons() {
         configurePlayAgainButton();
@@ -68,6 +60,17 @@ public class EndGameActivity extends GeneralGameActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    private void populatePlayerStats() {
+        TextView playerTimeElapsed = findViewById(R.id.playerTimeElapsed);
+        playerTimeElapsed.setText(String.valueOf(player.getTotalTime()));
+
+        TextView playerNumCoins = findViewById(R.id.playerNumCoins);
+        playerNumCoins.setText(String.valueOf(player.getNumCoins()));
+
+        TextView playerNumLives = findViewById(R.id.playerNumLives);
+        playerNumLives.setText(String.valueOf(player.getNumLives()));
     }
 
     @Override
