@@ -1,5 +1,9 @@
 package com.example.dungeonescape.platformer;
 
+import com.example.dungeonescape.game.collectable.Coin;
+
+import java.util.List;
+
 /**
  * Represents the ball that bounces on the platforms.
  */
@@ -91,9 +95,9 @@ class Character extends PlatformerObject {
     }
 
     /** Checks if there's a PlatformerCoin at the same coordinate as Character. */
-    void coinDetection() {
-        for (PlatformerCoin coin: getManager().getCoins()) {
-            if (getShape().intersect(coin.getShape())) {
+    void coinDetection(List<Coin> coins) {
+        for (Coin coin: coins) {
+            if (getShape().intersect(coin.getCoinShape())) {
                 coin.gotCoin();
                 getManager().getPlayer().addCoin();
             }

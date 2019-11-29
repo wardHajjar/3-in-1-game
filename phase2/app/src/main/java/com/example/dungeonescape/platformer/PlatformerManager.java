@@ -3,6 +3,7 @@ package com.example.dungeonescape.platformer;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 
+import com.example.dungeonescape.game.collectable.Coin;
 import com.example.dungeonescape.player.Player;
 
 import java.util.Random;
@@ -33,7 +34,7 @@ class PlatformerManager {
     /**
      * A list of coins.
      */
-    private List<PlatformerCoin> coins;
+    private List<Coin> coins;
     /**
      * The player user.
      */
@@ -56,9 +57,7 @@ class PlatformerManager {
         gridHeight = h - 344; //1684
         gridWidth = w; //1080
         platforms = createPlatforms();
-        coins = new ArrayList<>(2);
-        coins.add(new PlatformerCoin(300,300,60, this));
-        coins.add(new PlatformerCoin(70,1000,60, this));
+        createCoins(3);
 
     }
     PlatformerManager(int h, int w, int coins) {
@@ -72,8 +71,8 @@ class PlatformerManager {
 
     void createCoins(int number) {
         coins = new ArrayList<>(number);
-        coins.add(new PlatformerCoin(300,300,60, this));
-        coins.add(new PlatformerCoin(70,1000,60, this));
+        coins.add(new Coin(300,300,30));
+        coins.add(new Coin(70,1000,30));
     }
     /**
      * @return gets the grid width.
@@ -91,7 +90,7 @@ class PlatformerManager {
     int getGridHeight() {
         return gridHeight;
     }
-    List<PlatformerCoin> getCoins() {
+    List<Coin> getCoins() {
         return coins;
     }
 
@@ -171,7 +170,7 @@ class PlatformerManager {
     boolean update() {
 
         character.move();
-        character.coinDetection();
+        character.coinDetection(coins);
         boolean alive = character.isAlive();
         if (portal != null) {
             enterPortal = character.portalDetection();
@@ -189,7 +188,7 @@ class PlatformerManager {
             character.setY(549);
 
             for (int i = 0; i < coins.size(); i++) {
-                coins.get(i).update(diff);
+                coins.get(i).update(diff, gridHeight);
             }
             for (int i = 0; i < platforms.size(); i++) {
                 platforms.get(i).update(diff);
