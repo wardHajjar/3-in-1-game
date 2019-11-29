@@ -28,11 +28,11 @@ import java.util.List;
 import static android.text.TextUtils.isEmpty;
 
 public class NewGameActivity extends AppCompatActivity {
-    PlayerManager playerManager;
-    Player player;
-    EditText name;
-    String nameText;
-    Boolean isValid;
+    private PlayerManager playerManager;
+    private Player player;
+    private EditText name;
+    private String nameText;
+    private Boolean isValid;
     private MenuActivity menuActivity = new MenuActivity();
 
     @Override
