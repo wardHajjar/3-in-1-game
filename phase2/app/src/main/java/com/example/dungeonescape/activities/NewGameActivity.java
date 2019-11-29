@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,12 +27,13 @@ import java.util.List;
 
 import static android.text.TextUtils.isEmpty;
 
-public class NewGameActivity extends AppCompatActivity {
-    PlayerManager playerManager;
-    Player player;
-    EditText name;
-    String nameText;
-    Boolean isValid;
+public class NewGameActivity extends GeneralGameActivity {
+    private PlayerManager playerManager;
+    private Player player;
+    private EditText name;
+    private String nameText;
+    private Boolean isValid;
+    private MenuActivity menuActivity = new MenuActivity();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +46,28 @@ public class NewGameActivity extends AppCompatActivity {
         buttons();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.game_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.main_menu) {
+            Intent intent = menuActivity.createIntent(NewGameActivity.this,
+                    MainActivity.class, playerManager, player);
+            startActivity(intent);
+            return true;
+        } else {
+            return super.onContextItemSelected(item);
+        }
+    }
+
     private void buttons() {
         final TextView newGameText = findViewById(R.id.newGameText);
-        final Button enter = findViewById(R.id.enter);
+        final Button enter = findViewById(R.id.enterGame);
         final EditText name = findViewById(R.id.nameInput);
         final TextView diffPrompt = findViewById(R.id.diffPrompt);
         final Button easy = findViewById(R.id.easy);
@@ -163,16 +186,17 @@ public class NewGameActivity extends AppCompatActivity {
         });
 
     }
-    void checkName() {
+
+    private void checkName() {
         nameText = name.getText().toString();
         isValid = true;
-        List<String> names = playerManager.getPlayerNames();
+        List<String> allPlayerNames = playerManager.getPlayerNames();
+
         if (isEmpty(nameText)) {
             Toast t = Toast.makeText(this, "Please Enter a Name", Toast.LENGTH_SHORT);
             isValid = false;
             t.show();
-        }
-        else if (names.contains(nameText)) {
+        } else if (allPlayerNames.contains(nameText)) {
             Toast t = Toast.makeText(this, "There is already a player saved with " +
                     "this name", Toast.LENGTH_SHORT);
             isValid = false;

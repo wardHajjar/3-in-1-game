@@ -9,7 +9,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.dungeonescape.activities.DeadActivity;
 import com.example.dungeonescape.activities.MainActivity;
@@ -17,8 +16,6 @@ import com.example.dungeonescape.activities.MenuActivity;
 import com.example.dungeonescape.player.PlayerManager;
 import com.example.dungeonescape.activities.GeneralGameActivity;
 import com.example.dungeonescape.player.Player;
-import com.example.dungeonescape.platformer.PlatformerHiddenActivity;
-import com.example.dungeonescape.activities.EndGameActivity;
 import com.example.dungeonescape.R;
 /**
  * The activity for the main level3 game.
@@ -57,10 +54,18 @@ public class PlatformerMainActivity extends GeneralGameActivity {
         buttons();
         running = true;
 
-        game.setCustomEventListener(new OnCustomEventListener() {
+        game.setEnterPortalListener(new OnCustomEventListener() {
             public void onEvent() {nextLevel();
             }
         });
+//        game.setFinishLevelListener(new OnCustomEventListener() {
+//            public void onEvent() {nextLevel();
+//            }
+//        });
+//        game.setEndGameListener(new OnCustomEventListener() {
+//            public void onEvent() {nextLevel();
+//            }
+//        });
         // Thread code is from the following Youtube Video, body of run() is written myself
         // https://www.youtube.com/watch?v=6sBqeoioCHE&t=193s
         Thread t = new Thread() {
@@ -86,15 +91,13 @@ public class PlatformerMainActivity extends GeneralGameActivity {
                                     String life = "Lives: " + String.valueOf(lives);
                                     TextView lifeText = (TextView) findViewById(R.id.lives);
                                     lifeText.setText(life);
-                                    boolean doneLevel = game.nextLevel();
-//                                    boolean enterPortal = game.enterPortal();
-                                    boolean dead = game.dead();
-                                    boolean lostLife = game.lostLife();
-                                    if (doneLevel) {
-                                        nextLevel();
-                                        save(playerManager, player);
-                                        running = false;
-                                    }
+//
+
+//                                    if (doneLevel) {
+//                                        nextLevel();
+//                                        save(playerManager, player);
+//                                        running = false;
+//                                    }
 //                                    if (enterPortal) {
 //                                        nextLevel();
 //                                        save(playerManager, player);
@@ -105,11 +108,11 @@ public class PlatformerMainActivity extends GeneralGameActivity {
 //                                        game.gameOver(game.getManager().getPlayer());
 //
 //                                    }
-                                    if (dead){
-                                        save(playerManager, player);
-                                        deadPage();
-                                        running = false;
-                                    }
+//                                    if (dead){
+//                                        save(playerManager, player);
+//                                        deadPage();
+//                                        running = false;
+//                                    }
                                 }
                             }
                         });
@@ -133,20 +136,14 @@ public class PlatformerMainActivity extends GeneralGameActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.about:
-                // TODO: Make a Dialog box with the premise of the game
-                System.out.println("about");
-            case R.id.help:
-                // TODO: Make a Dialog box with
-                System.out.println("help");
-            case R.id.main_menu: // save game and return to main menu
-                save(playerManager, player);
-                Intent intent = menuActivity.createIntent(PlatformerMainActivity.this,
-                        MainActivity.class, playerManager, player);
-                startActivity(intent);
-            default:
-                return super.onContextItemSelected(item);
+        if (item.getItemId() == R.id.main_menu) {
+            save(playerManager, player);
+            Intent intent = menuActivity.createIntent(PlatformerMainActivity.this,
+                    MainActivity.class, playerManager, player);
+            startActivity(intent);
+            return true;
+        } else {
+            return super.onContextItemSelected(item);
         }
     }
 

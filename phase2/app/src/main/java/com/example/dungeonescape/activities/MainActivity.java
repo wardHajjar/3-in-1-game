@@ -14,7 +14,8 @@ import com.example.dungeonescape.game.SaveData;
 import java.io.File;
 
 public class MainActivity extends AppCompatActivity{
-    public PlayerManager playerManager;
+    private PlayerManager playerManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,34 +26,38 @@ public class MainActivity extends AppCompatActivity{
         if (playerManager == null) {
             playerManager = new PlayerManager();
         }
-
-        buttons();
+        configureActionButtons();
     }
 
-    private void buttons() {
+    private void configureActionButtons() {
+        configureNewGameButton();
+        configureLoadGameButton();
+    }
 
-        Button newGame = (Button) findViewById(R.id.newGame);
+    private void configureNewGameButton() {
+        Button newGame = findViewById(R.id.newGame);
         newGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Intent intent = new Intent(MainActivity.this, NewGameActivity.class);
                 intent.putExtra("Game Manager", playerManager);
                 startActivity(intent);
             }
         });
+    }
 
+    private void configureLoadGameButton() {
         Button loadGame = (Button) findViewById(R.id.loadGame);
         loadGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Intent intent = new Intent(MainActivity.this, LoadGameActivity.class);
                 intent.putExtra("Game Manager", playerManager);
                 startActivity(intent);
             }
         });
     }
+
     private void load() {
         try {
             String filePath = this.getFilesDir().getPath() + "/GameState.txt";

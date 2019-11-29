@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/congrats"
+        android:id="@+id/congratulatePlayer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="105dp"
@@ -32,7 +32,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/congrats" />
+        app:layout_constraintTop_toBottomOf="@+id/congratulatePlayer" />
 
 
     <LinearLayout
@@ -72,7 +72,7 @@
                 android:layout_weight="1" />
 
             <TextView
-                android:id="@+id/numTimerText"
+                android:id="@+id/playerTimeElapsed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -102,7 +102,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/numCoinsText"
+                android:id="@+id/playerNumCoins"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -132,7 +132,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/numLivesText"
+                android:id="@+id/playerNumLives"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -163,14 +163,14 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/menu"
+        android:id="@+id/mainMenu"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="100dp"
         android:background="#A08758"
-        android:text="@string/menu"
+        android:text="@string/main_menu"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="24sp"

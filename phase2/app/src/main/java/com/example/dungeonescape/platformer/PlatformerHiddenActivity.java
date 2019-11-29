@@ -48,7 +48,7 @@ public class PlatformerHiddenActivity extends GeneralGameActivity {
         //pass player into manager
         game.getManager().setPlayer(player);
 
-        setTitle("Level3: PlatformerHiddenLevel");
+        setTitle("Level 3: PlatformerBonusLevel");
 
         // Set Buttons
         buttons();
@@ -79,18 +79,18 @@ public class PlatformerHiddenActivity extends GeneralGameActivity {
                                     String life = "Lives: " + String.valueOf(lives);
                                     TextView lifeText = (TextView) findViewById(R.id.lives);
                                     lifeText.setText(life);
-                                    boolean doneLevel = game.nextLevel();
-                                    if (doneLevel) {
-                                        nextLevel();
-                                        save(playerManager, player);
-                                        running = false;
-                                    }
-                                    boolean dead = game.dead();
-                                    if (dead){
-                                        save(playerManager, player);
-                                        deadPage();
-                                        running = false;
-                                    }
+//                                    boolean doneLevel = game.nextLevel();
+//                                    if (doneLevel) {
+//                                        nextLevel();
+//                                        save(playerManager, player);
+//                                        running = false;
+//                                    }
+//                                    boolean dead = game.dead();
+//                                    if (dead){
+//                                        save(playerManager, player);
+//                                        deadPage();
+//                                        running = false;
+//                                    }
                                 }
                             }
                         });
@@ -112,20 +112,14 @@ public class PlatformerHiddenActivity extends GeneralGameActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.about:
-                // TODO: Make a Dialog box with the premise of the game
-                System.out.println("about");
-            case R.id.help:
-                // TODO: Make a Dialog box with
-                System.out.println("help");
-            case R.id.main_menu: // save game and return to main menu
-                save(playerManager, player);
-                Intent intent = menuActivity.createIntent(PlatformerHiddenActivity.this,
-                        MainActivity.class, playerManager, player);
-                startActivity(intent);
-            default:
-                return super.onContextItemSelected(item);
+        if (item.getItemId() == R.id.main_menu) {
+            save(playerManager, player);
+            Intent intent = menuActivity.createIntent(PlatformerHiddenActivity.this,
+                    MainActivity.class, playerManager, player);
+            startActivity(intent);
+            return true;
+        } else {
+            return super.onContextItemSelected(item);
         }
     }
 
