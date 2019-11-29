@@ -45,4 +45,9 @@ public class Coin extends GameObject implements Collectable {
     public void gotCollected() {
         this.available = false;
     }
+    protected Rect getCoinShape(int radius) {
+        return new Rect(getX() - radius / 2, getY() - radius / 2,
+                getX() + radius / 2, getY() + radius / 2);
+    }
+
 }

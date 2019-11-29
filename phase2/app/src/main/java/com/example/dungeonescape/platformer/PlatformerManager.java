@@ -1,6 +1,7 @@
 package com.example.dungeonescape.platformer;
 
 import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 
 import com.example.dungeonescape.player.Player;
 
@@ -32,11 +33,17 @@ class PlatformerManager {
     /**
      * A list of coins.
      */
-    private List<Coin> coins;
+    private List<PlatformerCoin> coins;
     /**
      * The player user.
      */
-    Player player;
+    private Player player;
+
+    private Portal portal;
+
+    private Drawable portalImage;
+
+    private boolean enterPortal;
 
     /**
      * Platform manager on a screen with characters and platforms.
@@ -50,8 +57,8 @@ class PlatformerManager {
         gridWidth = w; //1080
         platforms = createPlatforms();
         coins = new ArrayList<>(2);
-        coins.add(new Coin(300,300,60, this));
-        coins.add(new Coin(70,1000,60, this));
+        coins.add(new PlatformerCoin(300,300,60, this));
+        coins.add(new PlatformerCoin(70,1000,60, this));
 
     }
     /**
@@ -70,7 +77,7 @@ class PlatformerManager {
     int getGridHeight() {
         return gridHeight;
     }
-    List<Coin> getCoins() {
+    List<PlatformerCoin> getCoins() {
         return coins;
     }
 
@@ -123,6 +130,9 @@ class PlatformerManager {
         for (int i = 0; i < coins.size(); i++) {
             coins.get(i).draw(canvas);
         }
+        if (portal != null) {
+            portal.draw(canvas);
+        }
     }
     /**
      * Left and right buttons to move character
@@ -137,11 +147,24 @@ class PlatformerManager {
     /**
      * Updates the characters, platforms and coins.
      */
+    void setImage(Drawable drawable) {
+        portalImage = drawable;
+    }
+
+    Portal getPortal() {
+        return this.portal;
+    }
     boolean update() {
 
         character.move();
         character.coinDetection();
         boolean alive = character.isAlive();
+        if (portal != null) {
+            enterPortal = character.portalDetection();
+            if (enterPortal) {
+                System.out.println("PORTAL");
+            }
+        }
         if (!alive) {
             player.loseLife();
             return false;
@@ -157,6 +180,15 @@ class PlatformerManager {
             for (int i = 0; i < platforms.size(); i++) {
                 platforms.get(i).update(diff);
             }
+            if (portal != null) {
+                portal.moveDown(diff);
+            }
+        }
+
+        if (character.getGameScore() == 2) {
+            Random random = new Random();
+            int a = random.nextInt(gridWidth - 150);
+            portal = new Portal(a, -100, this, portalImage);
         }
         return true;
     }
@@ -165,6 +197,10 @@ class PlatformerManager {
      */
     boolean finishedLevel() {
         return (character.getGameScore() > 10);
+    }
+    boolean enterPortal() {
+        return enterPortal;
+
     }
 
     /**
