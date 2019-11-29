@@ -1,7 +1,6 @@
 package com.example.dungeonescape.platformer;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.view.Menu;
@@ -10,11 +9,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.dungeonescape.activities.DeadActivity;
 import com.example.dungeonescape.activities.MainActivity;
 import com.example.dungeonescape.activities.MenuActivity;
-import com.example.dungeonescape.maze.MazeActivity;
 import com.example.dungeonescape.player.PlayerManager;
 import com.example.dungeonescape.activities.GeneralGameActivity;
 import com.example.dungeonescape.player.Player;
@@ -57,6 +56,10 @@ public class PlatformerMainActivity extends GeneralGameActivity {
         buttons();
         running = true;
 
+        game.setCustomEventListener(new OnCustomEventListener() {
+            public void onEvent() {nextLevel();
+            }
+        });
         // Thread code is from the following Youtube Video, body of run() is written myself
         // https://www.youtube.com/watch?v=6sBqeoioCHE&t=193s
         Thread t = new Thread() {
@@ -83,19 +86,25 @@ public class PlatformerMainActivity extends GeneralGameActivity {
                                     TextView lifeText = (TextView) findViewById(R.id.lives);
                                     lifeText.setText(life);
                                     boolean doneLevel = game.nextLevel();
-                                    boolean enterPortal = game.enterPortal();
+//                                    boolean enterPortal = game.enterPortal();
                                     boolean dead = game.dead();
+                                    boolean lostLife = game.lostLife();
                                     if (doneLevel) {
                                         nextLevel();
                                         save(playerManager, player);
                                         running = false;
                                     }
-                                    else if (enterPortal) {
-                                        nextLevel();
-                                        save(playerManager, player);
-                                        running = false;
-                                    }
-                                    else if (dead){
+//                                    if (enterPortal) {
+//                                        nextLevel();
+//                                        save(playerManager, player);
+//                                        running = false;
+//                                    }
+//                                    if (lostLife){
+//                                        save(playerManager, player);
+//                                        game.gameOver(game.getManager().getPlayer());
+//
+//                                    }
+                                    if (dead){
                                         save(playerManager, player);
                                         deadPage();
                                         running = false;
@@ -118,6 +127,8 @@ public class PlatformerMainActivity extends GeneralGameActivity {
         inflater.inflate(R.menu.game_menu, menu);
         return true;
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

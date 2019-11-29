@@ -19,9 +19,11 @@ public class PlatformerView extends GameView implements Runnable{
     private PlatformerManager manager;
     private boolean nextLevel;
     private boolean noLives;
+    private boolean alive;
     private Point size;
     private boolean enterPortal;
     private Drawable portalImage;
+    protected OnCustomEventListener myCustomEventListener;
 
 
     public PlatformerView(Context context, AttributeSet attrs) {
@@ -37,9 +39,8 @@ public class PlatformerView extends GameView implements Runnable{
 
     }
 
-    public void setData(Player data)
-    {
-        manager.setPlayer(data);
+    public void setCustomEventListener(OnCustomEventListener eventListener) {
+        this.myCustomEventListener = eventListener;
     }
 
     public void draw() {
@@ -72,11 +73,15 @@ public class PlatformerView extends GameView implements Runnable{
         }
         if (manager.getCharacterScore() >= 2) {
             enterPortal = manager.enterPortal();
+            if (enterPortal) {
+                enterPortal();
+            }
         }
-        boolean alive = manager.update();
+        alive = manager.update();
         if (!alive) {
             gameOver(manager.getPlayer());
         }
+
     }
 
     public void gameOver(Player player) {
@@ -88,8 +93,8 @@ public class PlatformerView extends GameView implements Runnable{
         setZOrderOnTop(true);
 
     }
-    public boolean enterPortal() {
-        return enterPortal;
+    public void enterPortal() {
+        myCustomEventListener.onEvent();
     }
     public boolean nextLevel() {
         return nextLevel;
@@ -98,5 +103,5 @@ public class PlatformerView extends GameView implements Runnable{
     public boolean dead(){
         return noLives;
     }
-
+    public boolean lostLife() {return alive;}
 }
