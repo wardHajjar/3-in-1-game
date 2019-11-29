@@ -94,6 +94,7 @@ public class NewGameActivity extends GeneralGameActivity {
         });
     }
 
+    /** Creates the Button event for the Player to start the Game. */
     private void configureEnterGameButton() {
         Button enterGame = findViewById(R.id.enterGame);
         enterGame.setOnClickListener(new View.OnClickListener() {
