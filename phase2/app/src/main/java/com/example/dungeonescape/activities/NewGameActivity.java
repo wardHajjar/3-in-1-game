@@ -27,7 +27,7 @@ import java.util.List;
 
 import static android.text.TextUtils.isEmpty;
 
-public class NewGameActivity extends AppCompatActivity {
+public class NewGameActivity extends GeneralGameActivity {
     private PlayerManager playerManager;
     private Player player;
     private EditText name;
@@ -187,16 +187,16 @@ public class NewGameActivity extends AppCompatActivity {
 
     }
 
-    void checkName() {
+    private void checkName() {
         nameText = name.getText().toString();
         isValid = true;
-        List<String> names = playerManager.getPlayerNames();
+        List<String> allPlayerNames = playerManager.getPlayerNames();
+
         if (isEmpty(nameText)) {
             Toast t = Toast.makeText(this, "Please Enter a Name", Toast.LENGTH_SHORT);
             isValid = false;
             t.show();
-        }
-        else if (names.contains(nameText)) {
+        } else if (allPlayerNames.contains(nameText)) {
             Toast t = Toast.makeText(this, "There is already a player saved with " +
                     "this name", Toast.LENGTH_SHORT);
             isValid = false;
