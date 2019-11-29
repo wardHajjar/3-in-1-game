@@ -68,12 +68,16 @@ public class NewGameActivity extends GeneralGameActivity {
     }
 
     private void buttons() {
+        createPlayerColourChoices();
+        configureEnterPlayerNameButton();
+        configureEnterGameButton();
+    }
+
+    /** Creates and populates all Player Choice lists. */
+    private void createPlayerChoiceLists() {
         setPlayerNameData(createPlayerNameData());
         setGameDifficulties(createDifficultyButtons());
         setPlayerColourChoices(createPlayerColourChoices());
-
-        configureEnterPlayerNameButton();
-        configureEnterGameButton();
     }
 
     /** Creates the Button event for Player Name Input. */
