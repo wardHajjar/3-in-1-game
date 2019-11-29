@@ -82,14 +82,13 @@ public class LoadGameActivity extends AppCompatActivity {
     }
 
     private void configureEnterGameButton() {
-
         Button enterGame = findViewById(R.id.enterGame);
         enterGame.setVisibility(View.VISIBLE);
         enterGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String text = spinner.getSelectedItem().toString();
-                player = playerManager.getPlayer(text);
+                String playerName = spinner.getSelectedItem().toString();
+                player = playerManager.getPlayer(playerName);
                 progress();
             }
         });
