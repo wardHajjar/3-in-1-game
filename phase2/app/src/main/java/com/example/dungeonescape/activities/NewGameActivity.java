@@ -67,7 +67,7 @@ public class NewGameActivity extends AppCompatActivity {
 
     private void buttons() {
         final TextView newGameText = findViewById(R.id.newGameText);
-        final Button enter = findViewById(R.id.enter);
+        final Button enter = findViewById(R.id.enterGame);
         final EditText name = findViewById(R.id.nameInput);
         final TextView diffPrompt = findViewById(R.id.diffPrompt);
         final Button easy = findViewById(R.id.easy);
