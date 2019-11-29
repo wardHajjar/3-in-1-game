@@ -35,6 +35,9 @@ public class NewGameActivity extends GeneralGameActivity {
     private Boolean isValid;
     private MenuActivity menuActivity = new MenuActivity();
 
+    /** For New Game choices. */
+    private List<Button> gameDifficulties = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,8 +73,8 @@ public class NewGameActivity extends GeneralGameActivity {
         final Button enter = findViewById(R.id.enterGame);
         final EditText name = findViewById(R.id.nameInput);
         final TextView diffPrompt = findViewById(R.id.diffPrompt);
-        final Button easy = findViewById(R.id.easy);
-        final Button hard = findViewById(R.id.hard);
+//        final Button easy = findViewById(R.id.easy);
+//        final Button hard = findViewById(R.id.hard);
         final Button colour1 = findViewById(R.id.colour1);
         final Button colour2 = findViewById(R.id.colour2);
         final Button enterName = findViewById(R.id.checkName);
@@ -103,6 +106,8 @@ public class NewGameActivity extends GeneralGameActivity {
             }
         });
 
+        updateGameDifficulties();
+
         colour1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -110,9 +115,8 @@ public class NewGameActivity extends GeneralGameActivity {
                     int color = Color.argb(255, 173, 0, 0);
                     player.setColour(color);
                     save();
-                    diffPrompt.setText(("Chose Difficulty Level:"));
-                    easy.setVisibility(View.VISIBLE);
-                    hard.setVisibility(View.VISIBLE);
+                    diffPrompt.setText(("Choose Difficulty Level:"));
+                    setButtonsVisibility(gameDifficulties, View.VISIBLE);
                 }
             }
         });
@@ -124,10 +128,8 @@ public class NewGameActivity extends GeneralGameActivity {
                     int color = Color.argb(255, 76, 175, 80);
                     player.setColour(color);
                     save();
-                    diffPrompt.setText(("Chose Difficulty Level:"));
-                    easy.setVisibility(View.VISIBLE);
-                    hard.setVisibility(View.VISIBLE);
-
+                    diffPrompt.setText(("Choose Difficulty Level:"));
+                    setButtonsVisibility(gameDifficulties, View.VISIBLE);
                 }
             }
         });
@@ -141,35 +143,9 @@ public class NewGameActivity extends GeneralGameActivity {
                     int color = Color.argb(255, 255, 193, 7);
                     player.setColour(color);
                     save();
-                    diffPrompt.setText(("Chose Difficulty Level:"));
-                    easy.setVisibility(View.VISIBLE);
-                    hard.setVisibility(View.VISIBLE);
+                    diffPrompt.setText(("Choose Difficulty Level:"));
+                    setButtonsVisibility(gameDifficulties, View.VISIBLE);
                 }
-            }
-        });
-
-        easy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (isValid) {
-                    player.setDifficulty("Easy");
-                    save();
-                    enter.setVisibility(View.VISIBLE);
-
-                }
-
-            }
-        });
-
-        hard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (isValid) {
-                    player.setDifficulty("Hard");
-                    save();
-                    enter.setVisibility(View.VISIBLE);
-                }
-
             }
         });
 
@@ -185,6 +161,51 @@ public class NewGameActivity extends GeneralGameActivity {
             }
         });
 
+    }
+
+    private void setButtonsVisibility(List<Button> buttonList, int visibility) {
+        for (Button button: buttonList) {
+            button.setVisibility(visibility);
+        }
+    }
+
+    private void updateGameDifficulties() {
+        this.gameDifficulties = createDifficultyButtons();
+    }
+
+    private List<Button> createDifficultyButtons() {
+        final Button enter = findViewById(R.id.enterGame);
+        List<Button> difficultyButtons = new ArrayList<>();
+
+        Button easyButton = findViewById(R.id.easy);
+        easyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isValid) {
+                    player.setDifficulty("Easy");
+                    save();
+                    enter.setVisibility(View.VISIBLE);
+                }
+
+            }
+        });
+        difficultyButtons.add(easyButton);
+
+        Button hardButton = findViewById(R.id.hard);
+        hardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isValid) {
+                    player.setDifficulty("Hard");
+                    save();
+                    enter.setVisibility(View.VISIBLE);
+                }
+
+            }
+        });
+        difficultyButtons.add(hardButton);
+
+        return difficultyButtons;
     }
 
     private void checkName() {
