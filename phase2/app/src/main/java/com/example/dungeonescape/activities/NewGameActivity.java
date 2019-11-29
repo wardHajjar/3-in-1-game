@@ -85,8 +85,8 @@ public class NewGameActivity extends GeneralGameActivity {
         playerNameData.add(enterName);
         playerNameData.add(namePrompt);
 
-        updateGameDifficulties();
-        updatePlayerColourChoices();
+        setGameDifficulties(createDifficultyButtons());
+        setPlayerColourChoices(createPlayerColourChoices());
 
         enterName.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,15 +136,66 @@ public class NewGameActivity extends GeneralGameActivity {
         }
     }
 
-    /** Updates the playerColourChoices List with the new Player Colour Choices Buttons. */
-    private void updatePlayerColourChoices() {
-        this.playerColourChoices = createPlayerColourChoices();
+    /** Sets the gameDifficulties list to the new inputted list.
+     *
+     * @param gameDifficulties the new list of Game Difficulty (TextView) Buttons.
+     */
+    private void setGameDifficulties(List<TextView> gameDifficulties) {
+        this.gameDifficulties = gameDifficulties;
+    }
+
+    /** Creates the difficulty buttons for the Game. The buttons match up with the corresponding ID
+     * from the activity_new_game.xml file.
+     *
+     * @return a list of Game Difficulty Buttons.
+     */
+    private List<TextView> createDifficultyButtons() {
+        final Button enter = findViewById(R.id.enterGame);
+        List<TextView> difficultyButtons = new ArrayList<>();
+
+        Button easyButton = findViewById(R.id.easy);
+        easyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isValid) {
+                    player.setDifficulty("Easy");
+                    save();
+                    enter.setVisibility(View.VISIBLE);
+                }
+
+            }
+        });
+        difficultyButtons.add(easyButton);
+
+        Button hardButton = findViewById(R.id.hard);
+        hardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isValid) {
+                    player.setDifficulty("Hard");
+                    save();
+                    enter.setVisibility(View.VISIBLE);
+                }
+
+            }
+        });
+        difficultyButtons.add(hardButton);
+
+        return difficultyButtons;
+    }
+
+    /** Sets the playerColourChoices list to the new inputted list.
+     *
+     * @param playerColourChoices the new list of Player Colour Choice (TextView) Buttons.
+     */
+    private void setPlayerColourChoices(List<TextView> playerColourChoices) {
+        this.playerColourChoices = playerColourChoices;
     }
 
     /** Creates the Player Colour Choices. The Buttons match up with the corresponding ID from the
      * activity_new_game.xml file.
      *
-     * @return a list of Player Colour Choices Buttons.
+     * @return a list of Player Colour Choice Buttons.
      */
     private List<TextView> createPlayerColourChoices() {
         final TextView diffPrompt = findViewById(R.id.diffPrompt);
@@ -198,51 +249,6 @@ public class NewGameActivity extends GeneralGameActivity {
         colourChoices.add(yellowPlayer);
 
         return colourChoices;
-    }
-
-    /** Updates the gameDifficulties List with the new Game Difficulty Buttons. */
-    private void updateGameDifficulties() {
-        this.gameDifficulties = createDifficultyButtons();
-    }
-
-    /** Creates the difficulty buttons for the Game. The buttons match up with the corresponding ID
-     * from the activity_new_game.xml file.
-     *
-     * @return a list of Game Difficulty Buttons.
-     */
-    private List<TextView> createDifficultyButtons() {
-        final Button enter = findViewById(R.id.enterGame);
-        List<TextView> difficultyButtons = new ArrayList<>();
-
-        Button easyButton = findViewById(R.id.easy);
-        easyButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (isValid) {
-                    player.setDifficulty("Easy");
-                    save();
-                    enter.setVisibility(View.VISIBLE);
-                }
-
-            }
-        });
-        difficultyButtons.add(easyButton);
-
-        Button hardButton = findViewById(R.id.hard);
-        hardButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (isValid) {
-                    player.setDifficulty("Hard");
-                    save();
-                    enter.setVisibility(View.VISIBLE);
-                }
-
-            }
-        });
-        difficultyButtons.add(hardButton);
-
-        return difficultyButtons;
     }
 
     private void checkName() {
