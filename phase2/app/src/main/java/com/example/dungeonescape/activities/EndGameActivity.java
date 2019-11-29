@@ -22,7 +22,7 @@ public class EndGameActivity extends GeneralGameActivity {
         player = (Player) i.getSerializableExtra("Player");
         playerManager = (PlayerManager) i.getSerializableExtra("Game Manager");
 
-        buttons();
+        configureActionButtons();
 
         TextView congratPlayer = findViewById(R.id.congrats);
         congratPlayer.setText(String.format("Congratulation, %s!", player.getName()));
@@ -38,7 +38,12 @@ public class EndGameActivity extends GeneralGameActivity {
     }
 
 
-    private void buttons() {
+    private void configureActionButtons() {
+        configurePlayAgainButton();
+        configureMenuButton();
+    }
+
+    private void configurePlayAgainButton() {
         Button playAgain = findViewById(R.id.playAgain);
         playAgain.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
@@ -50,8 +55,10 @@ public class EndGameActivity extends GeneralGameActivity {
                 startActivity(intent);
             }
         });
+    }
 
-        Button menu = findViewById(R.id.menu);
+    private void configureMenuButton() {
+        Button menu = findViewById(R.id.mainMenu);
         menu.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 player.resetStats();
