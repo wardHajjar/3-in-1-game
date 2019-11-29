@@ -69,7 +69,7 @@ public class NewGameActivity extends GeneralGameActivity {
 
     /** Creates all Action Button events. */
     private void configureActionButtons() {
-        createPlayerColourChoices();
+        createPlayerChoiceLists();
         configureEnterPlayerNameButton();
         configureEnterGameButton();
     }
