@@ -46,6 +46,10 @@ class Brick extends GameObject {
         this.item = item;
     }
 
+    Collectable getItem() {
+        return this.item;
+    }
+
     boolean hasItem() {
         return this.item != null;
     }
