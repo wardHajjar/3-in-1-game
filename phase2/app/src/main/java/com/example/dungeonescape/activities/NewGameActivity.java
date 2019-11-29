@@ -21,6 +21,9 @@ import com.example.dungeonescape.player.PlayerManager;
 import com.example.dungeonescape.R;
 import com.example.dungeonescape.game.SaveData;
 import com.example.dungeonescape.brickbreaker.BBMainActivity;
+
+import org.w3c.dom.Text;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,8 +39,8 @@ public class NewGameActivity extends GeneralGameActivity {
     private MenuActivity menuActivity = new MenuActivity();
 
     /** For New Game choices. */
-    private List<Button> gameDifficulties = new ArrayList<>();
-    private List<Button> playerColourChoices = new ArrayList<>();
+    private List<TextView> gameDifficulties = new ArrayList<>();
+    private List<TextView> playerColourChoices = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +74,6 @@ public class NewGameActivity extends GeneralGameActivity {
 
     private void buttons() {
         final TextView newGameText = findViewById(R.id.newGameText);
-        final Button enter = findViewById(R.id.enterGame);
         final EditText name = findViewById(R.id.nameInput);
         final Button enterName = findViewById(R.id.checkName);
         final TextView namePrompt = findViewById(R.id.enterNameText);
@@ -87,7 +89,6 @@ public class NewGameActivity extends GeneralGameActivity {
                 if (isValid){
                     player = new Player(nameText);
                     playerManager.addPlayer(player);
-                    enter.setVisibility(View.INVISIBLE);
                     name.setVisibility(View.INVISIBLE);
                     namePrompt.setVisibility(View.INVISIBLE);
                     newGameText.setVisibility(View.INVISIBLE);
@@ -97,12 +98,18 @@ public class NewGameActivity extends GeneralGameActivity {
                     TextView colorPrompt =  (TextView) findViewById(R.id.colorPromptText);
                     enterName.setVisibility(View.INVISIBLE);
                     colorPrompt.setText((CharSequence)("Select Character Colour:"));
-                    setButtonsVisibility(playerColourChoices, View.VISIBLE);
+                    setListVisibility(playerColourChoices, View.VISIBLE);
                 }
             }
         });
 
-        enter.setOnClickListener(new View.OnClickListener() {
+        configureEnterGameButton();
+
+    }
+
+    private void configureEnterGameButton() {
+        Button enterGame = findViewById(R.id.enterGame);
+        enterGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (isValid) {
@@ -113,17 +120,16 @@ public class NewGameActivity extends GeneralGameActivity {
                 }
             }
         });
-
     }
 
     /** Sets all Buttons in the given buttonList to the specified visibility.
      *
-     * @param buttonList the list of Buttons to loop through & update Button visibility.
+     * @param textViewList the list of Buttons to loop through & update Button visibility.
      * @param visibility the Visibility value.
      */
-    private void setButtonsVisibility(List<Button> buttonList, int visibility) {
-        for (Button button: buttonList) {
-            button.setVisibility(visibility);
+    private void setListVisibility(List<TextView> textViewList, int visibility) {
+        for (TextView item: textViewList) {
+            item.setVisibility(visibility);
         }
     }
 
@@ -137,13 +143,13 @@ public class NewGameActivity extends GeneralGameActivity {
      *
      * @return a list of Player Colour Choices Buttons.
      */
-    private List<Button> createPlayerColourChoices() {
+    private List<TextView> createPlayerColourChoices() {
         final TextView diffPrompt = findViewById(R.id.diffPrompt);
         Button redPlayer = findViewById(R.id.colour1);
         Button greenPlayer = findViewById(R.id.colour2);
         Button yellowPlayer = findViewById(R.id.colour3);
 
-        List<Button> colourChoices = new ArrayList<>();
+        List<TextView> colourChoices = new ArrayList<>();
 
         redPlayer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,7 +159,7 @@ public class NewGameActivity extends GeneralGameActivity {
                     player.setColour(color);
                     save();
                     diffPrompt.setText(("Choose Difficulty Level:"));
-                    setButtonsVisibility(gameDifficulties, View.VISIBLE);
+                    setListVisibility(gameDifficulties, View.VISIBLE);
                 }
             }
         });
@@ -167,7 +173,7 @@ public class NewGameActivity extends GeneralGameActivity {
                     player.setColour(color);
                     save();
                     diffPrompt.setText(("Choose Difficulty Level:"));
-                    setButtonsVisibility(gameDifficulties, View.VISIBLE);
+                    setListVisibility(gameDifficulties, View.VISIBLE);
                 }
             }
         });
@@ -182,7 +188,7 @@ public class NewGameActivity extends GeneralGameActivity {
                     player.setColour(color);
                     save();
                     diffPrompt.setText(("Choose Difficulty Level:"));
-                    setButtonsVisibility(gameDifficulties, View.VISIBLE);
+                    setListVisibility(gameDifficulties, View.VISIBLE);
                 }
             }
         });
@@ -201,9 +207,9 @@ public class NewGameActivity extends GeneralGameActivity {
      *
      * @return a list of Game Difficulty Buttons.
      */
-    private List<Button> createDifficultyButtons() {
+    private List<TextView> createDifficultyButtons() {
         final Button enter = findViewById(R.id.enterGame);
-        List<Button> difficultyButtons = new ArrayList<>();
+        List<TextView> difficultyButtons = new ArrayList<>();
 
         Button easyButton = findViewById(R.id.easy);
         easyButton.setOnClickListener(new View.OnClickListener() {
