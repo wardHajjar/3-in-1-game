@@ -73,7 +73,7 @@ public class LoadGameActivity extends AppCompatActivity {
     }
 
     private void configureEnterGameButton() {
-        Button enterGame = findViewById(R.id.Enter);
+        Button enterGame = findViewById(R.id.enterGame);
         enterGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
