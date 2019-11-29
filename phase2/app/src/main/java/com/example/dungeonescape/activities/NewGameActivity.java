@@ -1,11 +1,7 @@
 package com.example.dungeonescape.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -21,8 +17,6 @@ import com.example.dungeonescape.player.PlayerManager;
 import com.example.dungeonescape.R;
 import com.example.dungeonescape.game.SaveData;
 import com.example.dungeonescape.brickbreaker.BBMainActivity;
-
-import org.w3c.dom.Text;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -74,13 +68,11 @@ public class NewGameActivity extends GeneralGameActivity {
     }
 
     private void buttons() {
-        Button enterName = findViewById(R.id.checkName);
-        final TextView welcomeDisplay = findViewById(R.id.welcomeDisplay);
-
         setPlayerNameData(createPlayerNameData());
         setGameDifficulties(createDifficultyButtons());
         setPlayerColourChoices(createPlayerColourChoices());
 
+        Button enterName = findViewById(R.id.checkName);
         enterName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -89,12 +81,8 @@ public class NewGameActivity extends GeneralGameActivity {
                     player = new Player(nameText);
                     playerManager.addPlayer(player);
                     setListVisibility(playerNameData, View.INVISIBLE);
-                    welcomeDisplay.setVisibility(View.VISIBLE);
-                    String welcomeMessage = "Welcome " + nameText;
-                    welcomeDisplay.setText(welcomeMessage);
-                    TextView colorPrompt =  (TextView) findViewById(R.id.colorPromptText);
-                    colorPrompt.setText((CharSequence)("Select Character Colour:"));
-                    setListVisibility(playerColourChoices, View.VISIBLE);
+                    createWelcomeMessage();
+                    createColourPrompt();
                 }
             }
         });
@@ -265,6 +253,21 @@ public class NewGameActivity extends GeneralGameActivity {
         colourChoices.add(yellowPlayer);
 
         return colourChoices;
+    }
+
+    /** Creates the Welcome Message for the Player. */
+    private void createWelcomeMessage() {
+        TextView welcomeDisplay = findViewById(R.id.welcomeDisplay);
+        String welcomeMessage = "Welcome " + nameText;
+        welcomeDisplay.setText(welcomeMessage);
+        welcomeDisplay.setVisibility(View.VISIBLE);
+    }
+
+    /** Creates the Player Colour Choice prompt and buttons. */
+    private void createColourPrompt() {
+        TextView colorPrompt = findViewById(R.id.colorPromptText);
+        colorPrompt.setText(("Select Character Colour:"));
+        setListVisibility(playerColourChoices, View.VISIBLE);
     }
 
     private void checkName() {
