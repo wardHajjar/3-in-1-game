@@ -48,7 +48,7 @@ public class PlatformerHiddenActivity extends GeneralGameActivity {
         //pass player into manager
         game.getManager().setPlayer(player);
 
-        setTitle("Level3: PlatformerHiddenLevel");
+        setTitle("Level 3: PlatformerBonusLevel");
 
         // Set Buttons
         buttons();
@@ -79,18 +79,18 @@ public class PlatformerHiddenActivity extends GeneralGameActivity {
                                     String life = "Lives: " + String.valueOf(lives);
                                     TextView lifeText = (TextView) findViewById(R.id.lives);
                                     lifeText.setText(life);
-                                    boolean doneLevel = game.nextLevel();
-                                    if (doneLevel) {
-                                        nextLevel();
-                                        save(playerManager, player);
-                                        running = false;
-                                    }
-                                    boolean dead = game.dead();
-                                    if (dead){
-                                        save(playerManager, player);
-                                        deadPage();
-                                        running = false;
-                                    }
+//                                    boolean doneLevel = game.nextLevel();
+//                                    if (doneLevel) {
+//                                        nextLevel();
+//                                        save(playerManager, player);
+//                                        running = false;
+//                                    }
+//                                    boolean dead = game.dead();
+//                                    if (dead){
+//                                        save(playerManager, player);
+//                                        deadPage();
+//                                        running = false;
+//                                    }
                                 }
                             }
                         });

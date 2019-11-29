@@ -61,6 +61,20 @@ class PlatformerManager {
         coins.add(new PlatformerCoin(70,1000,60, this));
 
     }
+    PlatformerManager(int h, int w, int coins) {
+        character = new Character(50,1000,100, this);
+        player = null;
+        gridHeight = h - 344; //1684
+        gridWidth = w; //1080
+        platforms = createPlatforms();
+        createCoins(coins);
+    }
+
+    void createCoins(int number) {
+        coins = new ArrayList<>(number);
+        coins.add(new PlatformerCoin(300,300,60, this));
+        coins.add(new PlatformerCoin(70,1000,60, this));
+    }
     /**
      * @return gets the grid width.
      * */
