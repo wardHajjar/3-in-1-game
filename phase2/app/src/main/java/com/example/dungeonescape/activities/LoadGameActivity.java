@@ -35,7 +35,7 @@ public class LoadGameActivity extends AppCompatActivity {
         Intent i = getIntent();
         playerManager = (PlayerManager) i.getSerializableExtra("Game Manager");
         setSpinner();
-        buttons();
+        configureActionButtons();
     }
 
     @Override
@@ -67,19 +67,23 @@ public class LoadGameActivity extends AppCompatActivity {
         myAdapter.setDropDownViewResource(android.R.layout.simple_list_item_1);
         spinner.setAdapter(myAdapter);
     }
-    private void buttons() {
 
-        Button enter = (Button) findViewById(R.id.Enter);
-        enter.setOnClickListener(new View.OnClickListener() {
+    private void configureActionButtons() {
+        configureEnterGameButton();
+    }
+
+    private void configureEnterGameButton() {
+        Button enterGame = findViewById(R.id.Enter);
+        enterGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String text = spinner.getSelectedItem().toString();
-                player = playerManager.getPlayer(text);
+                String playerName = spinner.getSelectedItem().toString();
+                player = playerManager.getPlayer(playerName);
                 progress();
             }
         });
-
     }
+
     private void progress() {
         int level = player.getCurrentLevel();
         if (level == 1 || level == 0) {
