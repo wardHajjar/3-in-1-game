@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".NewGameActivity">
+    tools:context="activities.NewGameActivity">
 
     <TextView
         android:id="@+id/newGameText"
@@ -13,7 +13,7 @@
         android:layout_marginStart="179dp"
         android:layout_marginTop="60dp"
         android:layout_marginEnd="163dp"
-        android:text="New Game"
+        android:text="@string/new_game"
         android:textColor="@android:color/black"
         android:textSize="36sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -40,9 +40,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
-        android:hint="Name"
         android:inputType="text"
         android:textSize="24sp"
+        android:importantForAutofill="no"
+        android:hint="@string/name_input"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.482"
         app:layout_constraintStart_toStartOf="parent"
@@ -88,7 +89,6 @@
         <Button
             android:id="@+id/colour1"
             android:layout_width="50dp"
-
             android:visibility="invisible"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -141,7 +141,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="35dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/Enter"
+        app:layout_constraintBottom_toTopOf="@+id/enterGame"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -163,13 +163,13 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/enter"
+        android:id="@+id/enterGame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="60dp"
         android:layout_marginEnd="162dp"
         android:layout_marginStart="162dp"
-        android:text="Enter"
+        android:text="@string/enter_game"
         android:textSize="28sp"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
