@@ -67,6 +67,7 @@ public class NewGameActivity extends GeneralGameActivity {
         }
     }
 
+    /** Creates all Action Button events. */
     private void configureActionButtons() {
         createPlayerColourChoices();
         configureEnterPlayerNameButton();
@@ -80,7 +81,9 @@ public class NewGameActivity extends GeneralGameActivity {
         setPlayerColourChoices(createPlayerColourChoices());
     }
 
-    /** Creates the Button event for Player Name Input. */
+    /** Creates the Button event for Player Name Input.
+     * Initializes Welcome Message with Colour prompt and Difficulty prompt.
+     * */
     private void configureEnterPlayerNameButton() {
         Button enterName = findViewById(R.id.checkName);
         enterName.setOnClickListener(new View.OnClickListener() {
