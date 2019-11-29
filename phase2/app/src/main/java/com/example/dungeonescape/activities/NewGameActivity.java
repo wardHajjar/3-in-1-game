@@ -39,6 +39,7 @@ public class NewGameActivity extends GeneralGameActivity {
     private MenuActivity menuActivity = new MenuActivity();
 
     /** For New Game choices. */
+    private List<TextView> playerNameData = new ArrayList<>();
     private List<TextView> gameDifficulties = new ArrayList<>();
     private List<TextView> playerColourChoices = new ArrayList<>();
 
@@ -79,6 +80,11 @@ public class NewGameActivity extends GeneralGameActivity {
         final TextView namePrompt = findViewById(R.id.enterNameText);
         final TextView welcomeDisplay = findViewById(R.id.welcomeDisplay);
 
+        playerNameData.add(newGameText);
+        playerNameData.add(name);
+        playerNameData.add(enterName);
+        playerNameData.add(namePrompt);
+
         updateGameDifficulties();
         updatePlayerColourChoices();
 
@@ -89,9 +95,7 @@ public class NewGameActivity extends GeneralGameActivity {
                 if (isValid){
                     player = new Player(nameText);
                     playerManager.addPlayer(player);
-                    name.setVisibility(View.INVISIBLE);
-                    namePrompt.setVisibility(View.INVISIBLE);
-                    newGameText.setVisibility(View.INVISIBLE);
+                    setListVisibility(playerNameData, View.INVISIBLE);
                     welcomeDisplay.setVisibility(View.VISIBLE);
                     String welcomeMessage = "Welcome " + nameText;
                     welcomeDisplay.setText(welcomeMessage);
@@ -104,7 +108,6 @@ public class NewGameActivity extends GeneralGameActivity {
         });
 
         configureEnterGameButton();
-
     }
 
     private void configureEnterGameButton() {
