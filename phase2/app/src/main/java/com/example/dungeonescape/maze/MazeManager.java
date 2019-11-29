@@ -171,7 +171,7 @@ class MazeManager {
         for (int i = 0; i < 2; i++) {
             int x = coordinates.keyAt(i);
             int y = coordinates.get(x);
-            Coin coin = new Coin(x, y);
+            Coin coin = new Coin(x, y, (int) cellSize);
             coins.add(coin);
         }
         return coins;

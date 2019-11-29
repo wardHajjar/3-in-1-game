@@ -61,7 +61,7 @@ public class MazeInstructionsActivity extends GeneralGameActivity {
 
     /** Creates the Start button to play the Maze. */
     private void configureNextButton() {
-        Button nextButton = findViewById(R.id.start);
+        Button nextButton = findViewById(R.id.startGame);
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
