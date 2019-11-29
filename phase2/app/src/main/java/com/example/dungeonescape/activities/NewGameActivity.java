@@ -116,16 +116,27 @@ public class NewGameActivity extends GeneralGameActivity {
 
     }
 
+    /** Sets all Buttons in the given buttonList to the specified visibility.
+     *
+     * @param buttonList the list of Buttons to loop through & update Button visibility.
+     * @param visibility the Visibility value.
+     */
     private void setButtonsVisibility(List<Button> buttonList, int visibility) {
         for (Button button: buttonList) {
             button.setVisibility(visibility);
         }
     }
 
+    /** Updates the playerColourChoices List with the new Player Colour Choices Buttons. */
     private void updatePlayerColourChoices() {
         this.playerColourChoices = createPlayerColourChoices();
     }
 
+    /** Creates the Player Colour Choices. The Buttons match up with the corresponding ID from the
+     * activity_new_game.xml file.
+     *
+     * @return a list of Player Colour Choices Buttons.
+     */
     private List<Button> createPlayerColourChoices() {
         final TextView diffPrompt = findViewById(R.id.diffPrompt);
         Button redPlayer = findViewById(R.id.colour1);
@@ -180,10 +191,16 @@ public class NewGameActivity extends GeneralGameActivity {
         return colourChoices;
     }
 
+    /** Updates the gameDifficulties List with the new Game Difficulty Buttons. */
     private void updateGameDifficulties() {
         this.gameDifficulties = createDifficultyButtons();
     }
 
+    /** Creates the difficulty buttons for the Game. The buttons match up with the corresponding ID
+     * from the activity_new_game.xml file.
+     *
+     * @return a list of Game Difficulty Buttons.
+     */
     private List<Button> createDifficultyButtons() {
         final Button enter = findViewById(R.id.enterGame);
         List<Button> difficultyButtons = new ArrayList<>();
