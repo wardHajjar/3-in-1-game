@@ -46,7 +46,7 @@ class BBGameManager {
 
         /* Random assignment of coins to bricks. */
         coins = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 10; i++) {
             Collections.shuffle(bricks);
             Brick curr = bricks.get(0);
             while (curr.hasCoin()){     /* Shuffle again if the current brick has a coin. */
@@ -96,7 +96,7 @@ class BBGameManager {
 
         /* Coin Collision Detection. */
         for (BBCoin currCoin: coins){
-            if (!currCoin.getCollectStatus()) {
+            if (currCoin.getAvailableStatus()) {
                 String coinCollision = ball.madeRectCollision(currCoin.getCoinShape());
                 if (coinCollision.equals("x")) {
                     player.addCoin();
@@ -187,7 +187,7 @@ class BBGameManager {
             if (!curr.getHitStatus()) {
                 curr.draw(canvas);
             } else {    /* Draw if hit brick contains a coin to be collected. */
-                if (curr.hasCoin() && !curr.coin.getCollectStatus()) {
+                if (curr.hasCoin() && curr.coin.getAvailableStatus()) {
                     curr.coin.draw(canvas);
                 }
             }

@@ -17,6 +17,7 @@ import com.example.dungeonescape.activities.MenuActivity;
 import com.example.dungeonescape.player.PlayerManager;
 import com.example.dungeonescape.activities.GeneralGameActivity;
 import com.example.dungeonescape.player.Player;
+import com.example.dungeonescape.platformer.PlatformerHiddenActivity;
 import com.example.dungeonescape.activities.EndGameActivity;
 import com.example.dungeonescape.R;
 /**
@@ -157,7 +158,7 @@ public class PlatformerMainActivity extends GeneralGameActivity {
         long elapsedMilliSeconds = endTime - startTime;
         player.updateTotalTime(elapsedMilliSeconds);
         save(playerManager, player);
-        Intent intent = new Intent(PlatformerMainActivity.this, EndGameActivity.class);
+        Intent intent = new Intent(PlatformerMainActivity.this, PlatformerHiddenActivity.class);
         intent.putExtra("Player", player);
         intent.putExtra("Game Manager", playerManager);
         startActivity(intent);

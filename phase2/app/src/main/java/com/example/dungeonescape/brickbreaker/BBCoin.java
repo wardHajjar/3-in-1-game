@@ -7,32 +7,19 @@ import android.graphics.Canvas;
 class BBCoin extends Coin {
 
     private int radius;
-    private boolean collect;
 
     BBCoin(int x, int y, int radius) {
         super(x, y);
         this.radius = radius;
-        collect = false;
+        setCoinShape(x, y, radius);
     }
 
-    /** Draws coin onto the canvas.
-     * @param canvas the graphic context on which the coin is drawn.
-     */
-    void draw(Canvas canvas) {
-        canvas.drawCircle(this.getX(), this.getY(), radius, this.getPaint());
-    }
-
-    /** Sets the coin's collect status to true. */
-    void gotCollected () {
-        collect = true;
-    }
-
-    /**
-     * Returns the coin's collect status.
-     * @return boolean of if the coin has been collected.
-     */
-    boolean getCollectStatus() {
-        return this.collect;
-    }
+//    /** Draws coin onto the canvas.
+//     * @param canvas the graphic context on which the coin is drawn.
+//     */
+//    @Override
+//    public void draw(Canvas canvas) {
+//        canvas.drawCircle(this.getX(), this.getY(), radius, this.getPaint());
+//    }
 
 }
