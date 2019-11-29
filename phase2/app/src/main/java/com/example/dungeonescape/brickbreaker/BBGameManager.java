@@ -5,6 +5,9 @@ import android.graphics.Color;
 import android.view.MotionEvent;
 import java.util.ArrayList;
 import java.util.Collections;
+
+import com.example.dungeonescape.game.collectable.Gem;
+import com.example.dungeonescape.game.collectable.Potion;
 import com.example.dungeonescape.player.Player;
 
 /** Instantiates and controls game objects. */
@@ -49,16 +52,36 @@ class BBGameManager {
         for (int i = 0; i < 10; i++) {
             Collections.shuffle(bricks);
             Brick curr = bricks.get(0);
-            while (curr.hasCoin()){     /* Shuffle again if the current brick has a coin. */
+            while (curr.hasItem()){     /* Shuffle again if the current brick has a coin. */
                 Collections.shuffle(bricks);
                 curr = bricks.get(0);
             }
             int radius = brickHeight/4;
             BBCoin newCoin = new BBCoin(curr.getX() + curr.getWidth()/2,
                         curr.getY() + curr.getHeight()/2, radius);
-            curr.setCoin(newCoin);
+            curr.setItem(newCoin);
             coins.add(newCoin);
         }
+
+        /* Random assignment of gem and potion to bricks. */
+        Collections.shuffle(bricks);
+        Brick curr = bricks.get(0);
+        while (curr.hasItem()){     /* Shuffle again if the current brick has a coin. */
+            Collections.shuffle(bricks);
+            curr = bricks.get(0);
+        }
+        Gem newGem = new Gem(curr.getX(), curr.getY());
+        curr.setItem(newGem);
+
+        Collections.shuffle(bricks);
+        curr = bricks.get(0);
+        while (curr.hasItem()){     /* Shuffle again if the current brick has a coin. */
+            Collections.shuffle(bricks);
+            curr = bricks.get(0);
+        }
+        Potion newPotion = new Potion(curr.getX(), curr.getY());
+        curr.setItem(newPotion);
+
     }
 
     /** Determines the physics of the ball in reaction to collisions. */
@@ -75,7 +98,7 @@ class BBGameManager {
         }
 
         /* Brick Collision Detection. */
-        for (Brick brick: bricks){
+        for (Brick brick: bricks) {
             if (!(brick.getHitStatus())) {
                 String brickCollision = ball.madeRectCollision(brick.getRect());
 
@@ -95,7 +118,7 @@ class BBGameManager {
         }
 
         /* Coin Collision Detection. */
-        for (BBCoin currCoin: coins){
+        for (BBCoin currCoin: coins) {
             if (currCoin.getAvailableStatus()) {
                 String coinCollision = ball.madeRectCollision(currCoin.getCoinShape());
                 if (coinCollision.equals("x")) {
@@ -111,6 +134,9 @@ class BBGameManager {
                 }
             }
         }
+
+//        /* Potion and Gem collision detection. */
+//        String gemCollision = ball.madeRectCollision()
 
         /* Paddle Collision Detection. */
         String paddleCollision = ball.madeRectCollision(paddle.getRect());
@@ -186,9 +212,9 @@ class BBGameManager {
             /* Draws the bricks that have not been hit. */
             if (!curr.getHitStatus()) {
                 curr.draw(canvas);
-            } else {    /* Draw if hit brick contains a coin to be collected. */
-                if (curr.hasCoin() && curr.coin.getAvailableStatus()) {
-                    curr.coin.draw(canvas);
+            } else {    /* Draw if hit brick contains a collectable item to be collected. */
+                if (curr.hasItem() && curr.getItem().getAvailableStatus()) {
+                    curr.getItem().draw(canvas);
                 }
             }
         }

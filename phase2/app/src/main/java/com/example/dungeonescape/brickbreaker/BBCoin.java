@@ -9,9 +9,8 @@ class BBCoin extends Coin {
     private int radius;
 
     BBCoin(int x, int y, int radius) {
-        super(x, y);
+        super(x, y, radius);
         this.radius = radius;
-        setCoinShape(x, y, radius);
     }
 
 //    /** Draws coin onto the canvas.

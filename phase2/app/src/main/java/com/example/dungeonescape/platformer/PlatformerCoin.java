@@ -14,7 +14,7 @@ class PlatformerCoin extends Coin {
 
     PlatformerCoin(int x, int y, int radius, PlatformerManager manager) {
 
-        super(x,y);
+        super(x,y, radius);
         this.radius = radius;
         this.manager = manager;
         this.shape = getCoinShape(radius);
