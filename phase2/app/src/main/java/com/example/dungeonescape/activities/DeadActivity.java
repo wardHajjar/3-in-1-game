@@ -17,8 +17,8 @@ import com.example.dungeonescape.brickbreaker.BBMainActivity;
 import java.io.File;
 
 public class DeadActivity extends GeneralGameActivity {
-    public PlayerManager playerManager;
-    Player player;
+    private PlayerManager playerManager;
+    private Player player;
 
     private MenuActivity menuActivity = new MenuActivity();
 
@@ -29,7 +29,7 @@ public class DeadActivity extends GeneralGameActivity {
         Intent i = getIntent();
         playerManager = (PlayerManager) i.getSerializableExtra("Game Manager");
         player = (Player) i.getSerializableExtra("Player");
-        buttons();
+        configureActionButtons();
         player.resetStats();
         save(playerManager, player);
     }
@@ -54,25 +54,30 @@ public class DeadActivity extends GeneralGameActivity {
         }
     }
 
-    private void buttons() {
+    private void configureActionButtons() {
+        configurePlayAgainButton();
+        configureMenuButton();
+    }
 
-        Button restart = findViewById(R.id.menu);
-        restart.setOnClickListener(new View.OnClickListener() {
-            @Override
+    private void configurePlayAgainButton() {
+        Button playAgain = findViewById(R.id.playAgain);
+        playAgain.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Intent intent = new Intent(DeadActivity.this, MainActivity.class);
+                save(playerManager, player);
+                Intent intent = new Intent(DeadActivity.this, BBMainActivity.class);
+                intent.putExtra("Player", player);
                 intent.putExtra("Game Manager", playerManager);
                 startActivity(intent);
             }
         });
+    }
 
-        Button playAgain = findViewById(R.id.restart);
-        playAgain.setOnClickListener(new View.OnClickListener() {
+    private void configureMenuButton() {
+        Button mainMenu = findViewById(R.id.mainMenu);
+        mainMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View view) {
-
-                save(playerManager, player);
-                Intent intent = new Intent(DeadActivity.this, BBMainActivity.class);
-                intent.putExtra("Player", player);
+                Intent intent = new Intent(DeadActivity.this, MainActivity.class);
                 intent.putExtra("Game Manager", playerManager);
                 startActivity(intent);
             }
