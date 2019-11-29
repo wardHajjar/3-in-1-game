@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.dungeonescape.player.Player;
 import com.example.dungeonescape.player.PlayerManager;
@@ -29,8 +30,18 @@ public class LoadGameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_load_game);
         Intent i = getIntent();
         playerManager = (PlayerManager) i.getSerializableExtra("Game Manager");
-        setSpinner();
-        buttons();
+
+        backButton();
+        if (playerManager.getPlayerNames().size() == 0) {
+            Toast t = Toast.makeText(this, "No players have been saved",
+                    Toast.LENGTH_LONG);
+            t.show();
+
+        }
+        else {
+            setSpinner();
+            enterButton();
+        }
     }
     private void setSpinner() {
         spinner = (Spinner) findViewById(R.id.spinner);
@@ -42,9 +53,10 @@ public class LoadGameActivity extends AppCompatActivity {
         myAdapter.setDropDownViewResource(android.R.layout.simple_list_item_1);
         spinner.setAdapter(myAdapter);
     }
-    private void buttons() {
+    private void enterButton() {
 
         Button enter = (Button) findViewById(R.id.Enter);
+        enter.setVisibility(View.VISIBLE);
         enter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -54,6 +66,16 @@ public class LoadGameActivity extends AppCompatActivity {
             }
         });
 
+    }
+    private void backButton() {
+        Button back = (Button) findViewById(R.id.backButton);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoadGameActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
     }
     private void progress() {
         int level = player.getCurrentLevel();
