@@ -44,7 +44,7 @@ class PlatformerCoin extends Coin {
         return this.shape;
     }
 
-    void draw(Canvas canvas) {
+    public void draw(Canvas canvas) {
         canvas.drawOval(getX() - radius / 2, getY() - radius / 2, getX() + radius / 2,
                 getY() + radius / 2, getPaint());
     }
