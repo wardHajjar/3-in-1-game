@@ -37,6 +37,7 @@ public class NewGameActivity extends GeneralGameActivity {
 
     /** For New Game choices. */
     private List<Button> gameDifficulties = new ArrayList<>();
+    private List<Button> playerColourChoices = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,15 +73,12 @@ public class NewGameActivity extends GeneralGameActivity {
         final TextView newGameText = findViewById(R.id.newGameText);
         final Button enter = findViewById(R.id.enterGame);
         final EditText name = findViewById(R.id.nameInput);
-        final TextView diffPrompt = findViewById(R.id.diffPrompt);
-//        final Button easy = findViewById(R.id.easy);
-//        final Button hard = findViewById(R.id.hard);
-        final Button colour1 = findViewById(R.id.colour1);
-        final Button colour2 = findViewById(R.id.colour2);
         final Button enterName = findViewById(R.id.checkName);
-        final Button colour3 = findViewById(R.id.colour3);
         final TextView namePrompt = findViewById(R.id.enterNameText);
         final TextView welcomeDisplay = findViewById(R.id.welcomeDisplay);
+
+        updateGameDifficulties();
+        updatePlayerColourChoices();
 
         enterName.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,52 +97,7 @@ public class NewGameActivity extends GeneralGameActivity {
                     TextView colorPrompt =  (TextView) findViewById(R.id.colorPromptText);
                     enterName.setVisibility(View.INVISIBLE);
                     colorPrompt.setText((CharSequence)("Select Character Colour:"));
-                    colour1.setVisibility(View.VISIBLE);
-                    colour2.setVisibility(View.VISIBLE);
-                    colour3.setVisibility(View.VISIBLE);
-                }
-            }
-        });
-
-        updateGameDifficulties();
-
-        colour1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (isValid) {
-                    int color = Color.argb(255, 173, 0, 0);
-                    player.setColour(color);
-                    save();
-                    diffPrompt.setText(("Choose Difficulty Level:"));
-                    setButtonsVisibility(gameDifficulties, View.VISIBLE);
-                }
-            }
-        });
-
-        colour2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (isValid) {
-                    int color = Color.argb(255, 76, 175, 80);
-                    player.setColour(color);
-                    save();
-                    diffPrompt.setText(("Choose Difficulty Level:"));
-                    setButtonsVisibility(gameDifficulties, View.VISIBLE);
-                }
-            }
-        });
-
-
-        colour3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                if (isValid) {
-                    int color = Color.argb(255, 255, 193, 7);
-                    player.setColour(color);
-                    save();
-                    diffPrompt.setText(("Choose Difficulty Level:"));
-                    setButtonsVisibility(gameDifficulties, View.VISIBLE);
+                    setButtonsVisibility(playerColourChoices, View.VISIBLE);
                 }
             }
         });
@@ -167,6 +120,64 @@ public class NewGameActivity extends GeneralGameActivity {
         for (Button button: buttonList) {
             button.setVisibility(visibility);
         }
+    }
+
+    private void updatePlayerColourChoices() {
+        this.playerColourChoices = createPlayerColourChoices();
+    }
+
+    private List<Button> createPlayerColourChoices() {
+        final TextView diffPrompt = findViewById(R.id.diffPrompt);
+        Button redPlayer = findViewById(R.id.colour1);
+        Button greenPlayer = findViewById(R.id.colour2);
+        Button yellowPlayer = findViewById(R.id.colour3);
+
+        List<Button> colourChoices = new ArrayList<>();
+
+        redPlayer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isValid) {
+                    int color = Color.argb(255, 173, 0, 0);
+                    player.setColour(color);
+                    save();
+                    diffPrompt.setText(("Choose Difficulty Level:"));
+                    setButtonsVisibility(gameDifficulties, View.VISIBLE);
+                }
+            }
+        });
+        colourChoices.add(redPlayer);
+
+        greenPlayer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isValid) {
+                    int color = Color.argb(255, 76, 175, 80);
+                    player.setColour(color);
+                    save();
+                    diffPrompt.setText(("Choose Difficulty Level:"));
+                    setButtonsVisibility(gameDifficulties, View.VISIBLE);
+                }
+            }
+        });
+        colourChoices.add(greenPlayer);
+
+
+        yellowPlayer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isValid) {
+                    int color = Color.argb(255, 255, 193, 7);
+                    player.setColour(color);
+                    save();
+                    diffPrompt.setText(("Choose Difficulty Level:"));
+                    setButtonsVisibility(gameDifficulties, View.VISIBLE);
+                }
+            }
+        });
+        colourChoices.add(yellowPlayer);
+
+        return colourChoices;
     }
 
     private void updateGameDifficulties() {
