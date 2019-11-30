@@ -74,8 +74,8 @@ public class MazeActivity extends GeneralGameActivity {
         mazeManager.relocatePlayerSprite();
     }
 
+    /** Creates and runs the countdown to losing the game. */
     private void startCountDown() {
-        /* Initializes the countdown to losing the game. */
         final TextView countTime = findViewById(R.id.countTime);
         countTime.setTextColor(Color.WHITE);
 
