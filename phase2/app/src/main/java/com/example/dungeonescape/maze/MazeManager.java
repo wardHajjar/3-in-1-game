@@ -3,7 +3,6 @@ package com.example.dungeonescape.maze;
 import android.graphics.Color;
 import android.util.SparseIntArray;
 
-import com.example.dungeonescape.game.GameObject;
 import com.example.dungeonescape.game.collectable.Coin;
 import com.example.dungeonescape.player.Player;
 
@@ -33,7 +32,7 @@ class MazeManager {
     private MazeView mazeView;
     private PlayerSprite playerSprite;
     private MazeCell playerLocation;
-    private MazeCell exit;
+    private MazeCell exitCell;
 
     /** Number of times the Player has gone through the maze. */
     private int mazeIterations = 0;
@@ -47,13 +46,13 @@ class MazeManager {
         mazeView.setNumMazeCols(getNumMazeCols());
         mazeView.setNumMazeRows(getNumMazeRows());
 
-        cells = createMaze();
+        this.cells = createMaze();
         mazeView.setCells(this.cells);
         mazeView.setCoins(createCoins());
-        playerSprite = mazeView.getPlayerSprite();
-        mazeView.setExit(new MazeCell(numMazeCols - 1, numMazeRows - 1));
-        mazeView.getExit().setPaintColour(Color.BLUE);
-        exit = mazeView.getExit();
+        this.playerSprite = mazeView.getPlayerSprite();
+        mazeView.setExitCell(new MazeCell(numMazeCols - 1, numMazeRows - 1));
+        mazeView.getExitCell().setPaintColour(Color.BLUE);
+        exitCell = mazeView.getExitCell();
     }
 
     /** Populates a 2D Array with MazeCell GameObjects to create the Maze.
@@ -253,7 +252,7 @@ class MazeManager {
 
     /** Checks if this Player has arrived at the exit, create a new Maze if true. */
     private void playerAtExit() {
-        if (playerSprite.getX() == exit.getX() && playerSprite.getY() == exit.getY()) {
+        if (playerSprite.getX() == exitCell.getX() && playerSprite.getY() == exitCell.getY()) {
             mazeIterations++;
             this.cells = createMaze();
             mazeView.setCells(this.cells);
@@ -280,8 +279,8 @@ class MazeManager {
     void relocatePlayerSprite() {
         playerSprite.setPaintColour(player.getColour());
         playerLocation = this.cells[0][0];
-        exit = new MazeCell(numMazeCols - 1, numMazeRows - 1);
-        exit.setPaintColour(Color.BLUE);
+        exitCell = new MazeCell(numMazeCols - 1, numMazeRows - 1);
+        exitCell.setPaintColour(Color.BLUE);
         if (playerSprite != null) {
             playerSprite.setX(0);
             playerSprite.setY(0);

@@ -35,7 +35,7 @@ public class MazeView extends View {
 
     /** Player and exit objects, and their positions. */
     private PlayerSprite playerSprite = new PlayerSprite();
-    private MazeCell exit;
+    private MazeCell exitCell;
 
     /** The number of columns and rows in this maze. */
     private int numMazeCols;
@@ -122,7 +122,7 @@ public class MazeView extends View {
         paintWalls(canvas, mazeCols, mazeRows, cellSize);
         paintCoins(canvas, cellSize, margin);
         paintPlayerSprite(canvas, cellSize, margin);
-        paintExit(exit, canvas, cellSize, margin);
+        paintExit(exitCell, canvas, cellSize, margin);
     }
 
     /** Draws walls (borders) for each mazeCell.
@@ -264,12 +264,12 @@ public class MazeView extends View {
         return this.cellSize;
     }
 
-    MazeCell getExit() {
-        return this.exit;
+    MazeCell getExitCell() {
+        return this.exitCell;
     }
 
-    void setExit(MazeCell exit) {
-        this.exit = exit;
+    void setExitCell(MazeCell exitCell) {
+        this.exitCell = exitCell;
     }
 
     PlayerSprite getPlayerSprite() {
