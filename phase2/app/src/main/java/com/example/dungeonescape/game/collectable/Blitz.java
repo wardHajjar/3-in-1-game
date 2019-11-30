@@ -1,6 +1,7 @@
 package com.example.dungeonescape.game.collectable;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.Rect;
@@ -15,11 +16,15 @@ public class Blitz extends GameObject implements Collectable {
 
     private Rect blitzShape;
     private boolean available;
+    private String blitzMode;
 
     public Blitz(int x, int y, int size){
         super(x, y);
+        setPaintColour(Color.RED);
         blitzShape = new Rect(x, y, x + size, y + size);
         available = true;
+        blitzMode = "notStarted";
+
     }
 
     @Override
@@ -80,5 +85,17 @@ public class Blitz extends GameObject implements Collectable {
 
     public void gotCollected(){
         available = false;
+    }
+
+    public void setBlitzMode(String mode){
+        blitzMode = mode;
+    }
+
+    public String getBlitzMode(){
+        return blitzMode;
+    }
+
+    public Rect getBlitzShape() {
+        return blitzShape;
     }
 }
