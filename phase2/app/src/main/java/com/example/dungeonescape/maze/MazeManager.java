@@ -49,11 +49,7 @@ class MazeManager {
         populateMaze();
     }
 
-    /** Populate Maze with GameObjects:
-     * PlayerSprite
-     * exitCell
-     * Coins
-     */
+    /** Populate Maze with GameObjects. */
     private void populateMaze() {
         initializeMaze();
         mazeView.setCoins(createCoins());
