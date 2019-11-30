@@ -52,9 +52,7 @@ public class MazeActivity extends GeneralGameActivity {
         player = (Player) i.getSerializableExtra("Player");
         playerManager = (PlayerManager) i.getSerializableExtra("Game Manager");
 
-        MazeView mazeView = findViewById(R.id.view);
-        mazeManager = new MazeManager(mazeView, player);
-        mazeManager.relocatePlayerSprite();
+        initializeMazeManager();
 
         /* Go to next game. Testing only. */
         configureNextButton();
@@ -63,6 +61,13 @@ public class MazeActivity extends GeneralGameActivity {
         startTime = SystemClock.elapsedRealtime();
 
         startCountDown();
+    }
+
+    /** Initializes the MazeManager for this Maze game. */
+    private void initializeMazeManager() {
+        MazeView mazeView = findViewById(R.id.view);
+        mazeManager = new MazeManager(mazeView, player);
+        mazeManager.relocatePlayerSprite();
     }
 
     private void startCountDown() {
@@ -92,7 +97,7 @@ public class MazeActivity extends GeneralGameActivity {
 
                 // Change UI to Lose Life screen
                 setContentView(R.layout.activity_maze_lose_life);
-                TextView textView = (TextView) findViewById(R.id.playerLives);
+                TextView textView = findViewById(R.id.playerLives);
                 textView.setText(String.format(Locale.getDefault(),
                         "You have %d lives left.", playerLivesLeft));
                 configureStartOverButton();
