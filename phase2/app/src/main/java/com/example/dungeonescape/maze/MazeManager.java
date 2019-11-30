@@ -64,36 +64,55 @@ class MazeManager {
         exit = mazeView.exit;
     }
 
-    /** Populates a 2D Array with MazeCell GameObjects to create the Maze. */
+    /** Populates a 2D Array with MazeCell GameObjects to create the Maze.
+     *
+     * @return a 2D Array of MazeCell GameObjects.
+     */
     private MazeCell[][] createMaze(){
-        MazeCell[][] cells = new MazeCell[numMazeCols][numMazeRows];
+        MazeCell[][] cellArray = new MazeCell[numMazeCols][numMazeRows];
 
-        //Creating a maze with cols X rows cells.
+        // Populates the 2D Array cellArray with MazeCell GameObjects
         for (int x = 0; x < numMazeCols; x++) {
             for (int y = 0; y < numMazeRows; y++) {
-                // cells[x][y] = new MazeCell(x, y);
-                MazeCell newMazeCell = new MazeCell(x, y);
-                cells[x][y] = newMazeCell;
-                newMazeCell.setPaintColour(Color.WHITE);
-                newMazeCell.setPaintStrokeWidth(4);
+                cellArray[x][y] = createMazeCell(x, y);
             }
         }
 
-        traverseMaze(cells);
+        traverseMaze(cellArray);
 
-        return cells;
+        return cellArray;
     }
 
-    private void traverseMaze(MazeCell[][] allCells) {
+    /** Returns a MazeCell GameObject at the specified coordinates with a specific colour and line
+     * width.
+     *
+     * @param x the x-coordinate
+     * @param y the y-coordinate
+     * @return a MazeCell GameObject.
+     */
+    private MazeCell createMazeCell(int x, int y) {
+        MazeCell mazeCell = new MazeCell(x, y);
+        mazeCell.setPaintColour(Color.WHITE);
+        mazeCell.setPaintStrokeWidth(4);
+
+        return mazeCell;
+    }
+
+    /** Traverses through the cellArray of MazeCell GameObejets and removes some walls to create
+     * the Maze.
+     *
+     * @param cellArray the 2D of MazeCell GameObjects to traverse through.
+     */
+    private void traverseMaze(MazeCell[][] cellArray) {
         Stack<MazeCell> stack = new Stack<>();
         MazeCell current, next;
 
-        current = allCells[0][0];
+        current = cellArray[0][0];
         current.setVisited(true);
 
-        //check for neighbors and remove walls until all cells are traversed.
+        // check for MazeCell neighbours and remove walls until all MazeCells are traversed
         do {
-            next = getNeighbour(current, allCells);
+            next = getNeighbour(current, cellArray);
             if (next != null) {
                 removeWall(current, next);
                 stack.push(current);
