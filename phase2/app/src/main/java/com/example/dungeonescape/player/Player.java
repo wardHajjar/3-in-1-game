@@ -32,11 +32,8 @@ public class Player implements Serializable {
     /** An ArrayList of the Collectable GameObjects this Player has. */
     private List<GameObject> satchel = new ArrayList<GameObject>();
 
-    /**
-     * The difficulty level that the user has chosen.
-     * Possible inputs: "Easy" or "Hard"
-     */
-    private String difficulty;
+    /** The Game Difficulty. Acts as a modifier. */
+    private int gameDifficulty = 1;
 
     /** The total time that the character has been playing the game for. */
     private long totalTimePlayed;
@@ -44,12 +41,10 @@ public class Player implements Serializable {
     public Player(String name) {
         setName(name);
         setScore(0);
-        setNumLives(5);
         setNumCoins(0);
         setColour(Color.WHITE);
         setCurrentLevel(1);
         totalTimePlayed = 0;
-        setDifficulty("Easy");
     }
 
     /** Adds a Collectable GameObject to the Player's satchel. */
@@ -103,23 +98,25 @@ public class Player implements Serializable {
         return score;
     }
 
-    //return the difficulty chosen by the player.
-    public String getDifficulty() {
-        return this.difficulty;
+    public int getGameDifficulty() {
+        return gameDifficulty;
     }
 
-    /**
-     * Sets the Game difficulty.
+    /** Sets the gameDifficulty value to an integer.
      *
      * @param difficulty the String difficulty.
      */
-    public void setDifficulty(String difficulty) {
-        this.difficulty = difficulty;
+    public void setGameDifficulty(String difficulty) {
         if (difficulty.equals("Easy")) {
-            setNumLives(5);
-        } else {
-            setNumLives(3);
+            this.gameDifficulty = 1;
+        } else if (difficulty.equals("Hard")) {
+            this.gameDifficulty = 2;
         }
+        updatePlayerData();
+    }
+
+    private void updatePlayerData() {
+        setNumLives((int) Math.ceil(5.0 / gameDifficulty));
     }
 
     /**
@@ -203,11 +200,7 @@ public class Player implements Serializable {
         setNumCoins(0);
         setCurrentLevel(1);
         resetTime();
-        if (getDifficulty().equals("Easy")) {
-            setNumLives(5);
-        } else if (getDifficulty().equals("Hard")) {
-            setNumLives(3);
-        }
+        updatePlayerData();
     }
 
     public List getSatchel() {

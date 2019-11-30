@@ -174,7 +174,8 @@ public class NewGameActivity extends GeneralGameActivity {
             @Override
             public void onClick(View view) {
                 if (isValid) {
-                    player.setDifficulty("Easy");
+//                    player.setDifficulty("Easy");
+                    player.setGameDifficulty("Easy");
                     save();
                     enter.setVisibility(View.VISIBLE);
                 }
@@ -188,7 +189,9 @@ public class NewGameActivity extends GeneralGameActivity {
             @Override
             public void onClick(View view) {
                 if (isValid) {
-                    player.setDifficulty("Hard");
+//                    player.setDifficulty("Hard");
+                    player.setGameDifficulty("Hard");
+                    System.out.println(player.getNumLives());
                     save();
                     enter.setVisibility(View.VISIBLE);
                 }
