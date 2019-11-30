@@ -163,30 +163,30 @@ public class MazeActivity extends GeneralGameActivity {
     /** Moves the Player up by one MazeCell. */
     public void movePlayerUp(View view) {
         mazeManager.movePlayer("UP");
-        checkDoneLevel(view);
+        goToNextLevel(view);
     }
 
     /** Moves the Player down by one MazeCell. */
     public void movePlayerDown(View view) {
         mazeManager.movePlayer("DOWN");
-        checkDoneLevel(view);
+        goToNextLevel(view);
     }
 
     /** Moves the Player left by one MazeCell. */
     public void movePlayerLeft(View view) {
         mazeManager.movePlayer("LEFT");
-        checkDoneLevel(view);
+        goToNextLevel(view);
     }
 
     /** Moves the Player right by one MazeCell. */
     public void movePlayerRight(View view) {
         mazeManager.movePlayer("RIGHT");
-        checkDoneLevel(view);
+        goToNextLevel(view);
     }
 
     /** Checks if the Maze has been completed 3 times. Go to next level if true. */
-    public void checkDoneLevel(View view) {
-        if (mazeManager.doneLevel())
+    public void goToNextLevel(View view) {
+        if (mazeManager.hasCompletedLevel())
             nextLevel();
     }
 

@@ -218,7 +218,11 @@ class MazeManager {
         return coins;
     }
 
-    boolean doneLevel() {
+    /** Returns if the Player has completed 3 iterations of the MazeCell.
+     *
+     * @return boolean value for Player level completion.
+     */
+    boolean hasCompletedLevel() {
         return mazeIterations >= 3;
     }
 
