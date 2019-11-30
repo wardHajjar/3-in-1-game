@@ -28,21 +28,21 @@ import java.util.Locale;
 
 
 public class MazeActivity extends GeneralGameActivity {
-    private MazeView mazeView;
+    private MazeManager mazeManager;
 
     /** Initial time set in milliseconds. */
     public long counter = 120000; // 2 min
     // public long counter = 6000; // 5s (for testing)
 
     /** Minutes and seconds values. */
-    long minutes;
-    long seconds;
+    private long minutes;
+    private long seconds;
 
     /** Initializes a Player and PlayerManager. */
-    Player player;
-    PlayerManager playerManager;
+    private Player player;
+    private PlayerManager playerManager;
 
-    long startTime;
+    private long startTime;
 
     private MenuActivity menuActivity = new MenuActivity();
 
@@ -55,15 +55,10 @@ public class MazeActivity extends GeneralGameActivity {
         Intent i = getIntent();
         player = (Player) i.getSerializableExtra("Player");
         playerManager = (PlayerManager) i.getSerializableExtra("Game Manager");
-        mazeView = findViewById(R.id.view);
-        mazeView.setPlayer(player);
-        mazeView.relocatePlayerSprite();
-//        mazeView.setMazeManager();
 
-        /* Sets the Player colour to the input choice from the New Game page. */
-        MazeManager mazeManager = mazeView.getMazeManager();
-//        mazeManager.setPlayerSpritePaint(player.getColour());
-//        playerSprite.setPaintColour(player.getColour());
+        MazeView mazeView = findViewById(R.id.view);
+        mazeManager = new MazeManager(mazeView, player);
+        mazeManager.relocatePlayerSprite();
 
         /* Go to next game. Testing only. */
         configureNextButton();
@@ -167,31 +162,31 @@ public class MazeActivity extends GeneralGameActivity {
 
     /** Moves the Player up by one MazeCell. */
     public void movePlayerUp(View view) {
-        mazeView.movePlayer("UP");
+        mazeManager.movePlayer("UP");
         checkDoneLevel(view);
     }
 
     /** Moves the Player down by one MazeCell. */
     public void movePlayerDown(View view) {
-        mazeView.movePlayer("DOWN");
+        mazeManager.movePlayer("DOWN");
         checkDoneLevel(view);
     }
 
     /** Moves the Player left by one MazeCell. */
     public void movePlayerLeft(View view) {
-        mazeView.movePlayer("LEFT");
+        mazeManager.movePlayer("LEFT");
         checkDoneLevel(view);
     }
 
     /** Moves the Player right by one MazeCell. */
     public void movePlayerRight(View view) {
-        mazeView.movePlayer("RIGHT");
+        mazeManager.movePlayer("RIGHT");
         checkDoneLevel(view);
     }
 
     /** Checks if the Maze has been completed 3 times. Go to next level if true. */
     public void checkDoneLevel(View view) {
-        if (mazeView.doneLevel())
+        if (mazeManager.doneLevel())
             nextLevel();
     }
 

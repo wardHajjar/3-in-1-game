@@ -1,12 +1,14 @@
 package com.example.dungeonescape.maze;
 
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.util.SparseIntArray;
 
+import com.example.dungeonescape.game.GameObject;
 import com.example.dungeonescape.game.collectable.Coin;
+import com.example.dungeonescape.player.Player;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 import java.util.Stack;
 
@@ -15,6 +17,10 @@ import java.util.Stack;
  * are created in this class and then passed to MazeView to be drawn out on screen.
  */
 class MazeManager {
+
+    /** A 2D Array of MazeCell cells. */
+    private MazeCell[][] cells;
+
     /** The size of each MazeCell */
     private float cellSize;
 
@@ -28,26 +34,38 @@ class MazeManager {
     /** The horizontal and vertical margin from the edge of the screen to the walls of the maze */
     private float horizontalPadding;
     private float verticalPadding;
-//
-//    MazeManager(int cols, int rows) {
-//        numMazeCols = cols;
-//        numMazeRows = rows;
-//    }
 
-    /*
-     * Create a maze using a specific algorithm:
-     * 1. Create a maze with cols X rows of grids, every cell is closed off.
-     * 2. Start at the top left hand corner as the "current" cell, add this cell to a stack,
-     * traverse to a random neighbor cell that has not been visited before,
-     * and knock out the wall in between the two cells.
-     * 3. If all neighbors have been visited, then we traverse back to previous cell and pop a
-     * cell out of the stack, repeat until we arrive at a cell with unvisited neighbor or until
-     * the stack is empty.
-     * 4. Mark the new cell as the "current cell" and repeat until the stack is empty, which
-     * guarantees all cells are visited so all cells have a path through which we can access.
-     *  @return a new maze with a path already made.
-     */
-    MazeCell[][] createMaze(){
+    private Player player;
+
+    private MazeView mazeView;
+    private PlayerSprite playerSprite;
+    private MazeCell playerLoc;
+    private GameObject exit;
+
+    /** Number of times the Player has gone through the maze. */
+    private int mazeIterations = 0;
+
+    MazeManager(MazeView mazeView, Player player) {
+        this.mazeView = mazeView;
+        this.player = player;
+        setNumMazeRows(5 * player.getGameDifficulty());
+        setNumMazeCols(5 * player.getGameDifficulty());
+
+        mazeView.setNumMazeCols(getNumMazeCols());
+        mazeView.setNumMazeRows(getNumMazeRows());
+
+        cells = createMaze();
+        mazeView.setCells(this.cells);
+        mazeView.setCoins(createCoins());
+        playerSprite = mazeView.playerSprite;
+        playerLoc = mazeView.playerLoc;
+        mazeView.exit = new GameObject(numMazeCols - 1, numMazeRows - 1);
+        mazeView.exit.setPaintColour(Color.BLUE);
+        exit = mazeView.exit;
+    }
+
+    /** Populates a 2D Array with MazeCell GameObjects to create the Maze. */
+    private MazeCell[][] createMaze(){
         Stack<MazeCell> stack = new Stack<>();
         MazeCell current, next;
         int mazeCols = getNumMazeCols();
@@ -148,7 +166,7 @@ class MazeManager {
      * Create 2 coins at random locations in the maze and return this list.
      * @return The list of coins we just created.
      */
-    ArrayList<Coin> createCoins() {
+    private ArrayList<Coin> createCoins() {
         ArrayList<Coin> coins = new ArrayList<>();
         SparseIntArray coordinates = new SparseIntArray();
         coordinates.append(0,0);
@@ -199,28 +217,77 @@ class MazeManager {
         setCellSize(newCellSize);
     }
 
-    /**
-     * Calculates the cell's horizontal padding based on the screen's width and calculated cell size.
-     *
-     * @param screenWidth the width of the phone screen in pixels.
-     * @param numMazeCols the number of columns in this Maze.
-     * @param cellSize the calculated size of the MazeCell.
-     */
-    void calculateCellHorizontalPadding(int screenWidth, int numMazeCols, float cellSize) {
-        float newHorizontalPadding = (screenWidth - (numMazeCols * cellSize)) / 2;
-        setHorizontalPadding(newHorizontalPadding);
+    boolean doneLevel() {
+        return mazeIterations >= 3;
     }
 
-    /**
-     * Calculates the cell's vertical padding based on the screen's height and calculated cell size.
-     *
-     * @param screenHeight the height of the phone screen in pixels.
-     * @param numMazeRows the number of rows in this Maze.
-     * @param cellSize the calculated size of the MazeCell.
+    void movePlayer(String direction){
+        // depending on the given direction, move the player to that cell if it's in the maze.
+        switch (direction){
+            case "UP":
+                if(!playerLoc.isTopWall()) {
+                    playerLoc = this.cells[playerSprite.getX()][playerSprite.getY() - 1];
+                    playerSprite.setY(playerSprite.getY() - 1);
+                }
+                break;
+            case "DOWN":
+                if(!playerLoc.isBottomWall()) {
+                    playerLoc = this.cells[playerSprite.getX()][playerSprite.getY() + 1];
+                    playerSprite.setY(playerSprite.getY() + 1);
+                }
+                break;
+            case "LEFT":
+                if(!playerLoc.isLeftWall()) {
+                    playerLoc = this.cells[playerLoc.getX() - 1][playerLoc.getY()];
+                    playerSprite.setX(playerSprite.getX() - 1);
+                }
+                break;
+            case "RIGHT":
+                if(!playerLoc.isRightWall()) {
+                    playerLoc = this.cells[playerLoc.getX() + 1][playerLoc.getY()];
+                    playerSprite.setX(playerSprite.getX() + 1);
+                }
+                break;
+        }
+        playerAtExit();
+        playerOnCoin();
+        mazeView.invalidate();
+    }
+
+    /** Checks if this Player has arrived at the exit, create a new Maze if true. */
+    private void playerAtExit() {
+        if (playerSprite.getX() == exit.getX() && playerSprite.getY() == exit.getY()) {
+            mazeIterations++;
+            this.cells = createMaze();
+            mazeView.setCells(this.cells);
+            mazeView.setCoins(createCoins());
+            relocatePlayerSprite();
+        }
+    }
+
+    /** Checks if this Player has the same coordinates as a Coin.
+     * Removes Coin from game & adds it to Player if true.
      */
-    void calculateCellVerticalPadding(int screenHeight, int numMazeRows, float cellSize) {
-        float newVerticalPadding = (screenHeight - (numMazeRows * cellSize)) / 2;
-        setVerticalPadding(newVerticalPadding);
+    private void playerOnCoin() {
+        Iterator<Coin> coinIterator = mazeView.getCoins().iterator();
+        while (coinIterator.hasNext()) {
+            Coin coin = coinIterator.next();
+            if (playerSprite.getX() == coin.getX() && playerSprite.getY() == coin.getY()) {
+                coinIterator.remove();
+                player.addCoin();
+            }
+        }
+    }
+
+    void relocatePlayerSprite() {
+        playerSprite.setPaintColour(player.getColour());
+        playerLoc = this.cells[0][0];
+        exit = new GameObject(numMazeCols - 1, numMazeRows - 1);
+        exit.setPaintColour(Color.BLUE);
+        if (playerSprite != null) {
+            playerSprite.setX(0);
+            playerSprite.setY(0);
+        }
     }
 
     /** Returns the Maze's cellSize.
@@ -271,13 +338,23 @@ class MazeManager {
         this.verticalPadding = verticalPadding;
     }
 
-    public int getNumMazeCols() {
+    private int getNumMazeCols() {
         return numMazeCols;
     }
-    public void setNumMazeCols(int cols){this.numMazeCols = cols;}
 
-    public int getNumMazeRows() {
+    private void setNumMazeCols(int cols){this.numMazeCols = cols;}
+
+    private int getNumMazeRows() {
         return numMazeRows;
     }
-    public void setNumMazeRows(int rows){this.numMazeRows = rows;}
+
+    private void setNumMazeRows(int rows){this.numMazeRows = rows;}
+
+    MazeView getMazeView() {
+        return this.mazeView;
+    }
+
+    void setMazeView(MazeView mazeView) {
+        this.mazeView = mazeView;
+    }
 }
