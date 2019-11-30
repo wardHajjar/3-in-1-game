@@ -66,14 +66,11 @@ class MazeManager {
 
     /** Populates a 2D Array with MazeCell GameObjects to create the Maze. */
     private MazeCell[][] createMaze(){
-        Stack<MazeCell> stack = new Stack<>();
-        MazeCell current, next;
-        int mazeCols = getNumMazeCols();
-        int mazeRows = getNumMazeRows();
-        MazeCell[][] cells = new MazeCell[mazeCols][mazeRows];
+        MazeCell[][] cells = new MazeCell[numMazeCols][numMazeRows];
+
         //Creating a maze with cols X rows cells.
-        for (int x = 0; x < mazeCols; x++) {
-            for (int y = 0; y < mazeRows; y++) {
+        for (int x = 0; x < numMazeCols; x++) {
+            for (int y = 0; y < numMazeRows; y++) {
                 // cells[x][y] = new MazeCell(x, y);
                 MazeCell newMazeCell = new MazeCell(x, y);
                 cells[x][y] = newMazeCell;
@@ -82,12 +79,21 @@ class MazeManager {
             }
         }
 
-        current = cells[0][0];
+        traverseMaze(cells);
+
+        return cells;
+    }
+
+    private void traverseMaze(MazeCell[][] allCells) {
+        Stack<MazeCell> stack = new Stack<>();
+        MazeCell current, next;
+
+        current = allCells[0][0];
         current.setVisited(true);
 
         //check for neighbors and remove walls until all cells are traversed.
         do {
-            next = getNeighbour(current, cells);
+            next = getNeighbour(current, allCells);
             if (next != null) {
                 removeWall(current, next);
                 stack.push(current);
@@ -97,7 +103,6 @@ class MazeManager {
                 current = stack.pop();
             }
         } while (!stack.isEmpty());
-        return cells;
     }
 
     /** Returns a MazeCell that has not been visited by the createMaze() function.
