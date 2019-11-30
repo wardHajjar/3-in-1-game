@@ -32,7 +32,7 @@ class MazeManager {
 
     private MazeView mazeView;
     private PlayerSprite playerSprite;
-    private MazeCell playerLoc;
+    private MazeCell playerLocation;
     private GameObject exit;
 
     /** Number of times the Player has gone through the maze. */
@@ -222,26 +222,26 @@ class MazeManager {
         // depending on the given direction, move the player to that cell if it's in the maze.
         switch (direction){
             case "UP":
-                if(!playerLoc.isTopWall()) {
-                    playerLoc = this.cells[playerSprite.getX()][playerSprite.getY() - 1];
+                if(!playerLocation.isTopWall()) {
+                    playerLocation = this.cells[playerSprite.getX()][playerSprite.getY() - 1];
                     playerSprite.setY(playerSprite.getY() - 1);
                 }
                 break;
             case "DOWN":
-                if(!playerLoc.isBottomWall()) {
-                    playerLoc = this.cells[playerSprite.getX()][playerSprite.getY() + 1];
+                if(!playerLocation.isBottomWall()) {
+                    playerLocation = this.cells[playerSprite.getX()][playerSprite.getY() + 1];
                     playerSprite.setY(playerSprite.getY() + 1);
                 }
                 break;
             case "LEFT":
-                if(!playerLoc.isLeftWall()) {
-                    playerLoc = this.cells[playerLoc.getX() - 1][playerLoc.getY()];
+                if(!playerLocation.isLeftWall()) {
+                    playerLocation = this.cells[playerLocation.getX() - 1][playerLocation.getY()];
                     playerSprite.setX(playerSprite.getX() - 1);
                 }
                 break;
             case "RIGHT":
-                if(!playerLoc.isRightWall()) {
-                    playerLoc = this.cells[playerLoc.getX() + 1][playerLoc.getY()];
+                if(!playerLocation.isRightWall()) {
+                    playerLocation = this.cells[playerLocation.getX() + 1][playerLocation.getY()];
                     playerSprite.setX(playerSprite.getX() + 1);
                 }
                 break;
@@ -279,7 +279,7 @@ class MazeManager {
     /** Sets the PlayerSprite's position to the initial state. */
     void relocatePlayerSprite() {
         playerSprite.setPaintColour(player.getColour());
-        playerLoc = this.cells[0][0];
+        playerLocation = this.cells[0][0];
         exit = new GameObject(numMazeCols - 1, numMazeRows - 1);
         exit.setPaintColour(Color.BLUE);
         if (playerSprite != null) {
