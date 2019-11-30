@@ -3,6 +3,7 @@ package com.example.dungeonescape.platformer;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 
+import com.example.dungeonescape.game.collectable.Coin;
 import com.example.dungeonescape.player.Player;
 
 import java.util.Random;
@@ -33,7 +34,7 @@ class PlatformerManager {
     /**
      * A list of coins.
      */
-    private List<PlatformerCoin> coins;
+    private List<Coin> coins;
     /**
      * The player user.
      */
@@ -45,35 +46,42 @@ class PlatformerManager {
 
     private boolean enterPortal;
 
+    private String gameMode;
+
     /**
      * Platform manager on a screen with characters and platforms.
      * @param h height of the screen.
      * @param w the width of the screen.
      */
     PlatformerManager(int h, int w) {
+
         character = new Character(50,1000,100, this);
         player = null;
         gridHeight = h - 344; //1684
         gridWidth = w; //1080
         platforms = createPlatforms();
-        coins = new ArrayList<>(2);
-        coins.add(new PlatformerCoin(300,300,60, this));
-        coins.add(new PlatformerCoin(70,1000,60, this));
+        createCoins(3);
+        gameMode = "Regular";
 
     }
     PlatformerManager(int h, int w, int coins) {
+
         character = new Character(50,1000,100, this);
         player = null;
         gridHeight = h - 344; //1684
         gridWidth = w; //1080
         platforms = createPlatforms();
         createCoins(coins);
+        gameMode = "Blitz";
     }
 
     void createCoins(int number) {
         coins = new ArrayList<>(number);
-        coins.add(new PlatformerCoin(300,300,60, this));
-        coins.add(new PlatformerCoin(70,1000,60, this));
+        for (int i = 1; i <= number; i++) {
+            Random random = new Random();
+            int a = random.nextInt(gridWidth - 150);
+            coins.add(new Coin(a, gridHeight*i/10, 30));
+        }
     }
     /**
      * @return gets the grid width.
@@ -91,7 +99,7 @@ class PlatformerManager {
     int getGridHeight() {
         return gridHeight;
     }
-    List<PlatformerCoin> getCoins() {
+    List<Coin> getCoins() {
         return coins;
     }
 
@@ -144,7 +152,7 @@ class PlatformerManager {
         for (int i = 0; i < coins.size(); i++) {
             coins.get(i).draw(canvas);
         }
-        if (portal != null) {
+        if (portal != null && !gameMode.equals("Blitz")) {
             portal.draw(canvas);
         }
     }
@@ -171,7 +179,7 @@ class PlatformerManager {
     boolean update() {
 
         character.move();
-        character.coinDetection();
+        character.coinDetection(coins);
         boolean alive = character.isAlive();
         if (portal != null) {
             enterPortal = character.portalDetection();
@@ -189,7 +197,7 @@ class PlatformerManager {
             character.setY(549);
 
             for (int i = 0; i < coins.size(); i++) {
-                coins.get(i).update(diff);
+                coins.get(i).update(diff, gridHeight);
             }
             for (int i = 0; i < platforms.size(); i++) {
                 platforms.get(i).update(diff);

@@ -17,24 +17,19 @@ class PlatformerCoin extends Coin {
         super(x,y, radius);
         this.radius = radius;
         this.manager = manager;
-        this.shape = getCoinShape(radius);
+        this.shape = getNewShape();
     }
 
 
     /** Deletes a PlatformerCoin that the Character has already collected.
      * Creates a new PlatformerCoin at a new y value.
      */
-    void gotCoin() {
-        setY(0);
-        Random r = new Random();
-        setX(r.nextInt(1080- 150));
-        shape = getCoinShape(radius);
-    }
+
 
     /** Moves the Platforms down. */
     void update(int down) {
         coinDown(down);
-        shape = getCoinShape(radius);
+        shape = getNewShape();
     }
     PlatformerManager getManager() {
         return this.manager;

@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.dungeonescape.activities.DeadActivity;
+import com.example.dungeonescape.activities.EndGameActivity;
 import com.example.dungeonescape.activities.MainActivity;
 import com.example.dungeonescape.activities.MenuActivity;
 import com.example.dungeonescape.player.PlayerManager;
@@ -20,7 +21,7 @@ import com.example.dungeonescape.R;
 /**
  * The activity for the main level3 game.
  */
-public class PlatformerMainActivity extends GeneralGameActivity {
+public class PlatformerMainActivity extends GeneralGameActivity{
     private PlatformerView game;
     private boolean running;
     Player player;
@@ -55,17 +56,17 @@ public class PlatformerMainActivity extends GeneralGameActivity {
         running = true;
 
         game.setEnterPortalListener(new OnCustomEventListener() {
-            public void onEvent() {nextLevel();
+            public void onEvent() {enterHiddenLevel();
             }
         });
-//        game.setFinishLevelListener(new OnCustomEventListener() {
-//            public void onEvent() {nextLevel();
-//            }
-//        });
-//        game.setEndGameListener(new OnCustomEventListener() {
-//            public void onEvent() {nextLevel();
-//            }
-//        });
+        game.setFinishLevelListener(new OnCustomEventListener() {
+            public void onEvent() {endGame();
+            }
+        });
+        game.setEndGameListener(new OnCustomEventListener() {
+            public void onEvent() {deadPage();
+            }
+        });
         // Thread code is from the following Youtube Video, body of run() is written myself
         // https://www.youtube.com/watch?v=6sBqeoioCHE&t=193s
         Thread t = new Thread() {
@@ -94,12 +95,12 @@ public class PlatformerMainActivity extends GeneralGameActivity {
 //
 
 //                                    if (doneLevel) {
-//                                        nextLevel();
+//                                        enterHiddenLevel();
 //                                        save(playerManager, player);
 //                                        running = false;
 //                                    }
 //                                    if (enterPortal) {
-//                                        nextLevel();
+//                                        enterHiddenLevel();
 //                                        save(playerManager, player);
 //                                        running = false;
 //                                    }
@@ -108,7 +109,7 @@ public class PlatformerMainActivity extends GeneralGameActivity {
 //                                        game.gameOver(game.getManager().getPlayer());
 //
 //                                    }
-//                                    if (dead){
+//                                    if (exitHiddenLevel){
 //                                        save(playerManager, player);
 //                                        deadPage();
 //                                        running = false;
@@ -148,14 +149,27 @@ public class PlatformerMainActivity extends GeneralGameActivity {
     }
 
     /**
-     * User has successfully finished Platformer and will now move to the EndGamePage.
+     * User has entered the portal to the hidden level.
      */
-    private void nextLevel() {
+    private void enterHiddenLevel() {
         long endTime = SystemClock.elapsedRealtime();
         long elapsedMilliSeconds = endTime - startTime;
         player.updateTotalTime(elapsedMilliSeconds);
         save(playerManager, player);
         Intent intent = new Intent(PlatformerMainActivity.this, PlatformerHiddenActivity.class);
+        intent.putExtra("Player", player);
+        intent.putExtra("Game Manager", playerManager);
+        startActivity(intent);
+    }
+    /**
+     * User has successfully finished Platformer and will now move to the EndGamePage.
+     */
+    private void endGame() {
+        long endTime = SystemClock.elapsedRealtime();
+        long elapsedMilliSeconds = endTime - startTime;
+        player.updateTotalTime(elapsedMilliSeconds);
+        save(playerManager, player);
+        Intent intent = new Intent(PlatformerMainActivity.this, EndGameActivity.class);
         intent.putExtra("Player", player);
         intent.putExtra("Game Manager", playerManager);
         startActivity(intent);

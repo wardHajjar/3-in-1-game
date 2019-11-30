@@ -6,36 +6,77 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Rect;
 
+import java.util.Random;
+
 
 public class Coin extends GameObject implements Collectable {
 
+    /** The shape of the coin. */
     private Rect coinShape;
+    /** The available status of the coin */
     private Boolean available;
 
-    public Coin(int x, int y, int size) {
+    /** The radius of the coin. */
+    private int coinRadius;
+
+    public Coin(int x, int y, int coinRadius) {
         super(x, y);
         setPaintColour(Color.YELLOW);
         this.available = true;
-        this.coinShape = new Rect(x, y, x + size, y + size);
+        this.coinRadius = coinRadius;
+        this.coinShape = new Rect(x, y, x + coinRadius, y + coinRadius);
+
     }
 
-    public void updateCoinLocation(int x, int y) {
-        this.coinShape.top = getX();
-        this.coinShape.left = getY();
+    private void updateCoinLocation() {
+        this.coinShape.top = getY();
+        this.coinShape.right = getX() + coinRadius;
+        this.coinShape.bottom = getY() + coinRadius;
+        this.coinShape.left = getX();
     }
 
+    public void gotCoin() {
+        setY(0);
+        Random r = new Random();
+        setX(r.nextInt(1080 - 150));
+        updateCoinLocation();
+    }
     public Rect getCoinShape() {
         return coinShape;
     }
 
-    protected Rect getCoinShape(int radius) {
-        return new Rect(getX() - radius / 2, getY() - radius / 2,
-                getX() + radius / 2, getY() + radius / 2);
+    protected Rect getNewShape() {
+        return new Rect(getX(), getY(),
+                getX() + coinRadius, getY() + coinRadius);
+    }
+    /** Moves the coin down when the Character jumps up. */
+    public void update(int down, int height) {
+
+        if (getY() + down > height) {
+            /* Moves coin up if the Character moves down without collection the PlatformerCoin. */
+            int diff = Math.abs(getY() + down - height);
+            if (diff > 400) {
+                setY(0);
+            }
+            else if (diff > 200) {
+                setY(-200);
+            }
+            else {
+                setY(-diff);
+            }
+            Random r = new Random();
+            int a = r.nextInt(height - 150);
+            this.setX(a);
+        }
+        else {
+            incY(down);
+        }
+        updateCoinLocation();
     }
 
     @Override
     public void draw(Canvas canvas) {
-        canvas.drawCircle(this.getX(), this.getY(), this.coinShape.width()/2, this.getPaint());
+        canvas.drawCircle(this.getX(), this.getY(), coinRadius, this.getPaint());
     }
 
     @Override
