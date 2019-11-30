@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.dungeonescape.brickbreaker.BBInstructionsActivity;
 import com.example.dungeonescape.player.Player;
 import com.example.dungeonescape.player.PlayerManager;
 import com.example.dungeonescape.R;
@@ -107,7 +108,7 @@ public class LoadGameActivity extends AppCompatActivity {
     private void progress() {
         int level = player.getCurrentLevel();
         if (level == 1 || level == 0) {
-            Intent intent = new Intent(LoadGameActivity.this, BBMainActivity.class);
+            Intent intent = new Intent(LoadGameActivity.this, BBInstructionsActivity.class);
             intent.putExtra("Player", player);
             intent.putExtra("Game Manager", playerManager);
             startActivity(intent);

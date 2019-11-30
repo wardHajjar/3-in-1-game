@@ -161,7 +161,6 @@ class BBGameManager {
         if (item.getAvailableStatus()) {
             String coinCollision = ball.madeRectCollision(item.getItemShape());
             if (coinCollision.equals("x") || coinCollision.equals("y")) {
-                player.addCoin();
                 item.gotCollected();
                 return true;
             }

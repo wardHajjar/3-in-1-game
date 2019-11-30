@@ -12,6 +12,7 @@ import android.graphics.Color;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.dungeonescape.brickbreaker.BBInstructionsActivity;
 import com.example.dungeonescape.player.Player;
 import com.example.dungeonescape.player.PlayerManager;
 import com.example.dungeonescape.R;
@@ -108,7 +109,7 @@ public class NewGameActivity extends GeneralGameActivity {
             @Override
             public void onClick(View view) {
                 if (isValid) {
-                    Intent intent = new Intent(NewGameActivity.this, BBMainActivity.class);
+                    Intent intent = new Intent(NewGameActivity.this, BBInstructionsActivity.class);
                     intent.putExtra("Player", player);
                     intent.putExtra("Game Manager", playerManager);
                     startActivity(intent);
