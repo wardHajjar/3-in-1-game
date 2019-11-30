@@ -166,28 +166,22 @@ class MazeManager {
 
     /** Removes walls between this MazeCell and the next MazeCell, as long as they're not borders.
      *
-     * @param current the current MazeCell.
-     * @param next the next MazeCell.
+     * @param currCell the current MazeCell.
+     * @param nextCell the next MazeCell to check.
      */
-    private void removeMazeCellWall(MazeCell current, MazeCell next){
-        /* (x, y) coordinates for the current and next MazeCell. */
-        int currX = current.getX();
-        int currY = current.getY();
-        int nextX = next.getX();
-        int nextY = next.getY();
-
-        if (currX == nextX - 1) {
-            current.setRightWall(false);
-            next.setLeftWall(false);
-        } else if (currX == nextX + 1) {
-            current.setLeftWall(false);
-            next.setRightWall(false);
-        } else if (currY == nextY - 1) {
-            current.setBottomWall(false);
-            next.setTopWall(false);
+    private void removeMazeCellWall(MazeCell currCell, MazeCell nextCell){
+        if (currCell.getX() == nextCell.getX() - 1) {
+            currCell.setRightWall(false);
+            nextCell.setLeftWall(false);
+        } else if (currCell.getX() == nextCell.getX() + 1) {
+            currCell.setLeftWall(false);
+            nextCell.setRightWall(false);
+        } else if (currCell.getY() == nextCell.getY() - 1) {
+            currCell.setBottomWall(false);
+            nextCell.setTopWall(false);
         } else {
-            current.setTopWall(false);
-            next.setBottomWall(false);
+            currCell.setTopWall(false);
+            nextCell.setBottomWall(false);
         }
     }
 
