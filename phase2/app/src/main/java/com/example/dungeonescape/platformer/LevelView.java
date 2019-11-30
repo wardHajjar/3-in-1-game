@@ -50,6 +50,9 @@ abstract class LevelView extends GameView implements Runnable {
     PlatformerManager getManager() {
         return manager;
     }
+    void setManager(PlatformerManager manager) {
+        this.manager = manager;
+    }
 
     Point getSize() {
         return size;

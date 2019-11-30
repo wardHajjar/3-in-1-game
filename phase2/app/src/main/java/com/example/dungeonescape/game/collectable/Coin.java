@@ -5,11 +5,10 @@ import com.example.dungeonescape.game.GameObject;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Rect;
-
 import java.util.Random;
 
 
-public class Coin extends GameObject implements Collectable {
+public class Coin extends GameObject implements Collectable{
 
     /** The shape of the coin. */
     private Rect coinShape;
@@ -25,7 +24,6 @@ public class Coin extends GameObject implements Collectable {
         this.available = true;
         this.coinRadius = coinRadius;
         this.coinShape = new Rect(x, y, x + coinRadius, y + coinRadius);
-
     }
 
     private void updateCoinLocation() {
@@ -45,10 +43,6 @@ public class Coin extends GameObject implements Collectable {
         return coinShape;
     }
 
-    protected Rect getNewShape() {
-        return new Rect(getX(), getY(),
-                getX() + coinRadius, getY() + coinRadius);
-    }
     /** Moves the coin down when the Character jumps up. */
     public void update(int down, int height) {
 
@@ -88,7 +82,5 @@ public class Coin extends GameObject implements Collectable {
     public void gotCollected() {
         this.available = false;
     }
-
-
 
 }

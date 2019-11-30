@@ -63,6 +63,7 @@ public class PlatformerInstructionsActivity extends GeneralGameActivity {
                 Intent intent = new Intent(PlatformerInstructionsActivity.this, PlatformerMainActivity.class);
                 intent.putExtra("Player", player);
                 intent.putExtra("Game Manager", playerManager);
+
                 startActivity(intent);
             }
         });

@@ -3,6 +3,7 @@ package com.example.dungeonescape.platformer;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -14,10 +15,16 @@ import com.example.dungeonescape.activities.DeadActivity;
 import com.example.dungeonescape.activities.EndGameActivity;
 import com.example.dungeonescape.activities.MainActivity;
 import com.example.dungeonescape.activities.MenuActivity;
+import com.example.dungeonescape.game.SaveData;
 import com.example.dungeonescape.player.PlayerManager;
 import com.example.dungeonescape.activities.GeneralGameActivity;
 import com.example.dungeonescape.player.Player;
 import com.example.dungeonescape.R;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * The activity for the main level3 game.
  */
@@ -31,7 +38,7 @@ public class PlatformerMainActivity extends GeneralGameActivity{
     private MenuActivity menuActivity = new MenuActivity();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         startTime = SystemClock.elapsedRealtime();
@@ -40,8 +47,20 @@ public class PlatformerMainActivity extends GeneralGameActivity{
         player = (Player) i.getSerializableExtra("Player");
         playerManager = (PlayerManager) i.getSerializableExtra("Game Manager");
 
+        @SuppressWarnings("unchecked")
+        ArrayList<Integer> character = (ArrayList<Integer>) i.getSerializableExtra("Character");
+        @SuppressWarnings("unchecked")
+        ArrayList<List> platformLocations = (ArrayList) i.getSerializableExtra("Platforms");
+
+
         setContentView(R.layout.activity_level3_main);
         game = findViewById(R.id.level2);
+
+        if (platformLocations != null && character != null) {
+            int score = (int) i.getSerializableExtra("Score");
+            game.getManager().setCharacter(character, score);
+            game.getManager().setPlatforms(platformLocations);
+        }
 
         // getting player instance from intent
         //pass player into manager
@@ -55,8 +74,10 @@ public class PlatformerMainActivity extends GeneralGameActivity{
         buttons();
         running = true;
 
+
         game.setEnterPortalListener(new OnCustomEventListener() {
-            public void onEvent() {enterHiddenLevel();
+            public void onEvent() {enterHiddenLevel(savedInstanceState);
+
             }
         });
         game.setFinishLevelListener(new OnCustomEventListener() {
@@ -92,28 +113,6 @@ public class PlatformerMainActivity extends GeneralGameActivity{
                                     String life = "Lives: " + String.valueOf(lives);
                                     TextView lifeText = (TextView) findViewById(R.id.lives);
                                     lifeText.setText(life);
-//
-
-//                                    if (doneLevel) {
-//                                        enterHiddenLevel();
-//                                        save(playerManager, player);
-//                                        running = false;
-//                                    }
-//                                    if (enterPortal) {
-//                                        enterHiddenLevel();
-//                                        save(playerManager, player);
-//                                        running = false;
-//                                    }
-//                                    if (lostLife){
-//                                        save(playerManager, player);
-//                                        game.gameOver(game.getManager().getPlayer());
-//
-//                                    }
-//                                    if (exitHiddenLevel){
-//                                        save(playerManager, player);
-//                                        deadPage();
-//                                        running = false;
-//                                    }
                                 }
                             }
                         });
@@ -151,14 +150,17 @@ public class PlatformerMainActivity extends GeneralGameActivity{
     /**
      * User has entered the portal to the hidden level.
      */
-    private void enterHiddenLevel() {
+    private void enterHiddenLevel(Bundle savedInstanceState) {
         long endTime = SystemClock.elapsedRealtime();
         long elapsedMilliSeconds = endTime - startTime;
         player.updateTotalTime(elapsedMilliSeconds);
-        save(playerManager, player);
         Intent intent = new Intent(PlatformerMainActivity.this, PlatformerHiddenActivity.class);
         intent.putExtra("Player", player);
         intent.putExtra("Game Manager", playerManager);
+        intent.putExtra("Character", game.getManager().getCharacterLocation());
+        intent.putExtra("Platforms", game.getManager().getPlatformPositions());
+        intent.putExtra("Score", game.getManager().getCharacterScore());
+
         startActivity(intent);
     }
     /**
@@ -230,7 +232,6 @@ public class PlatformerMainActivity extends GeneralGameActivity{
         super.save(playerManager, player);
         player.setCurrentLevel(3);
     }
-
 
 }
 

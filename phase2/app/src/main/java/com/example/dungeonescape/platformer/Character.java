@@ -2,12 +2,13 @@ package com.example.dungeonescape.platformer;
 
 import com.example.dungeonescape.game.collectable.Coin;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Represents the ball that bounces on the platforms.
  */
-class Character extends PlatformerObject {
+class Character extends PlatformerObject implements Serializable{
 
     /** The speed of the ball. */
     private int speed = 5;
