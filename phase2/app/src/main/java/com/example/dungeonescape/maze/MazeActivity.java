@@ -155,6 +155,7 @@ public class MazeActivity extends GeneralGameActivity {
         });
     }
 
+    /** Creates the Button to play the Maze Game from the beginning. */
     private void configureStartOverButton() {
         Button startOver = findViewById(R.id.startOver);
         startOver.setOnClickListener(new View.OnClickListener() {
@@ -199,15 +200,14 @@ public class MazeActivity extends GeneralGameActivity {
             nextLevel();
     }
 
-    /** User has successfully finished Maze and will now move on to Platformer. */
+    /** Send the Player to the next level of the game. */
     protected void nextLevel() {
-        /* The time at which the user has finished the level. */
-        long endTime = SystemClock.elapsedRealtime();
-        long elapsedMilliSeconds = endTime - startTime;
-
-        /* Updates the total time elapsed in Player. */
+        // The time at which the user has finished the level
+        long elapsedMilliSeconds = SystemClock.elapsedRealtime() - startTime;
         player.updateTotalTime(elapsedMilliSeconds);
+
         save(playerManager, player);
+
         Intent intent = new Intent(MazeActivity.this, PlatformerInstructionsActivity.class);
         intent.putExtra("Player", player);
         intent.putExtra("Game Manager", playerManager);
