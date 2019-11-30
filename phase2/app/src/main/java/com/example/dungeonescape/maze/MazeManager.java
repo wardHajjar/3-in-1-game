@@ -100,34 +100,39 @@ class MazeManager {
         return cells;
     }
 
-    /**
-     * get a random neighbor that has not been visited and proceed to that cell.
-     * @param cell the current cell we're at, used to determine possible neighbors.
+    /** Returns a MazeCell that has not been visited by the createMaze() function.
+     *
+     * @param currCell the current cell we're at, used to determine possible neighbors.
      * @param cells all the possible cells in the maze.
      * @return an unvisited cell which is a neighbor of the passed in cell.
      */
-    private MazeCell getNeighbour(MazeCell cell, MazeCell[][] cells) {
+    private MazeCell getNeighbour(MazeCell currCell, MazeCell[][] cells) {
         ArrayList<MazeCell> neighbours = new ArrayList<>();
-        int cellX = cell.getX();
-        int cellY = cell.getY();
-        int mazeCols = getNumMazeCols();
-        int mazeRows = getNumMazeRows();
-        // left
-        if (cellX - 1 >= 0 && !cells[cellX - 1][cellY].isVisited()) {
-            neighbours.add(cells[cellX - 1][cellY]);
+
+        // check MazeCell on the left
+        if (currCell.getX() - 1 >= 0 &&
+                !cells[currCell.getX() - 1][currCell.getY()].isVisited()) {
+            neighbours.add(cells[currCell.getX() - 1][currCell.getY()]);
         }
-        // right
-        if (cellX + 1 < mazeCols && !cells[cellX + 1][cellY].isVisited()) {
-            neighbours.add(cells[cellX + 1][cellY]);
+
+        // check MazeCell on the left
+        if (currCell.getX() + 1 < numMazeCols &&
+                !cells[currCell.getX() + 1][currCell.getY()].isVisited()) {
+            neighbours.add(cells[currCell.getX() + 1][currCell.getY()]);
         }
-        // bottom
-        if (cellY + 1 < mazeRows && !cells[cellX][cellY + 1].isVisited()) {
-            neighbours.add(cells[cellX][cellY + 1]);
+
+        // check MazeCell below
+        if (currCell.getY() + 1 < numMazeRows &&
+                !cells[currCell.getX()][currCell.getY() + 1].isVisited()) {
+            neighbours.add(cells[currCell.getX()][currCell.getY() + 1]);
         }
-        // top
-        if (cellY - 1 >= 0 && !cells[cellX][cellY - 1].isVisited()) {
-            neighbours.add(cells[cellX][cellY - 1]);
+
+        // check MazeCell above
+        if (currCell.getY() - 1 >= 0 &&
+                !cells[currCell.getX()][currCell.getY() - 1].isVisited()) {
+            neighbours.add(cells[currCell.getX()][currCell.getY() - 1]);
         }
+
         if (neighbours.isEmpty()) {
             return null;
         } else {
@@ -195,28 +200,6 @@ class MazeManager {
         return coins;
     }
 
-    /** Calculates the cellSize based on the screen's dimensions.
-     *
-     * @param screenWidth the width of the phone screen in pixels.
-     * @param screenHeight the height of the phone screen in pixels.
-     * @param numMazeCols the number of columns this Maze has.
-     * @param numMazeRows the number of rows this Maze has.
-     */
-    void calculateCellSize(int screenWidth, int screenHeight,
-                           int numMazeCols, int numMazeRows) {
-        float newCellSize;
-        float screenWidthDivHeight = screenWidth / screenHeight;
-        float mazeColsDivRows = numMazeCols / numMazeRows;
-
-        if (screenWidthDivHeight < mazeColsDivRows) {
-            newCellSize = screenWidth / (numMazeCols + 1);
-        } else {
-            newCellSize = screenHeight / (numMazeRows + 1);
-        }
-
-        setCellSize(newCellSize);
-    }
-
     boolean doneLevel() {
         return mazeIterations >= 3;
     }
@@ -279,6 +262,7 @@ class MazeManager {
         }
     }
 
+    /** Sets the PlayerSprite's position to the initial state. */
     void relocatePlayerSprite() {
         playerSprite.setPaintColour(player.getColour());
         playerLoc = this.cells[0][0];
