@@ -12,10 +12,10 @@ public class CollectableFactory {
             return new Coin(x, y, size);
 
         } else if (collectableType.equalsIgnoreCase("gem")) {
-            return new Gem(x, y);
+            return new Gem(x, y, size);
 
         } else if (collectableType.equalsIgnoreCase("potion")) {
-            return new Potion(x, y);
+            return new Potion(x, y, size);
         }
 
         return null;
