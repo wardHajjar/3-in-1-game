@@ -9,8 +9,15 @@ public class HiddenLevelView extends LevelView {
         super(context, attrs, "Blitz");
 
     }
-//    public void setFinishLevelListener(OnCustomEventListener eventListener) {
-//        this.finishLevelListener = eventListener;
-//    }
+
+    public void update() {
+        if (!getManager().update()) {
+            exitHiddenLevel();
+        }
+    }
+
+    public void exitHiddenLevel() {
+        endGameListener.onEvent();
+    }
 
 }

@@ -46,27 +46,33 @@ class PlatformerManager {
 
     private boolean enterPortal;
 
+    private String gameMode;
+
     /**
      * Platform manager on a screen with characters and platforms.
      * @param h height of the screen.
      * @param w the width of the screen.
      */
     PlatformerManager(int h, int w) {
+
         character = new Character(50,1000,100, this);
         player = null;
         gridHeight = h - 344; //1684
         gridWidth = w; //1080
         platforms = createPlatforms();
         createCoins(3);
+        gameMode = "Regular";
 
     }
     PlatformerManager(int h, int w, int coins) {
+
         character = new Character(50,1000,100, this);
         player = null;
         gridHeight = h - 344; //1684
         gridWidth = w; //1080
         platforms = createPlatforms();
         createCoins(coins);
+        gameMode = "Blitz";
     }
 
     void createCoins(int number) {
@@ -143,7 +149,7 @@ class PlatformerManager {
         for (int i = 0; i < coins.size(); i++) {
             coins.get(i).draw(canvas);
         }
-        if (portal != null) {
+        if (portal != null && !gameMode.equals("Blitz")) {
             portal.draw(canvas);
         }
     }
