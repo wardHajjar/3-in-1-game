@@ -1,7 +1,5 @@
 package com.example.dungeonescape.maze;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -16,8 +14,6 @@ import android.widget.TextView;
 
 import com.example.dungeonescape.activities.MainActivity;
 import com.example.dungeonescape.activities.MenuActivity;
-import com.example.dungeonescape.activities.NewGameActivity;
-import com.example.dungeonescape.brickbreaker.BBMainActivity;
 import com.example.dungeonescape.player.PlayerManager;
 import com.example.dungeonescape.player.Player;
 import com.example.dungeonescape.R;
@@ -66,6 +62,10 @@ public class MazeActivity extends GeneralGameActivity {
         // starts the clock
         startTime = SystemClock.elapsedRealtime();
 
+        startCountDown();
+    }
+
+    private void startCountDown() {
         /* Initializes the countdown to losing the game. */
         final TextView countTime = findViewById(R.id.countTime);
         countTime.setTextColor(Color.WHITE);
@@ -86,11 +86,11 @@ public class MazeActivity extends GeneralGameActivity {
 
             @Override
             public void onFinish() {
-                /* Player loses a life when the countdown runs out. */
+                // Player loses a life when the countdown runs out
                 player.loseLife();
                 int playerLivesLeft = player.getNumLives();
 
-                /* Change UI to Lose Life screen. */
+                // Change UI to Lose Life screen
                 setContentView(R.layout.activity_maze_lose_life);
                 TextView textView = (TextView) findViewById(R.id.playerLives);
                 textView.setText(String.format(Locale.getDefault(),
