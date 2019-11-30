@@ -33,7 +33,7 @@ class MazeManager {
     private MazeView mazeView;
     private PlayerSprite playerSprite;
     private MazeCell playerLocation;
-    private GameObject exit;
+    private MazeCell exit;
 
     /** Number of times the Player has gone through the maze. */
     private int mazeIterations = 0;
@@ -51,7 +51,7 @@ class MazeManager {
         mazeView.setCells(this.cells);
         mazeView.setCoins(createCoins());
         playerSprite = mazeView.getPlayerSprite();
-        mazeView.setExit(new GameObject(numMazeCols - 1, numMazeRows - 1));
+        mazeView.setExit(new MazeCell(numMazeCols - 1, numMazeRows - 1));
         mazeView.getExit().setPaintColour(Color.BLUE);
         exit = mazeView.getExit();
     }
@@ -280,7 +280,7 @@ class MazeManager {
     void relocatePlayerSprite() {
         playerSprite.setPaintColour(player.getColour());
         playerLocation = this.cells[0][0];
-        exit = new GameObject(numMazeCols - 1, numMazeRows - 1);
+        exit = new MazeCell(numMazeCols - 1, numMazeRows - 1);
         exit.setPaintColour(Color.BLUE);
         if (playerSprite != null) {
             playerSprite.setX(0);
