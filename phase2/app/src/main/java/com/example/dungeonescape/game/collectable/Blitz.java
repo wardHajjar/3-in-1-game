@@ -95,7 +95,7 @@ public class Blitz extends GameObject implements Collectable {
         return blitzMode;
     }
 
-    public Rect getBlitzShape() {
+    public Rect getItemShape() {
         return blitzShape;
     }
 }

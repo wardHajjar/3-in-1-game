@@ -97,7 +97,7 @@ class Character extends PlatformerObject {
     /** Checks if there's a PlatformerCoin at the same coordinate as Character. */
     void coinDetection(List<Coin> coins) {
         for (Coin coin: coins) {
-            if (getShape().intersect(coin.getCoinShape())) {
+            if (getShape().intersect(coin.getItemShape())) {
                 coin.gotCoin();
                 getManager().getPlayer().addCoin();
             }

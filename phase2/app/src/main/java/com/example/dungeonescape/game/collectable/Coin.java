@@ -41,7 +41,7 @@ public class Coin extends GameObject implements Collectable {
         setX(r.nextInt(1080 - 150));
         updateCoinLocation();
     }
-    public Rect getCoinShape() {
+    public Rect getItemShape() {
         return coinShape;
     }
 
