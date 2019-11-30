@@ -42,9 +42,7 @@ public class MazeView extends View {
     private int numMazeCols;
     private int numMazeRows;
 
-    /** Instantiates the MazeManager class for this Maze. */
-    private MazeManager mazeManager;
-
+    /** The size of each MazeCell */
     private float cellSize;
 
     /** The horizontal and vertical margin from the edge of the screen to the walls of the maze */

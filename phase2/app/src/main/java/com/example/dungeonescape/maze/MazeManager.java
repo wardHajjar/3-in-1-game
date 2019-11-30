@@ -21,9 +21,6 @@ class MazeManager {
     /** A 2D Array of MazeCell cells. */
     private MazeCell[][] cells;
 
-    /** The size of each MazeCell */
-//    private float cellSize;
-
     /** The number of columns and rows in the Maze, passed in from MazeView. */
     private int numMazeCols;
     private int numMazeRows;
