@@ -114,7 +114,7 @@ class MazeManager {
         do {
             next = getNeighbour(current, cellArray);
             if (next != null) {
-                removeWall(current, next);
+                removeMazeCellWall(current, next);
                 stack.push(current);
                 current = next;
                 current.setVisited(true);
@@ -169,7 +169,7 @@ class MazeManager {
      * @param current the current MazeCell.
      * @param next the next MazeCell.
      */
-    private void removeWall(MazeCell current, MazeCell next){
+    private void removeMazeCellWall(MazeCell current, MazeCell next){
         /* (x, y) coordinates for the current and next MazeCell. */
         int currX = current.getX();
         int currY = current.getY();
