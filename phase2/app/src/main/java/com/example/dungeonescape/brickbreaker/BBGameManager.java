@@ -107,6 +107,34 @@ class BBGameManager {
         ball.move();
 
         /* Wall Collision Detection. */
+        manageWallCollision();
+
+        /* Brick Collision Detection. */
+        manageBrickCollision();
+
+        /* Paddle Collision Detection. */
+        managePaddleCollision();
+
+        /* Coin Collision Detection. */
+        for (Coin coin: coins) {
+            boolean itemCollision = manageItemCollision(coin);
+            if (itemCollision){
+                player.addCoin();
+            }
+        }
+
+        /* Blitz Collision Detection */
+        manageItemCollision(blitz);
+
+        /* Gem Collision Detection */
+//        manageItemCollision(gem);
+
+        /* Potion Collision Detection */
+//        manageItemCollision(potion);
+
+    }
+
+    private void manageWallCollision(){
         String wallCollision = ball.madeWallCollision(screenX, screenY);
         if ( wallCollision.equals("x")) {
             ball.setXSpeed(ball.getXSpeed() * -1);
@@ -114,17 +142,16 @@ class BBGameManager {
         else if(wallCollision.equals("y")) {
             ball.setYSpeed(ball.getYSpeed() * -1);
         }
+    }
 
-        /* Brick Collision Detection. */
+    private void manageBrickCollision(){
         if (!blitz.getBlitzMode().equals("started")){
             for (Brick brick: bricks) {
                 if (!(brick.getHitStatus())) {
                     String brickCollision = ball.madeRectCollision(brick.getRect());
-
                     if (brickCollision.equals("x")) {
                         ball.setXSpeed(ball.getXSpeed() * -1);
                         brick.changeHitStatus();
-
                         break;
                     } else if (brickCollision.equals("y")) {
                         ball.setYSpeed(ball.getYSpeed() * -1);
@@ -134,40 +161,28 @@ class BBGameManager {
                 }
             }
         }
+    }
 
-        /* Coin Collision Detection. */
-        for (Coin currCoin: coins) {
-            if (currCoin.getAvailableStatus()) {
-                String coinCollision = ball.madeRectCollision(currCoin.getCoinShape());
-                if (coinCollision.equals("x")) {
-                    player.addCoin();
-                    ball.setXSpeed(ball.getXSpeed() * -1);
-                    currCoin.gotCollected();
-                    break;
-                } else if (coinCollision.equals("y")) {
-                    player.addCoin();
-                    ball.setYSpeed(ball.getYSpeed() * -1);
-                    currCoin.gotCollected();
-                    break;
-                }
+    private boolean manageItemCollision(Collectable item){
+        if (item.getAvailableStatus()) {
+            String coinCollision = ball.madeRectCollision(item.getItemShape());
+            if (coinCollision.equals("x") || coinCollision.equals("y")) {
+                player.addCoin();
+                item.gotCollected();
+                return true;
             }
         }
+        return false;
+    }
 
-//        /* Potion and Gem collision detection. */
-//        String gemCollision = ball.madeRectCollision()
-
-        /* Paddle Collision Detection. */
+    private void managePaddleCollision(){
         String paddleCollision = ball.madeRectCollision(paddle.getRect());
         if (!(paddleCollision.equals(" "))) {
             ball.setYSpeed(ball.getYSpeed() * -1);
             ball.setRandomXSpeed();
         }
-
-        String blitzCollision = ball.madeRectCollision(blitz.getBlitzShape());
-        if (blitzCollision.equals("x") || blitzCollision.equals("y")){
-            blitz.gotCollected();
-        }
     }
+
 
     /**
      * Checks if the player still has lives left after they've lost the ball.
