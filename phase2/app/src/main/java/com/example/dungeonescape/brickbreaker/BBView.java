@@ -2,18 +2,18 @@ package com.example.dungeonescape.brickbreaker;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.Display;
 import android.graphics.Point;
 import android.app.Activity;
 import com.example.dungeonescape.game.GameView;
-
+import com.example.dungeonescape.game.collectable.Blitz;
 /**
  * BBMainActivity and BBView were structured like the following game:
  * http://gamecodeschool.com/android/building-a-simple-game-engine/
  */
-
 /**
  * Class that controls the logic of the game by handling collisions, updating the objects' stats and
  * drawing the new states onto the canvas.
@@ -33,6 +33,7 @@ public class BBView extends GameView {
      */
     boolean startGame = false;
     BBGameManager manager;
+    long startTime;
     public BBView(Context context, AttributeSet attrs) {
         super(context, attrs);
         Display display = ((Activity)context).getWindowManager().getDefaultDisplay();
@@ -41,6 +42,7 @@ public class BBView extends GameView {
         this.screenX = size.x;
         this.screenY = size.y - 350;    /* 300 accounts for the buttons above the playing screen. */
         manager = new BBGameManager(screenX, screenY);
+
     }
 
     /**
@@ -65,6 +67,18 @@ public class BBView extends GameView {
             if (manager.checkLifeCondition()) {
                 startGame = false;
             }
+            Blitz blitz = manager.getBlitz();
+            if (blitz.getBlitzMode().equals("notStarted") && !blitz.getAvailableStatus()){
+                blitz.setBlitzMode("started");
+                manager.initializeBlitzCoins();
+                startTime = SystemClock.elapsedRealtime();
+            }
+            long currTime = SystemClock.elapsedRealtime();
+            if ((int) ((currTime - startTime) / 1000)  == 30){
+                blitz.setBlitzMode("done");
+                manager.endBlitzGame();
+            }
+
         }
     }
 
@@ -79,7 +93,12 @@ public class BBView extends GameView {
             canvas.drawColor(Color.argb(255,  0, 0, 0));
 
             /* Choose the brush color for drawing - white. */
-            manager.drawGame(canvas);
+            if (manager.getBlitz().getBlitzMode().equals("started")){
+                manager.drawBlitzGame(canvas);
+            }else{
+                manager.drawGame(canvas);
+            }
+
 
             /* Draws everything to the screen. */
             holder.unlockCanvasAndPost(canvas);
@@ -109,6 +128,6 @@ public class BBView extends GameView {
      * @return true if user passed.
      */
     public boolean doneLevel() {
-        return manager.hitAllBricks() || manager.passedBorder();
+        return manager.hitAllBricks();
     }
 }

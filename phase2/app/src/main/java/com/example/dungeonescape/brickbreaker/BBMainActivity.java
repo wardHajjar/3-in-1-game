@@ -67,7 +67,6 @@ public class BBMainActivity extends GeneralGameActivity {
                 save(playerManager, player);
                 //Intent intent = new Intent(BBMainActivity.this, MazeActivity.class);
                 Intent intent = new Intent(BBMainActivity.this, MazeInstructionsActivity.class);
-                System.out.println("HERE");
                 intent.putExtra("Player", player);
                 intent.putExtra("Game Manager", playerManager);
                 startActivity(intent);
