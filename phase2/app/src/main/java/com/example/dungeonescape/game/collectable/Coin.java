@@ -24,7 +24,6 @@ public class Coin extends GameObject implements Collectable{
         this.available = true;
         this.coinRadius = coinRadius;
         this.coinShape = new Rect(x, y, x + coinRadius, y + coinRadius);
-
     }
 
     private void updateCoinLocation() {
@@ -83,7 +82,5 @@ public class Coin extends GameObject implements Collectable{
     public void gotCollected() {
         this.available = false;
     }
-
-
 
 }

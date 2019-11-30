@@ -2,10 +2,8 @@ package com.example.dungeonescape.platformer;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;
-
 import com.example.dungeonescape.game.GameObject;
 
-import java.util.Random;
 
 class PlatformerObject extends GameObject {
     private int size;
