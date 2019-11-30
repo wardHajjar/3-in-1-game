@@ -22,7 +22,7 @@ class MazeManager {
     private MazeCell[][] cells;
 
     /** The size of each MazeCell */
-    private float cellSize;
+//    private float cellSize;
 
     /** The number of columns and rows in the Maze, passed in from MazeView. */
     private int numMazeCols;
@@ -30,10 +30,6 @@ class MazeManager {
 
     /** a Random instance used to randomize Coin locations. */
     private Random rand = new Random();
-
-    /** The horizontal and vertical margin from the edge of the screen to the walls of the maze */
-    private float horizontalPadding;
-    private float verticalPadding;
 
     private Player player;
 
@@ -212,7 +208,7 @@ class MazeManager {
         for (int i = 0; i < 2; i++) {
             int x = coordinates.keyAt(i);
             int y = coordinates.get(x);
-            Coin coin = new Coin(x, y, (int) cellSize);
+            Coin coin = new Coin(x, y, (int) mazeView.getCellSize());
             coins.add(coin);
         }
         return coins;
@@ -296,54 +292,6 @@ class MazeManager {
         }
     }
 
-    /** Returns the Maze's cellSize.
-     *
-     * @return float value for cellSize.
-     */
-    float getCellSize() {
-        return cellSize;
-    }
-
-    /** Sets the cellSize in pixel for all MazeCells.
-     *
-     * @param cellSize the new cellSize.
-     */
-    private void setCellSize(float cellSize) {
-        this.cellSize = cellSize;
-    }
-
-    /** Returns the Maze's horizontalPadding.
-     *
-     * @return float value for horizontalPadding.
-     */
-    float getHorizontalPadding() {
-        return horizontalPadding;
-    }
-
-    /** Sets the horizontalPadding for this Maze.
-     *
-     * @param horizontalPadding the new horizontalPadding of the Maze.
-     */
-    private void setHorizontalPadding(float horizontalPadding) {
-        this.horizontalPadding = horizontalPadding;
-    }
-
-    /** Returns the Maze's verticalPadding.
-     *
-     * @return float value for verticalPadding.
-     */
-    float getVerticalPadding() {
-        return verticalPadding;
-    }
-
-    /** Sets the verticalPadding for this Maze.
-     *
-     * @param verticalPadding the new verticalPadding of the Maze.
-     */
-    private void setVerticalPadding(float verticalPadding) {
-        this.verticalPadding = verticalPadding;
-    }
-
     private int getNumMazeCols() {
         return numMazeCols;
     }
@@ -355,12 +303,4 @@ class MazeManager {
     }
 
     private void setNumMazeRows(int rows){this.numMazeRows = rows;}
-
-    MazeView getMazeView() {
-        return this.mazeView;
-    }
-
-    void setMazeView(MazeView mazeView) {
-        this.mazeView = mazeView;
-    }
 }

@@ -45,9 +45,11 @@ public class MazeView extends View {
     /** Instantiates the MazeManager class for this Maze. */
     private MazeManager mazeManager;
 
-    float cellSize;
-    float horizontalPadding;
-    float verticalPadding;
+    private float cellSize;
+
+    /** The horizontal and vertical margin from the edge of the screen to the walls of the maze */
+    private float horizontalPadding;
+    private float verticalPadding;
 
     public MazeView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -72,7 +74,7 @@ public class MazeView extends View {
             newCellSize = screenHeight / (numMazeRows + 1);
         }
 
-        cellSize = newCellSize;
+        setCellSize(newCellSize);
     }
 
     /**
@@ -255,5 +257,13 @@ public class MazeView extends View {
 
     void setCoins(ArrayList<Coin> coins) {
         this.coins = coins;
+    }
+
+    void setCellSize(float cellSize) {
+        this.cellSize = cellSize;
+    }
+
+    float getCellSize() {
+        return this.cellSize;
     }
 }
