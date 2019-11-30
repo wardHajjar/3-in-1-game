@@ -77,8 +77,11 @@ class PlatformerManager {
 
     void createCoins(int number) {
         coins = new ArrayList<>(number);
-        coins.add(new Coin(300,300,30));
-        coins.add(new Coin(70,1000,30));
+        for (int i = 1; i <= number; i++) {
+            Random random = new Random();
+            int a = random.nextInt(gridWidth - 150);
+            coins.add(new Coin(a, gridHeight*i/10, 30));
+        }
     }
     /**
      * @return gets the grid width.

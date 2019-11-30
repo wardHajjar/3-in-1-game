@@ -17,7 +17,7 @@ class PlatformerCoin extends Coin {
         super(x,y, radius);
         this.radius = radius;
         this.manager = manager;
-        this.shape = getCoinShape(radius);
+        this.shape = getNewShape();
     }
 
 
@@ -29,7 +29,7 @@ class PlatformerCoin extends Coin {
     /** Moves the Platforms down. */
     void update(int down) {
         coinDown(down);
-        shape = getCoinShape(radius);
+        shape = getNewShape();
     }
     PlatformerManager getManager() {
         return this.manager;
