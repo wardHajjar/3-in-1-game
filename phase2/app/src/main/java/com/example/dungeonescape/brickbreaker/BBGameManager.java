@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.view.MotionEvent;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Collections;
 
 import com.example.dungeonescape.game.collectable.Coin;
@@ -56,50 +57,43 @@ class BBGameManager {
         /* Random assignment of coins to bricks. */
         coins = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            Collections.shuffle(bricks);
-            Brick curr = bricks.get(0);
-            while (curr.hasItem()){     /* Shuffle again if the current brick has a coin. */
-                Collections.shuffle(bricks);
-                curr = bricks.get(0);
-            }
-//            int radius = brickHeight/4;
-            Coin newCoin = new Coin(curr.getX() + curr.getWidth()/2,
-                        curr.getY() + curr.getHeight()/2, curr.getHeight()/2);
-            curr.setItem(newCoin);
+            Brick coinBrick = getRandomBrick();
+            Coin newCoin = new Coin(
+                    coinBrick.getX() + brickWidth/2,
+                    coinBrick.getY() + brickHeight/2,
+                    brickHeight/2);
+            coinBrick.setItem(newCoin);
             coins.add(newCoin);
         }
 
-//        /* Random assignment of gem and potion to bricks. */
-//        Collections.shuffle(bricks);
-//        Brick curr = bricks.get(0);
-//        while (curr.hasItem()){     /* Shuffle again if the current brick has a coin. */
-//            Collections.shuffle(bricks);
-//            curr = bricks.get(0);
-//        }
-//        Gem newGem = new Gem(curr.getX(), curr.getY());
-//        this.gem = newGem;
-//        curr.setItem(newGem);
-//
-//        Collections.shuffle(bricks);
-//        curr = bricks.get(0);
-//        while (curr.hasItem()){     /* Shuffle again if the current brick has a coin. */
-//            Collections.shuffle(bricks);
-//            curr = bricks.get(0);
-//        }
-//        Potion newPotion = new Potion(curr.getX(), curr.getY());
-//        this.potion = newPotion;
-//        curr.setItem(newPotion);
-        Brick curr = bricks.get(0);
+        Brick blitzBrick = getRandomBrick();
+        Blitz newBlitz = new Blitz(blitzBrick.getX() + brickWidth/2,
+                blitzBrick.getY() + brickHeight/2, brickHeight/2);
+        this.blitz = newBlitz;
+        blitzBrick.setItem(newBlitz);
+
+        Brick gemBrick = getRandomBrick();
+        Gem newGem = new Gem(gemBrick.getX() + brickWidth/2,
+                gemBrick.getY() + brickHeight/2, brickHeight/2);
+        this.gem = newGem;
+        gemBrick.setItem(newGem);
+
+        Brick potionBrick = getRandomBrick();
+        Potion newPotion = new Potion(potionBrick.getX() + brickWidth/2,
+                potionBrick.getY() + brickHeight/2, brickHeight/2);
+        this.potion = newPotion;
+        potionBrick.setItem(newPotion);
+
+    }
+
+    private Brick getRandomBrick(){
+        Random random = new Random();
+        Brick curr = bricks.get(random.nextInt(bricks.size()));
         while(curr.hasItem()){
             Collections.shuffle(bricks);
             curr = bricks.get(0);
         }
-        Blitz newBlitz = new Blitz(curr.getX() + curr.getWidth()/2,
-                curr.getY() + curr.getHeight()/2, brickHeight/2);
-        this.blitz = newBlitz;
-        curr.setItem(newBlitz);
-
-
+        return curr;
     }
 
     /** Determines the physics of the ball in reaction to collisions. */
