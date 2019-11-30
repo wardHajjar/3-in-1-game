@@ -40,25 +40,28 @@ class MazeManager {
     MazeManager(MazeView mazeView, Player player) {
         this.mazeView = mazeView;
         this.player = player;
+        initializeMazeSize();
+        populateMaze();
+    }
+
+    /** Creates the size of the Maze. */
+    private void initializeMazeSize() {
         setNumMazeRows(5 * player.getGameDifficulty());
         setNumMazeCols(5 * player.getGameDifficulty());
-
         mazeView.setNumMazeCols(getNumMazeCols());
         mazeView.setNumMazeRows(getNumMazeRows());
-
-        populateMaze();
     }
 
     /** Populate Maze with GameObjects. */
     private void populateMaze() {
-        initializeMaze();
+        initializeMazeArray();
         mazeView.setCoins(createCoins());
         this.playerSprite = mazeView.getPlayerSprite();
         createExitCell();
     }
 
     /** Creates and assigns the Maze 2D Array to this.cells. */
-    private void initializeMaze() {
+    private void initializeMazeArray() {
         this.cells = createMaze();
         mazeView.setCells(this.cells);
     }
