@@ -52,18 +52,18 @@ class MazeManager {
         mazeView.setNumMazeRows(getNumMazeRows());
     }
 
+    /** Creates and assigns the Maze 2D Array to this.cells. */
+    private void initializeMazeArray() {
+        this.cells = createMaze();
+        mazeView.setCells(this.cells);
+    }
+
     /** Populate Maze with GameObjects. */
     private void populateMaze() {
         initializeMazeArray();
         mazeView.setCoins(createCoins());
         this.playerSprite = mazeView.getPlayerSprite();
         createExitCell();
-    }
-
-    /** Creates and assigns the Maze 2D Array to this.cells. */
-    private void initializeMazeArray() {
-        this.cells = createMaze();
-        mazeView.setCells(this.cells);
     }
 
     /** Create a MazeCell object in the bottom right hand corner of the Maze. */
@@ -107,7 +107,7 @@ class MazeManager {
         return mazeCell;
     }
 
-    /** Traverses through the cellArray of MazeCell GameObejets and removes some walls to create
+    /** Traverses through the cellArray of MazeCell GameObjects and removes some walls to create
      * the Maze.
      *
      * @param cellArray the 2D of MazeCell GameObjects to traverse through.
@@ -235,7 +235,7 @@ class MazeManager {
         return mazeIterations >= 3;
     }
 
-    void movePlayer(String direction){
+    void movePlayerSprite(String direction){
         // depending on the given direction, move the player to that cell if it's in the maze.
         switch (direction){
             case "UP":

@@ -172,25 +172,25 @@ public class MazeActivity extends GeneralGameActivity {
 
     /** Moves the Player up by one MazeCell. */
     public void movePlayerUp(View view) {
-        mazeManager.movePlayer("UP");
+        mazeManager.movePlayerSprite("UP");
         goToNextLevel(view);
     }
 
     /** Moves the Player down by one MazeCell. */
     public void movePlayerDown(View view) {
-        mazeManager.movePlayer("DOWN");
+        mazeManager.movePlayerSprite("DOWN");
         goToNextLevel(view);
     }
 
     /** Moves the Player left by one MazeCell. */
     public void movePlayerLeft(View view) {
-        mazeManager.movePlayer("LEFT");
+        mazeManager.movePlayerSprite("LEFT");
         goToNextLevel(view);
     }
 
     /** Moves the Player right by one MazeCell. */
     public void movePlayerRight(View view) {
-        mazeManager.movePlayer("RIGHT");
+        mazeManager.movePlayerSprite("RIGHT");
         goToNextLevel(view);
     }
 
