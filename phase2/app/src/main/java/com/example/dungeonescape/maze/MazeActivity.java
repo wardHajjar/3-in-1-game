@@ -47,20 +47,24 @@ public class MazeActivity extends GeneralGameActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maze);
 
-        /* Gather saved data. */
-        Intent i = getIntent();
-        player = (Player) i.getSerializableExtra("Player");
-        playerManager = (PlayerManager) i.getSerializableExtra("Game Manager");
-
+        getPlayerSaveData(getIntent());
         initializeMazeManager();
+        startCountDown();
 
-        /* Go to next game. Testing only. */
-        configureNextButton();
-
-        // starts the clock
+        // starts the Time Elapsed clock
         startTime = SystemClock.elapsedRealtime();
 
-        startCountDown();
+        // go to Next Mini-game; testing only
+        configureNextButton();
+    }
+
+    /** Assigns variables player and playerManager to data from the specified Intent.
+     *
+     * @param intent the Intent to gather data from.
+     */
+    private void getPlayerSaveData(Intent intent) {
+        player = (Player) intent.getSerializableExtra("Player");
+        playerManager = (PlayerManager) intent.getSerializableExtra("Game Manager");
     }
 
     /** Initializes the MazeManager for this Maze game. */
