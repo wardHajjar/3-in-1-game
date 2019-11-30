@@ -1,8 +1,6 @@
 package com.example.dungeonescape.platformer;
 
 import android.graphics.Color;
-
-import java.io.Serializable;
 import java.lang.Math;
 import java.util.Random;
 
@@ -20,7 +18,7 @@ class Platforms extends PlatformerObject{
         super(x,y,0, manager);
         this.length = length;
         this.width = width;
-        getPaint().setColor(Color.GREEN);
+        getPaint().setColor(Color.rgb(130,199,169));
         setShape(this.length, this.width);
     }
     /** Updates the platforms, moving the platforms down when the ball surpasses them. */
