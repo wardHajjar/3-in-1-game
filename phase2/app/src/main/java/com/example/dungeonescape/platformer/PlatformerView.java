@@ -1,9 +1,6 @@
 package com.example.dungeonescape.platformer;
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.util.AttributeSet;
 
 import com.example.dungeonescape.player.Player;
