@@ -15,11 +15,7 @@ import com.example.dungeonescape.activities.MenuActivity;
 import com.example.dungeonescape.player.PlayerManager;
 import com.example.dungeonescape.activities.GeneralGameActivity;
 import com.example.dungeonescape.player.Player;
-import com.example.dungeonescape.activities.EndGameActivity;
 import com.example.dungeonescape.R;
-
-import java.util.ArrayList;
-import java.util.logging.Level;
 
 /**
  * The activity for the main level3 game.

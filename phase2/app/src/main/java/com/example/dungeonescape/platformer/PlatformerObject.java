@@ -20,7 +20,7 @@ class PlatformerObject extends GameObject {
     private PlatformerManager manager;
 
     PlatformerObject(int x, int y, int size, PlatformerManager manager) {
-        super(x,y);
+        super(x, y);
         this.size = size;
         this.manager = manager;
     }
@@ -31,6 +31,7 @@ class PlatformerObject extends GameObject {
     int getSize() {
         return this.size;
     }
+
     /**
      * Sets the rectangle for this object
      */
