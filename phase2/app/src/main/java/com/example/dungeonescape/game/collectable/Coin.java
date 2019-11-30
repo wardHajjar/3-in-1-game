@@ -15,21 +15,22 @@ public class Coin extends GameObject implements Collectable {
     private Rect coinShape;
     /** The available status of the coin */
     private Boolean available;
-    /** The radius of the coin. */
-    private int size;
 
-    public Coin(int x, int y, int size) {
+    /** The radius of the coin. */
+    private int coinRadius;
+
+    public Coin(int x, int y, int coinRadius) {
         super(x, y);
         setPaintColour(Color.YELLOW);
         this.available = true;
-        this.size = size;
-        this.coinShape = new Rect(x, y, x + size, y + size);
+        this.coinRadius = coinRadius;
+        this.coinShape = new Rect(x, y, x + coinRadius, y + coinRadius);
     }
 
     private void updateCoinLocation() {
         this.coinShape.top = getX();
-        this.coinShape.right = getX() + size;
-        this.coinShape.bottom = getY() + size;
+        this.coinShape.right = getX() + coinRadius;
+        this.coinShape.bottom = getY() + coinRadius;
         this.coinShape.left = getY();
     }
 
@@ -74,7 +75,7 @@ public class Coin extends GameObject implements Collectable {
 
     @Override
     public void draw(Canvas canvas) {
-        canvas.drawCircle(this.getX(), this.getY(), size, this.getPaint());
+        canvas.drawCircle(this.getX(), this.getY(), coinRadius, this.getPaint());
     }
 
     @Override
