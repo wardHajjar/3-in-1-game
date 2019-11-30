@@ -21,6 +21,8 @@ public class GameObject {
         setPaint(new Paint());
     }
 
+    public void paintObject(){};
+
     /**
      * Sets the Game Object Paint's colour.
      *
