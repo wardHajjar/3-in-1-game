@@ -27,8 +27,8 @@ import java.util.logging.Level;
 public class PlatformerHiddenActivity extends GeneralGameActivity {
     private LevelView game;
     private boolean running;
-    Player player;
-    PlayerManager playerManager;
+    private Player player;
+    private PlayerManager playerManager;
     long startTime;
     private Intent i;
 

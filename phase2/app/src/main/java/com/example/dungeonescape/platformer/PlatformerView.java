@@ -12,7 +12,7 @@ import com.example.dungeonescape.player.Player;
 public class PlatformerView extends LevelView implements Runnable {
 
     private Drawable portalImage;
-    protected OnCustomEventListener portalEventListener;
+    OnCustomEventListener portalEventListener;
 
     public PlatformerView(Context context, AttributeSet attrs) {
 

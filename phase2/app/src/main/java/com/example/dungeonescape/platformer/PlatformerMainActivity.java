@@ -31,9 +31,9 @@ import java.util.List;
 public class PlatformerMainActivity extends GeneralGameActivity{
     private PlatformerView game;
     private boolean running;
-    Player player;
-    PlayerManager playerManager;
-    long startTime;
+    private Player player;
+    private PlayerManager playerManager;
+    private long startTime;
 
     private MenuActivity menuActivity = new MenuActivity();
 
