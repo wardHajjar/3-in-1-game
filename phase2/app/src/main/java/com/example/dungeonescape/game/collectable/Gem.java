@@ -5,6 +5,7 @@ import com.example.dungeonescape.game.GameObject;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Rect;
+import android.graphics.Path;
 
 public class Gem extends GameObject implements Collectable {
 
@@ -21,7 +22,24 @@ public class Gem extends GameObject implements Collectable {
 
     @Override
     public void draw(Canvas canvas) {
+        /*
+         * Math required to draw the gem shape is taken from:
+         * https://stackoverflow.com/questions/51370566/diamond-shape-in-android-studio/51372564
+         */
+        int width = gemShape.width();
+        int x = getX();
+        int y = getY();
 
+        Path path = new Path();
+
+        path.moveTo(x, y + width); // Top
+        path.lineTo(x - width/2, y); // Left
+        path.lineTo(x, y - width); // Bottom
+        path.lineTo(x + width/2, y); // Right
+        path.lineTo(x, y + width); // Back to Top
+        path.close();
+
+        canvas.drawPath(path, getPaint());
     }
 
     @Override
