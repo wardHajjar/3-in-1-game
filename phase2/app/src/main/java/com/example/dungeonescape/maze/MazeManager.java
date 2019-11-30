@@ -50,11 +50,10 @@ class MazeManager {
         cells = createMaze();
         mazeView.setCells(this.cells);
         mazeView.setCoins(createCoins());
-        playerSprite = mazeView.playerSprite;
-        playerLoc = mazeView.playerLocation;
-        mazeView.exit = new GameObject(numMazeCols - 1, numMazeRows - 1);
-        mazeView.exit.setPaintColour(Color.BLUE);
-        exit = mazeView.exit;
+        playerSprite = mazeView.getPlayerSprite();
+        mazeView.setExit(new GameObject(numMazeCols - 1, numMazeRows - 1));
+        mazeView.getExit().setPaintColour(Color.BLUE);
+        exit = mazeView.getExit();
     }
 
     /** Populates a 2D Array with MazeCell GameObjects to create the Maze.

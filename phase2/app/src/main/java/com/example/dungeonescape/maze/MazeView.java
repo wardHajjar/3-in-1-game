@@ -34,9 +34,8 @@ public class MazeView extends View {
     private ArrayList<Coin> coins;
 
     /** Player and exit objects, and their positions. */
-    PlayerSprite playerSprite = new PlayerSprite();
-    GameObject exit;
-    MazeCell playerLocation;
+    private PlayerSprite playerSprite = new PlayerSprite();
+    private GameObject exit;
 
     /** The number of columns and rows in this maze. */
     private int numMazeCols;
@@ -263,5 +262,21 @@ public class MazeView extends View {
 
     float getCellSize() {
         return this.cellSize;
+    }
+
+    GameObject getExit() {
+        return this.exit;
+    }
+
+    void setExit(GameObject exit) {
+        this.exit = exit;
+    }
+
+    PlayerSprite getPlayerSprite() {
+        return this.playerSprite;
+    }
+
+    void setPlayerSprite(PlayerSprite playerSprite) {
+        this.playerSprite = playerSprite;
     }
 }
