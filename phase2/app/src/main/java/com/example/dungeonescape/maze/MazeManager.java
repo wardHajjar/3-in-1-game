@@ -51,7 +51,7 @@ class MazeManager {
         mazeView.setCells(this.cells);
         mazeView.setCoins(createCoins());
         playerSprite = mazeView.playerSprite;
-        playerLoc = mazeView.playerLoc;
+        playerLoc = mazeView.playerLocation;
         mazeView.exit = new GameObject(numMazeCols - 1, numMazeRows - 1);
         mazeView.exit.setPaintColour(Color.BLUE);
         exit = mazeView.exit;

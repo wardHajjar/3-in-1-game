@@ -36,7 +36,7 @@ public class MazeView extends View {
     /** Player and exit objects, and their positions. */
     PlayerSprite playerSprite = new PlayerSprite();
     GameObject exit;
-    MazeCell playerLoc;
+    MazeCell playerLocation;
 
     /** The number of columns and rows in this maze. */
     private int numMazeCols;
