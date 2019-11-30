@@ -46,13 +46,28 @@ class MazeManager {
         mazeView.setNumMazeCols(getNumMazeCols());
         mazeView.setNumMazeRows(getNumMazeRows());
 
-        this.cells = createMaze();
-        mazeView.setCells(this.cells);
+        populateMaze();
+    }
+
+    /** Populate Maze with GameObjects:
+     * PlayerSprite
+     * exitCell
+     * Coins
+     */
+    private void populateMaze() {
+        initializeMaze();
         mazeView.setCoins(createCoins());
         this.playerSprite = mazeView.getPlayerSprite();
         createExitCell();
     }
 
+    /** Creates and assigns the Maze 2D Array to this.cells. */
+    private void initializeMaze() {
+        this.cells = createMaze();
+        mazeView.setCells(this.cells);
+    }
+
+    /** Create a MazeCell object in the bottom right hand corner of the Maze. */
     private void createExitCell() {
         mazeView.setExitCell(new MazeCell(numMazeCols - 1, numMazeRows - 1));
         mazeView.getExitCell().setPaintColour(Color.BLUE);
