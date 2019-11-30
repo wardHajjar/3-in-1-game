@@ -6,10 +6,11 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Rect;
 
+import java.io.Serializable;
 import java.util.Random;
 
 
-public class Coin extends GameObject implements Collectable {
+public class Coin extends GameObject implements Collectable{
 
     /** The shape of the coin. */
     private Rect coinShape;

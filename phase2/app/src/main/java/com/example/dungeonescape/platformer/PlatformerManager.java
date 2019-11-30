@@ -2,10 +2,13 @@ package com.example.dungeonescape.platformer;
 
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
+import android.os.Parcelable;
+import android.util.Pair;
 
 import com.example.dungeonescape.game.collectable.Coin;
 import com.example.dungeonescape.player.Player;
 
+import java.io.Serializable;
 import java.util.Random;
 
 import java.util.*;
@@ -13,7 +16,7 @@ import java.util.*;
 /**
  * Platform manager on a screen with characters and platforms.
  */
-class PlatformerManager {
+public class PlatformerManager{
 
     /**
      * The width of canvas.
@@ -118,7 +121,6 @@ class PlatformerManager {
         return player;
     }
 
-
     /**
      * @return the character scores
      * */
@@ -155,6 +157,37 @@ class PlatformerManager {
         if (portal != null && !gameMode.equals("Blitz")) {
             portal.draw(canvas);
         }
+    }
+    ArrayList<List> getPlatformPositions() {
+        ArrayList<List> arr = new ArrayList<>(platforms.size());
+
+        for (int i = 0; i < platforms.size(); i++) {
+            ArrayList<Integer> coordinates = new ArrayList<>();
+            coordinates.add(platforms.get(i).getX());
+            coordinates.add(platforms.get(i).getY());
+            arr.add(coordinates);
+        }
+        return arr;
+    }
+    void setPlatforms(ArrayList<List> arr) {
+        platforms = new ArrayList<>(arr.size());
+        for (int i = 0; i < arr.size(); i++) {
+            int x = (int) arr.get(i).get(0);
+            int y = (int) arr.get(i).get(1);
+            platforms.add(new Platforms(x,y,150, 30, this));
+        }
+    }
+
+    void setCharacter(ArrayList<Integer> characterLocation, int score) {
+        this.character.setX(characterLocation.get(0));
+        this.character.setY(characterLocation.get(1));
+        this.character.setGameScore(score);
+    }
+    ArrayList<Integer> getCharacterLocation() {
+        ArrayList<Integer> lst = new ArrayList<>();
+        lst.add(character.getX());
+        lst.add(character.getY());
+        return lst;
     }
     /**
      * Left and right buttons to move character

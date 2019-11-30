@@ -18,6 +18,7 @@ import com.example.dungeonescape.player.Player;
 import com.example.dungeonescape.activities.EndGameActivity;
 import com.example.dungeonescape.R;
 
+import java.util.ArrayList;
 import java.util.logging.Level;
 
 /**
@@ -29,6 +30,7 @@ public class PlatformerHiddenActivity extends GeneralGameActivity {
     Player player;
     PlayerManager playerManager;
     long startTime;
+    private Intent i;
 
     private MenuActivity menuActivity = new MenuActivity();
 
@@ -38,9 +40,10 @@ public class PlatformerHiddenActivity extends GeneralGameActivity {
 
         startTime = SystemClock.elapsedRealtime();
         // Set the View we are using
-        Intent i = getIntent();
+        i = getIntent();
         player = (Player) i.getSerializableExtra("Player");
         playerManager = (PlayerManager) i.getSerializableExtra("Game Manager");
+
 
         setContentView(R.layout.activity_platformer_hidden_main);
         game = findViewById(R.id.level);
@@ -123,9 +126,13 @@ public class PlatformerHiddenActivity extends GeneralGameActivity {
         long endTime = SystemClock.elapsedRealtime();
         long elapsedMilliSeconds = endTime - startTime;
         player.updateTotalTime(elapsedMilliSeconds);
+
         Intent intent = new Intent(PlatformerHiddenActivity.this, PlatformerMainActivity.class);
         intent.putExtra("Player", player);
         intent.putExtra("Game Manager", playerManager);
+        intent.putExtra("Character", i.getSerializableExtra("Character"));
+        intent.putExtra("Platforms", i.getSerializableExtra("Platforms"));
+        intent.putExtra("Score", i.getSerializableExtra("Score"));
         startActivity(intent);
     }
 

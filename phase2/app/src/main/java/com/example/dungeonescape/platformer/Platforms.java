@@ -1,11 +1,13 @@
 package com.example.dungeonescape.platformer;
 
 import android.graphics.Color;
+
+import java.io.Serializable;
 import java.lang.Math;
 import java.util.Random;
 
 
-class Platforms extends PlatformerObject {
+class Platforms extends PlatformerObject{
 
     /** length of the platforms. */
     private int length;

@@ -13,7 +13,7 @@ import com.example.dungeonescape.game.SaveData;
 
 import java.io.File;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends GeneralGameActivity{
     private PlayerManager playerManager;
 
     @Override
@@ -57,7 +57,6 @@ public class MainActivity extends AppCompatActivity{
             }
         });
     }
-
     private void load() {
         try {
             String filePath = this.getFilesDir().getPath() + "/GameState.txt";

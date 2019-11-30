@@ -2,6 +2,7 @@ package com.example.dungeonescape.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.dungeonescape.platformer.PlatformerManager;
 import com.example.dungeonescape.player.Player;
 import com.example.dungeonescape.player.PlayerManager;
 import com.example.dungeonescape.game.SaveData;
@@ -26,4 +27,5 @@ public abstract class GeneralGameActivity extends AppCompatActivity {
             System.out.println("Couldn't save: " + e.getMessage());
         }
     }
+
 }
