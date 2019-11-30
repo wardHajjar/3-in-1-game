@@ -25,13 +25,14 @@ public class Coin extends GameObject implements Collectable {
         this.available = true;
         this.coinRadius = coinRadius;
         this.coinShape = new Rect(x, y, x + coinRadius, y + coinRadius);
+
     }
 
     private void updateCoinLocation() {
-        this.coinShape.top = getX();
+        this.coinShape.top = getY();
         this.coinShape.right = getX() + coinRadius;
         this.coinShape.bottom = getY() + coinRadius;
-        this.coinShape.left = getY();
+        this.coinShape.left = getX();
     }
 
     public void gotCoin() {
@@ -40,13 +41,13 @@ public class Coin extends GameObject implements Collectable {
         setX(r.nextInt(1080 - 150));
         updateCoinLocation();
     }
-    public Rect getCoinShape() {
+    public Rect getItemShape() {
         return coinShape;
     }
 
-    protected Rect getCoinShape(int size) {
+    protected Rect getNewShape() {
         return new Rect(getX(), getY(),
-                getX() + size, getY() + size);
+                getX() + coinRadius, getY() + coinRadius);
     }
     /** Moves the coin down when the Character jumps up. */
     public void update(int down, int height) {

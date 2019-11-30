@@ -40,7 +40,16 @@ public class PlatformerView extends LevelView implements Runnable{
                 enterPortal();
             }
         }
-        super.update();
+
+        if (getManager().finishedLevel()) {
+            nextLevel();
+        }
+        if (getManager().isDead()) {
+            lostGame();
+        }
+        if (!getManager().update()) {
+            gameOver(getManager().getPlayer());
+        }
 
     }
 
@@ -53,6 +62,14 @@ public class PlatformerView extends LevelView implements Runnable{
     public void enterPortal() {
         portalEventListener.onEvent();
     }
-
+    public void setFinishLevelListener(OnCustomEventListener eventListener) {
+        this.finishLevelListener = eventListener;
+    }
+    public void nextLevel() {
+        finishLevelListener.onEvent();
+    }
+    public void lostGame() {
+        endGameListener.onEvent();
+    }
 
 }

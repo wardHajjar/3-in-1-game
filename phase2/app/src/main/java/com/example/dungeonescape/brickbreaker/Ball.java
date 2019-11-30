@@ -56,9 +56,12 @@ public class Ball extends GameObject {
      */
     void setRandomXSpeed(){
         Random random = new Random();
+        int dir = random.nextInt(2);
         xSpeed = random.nextInt((Math.abs(ySpeed) - 15)) + 15;
-        System.out.printf("%d", xSpeed);
-        System.out.println(" ");
+        if (dir == 1){
+            xSpeed *= -1;
+        }
+
     }
 
     /**
@@ -111,11 +114,13 @@ public class Ball extends GameObject {
         int newYPos = this.getY() + ySpeed;
         if (newXPos <= 0 || newXPos >= width) {
             return "x";
-        } else if (newYPos >= height) {
+        } else if (newYPos >= height || newYPos <= 0) {
             return "y";
-        } else if(newYPos <= 0) {
-            return "win";
         }
+
+//        } else if(newYPos <= 0) {
+//            return "win";
+//        }
         return " ";
 
     }
@@ -155,7 +160,7 @@ public class Ball extends GameObject {
      * Returns a rectangular representation of the object.
      * @return Rect object.
      */
-    Rect getRect(){
+    private Rect getRect(){
         int x = this.getX();
         int y = this.getY();
         return new Rect(x - 25, y - 25, x + 25, y + 25);

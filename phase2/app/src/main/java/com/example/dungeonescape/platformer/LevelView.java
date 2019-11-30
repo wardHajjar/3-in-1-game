@@ -14,13 +14,12 @@ import com.example.dungeonescape.player.Player;
  * This class is responsible for drawing out the game objects of the level, as well as
  * as well as updating player state.
  */
-public class LevelView extends GameView implements Runnable {
+abstract class LevelView extends GameView implements Runnable {
 
     private PlatformerManager manager;
     private Point size;
     protected OnCustomEventListener endGameListener;
-
-
+    protected OnCustomEventListener finishLevelListener;
 
     public LevelView(Context context, AttributeSet attrs, String mode) {
 
@@ -45,7 +44,6 @@ public class LevelView extends GameView implements Runnable {
             canvas.drawColor(Color.WHITE);
             manager.draw(canvas);
             holder.unlockCanvasAndPost(canvas);
-
         }
     }
 
@@ -57,23 +55,7 @@ public class LevelView extends GameView implements Runnable {
         return size;
     }
 
-    public void update() {
-
-        boolean finishedLevel = manager.finishedLevel();
-        if (finishedLevel) {
-//            nextLevel();
-        }
-        boolean dead = manager.isDead();
-        if (dead) {
-            dead();
-        }
-
-        boolean alive = manager.update();
-        if (!alive) {
-            gameOver(manager.getPlayer());
-        }
-
-    }
+    public abstract void update();
 
     public void gameOver(Player player) {
         manager = new PlatformerManager(size.y, size.x);
@@ -84,17 +66,11 @@ public class LevelView extends GameView implements Runnable {
 
     }
 
-//    public void nextLevel() {
-//        finishLevelListener.onEvent();
-//    }
-
-
     public void setEndGameListener(OnCustomEventListener eventListener) {
         this.endGameListener = eventListener;
     }
 
-    public void dead() {
-        endGameListener.onEvent();
-    }
+
+
 
 }

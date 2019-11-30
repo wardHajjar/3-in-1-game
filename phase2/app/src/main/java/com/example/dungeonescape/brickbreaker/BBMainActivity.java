@@ -1,7 +1,5 @@
 package com.example.dungeonescape.brickbreaker;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -67,7 +65,6 @@ public class BBMainActivity extends GeneralGameActivity {
                 save(playerManager, player);
                 //Intent intent = new Intent(BBMainActivity.this, MazeActivity.class);
                 Intent intent = new Intent(BBMainActivity.this, MazeInstructionsActivity.class);
-                System.out.println("HERE");
                 intent.putExtra("Player", player);
                 intent.putExtra("Game Manager", playerManager);
                 startActivity(intent);

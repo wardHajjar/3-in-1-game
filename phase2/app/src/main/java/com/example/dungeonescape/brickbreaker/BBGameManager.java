@@ -4,12 +4,15 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.view.MotionEvent;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Collections;
 
 import com.example.dungeonescape.game.collectable.Coin;
 import com.example.dungeonescape.game.collectable.Gem;
 import com.example.dungeonescape.game.collectable.Potion;
 import com.example.dungeonescape.player.Player;
+import com.example.dungeonescape.game.collectable.Blitz;
+import com.example.dungeonescape.game.collectable.Collectable;
 
 /** Instantiates and controls game objects. */
 class BBGameManager {
@@ -25,6 +28,7 @@ class BBGameManager {
     private ArrayList<Coin> coins;
     private Gem gem;
     private Potion potion;
+    private Blitz blitz;
     private int screenX;
     private int screenY;
     private Player player;
@@ -53,40 +57,43 @@ class BBGameManager {
         /* Random assignment of coins to bricks. */
         coins = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            Collections.shuffle(bricks);
-            Brick curr = bricks.get(0);
-            while (curr.hasItem()){     /* Shuffle again if the current brick has a coin. */
-                Collections.shuffle(bricks);
-                curr = bricks.get(0);
-            }
-            int radius = brickHeight/4;
-            Coin newCoin = new Coin(curr.getX() + curr.getWidth()/2,
-                        curr.getY() + curr.getHeight()/2, radius);
-            curr.setItem(newCoin);
+            Brick coinBrick = getRandomBrick();
+            Coin newCoin = new Coin(
+                    coinBrick.getX() + brickWidth/2,
+                    coinBrick.getY() + brickHeight/2,
+                    brickHeight/2);
+            coinBrick.setItem(newCoin);
             coins.add(newCoin);
         }
 
-        /* Random assignment of gem and potion to bricks. */
-        Collections.shuffle(bricks);
-        Brick curr = bricks.get(0);
-        while (curr.hasItem()){     /* Shuffle again if the current brick has a coin. */
-            Collections.shuffle(bricks);
-            curr = bricks.get(0);
-        }
-        Gem newGem = new Gem(curr.getX(), curr.getY());
+        Brick blitzBrick = getRandomBrick();
+        Blitz newBlitz = new Blitz(blitzBrick.getX() + brickWidth/2,
+                blitzBrick.getY() + brickHeight/2, brickHeight/2);
+        this.blitz = newBlitz;
+        blitzBrick.setItem(newBlitz);
+
+        Brick gemBrick = getRandomBrick();
+        Gem newGem = new Gem(gemBrick.getX() + brickWidth/2,
+                gemBrick.getY() + brickHeight/2, brickHeight/2);
         this.gem = newGem;
-        curr.setItem(newGem);
+        gemBrick.setItem(newGem);
 
-        Collections.shuffle(bricks);
-        curr = bricks.get(0);
-        while (curr.hasItem()){     /* Shuffle again if the current brick has a coin. */
+        Brick potionBrick = getRandomBrick();
+        Potion newPotion = new Potion(potionBrick.getX() + brickWidth/2,
+                potionBrick.getY() + brickHeight/2, brickHeight/2);
+        this.potion = newPotion;
+        potionBrick.setItem(newPotion);
+
+    }
+
+    private Brick getRandomBrick(){
+        Random random = new Random();
+        Brick curr = bricks.get(random.nextInt(bricks.size()));
+        while(curr.hasItem()){
             Collections.shuffle(bricks);
             curr = bricks.get(0);
         }
-        Potion newPotion = new Potion(curr.getX(), curr.getY());
-        this.potion = newPotion;
-        curr.setItem(newPotion);
-
+        return curr;
     }
 
     /** Determines the physics of the ball in reaction to collisions. */
@@ -94,6 +101,34 @@ class BBGameManager {
         ball.move();
 
         /* Wall Collision Detection. */
+        manageWallCollision();
+
+        /* Brick Collision Detection. */
+        manageBrickCollision();
+
+        /* Paddle Collision Detection. */
+        managePaddleCollision();
+
+        /* Coin Collision Detection. */
+        for (Coin coin: coins) {
+            boolean itemCollision = manageItemCollision(coin);
+            if (itemCollision){
+                player.addCoin();
+            }
+        }
+
+        /* Blitz Collision Detection */
+        manageItemCollision(blitz);
+
+        /* Gem Collision Detection */
+//        manageItemCollision(gem);
+
+        /* Potion Collision Detection */
+//        manageItemCollision(potion);
+
+    }
+
+    private void manageWallCollision(){
         String wallCollision = ball.madeWallCollision(screenX, screenY);
         if ( wallCollision.equals("x")) {
             ball.setXSpeed(ball.getXSpeed() * -1);
@@ -101,55 +136,46 @@ class BBGameManager {
         else if(wallCollision.equals("y")) {
             ball.setYSpeed(ball.getYSpeed() * -1);
         }
+    }
 
-        /* Brick Collision Detection. */
-        for (Brick brick: bricks) {
-            if (!(brick.getHitStatus())) {
-                String brickCollision = ball.madeRectCollision(brick.getRect());
-
-                if (brickCollision.equals("x")) {
-                    System.out.println("BRICK");
-                    ball.setXSpeed(ball.getXSpeed() * -1);
-                    brick.changeHitStatus();
-
-                    break;
-                } else if (brickCollision.equals("y")) {
-                    System.out.println("BRICK");
-                    ball.setYSpeed(ball.getYSpeed() * -1);
-                    brick.changeHitStatus();
-                    break;
+    private void manageBrickCollision(){
+        if (!blitz.getBlitzMode().equals("started")){
+            for (Brick brick: bricks) {
+                if (!(brick.getHitStatus())) {
+                    String brickCollision = ball.madeRectCollision(brick.getRect());
+                    if (brickCollision.equals("x")) {
+                        ball.setXSpeed(ball.getXSpeed() * -1);
+                        brick.changeHitStatus();
+                        break;
+                    } else if (brickCollision.equals("y")) {
+                        ball.setYSpeed(ball.getYSpeed() * -1);
+                        brick.changeHitStatus();
+                        break;
+                    }
                 }
             }
         }
+    }
 
-        /* Coin Collision Detection. */
-        for (Coin currCoin: coins) {
-            if (currCoin.getAvailableStatus()) {
-                String coinCollision = ball.madeRectCollision(currCoin.getCoinShape());
-                if (coinCollision.equals("x")) {
-                    player.addCoin();
-                    ball.setXSpeed(ball.getXSpeed() * -1);
-                    currCoin.gotCollected();
-                    break;
-                } else if (coinCollision.equals("y")) {
-                    player.addCoin();
-                    ball.setYSpeed(ball.getYSpeed() * -1);
-                    currCoin.gotCollected();
-                    break;
-                }
+    private boolean manageItemCollision(Collectable item){
+        if (item.getAvailableStatus()) {
+            String coinCollision = ball.madeRectCollision(item.getItemShape());
+            if (coinCollision.equals("x") || coinCollision.equals("y")) {
+                item.gotCollected();
+                return true;
             }
         }
+        return false;
+    }
 
-//        /* Potion and Gem collision detection. */
-//        String gemCollision = ball.madeRectCollision()
-
-        /* Paddle Collision Detection. */
+    private void managePaddleCollision(){
         String paddleCollision = ball.madeRectCollision(paddle.getRect());
         if (!(paddleCollision.equals(" "))) {
             ball.setYSpeed(ball.getYSpeed() * -1);
             ball.setRandomXSpeed();
         }
     }
+
 
     /**
      * Checks if the player still has lives left after they've lost the ball.
@@ -223,6 +249,37 @@ class BBGameManager {
                 }
             }
         }
+    }
+
+    void initializeBlitzCoins(){
+        for (Brick brick: bricks){
+            Collectable item = brick.getItem();
+            if (item == null || item.getClass() != Coin.class ||
+                    (item.getClass() == Coin.class && !item.getAvailableStatus())){
+                Coin newCoin = new Coin(brick.getX() + brick.getWidth()/2,
+                        brick.getY() + brick.getHeight()/2, brick.getHeight()/2);
+                coins.add(newCoin);
+            }
+        }
+    }
+
+    void endBlitzGame(){
+        //TODO: change starting index after testing is done
+        coins.subList(10, coins.size()).clear();
+    }
+
+    void drawBlitzGame(Canvas canvas){
+        ball.draw(canvas);
+        paddle.draw(canvas);
+        for (Coin coin: coins){
+            if (coin.getAvailableStatus()){
+                coin.draw(canvas);
+            }
+        }
+    }
+
+    Blitz getBlitz(){
+        return blitz;
     }
 
     /**

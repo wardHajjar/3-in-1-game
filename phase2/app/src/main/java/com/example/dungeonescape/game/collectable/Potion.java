@@ -10,10 +10,13 @@ import android.graphics.Rect;
 public class Potion extends GameObject implements Collectable {
 
     private Boolean available;
+    private Rect potionShape;
 
-    public Potion(int x, int y) {
+    public Potion(int x, int y, int size) {
         super(x, y);
         available = true;
+        setPaintColour(Color.GREEN);
+        potionShape = new Rect(x, y, x + size, y + size);
     }
 
     @Override
@@ -29,5 +32,10 @@ public class Potion extends GameObject implements Collectable {
     @Override
     public void gotCollected() {
         this.available = false;
+    }
+
+    @Override
+    public Rect getItemShape(){
+        return potionShape;
     }
 }

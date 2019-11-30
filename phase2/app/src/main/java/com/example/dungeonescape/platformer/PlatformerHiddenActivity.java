@@ -10,20 +10,21 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.dungeonescape.activities.DeadActivity;
 import com.example.dungeonescape.activities.MainActivity;
 import com.example.dungeonescape.activities.MenuActivity;
-import com.example.dungeonescape.maze.MazeActivity;
 import com.example.dungeonescape.player.PlayerManager;
 import com.example.dungeonescape.activities.GeneralGameActivity;
 import com.example.dungeonescape.player.Player;
 import com.example.dungeonescape.activities.EndGameActivity;
 import com.example.dungeonescape.R;
+
+import java.util.logging.Level;
+
 /**
  * The activity for the main level3 game.
  */
 public class PlatformerHiddenActivity extends GeneralGameActivity {
-    private PlatformerView game;
+    private LevelView game;
     private boolean running;
     Player player;
     PlayerManager playerManager;
@@ -49,7 +50,11 @@ public class PlatformerHiddenActivity extends GeneralGameActivity {
         game.getManager().setPlayer(player);
 
         setTitle("Level 3: PlatformerBonusLevel");
-
+        game.setEndGameListener(new OnCustomEventListener() {
+            public void onEvent() {
+                endLevel();
+            }
+        });
         // Set Buttons
         buttons();
         running = true;
@@ -79,18 +84,6 @@ public class PlatformerHiddenActivity extends GeneralGameActivity {
                                     String life = "Lives: " + String.valueOf(lives);
                                     TextView lifeText = (TextView) findViewById(R.id.lives);
                                     lifeText.setText(life);
-//                                    boolean doneLevel = game.nextLevel();
-//                                    if (doneLevel) {
-//                                        nextLevel();
-//                                        save(playerManager, player);
-//                                        running = false;
-//                                    }
-//                                    boolean dead = game.dead();
-//                                    if (dead){
-//                                        save(playerManager, player);
-//                                        deadPage();
-//                                        running = false;
-//                                    }
                                 }
                             }
                         });
@@ -113,7 +106,6 @@ public class PlatformerHiddenActivity extends GeneralGameActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.main_menu) {
-            save(playerManager, player);
             Intent intent = menuActivity.createIntent(PlatformerHiddenActivity.this,
                     MainActivity.class, playerManager, player);
             startActivity(intent);
@@ -123,28 +115,15 @@ public class PlatformerHiddenActivity extends GeneralGameActivity {
         }
     }
 
+
     /**
-     * User has successfully finished Platformer and will now move to the EndGamePage.
+     * User has died in the hidden level i.e. Fell once.
      */
-    private void nextLevel() {
+    private void endLevel() {
         long endTime = SystemClock.elapsedRealtime();
         long elapsedMilliSeconds = endTime - startTime;
         player.updateTotalTime(elapsedMilliSeconds);
-        save(playerManager, player);
-        Intent intent = new Intent(PlatformerHiddenActivity.this, EndGameActivity.class);
-        intent.putExtra("Player", player);
-        intent.putExtra("Game Manager", playerManager);
-        startActivity(intent);
-    }
-    /**
-     * User has lost the Game i.e. no more lives left.
-     */
-    private void deadPage() {
-        long endTime = SystemClock.elapsedRealtime();
-        long elapsedMilliSeconds = endTime - startTime;
-        player.updateTotalTime(elapsedMilliSeconds);
-        save(playerManager, player);
-        Intent intent = new Intent(PlatformerHiddenActivity.this, EndGameActivity.class);
+        Intent intent = new Intent(PlatformerHiddenActivity.this, PlatformerMainActivity.class);
         intent.putExtra("Player", player);
         intent.putExtra("Game Manager", playerManager);
         startActivity(intent);
@@ -187,11 +166,6 @@ public class PlatformerHiddenActivity extends GeneralGameActivity {
         game.pause();
     }
 
-    @Override
-    public void save(PlayerManager playerManager, Player player) {
-        super.save(playerManager, player);
-        player.setCurrentLevel(3);
-    }
 
 
 }
