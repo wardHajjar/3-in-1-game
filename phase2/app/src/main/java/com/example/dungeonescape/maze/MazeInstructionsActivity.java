@@ -16,9 +16,17 @@ import com.example.dungeonescape.player.PlayerManager;
 import com.example.dungeonescape.player.Player;
 import com.example.dungeonescape.R;
 
+/**
+ * Creates an activity to display before a player enters the Maze level.
+ *
+ * This activity will give instructions to players on how to play the game, and what the objectives
+ * of the level are in order to help them complete it.
+ */
 public class MazeInstructionsActivity extends GeneralGameActivity {
 
-    /** Initializes a Player and PlayerManager. */
+    /* The activity needs a Player and a PlayerManager attribute, but the level does not use them
+     * for any specific purpose besides storing them and then sending them to the next activity,
+     * which is MazeActivity, who then does use the two instances. */
     private Player player;
     private PlayerManager playerManager;
 
@@ -59,21 +67,14 @@ public class MazeInstructionsActivity extends GeneralGameActivity {
         }
     }
 
-    /** Creates the Start button to play the Maze. */
+    /** Creates and configures the Start button to play the Maze game following the instructions
+     * page.
+     */
     private void configureNextButton() {
         Button nextButton = findViewById(R.id.startGame);
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                try {
-//                    Intent intent = new Intent(
-//                            MazeInstructionsActivity.this, MazeActivity.class);
-//                    intent.putExtra("Player", player);
-//                    intent.putExtra("Game Manager", playerManager);
-//                    startActivity(intent);
-//                } catch ( ActivityNotFoundException e) {
-//                    e.printStackTrace();
-//                }
                 Intent intent = new Intent(
                         MazeInstructionsActivity.this, MazeActivity.class);
                 intent.putExtra("Player", player);
