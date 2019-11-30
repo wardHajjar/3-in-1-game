@@ -13,6 +13,7 @@ import com.example.dungeonescape.player.Player;
 import com.example.dungeonescape.game.collectable.Coin;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class is responsible for drawing out the game objects and walls of the maze, as well as
@@ -56,11 +57,8 @@ public class MazeView extends View {
      *
      * @param screenWidth the width of the phone screen in pixels.
      * @param screenHeight the height of the phone screen in pixels.
-     * @param numMazeCols the number of columns this Maze has.
-     * @param numMazeRows the number of rows this Maze has.
      */
-    void calculateCellSize(int screenWidth, int screenHeight,
-                           int numMazeCols, int numMazeRows) {
+    void calculateCellSize(int screenWidth, int screenHeight) {
         float newCellSize;
         float screenWidthDivHeight = screenWidth / screenHeight;
         float mazeColsDivRows = numMazeCols / numMazeRows;
@@ -78,10 +76,9 @@ public class MazeView extends View {
      * Calculates the cell's horizontal padding based on the screen's width and calculated cell size.
      *
      * @param screenWidth the width of the phone screen in pixels.
-     * @param numMazeCols the number of columns in this Maze.
      * @param cellSize the calculated size of the MazeCell.
      */
-    void calculateCellHorizontalPadding(int screenWidth, int numMazeCols, float cellSize) {
+    void calculateCellHorizontalPadding(int screenWidth, float cellSize) {
         horizontalPadding = (screenWidth - (numMazeCols * cellSize)) / 2;
     }
 
@@ -89,28 +86,17 @@ public class MazeView extends View {
      * Calculates the cell's vertical padding based on the screen's height and calculated cell size.
      *
      * @param screenHeight the height of the phone screen in pixels.
-     * @param numMazeRows the number of rows in this Maze.
      * @param cellSize the calculated size of the MazeCell.
      */
-    void calculateCellVerticalPadding(int screenHeight, int numMazeRows, float cellSize) {
+    void calculateCellVerticalPadding(int screenHeight, float cellSize) {
         verticalPadding = (screenHeight - (numMazeRows * cellSize)) / 2;
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         canvas.drawColor(Color.BLACK);
-        /* Represents the width and height of the available screen in pixels. */
-        int screenWidth = getWidth();
-        int screenHeight = getHeight();
-        int mazeCols = getNumMazeCols();
-        int mazeRows = getNumMazeRows();
 
-        // calculates MazeCell cellSize in pixels
-        calculateCellSize(screenWidth, screenHeight, mazeCols, mazeRows);
-
-        // calculates MazeCell horizontalPadding and verticalPadding
-        calculateCellHorizontalPadding(screenWidth, mazeCols, cellSize);
-        calculateCellVerticalPadding(screenHeight, mazeRows, cellSize);
+        calculateDimensions();
 
         // translate the canvas by our padding values so the maze is always centered on our screen.
         canvas.translate(horizontalPadding, verticalPadding);
@@ -119,21 +105,27 @@ public class MazeView extends View {
         float margin = cellSize / 10;
 
         // draws walls, Coins, the Player and the exit square on the screen
-        paintWalls(canvas, mazeCols, mazeRows, cellSize);
+        paintWalls(canvas, cellSize);
         paintCoins(canvas, cellSize, margin);
-        paintPlayerSprite(canvas, cellSize, margin);
+//        paintPlayerSprite(canvas, cellSize, margin);
+        playerSprite.paintObject(canvas, cellSize, margin);
         paintExit(exitCell, canvas, cellSize, margin);
+    }
+
+    /** Performs dimensions calculations including cellSize and padding values. */
+    private void calculateDimensions() {
+        calculateCellSize(getWidth(), getHeight());
+        calculateCellHorizontalPadding(getWidth(), cellSize);
+        calculateCellVerticalPadding(getHeight(), cellSize);
     }
 
     /** Draws walls (borders) for each mazeCell.
      *
      * @param canvas the Canvas to draw the walls on.
-     * @param mazeCols the number of columns in this Maze.
-     * @param mazeRows the number of rows in this Maze.
      */
-    private void paintWalls(Canvas canvas, int mazeCols, int mazeRows, float cellSize) {
-        for(int x = 0; x < mazeCols; x++) {
-            for(int y = 0; y < mazeRows; y++) {
+    private void paintWalls(Canvas canvas, float cellSize) {
+        for(int x = 0; x < numMazeCols; x++) {
+            for(int y = 0; y < numMazeRows; y++) {
                 MazeCell currentCell = cells[x][y];
                 if (cells[x][y].isTopWall()) {
                     canvas.drawLine(
