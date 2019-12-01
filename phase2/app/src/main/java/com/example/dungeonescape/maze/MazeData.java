@@ -1,8 +1,10 @@
 package com.example.dungeonescape.maze;
 
 import com.example.dungeonescape.game.GameData;
+import com.example.dungeonescape.game.collectable.Collectable;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /** Contains all data for the Maze Game. */
 class MazeData extends GameData {
@@ -12,6 +14,8 @@ class MazeData extends GameData {
 
     /** A list of coins that can be collected for score. */
     private ArrayList<MazeCoin> coins;
+
+    private List<Collectable> collectables;
 
     /** The number of columns and rows in this Maze. */
     private int numMazeCols;
@@ -101,7 +105,19 @@ class MazeData extends GameData {
         this.cells = cells;
     }
 
-    ArrayList<MazeCoin> getCoins() {
+    List<Collectable> getCollectables() {
+        return this.collectables;
+    }
+
+    /** Sets the MazeCoins array to the inputted array.
+     *
+     * @param collectables the List of MazeCoins.
+     */
+    void setCollectables(List<Collectable> collectables) {
+        this.collectables = collectables;
+    }
+
+    List<MazeCoin> getCoins() {
         return this.coins;
     }
 

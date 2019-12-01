@@ -1,13 +1,19 @@
 package com.example.dungeonescape.maze;
 
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.util.SparseIntArray;
 
 import com.example.dungeonescape.game.collectable.Coin;
+import com.example.dungeonescape.game.collectable.Collectable;
+import com.example.dungeonescape.game.collectable.CollectableFactory;
+import com.example.dungeonescape.game.collectable.Gem;
+import com.example.dungeonescape.game.collectable.Potion;
 import com.example.dungeonescape.player.Player;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
 import java.util.Stack;
 
@@ -68,6 +74,7 @@ class MazeManager {
     private void populateMaze() {
         initializeMazeArray();
         mazeData.setCoins(createCoins());
+        mazeData.setCollectables(createCollectables());
         this.playerSprite = mazeView.getPlayerSprite();
         createExitCell();
     }
@@ -232,6 +239,56 @@ class MazeManager {
         return coins;
     }
 
+    private List<Collectable> createCollectables() {
+        List<Collectable> collectables = new ArrayList<>();
+        SparseIntArray coordinates = createCoordinates();
+        CollectableFactory factory = new CollectableFactory();
+
+        for (int i = 0; i < 2; i++) {
+            int x = coordinates.keyAt(i);
+            int y = coordinates.get(x);
+            int cellSize = (int) mazeData.getCellSize();
+            int val = rand.nextInt(5);
+            if (val > 2) {
+                MazeCoin mazeCoin = new MazeCoin(x, y, cellSize);
+                collectables.add(mazeCoin);
+            } else if (val == 2) {
+                Gem gem = (Gem) factory.getCollectable("gem", x, y, cellSize);
+                collectables.add(gem);
+            } else {
+                Potion potion =
+                        (Potion) factory.getCollectable("potion", x, y, cellSize);
+                collectables.add(potion);
+            }
+        }
+
+        return collectables;
+    }
+
+    private SparseIntArray createCoordinates() {
+        SparseIntArray coordinates = new SparseIntArray();
+        coordinates.append(0, 0);
+        coordinates.append(numMazeCols, numMazeRows);
+
+        while (coordinates.size() < 4) {
+            int x = rand.nextInt(numMazeCols);
+            if (coordinates.get(x, -1) == -1) {
+                coordinates.append(x, rand.nextInt(numMazeRows));
+            } else {
+                int y = rand.nextInt(numMazeRows);
+                while (coordinates.get(x) == y) {
+                    y = rand.nextInt(numMazeRows);
+                }
+                coordinates.append(x, y);
+            }
+        }
+
+        coordinates.delete(0);
+        coordinates.delete(numMazeCols);
+
+        return coordinates;
+    }
+
     /** Returns if the Player has completed 3 iterations of the MazeCell.
      *
      * @return boolean value for Player level completion.
@@ -280,6 +337,7 @@ class MazeManager {
             this.cells = createMaze();
             mazeData.setCells(this.cells);
             mazeData.setCoins(createCoins());
+            mazeData.setCollectables(createCollectables());
             relocatePlayerSprite();
         }
     }
