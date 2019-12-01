@@ -30,9 +30,9 @@ class MazeManager {
     private Player player;
 
     private MazeView mazeView;
-    private PlayerSprite playerSprite;
+    private Sprite playerSprite;
     private MazeCell playerLocation;
-    private MazeCell exitCell;
+    private Sprite exitSprite;
 
     /** Number of times the Player has gone through the maze. */
     private int mazeIterations = 0;
@@ -68,9 +68,9 @@ class MazeManager {
 
     /** Create a MazeCell object in the bottom right hand corner of the Maze. */
     private void createExitCell() {
-        mazeView.setExitCell(new MazeCell(numMazeCols - 1, numMazeRows - 1));
-        mazeView.getExitCell().setPaintColour(Color.BLUE);
-        this.exitCell = mazeView.getExitCell();
+        mazeView.setExitSprite();
+        mazeView.getExitSprite().setPaintColour(Color.BLUE);
+        this.exitSprite = mazeView.getExitSprite();
     }
 
     /** Populates a 2D Array with MazeCell GameObjects to create the Maze.
@@ -103,7 +103,6 @@ class MazeManager {
         MazeCell mazeCell = new MazeCell(x, y);
         mazeCell.setPaintColour(Color.WHITE);
         mazeCell.setPaintStrokeWidth(4);
-
         return mazeCell;
     }
 
@@ -270,7 +269,7 @@ class MazeManager {
 
     /** Checks if this Player has arrived at the exit, create a new Maze if true. */
     private void playerAtExit() {
-        if (playerSprite.getX() == exitCell.getX() && playerSprite.getY() == exitCell.getY()) {
+        if (playerSprite.getX() == exitSprite.getX() && playerSprite.getY() == exitSprite.getY()) {
             mazeIterations++;
             this.cells = createMaze();
             mazeView.setCells(this.cells);
@@ -297,8 +296,8 @@ class MazeManager {
     void relocatePlayerSprite() {
         playerSprite.setPaintColour(player.getColour());
         playerLocation = this.cells[0][0];
-        exitCell = new MazeCell(numMazeCols - 1, numMazeRows - 1);
-        exitCell.setPaintColour(Color.BLUE);
+//        exitCell = new MazeCell(numMazeCols - 1, numMazeRows - 1);
+//        exitCell.setPaintColour(Color.BLUE);
         if (playerSprite != null) {
             playerSprite.setX(0);
             playerSprite.setY(0);

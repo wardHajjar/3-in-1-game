@@ -35,8 +35,8 @@ public class MazeView extends View {
     private ArrayList<Coin> coins;
 
     /** Player and exit objects, and their positions. */
-    private PlayerSprite playerSprite = new PlayerSprite();
-    private MazeCell exitCell;
+    private Sprite playerSprite = new Sprite();
+    private Sprite exitSprite = new Sprite();
 
     /** The number of columns and rows in this maze. */
     private int numMazeCols;
@@ -107,8 +107,8 @@ public class MazeView extends View {
         // draws walls, Coins, the Player and the exit square on the screen
         paintWalls(canvas, cellSize);
         paintCoins(canvas, cellSize, margin);
-        playerSprite.paintObject(canvas, cellSize, margin);
-        paintExit(exitCell, canvas, cellSize, margin);
+        playerSprite.draw(canvas, cellSize, margin);
+        exitSprite.draw(canvas, cellSize, margin);
     }
 
     /** Performs dimensions calculations including cellSize and padding values. */
@@ -125,39 +125,7 @@ public class MazeView extends View {
     private void paintWalls(Canvas canvas, float cellSize) {
         for(int x = 0; x < numMazeCols; x++) {
             for(int y = 0; y < numMazeRows; y++) {
-                MazeCell currentCell = cells[x][y];
-                if (cells[x][y].isTopWall()) {
-                    canvas.drawLine(
-                            x * cellSize,
-                            y * cellSize,
-                            (x + 1) * cellSize,
-                            y * cellSize,
-                            currentCell.getPaint());
-                }
-                if (cells[x][y].isLeftWall()) {
-                    canvas.drawLine(
-                            x * cellSize,
-                            y * cellSize,
-                            x * cellSize,
-                            (y + 1) * cellSize,
-                            currentCell.getPaint());
-                }
-                if (cells[x][y].isBottomWall()) {
-                    canvas.drawLine(
-                            x * cellSize,
-                            (y + 1) * cellSize,
-                            (x + 1) * cellSize,
-                            (y + 1) * cellSize,
-                            currentCell.getPaint());
-                }
-                if (cells[x][y].isRightWall()) {
-                    canvas.drawLine(
-                            (x + 1) * cellSize,
-                            y * cellSize,
-                            (x + 1) * cellSize,
-                            (y + 1) * cellSize,
-                            currentCell.getPaint());
-                }
+                cells[x][y].draw(canvas, cellSize);
             }
         }
     }
@@ -169,31 +137,8 @@ public class MazeView extends View {
      */
     private void paintCoins(Canvas canvas, float cellSize, float margin) {
         for (Coin coin : coins) {
-            canvas.drawOval(
-                    coin.getX() * cellSize + margin,
-                    coin.getY() * cellSize + margin,
-                    (coin.getX() + 1) * cellSize - margin,
-                    (coin.getY() + 1) * cellSize - margin,
-                    coin.getPaint());
+            coin.draw(canvas, cellSize, margin);
         }
-    }
-
-    /** Draws the exit square on the screen.
-     *
-     * @param canvas the Canvas to draw the exit on.
-     * @param margin the space around the square.
-     */
-    private void paintExit(MazeCell exit, Canvas canvas, float cellSize, float margin) {
-        Paint mazeExitPaint = exit.getPaint();
-        int exitX = exit.getX();
-        int exitY = exit.getY();
-
-        canvas.drawRect(
-                exitX * cellSize + margin,
-                exitY * cellSize + margin,
-                (exitX + 1) * cellSize - margin,
-                (exitY + 1) * cellSize - margin,
-                mazeExitPaint);
     }
 
     void setNumMazeCols(int cols) {
@@ -236,19 +181,20 @@ public class MazeView extends View {
         return this.cellSize;
     }
 
-    MazeCell getExitCell() {
-        return this.exitCell;
+    Sprite getExitSprite() {
+        return this.exitSprite;
     }
 
-    void setExitCell(MazeCell exitCell) {
-        this.exitCell = exitCell;
+    void setExitSprite() {
+        this.exitSprite.setX(this.numMazeCols-1);
+        this.exitSprite.setY(this.numMazeRows-1);
     }
 
-    PlayerSprite getPlayerSprite() {
+    Sprite getPlayerSprite() {
         return this.playerSprite;
     }
 
-    void setPlayerSprite(PlayerSprite playerSprite) {
+    void setPlayerSprite(Sprite playerSprite) {
         this.playerSprite = playerSprite;
     }
 }

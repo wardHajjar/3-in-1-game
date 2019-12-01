@@ -1,5 +1,7 @@
 package com.example.dungeonescape.maze;
 
+import android.graphics.Canvas;
+
 import com.example.dungeonescape.game.GameObject;
 
 /**
@@ -16,11 +18,43 @@ public class MazeCell extends GameObject {
     /** If this cell has been visited before. */
     private boolean visited = false;
 
-    /** The size of this MazeCell in pixels. */
-    private float cellSize;
-
     MazeCell(int col, int row) {
         super(col, row);
+    }
+
+    void draw(Canvas canvas, float cellSize){
+        if (isTopWall()) {
+            canvas.drawLine(
+                    getX() * cellSize,
+                    getY() * cellSize,
+                    (getX() + 1) * cellSize,
+                    getY() * cellSize,
+                    getPaint());
+        }
+        if (isLeftWall()) {
+            canvas.drawLine(
+                    getX() * cellSize,
+                    getY() * cellSize,
+                    getX() * cellSize,
+                    (getY() + 1) * cellSize,
+                    getPaint());
+        }
+        if (isBottomWall()) {
+            canvas.drawLine(
+                    getX() * cellSize,
+                    (getY() + 1) * cellSize,
+                    (getX() + 1) * cellSize,
+                    (getY() + 1) * cellSize,
+                    getPaint());
+        }
+        if (isRightWall()) {
+            canvas.drawLine(
+                    (getX() + 1) * cellSize,
+                    getY() * cellSize,
+                    (getX() + 1) * cellSize,
+                    (getY() + 1) * cellSize,
+                    getPaint());
+        }
     }
 
     boolean isTopWall() {
@@ -86,18 +120,5 @@ public class MazeCell extends GameObject {
      */
     void setVisited(boolean visited) {
         this.visited = visited;
-    }
-
-    public float getCellSize() {
-        return cellSize;
-    }
-
-    /**
-     * Sets the MazeCell's size.
-     *
-     * @param cellSize the MazeCell's cellSize.
-     */
-    public void setCellSize(float cellSize) {
-        this.cellSize = cellSize;
     }
 }

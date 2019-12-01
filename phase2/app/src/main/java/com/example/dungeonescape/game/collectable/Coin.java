@@ -68,9 +68,17 @@ public class Coin extends GameObject implements Collectable{
         updateCoinLocation();
     }
 
-    @Override
     public void draw(Canvas canvas) {
         canvas.drawCircle(this.getX(), this.getY(), coinRadius, this.getPaint());
+    }
+
+    public void draw(Canvas canvas, float cellSize, float margin) {
+        canvas.drawOval(
+                this.getX() * cellSize + margin,
+                this.getY() * cellSize + margin,
+                (this.getX() + 1) * cellSize - margin,
+                (this.getY() + 1) * cellSize - margin,
+                this.getPaint());
     }
 
     @Override

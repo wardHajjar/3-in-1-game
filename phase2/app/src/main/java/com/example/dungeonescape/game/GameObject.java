@@ -12,6 +12,8 @@ public class GameObject {
     private Paint paint;
 
     public GameObject() {
+        setX(0);
+        setY(0);
         setPaint(new Paint());
     }
 
@@ -21,7 +23,10 @@ public class GameObject {
         setPaint(new Paint());
     }
 
-    public void paintObject(){};
+    /**
+     * abstract class draw which is different depending on the object to be drawn.
+     */
+    void draw(){}
 
     /**
      * Sets the Game Object Paint's colour.
