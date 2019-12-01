@@ -53,8 +53,6 @@ class MazeManager {
     private void initializeMazeSize() {
         setNumMazeRows(5 * player.getGameDifficulty());
         setNumMazeCols(5 * player.getGameDifficulty());
-//        mazeView.setNumMazeCols(getNumMazeCols());
-//        mazeView.setNumMazeRows(getNumMazeRows());
 
         mazeData.setNumMazeCols(getNumMazeCols());
         mazeData.setNumMazeRows(getNumMazeRows());
@@ -63,7 +61,8 @@ class MazeManager {
     /** Creates and assigns the Maze 2D Array to this.cells. */
     private void initializeMazeArray() {
         this.cells = createMaze();
-        mazeView.setCells(this.cells);
+//        mazeView.setCells(this.cells);
+        mazeData.setCells(this.cells);
     }
 
     /** Populate Maze with GameObjects. */
@@ -280,7 +279,8 @@ class MazeManager {
         if (playerSprite.getX() == exitSprite.getX() && playerSprite.getY() == exitSprite.getY()) {
             mazeIterations++;
             this.cells = createMaze();
-            mazeView.setCells(this.cells);
+//            mazeView.setCells(this.cells);
+            mazeData.setCells(this.cells);
             mazeView.setCoins(createCoins());
             relocatePlayerSprite();
         }

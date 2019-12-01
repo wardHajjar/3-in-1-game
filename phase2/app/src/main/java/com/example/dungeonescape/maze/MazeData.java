@@ -2,6 +2,10 @@ package com.example.dungeonescape.maze;
 
 /** Contains all data for the Maze Game. */
 class MazeData {
+
+    /** A 2D Array of MazeCell cells. */
+    private MazeCell[][] cells;
+
     /** The number of columns and rows in this Maze. */
     private int numMazeCols;
     private int numMazeRows;
@@ -91,4 +95,13 @@ class MazeData {
     private void setVerticalPadding(float verticalPadding) {
         this.verticalPadding = verticalPadding;
     }
+
+    MazeCell[][] getCells() {
+        return this.cells;
+    }
+
+    void setCells(MazeCell[][] cells) {
+        this.cells = cells;
+    }
+
 }

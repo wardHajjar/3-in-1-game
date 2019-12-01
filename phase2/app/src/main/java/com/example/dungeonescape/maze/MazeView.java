@@ -21,8 +21,8 @@ import java.util.ArrayList;
  */
 
 public class MazeView extends View {
-    /** A 2D Array of MazeCell cells. */
-    private MazeCell[][] cells;
+//    /** A 2D Array of MazeCell cells. */
+//    private MazeCell[][] cells;
 
     /** A list of coins that can be collected for score. */
     private ArrayList<MazeCoin> coins;
@@ -30,10 +30,6 @@ public class MazeView extends View {
     /** Player and exit objects, and their positions. */
     private Sprite playerSprite = new Sprite();
     private Sprite exitSprite = new Sprite();
-
-    /** The number of columns and rows in this maze. */
-    private int numMazeCols;
-    private int numMazeRows;
 
     private MazeData mazeData;
 
@@ -43,14 +39,7 @@ public class MazeView extends View {
 
     void setMazeData(MazeData mazeData) {
         this.mazeData = mazeData;
-        setMazeSize();
     }
-
-    void setMazeSize() {
-        setNumMazeRows(mazeData.getNumMazeRows());
-        setNumMazeCols(mazeData.getNumMazeCols());
-    }
-
 
     @Override
     protected void onDraw(Canvas canvas) {
@@ -83,10 +72,10 @@ public class MazeView extends View {
      * @param canvas the Canvas to draw the walls on.
      */
     private void paintWalls(Canvas canvas) {
-        for(int x = 0; x < numMazeCols; x++) {
-            for(int y = 0; y < numMazeRows; y++) {
-                cells[x][y].setMazeData(mazeData);
-                cells[x][y].draw(canvas);
+        for(int x = 0; x < mazeData.getNumMazeCols(); x++) {
+            for(int y = 0; y < mazeData.getNumMazeRows(); y++) {
+                mazeData.getCells()[x][y].setMazeData(mazeData);
+                mazeData.getCells()[x][y].draw(canvas);
             }
         }
     }
@@ -102,30 +91,6 @@ public class MazeView extends View {
         }
     }
 
-    void setNumMazeCols(int cols) {
-        this.numMazeCols = cols;
-    }
-
-    void setNumMazeRows(int rows) {
-        this.numMazeRows = rows;
-    }
-
-    public int getNumMazeCols() {
-        return numMazeCols;
-    }
-
-    public int getNumMazeRows() {
-        return numMazeRows;
-    }
-
-    MazeCell[][] getCells() {
-        return this.cells;
-    }
-
-    void setCells(MazeCell[][] cells) {
-        this.cells = cells;
-    }
-
     ArrayList<MazeCoin> getCoins() {
         return this.coins;
     }
@@ -139,8 +104,8 @@ public class MazeView extends View {
     }
 
     void setExitSprite() {
-        this.exitSprite.setX(numMazeCols - 1);
-        this.exitSprite.setY(numMazeRows - 1);
+        this.exitSprite.setX(mazeData.getNumMazeCols() - 1);
+        this.exitSprite.setY(mazeData.getNumMazeRows() - 1);
     }
 
     Sprite getPlayerSprite() {
