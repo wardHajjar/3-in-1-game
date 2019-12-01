@@ -61,50 +61,38 @@ class MazeData {
         setVerticalPadding((screenHeight - (numMazeRows * cellSize)) / 2);
     }
 
-    void setNumMazeCols(int numMazeCols) {
-        this.numMazeCols = numMazeCols;
-    }
-
     int getNumMazeCols() {
         return this.numMazeCols;
     }
 
-    void setNumMazeRows(int numMazeRows) {
-        this.numMazeRows = numMazeRows;
+    /** Sets the number of columns in this Maze.
+     *
+     * @param numMazeCols the number of columns.
+     */
+    void setNumMazeCols(int numMazeCols) {
+        this.numMazeCols = numMazeCols;
     }
 
     int getNumMazeRows() {
         return this.numMazeRows;
     }
 
-    private void setCellSize(float cellSize) {
-        this.cellSize = cellSize;
-    }
-
-    float getCellSize() {
-        return this.cellSize;
-    }
-
-    float getHorizontalPadding() {
-        return this.horizontalPadding;
-    }
-
-    private void setHorizontalPadding(float horizontalPadding) {
-        this.horizontalPadding = horizontalPadding;
-    }
-
-    float getVerticalPadding() {
-        return this.verticalPadding;
-    }
-
-    private void setVerticalPadding(float verticalPadding) {
-        this.verticalPadding = verticalPadding;
+    /** Sets the number of rows in this Maze.
+     *
+     * @param numMazeRows the number of rows.
+     */
+    void setNumMazeRows(int numMazeRows) {
+        this.numMazeRows = numMazeRows;
     }
 
     MazeCell[][] getCells() {
         return this.cells;
     }
 
+    /** Sets the cells array to the inputted array.
+     *
+     * @param cells the 2D array of MazeCell objects.
+     */
     void setCells(MazeCell[][] cells) {
         this.cells = cells;
     }
@@ -113,8 +101,47 @@ class MazeData {
         return this.coins;
     }
 
+    /** Sets the MazeCoins array to the inputted array.
+     *
+     * @param coins the List of MazeCoins.
+     */
     void setCoins(ArrayList<MazeCoin> coins) {
         this.coins = coins;
     }
 
+    float getCellSize() {
+        return this.cellSize;
+    }
+
+    /** Sets the cellSize in pixels.
+     *
+     * @param cellSize the float value of the cellSize.
+     */
+    private void setCellSize(float cellSize) {
+        this.cellSize = cellSize;
+    }
+
+    float getHorizontalPadding() {
+        return this.horizontalPadding;
+    }
+
+    /** Sets the horizontalPadding of the Maze.
+     *
+     * @param horizontalPadding the float value.
+     */
+    private void setHorizontalPadding(float horizontalPadding) {
+        this.horizontalPadding = horizontalPadding;
+    }
+
+    float getVerticalPadding() {
+        return this.verticalPadding;
+    }
+
+    /** Sets the verticalPadding of the Maze.
+     *
+     * @param verticalPadding the float value.
+     */
+    private void setVerticalPadding(float verticalPadding) {
+        this.verticalPadding = verticalPadding;
+    }
 }
