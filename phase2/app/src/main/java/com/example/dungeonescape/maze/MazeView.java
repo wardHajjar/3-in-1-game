@@ -82,8 +82,8 @@ public class MazeView extends View {
 
     /** Runs method setMazeData on all GameObjects that implement RetrieveData. */
     void updateMazeObjectsData() {
-        playerSprite.setMazeData(this.mazeData);
-        exitSprite.setMazeData(this.mazeData);
+        playerSprite.setGameData(this.mazeData);
+        exitSprite.setGameData(this.mazeData);
         updateMazeCellData();
         updateCoinData();
     }
@@ -92,7 +92,7 @@ public class MazeView extends View {
     void updateMazeCellData() {
         for (int x = 0; x < mazeData.getNumMazeRows(); x++) {
             for (int y = 0; y < mazeData.getNumMazeRows(); y++) {
-                mazeData.getCells()[x][y].setMazeData(mazeData);
+                mazeData.getCells()[x][y].setGameData(mazeData);
             }
         }
     }
@@ -100,7 +100,7 @@ public class MazeView extends View {
     /** Runs method setMazeData on all MazeCoins. */
     void updateCoinData() {
         for (MazeCoin coin: mazeData.getCoins()) {
-            coin.setMazeData(mazeData);
+            coin.setGameData(mazeData);
         }
     }
 
