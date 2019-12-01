@@ -75,20 +75,20 @@ class BBGameManager {
 
         /* Random assignment of collectable items to unoccupied bricks. */
         coins = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 5; i++) {
             Brick coinBrick = getRandomBrick();
             Collectable newCoin = factory.getCollectable("coin",
                     coinBrick.getX() + brickWidth/2,
                     coinBrick.getY() + brickHeight/2,
-                    brickHeight/2);
+                    brickHeight/4);
             coinBrick.setItem(newCoin);
             coins.add((Coin) newCoin);
         }
 
         Brick blitzBrick = getRandomBrick();
         Blitz newBlitz = (Blitz) factory.getCollectable("blitz",
-                blitzBrick.getX() + brickWidth/2, blitzBrick.getY() + brickHeight/2,
-                brickHeight/2);
+                blitzBrick.getX() + brickWidth/4, blitzBrick.getY(),
+                brickHeight);
         this.blitz = newBlitz;
         blitzBrick.setItem(newBlitz);
 
@@ -101,8 +101,8 @@ class BBGameManager {
 
         Brick potionBrick = getRandomBrick();
         Potion newPotion = (Potion) factory.getCollectable("potion",
-                potionBrick.getX() + brickWidth/2, potionBrick.getY() + brickHeight/2,
-                brickHeight/2);
+                potionBrick.getX() + (int)(brickWidth/3), potionBrick.getY() + brickHeight/4,
+                (int) (brickHeight/1.5));
         this.potion = newPotion;
         potionBrick.setItem(newPotion);
 
@@ -309,7 +309,7 @@ class BBGameManager {
             if (item == null || item.getClass() != Coin.class ||
                     (item.getClass() == Coin.class && !item.getAvailableStatus())){
                 Coin newCoin = new Coin(brick.getX() + brick.getWidth()/2,
-                        brick.getY() + brick.getHeight()/2, brick.getHeight()/2);
+                        brick.getY() + brick.getHeight()/2, brick.getHeight()/4);
                 coins.add(newCoin);
             }
         }
