@@ -1,6 +1,9 @@
 package com.example.dungeonescape.platformer;
 
 import android.graphics.Color;
+
+import com.example.dungeonescape.game.collectable.Collectable;
+
 import java.lang.Math;
 import java.util.Random;
 
@@ -12,6 +15,8 @@ class Platforms extends PlatformerObject{
 
     /** width of the platforms. */
     private int width;
+
+    Collectable item;
 
 
     Platforms(int x, int y, int length, int width, PlatformerManager manager) {
@@ -26,6 +31,14 @@ class Platforms extends PlatformerObject{
         // Moves platforms down
         platformDown(down);
         setShape(this.length, this.width);
+    }
+
+    boolean hasItem() {
+        return this.item != null;
+    }
+
+    void setItem(Collectable item) {
+        this.item = item;
     }
 
     /** Moves the platforms down, i.e when the ball surpasses the platforms they get moved to their
