@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import com.example.dungeonescape.game.GameObject;
 import com.example.dungeonescape.game.Drawable;
+import com.example.dungeonescape.player.Player;
 
 
 public class Blitz extends GameObject implements Collectable, Drawable {
@@ -42,6 +43,11 @@ public class Blitz extends GameObject implements Collectable, Drawable {
         path.lineTo(startPoint.x, startPoint.y);
         path.close();
         canvas.drawPath(path, getPaint());
+    }
+
+    @Override
+    public void collect(Player player) {
+        player.addToSatchel(this);
     }
 
     private List<Point> createShapePoints(){

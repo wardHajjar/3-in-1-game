@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import com.example.dungeonescape.game.collectable.Coin;
 import com.example.dungeonescape.game.Drawable;
 import com.example.dungeonescape.game.collectable.Collectable;
+import com.example.dungeonescape.player.Player;
 
 /** Represents one MazeCoin for the Maze Game. This MazeCoin can be drawn and collected. */
 class MazeCoin extends Coin implements Collectable, Drawable, RetrieveData {
@@ -25,6 +26,11 @@ class MazeCoin extends Coin implements Collectable, Drawable, RetrieveData {
                 (this.getX() + 1) * cellSize - margin,
                 (this.getY() + 1) * cellSize - margin,
                 this.getPaint());
+    }
+
+    @Override
+    public void collect(Player player) {
+        player.addToSatchel(this);
     }
 
     @Override

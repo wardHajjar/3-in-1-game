@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.Path;
 import com.example.dungeonescape.game.Drawable;
+import com.example.dungeonescape.player.Player;
 
 
 public class Potion extends GameObject implements Collectable, Drawable {
@@ -43,6 +44,10 @@ public class Potion extends GameObject implements Collectable, Drawable {
         canvas.drawPath(path, getPaint());
     }
 
+    @Override
+    public void collect(Player player) {
+        player.addToSatchel(this);
+    }
 
     @Override
     public Boolean getAvailableStatus() {
