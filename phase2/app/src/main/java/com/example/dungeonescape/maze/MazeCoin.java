@@ -7,7 +7,7 @@ import com.example.dungeonescape.game.Drawable;
 import com.example.dungeonescape.game.collectable.Collectable;
 
 /** Represents one MazeCoin for the Maze Game. This MazeCoin can be drawn and collected. */
-class MazeCoin extends Coin implements Collectable, Drawable {
+class MazeCoin extends Coin implements Collectable, Drawable, RetrieveData {
 
     private MazeData mazeData;
 
@@ -27,11 +27,8 @@ class MazeCoin extends Coin implements Collectable, Drawable {
                 this.getPaint());
     }
 
-    /** Sets the mazeData variable equal to the passed in MazeData instance.
-     *
-     * @param mazeData the instance of MazeData that this MazeCoin will read from.
-     */
-    void setMazeData(MazeData mazeData) {
+    @Override
+    public void setMazeData(MazeData mazeData) {
         this.mazeData = mazeData;
     }
 }

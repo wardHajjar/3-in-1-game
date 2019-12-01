@@ -106,12 +106,20 @@ public class PlatformerMainActivity extends GeneralGameActivity{
                                     String scr = String.valueOf(score) ;
                                     String scre = "Score: " + scr;
 
-                                    TextView score1 = (TextView) findViewById(R.id.score);
+                                    TextView score1 = findViewById(R.id.score);
                                     score1.setText(scre);
+                                    // Update the lives shown
                                     int lives = game.getManager().getPlayer().getNumLives();
-                                    String life = "Lives: " + String.valueOf(lives);
-                                    TextView lifeText = (TextView) findViewById(R.id.lives);
+                                    String life = "Lives: " + (lives);
+
+                                    TextView lifeText = findViewById(R.id.lives);
                                     lifeText.setText(life);
+                                    // Update the coins shown
+                                    int numCoins = game.getManager().getPlayer().getNumCoins();
+                                    String strCoins = "Coins: " + (numCoins);
+
+                                    TextView coinsText = findViewById(R.id.coins);
+                                    coinsText.setText(strCoins);
                                 }
                             }
                         });
@@ -153,6 +161,7 @@ public class PlatformerMainActivity extends GeneralGameActivity{
         long endTime = SystemClock.elapsedRealtime();
         long elapsedMilliSeconds = endTime - startTime;
         player.updateTotalTime(elapsedMilliSeconds);
+        save(getPlayerManager());
         Intent intent = new Intent(PlatformerMainActivity.this, PlatformerHiddenActivity.class);
         intent.putExtra("Player Name", player.getName());
         intent.putExtra("Game Manager", getPlayerManager());

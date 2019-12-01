@@ -2,12 +2,15 @@ package com.example.dungeonescape.maze;
 
 import android.graphics.Canvas;
 
+import com.example.dungeonescape.game.Drawable;
 import com.example.dungeonescape.game.GameObject;
 
 /**
  * Represents a MazeCell GameObject which is a square cell in the Maze.
  */
-public class MazeCell extends GameObject {
+public class MazeCell extends GameObject implements Drawable, RetrieveData {
+
+    private MazeData mazeData;
 
     /** Assigns whether or not this cell as a wall on the specified side. */
     private boolean topWall = true;
@@ -22,7 +25,9 @@ public class MazeCell extends GameObject {
         super(col, row);
     }
 
-    void draw(Canvas canvas, float cellSize){
+    @Override
+    public void draw(Canvas canvas){
+        float cellSize = mazeData.getCellSize();
         if (isTopWall()) {
             canvas.drawLine(
                     getX() * cellSize,
@@ -55,6 +60,11 @@ public class MazeCell extends GameObject {
                     (getY() + 1) * cellSize,
                     getPaint());
         }
+    }
+
+    @Override
+    public void setMazeData(MazeData mazeData) {
+        this.mazeData = mazeData;
     }
 
     boolean isTopWall() {

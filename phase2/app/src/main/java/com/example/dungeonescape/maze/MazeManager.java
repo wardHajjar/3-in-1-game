@@ -303,8 +303,6 @@ class MazeManager {
     void relocatePlayerSprite() {
         playerSprite.setPaintColour(player.getColour());
         playerLocation = this.cells[0][0];
-//        exitCell = new MazeCell(numMazeCols - 1, numMazeRows - 1);
-//        exitCell.setPaintColour(Color.BLUE);
         if (playerSprite != null) {
             playerSprite.setX(0);
             playerSprite.setY(0);

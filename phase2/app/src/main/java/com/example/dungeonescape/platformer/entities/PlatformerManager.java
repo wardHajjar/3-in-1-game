@@ -2,10 +2,17 @@ package com.example.dungeonescape.platformer.entities;
 
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
+import com.example.dungeonescape.game.collectable.Blitz;
 import com.example.dungeonescape.game.collectable.Coin;
+import com.example.dungeonescape.game.collectable.Collectable;
+import com.example.dungeonescape.game.collectable.CollectableFactory;
+import com.example.dungeonescape.game.collectable.Gem;
+import com.example.dungeonescape.game.collectable.Potion;
 import com.example.dungeonescape.player.Player;
 import java.util.Random;
 import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Platform manager on a screen with characters and platforms.
@@ -53,6 +60,11 @@ public class PlatformerManager{
      */
     private String gameMode;
 
+    private Gem gem;
+    private Potion potion;
+    private Blitz blitz;
+    private CollectableFactory factory;
+
 
     /**
      * Platform manager on a screen with characters and platforms.
@@ -64,6 +76,27 @@ public class PlatformerManager{
         init(height, width);
         createCoins(3);
         gameMode = "Regular";
+
+        Platforms blitzPlatform = getRandomPlatform();
+        Blitz newBlitz = (Blitz) factory.getCollectable("blitz",
+                blitzPlatform.getX() + gridWidth - 150, blitzPlatform.getY() + gridHeight/2,
+                30);
+        this.blitz = newBlitz;
+        blitzPlatform.setItem(newBlitz);
+
+        Platforms gemBrick = getRandomPlatform();
+        Gem newGem = (Gem) factory.getCollectable("gem",
+                gemBrick.getX() + gridWidth - 150, gemBrick.getY() + gridHeight/2,
+                30);
+        this.gem = newGem;
+        gemBrick.setItem(newGem);
+
+        Platforms potionBrick = getRandomPlatform();
+        Potion newPotion = (Potion) factory.getCollectable("potion",
+                potionBrick.getX() + gridWidth - 150, potionBrick.getY() + gridHeight/2,
+                30);
+        this.potion = newPotion;
+        potionBrick.setItem(newPotion);
 
     }
     public PlatformerManager(int h, int w, int coins) {
@@ -80,6 +113,7 @@ public class PlatformerManager{
         character = new com.example.dungeonescape.platformer.entities.Character(50,1000,100, this);
         player = null;
         platforms = createPlatforms();
+        factory = new CollectableFactory();
     }
     /**
      * Creates platforms.
@@ -87,9 +121,13 @@ public class PlatformerManager{
     private void createCoins(int number) {
         coins = new ArrayList<>(number);
         for (int i = 1; i <= number; i++) {
-            Random random = new Random();
-            int a = random.nextInt(gridWidth - 150);
-            coins.add(new Coin(a, gridHeight*i/number, 30));
+            Platforms coinPlatform = getRandomPlatform();
+            Collectable newCoin = factory.getCollectable("coin",
+                    coinPlatform.getX() + gridWidth/2,
+                    coinPlatform.getY() + gridHeight/2,
+                    30);
+            coinPlatform.setItem(newCoin);
+            coins.add((Coin) newCoin);
         }
     }
     /**
@@ -330,5 +368,15 @@ public class PlatformerManager{
      *  Returns a boolean that indicates if the player has lost all their lives.
      */
     public boolean isDead(){ return (player.getNumLives() <= 0);}
+
+    private Platforms getRandomPlatform(){
+        Random random = new Random();
+        Platforms curr = platforms.get(random.nextInt(platforms.size()));
+        while(curr.hasItem()){
+            Collections.shuffle(platforms);
+            curr = platforms.get(0);
+        }
+        return curr;
+    }
 
 }
