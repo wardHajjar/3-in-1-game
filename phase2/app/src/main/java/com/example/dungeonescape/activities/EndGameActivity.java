@@ -68,7 +68,10 @@ public class EndGameActivity extends GeneralGameActivity {
     private void populatePlayerStats() {
         List<Integer> score = new ArrayList<>();
         TextView playerTimeElapsed = findViewById(R.id.playerTimeElapsed);
-        playerTimeElapsed.setText(String.valueOf(player.getTotalTime()));
+        String minutes = String.valueOf(player.totalMinutes());
+        String seconds = String.valueOf(player.totalSeconds());
+        String time = minutes +":" + seconds;
+        playerTimeElapsed.setText(time);
 
         TextView playerNumCoins = findViewById(R.id.playerNumCoins);
         playerNumCoins.setText(String.valueOf(player.getNumCoins()));

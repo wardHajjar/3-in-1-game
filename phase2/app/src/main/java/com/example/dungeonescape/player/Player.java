@@ -3,7 +3,6 @@ package com.example.dungeonescape.player;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
@@ -197,6 +196,14 @@ public class Player implements Serializable {
      */
     public void updateTotalTime(long timeElapsed) {
         totalTimePlayed = totalTimePlayed + timeElapsed;
+    }
+
+    public long totalMinutes(){
+        return (totalTimePlayed / 1000) / 60;
+    }
+
+    public long totalSeconds(){
+        return (totalTimePlayed / 1000) % 60;
     }
 
     private void resetTime() {
