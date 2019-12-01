@@ -138,7 +138,8 @@ public class MazeView extends View {
     private void paintWalls(Canvas canvas, float cellSize) {
         for(int x = 0; x < numMazeCols; x++) {
             for(int y = 0; y < numMazeRows; y++) {
-                cells[x][y].draw(canvas, cellSize);
+                cells[x][y].setMazeData(mazeData);
+                cells[x][y].draw(canvas);
             }
         }
     }
