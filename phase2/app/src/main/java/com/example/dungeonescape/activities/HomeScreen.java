@@ -37,7 +37,7 @@ public class HomeScreen extends GeneralGameActivity {
         playerLives.setText(String.format("%s", highScore.get("Lives")));
 
         TextView coins = findViewById(R.id.numCoins);
-        coins.setText(String.format("%s", highScore.get("Lives")));
+        coins.setText(String.format("%s", highScore.get("Coins")));
 
         TextView time = findViewById(R.id.numTime);
         time.setText(String.format("%s", highScore.get("Time")));
