@@ -7,7 +7,11 @@ import com.example.dungeonescape.game.GameObject;
 class PlayerSprite extends GameObject {
     PlayerSprite(){}
 
-    public void paintObject(Canvas canvas, float cellSize, float margin) {
+    /** Draws the PlayerSprite square on the screen.
+     *
+     * @param canvas the Canvas to draw the PlayerSprite on.
+     * @param margin the space around the PlayerSprite square. */
+    void paintObject(Canvas canvas, float cellSize, float margin) {
         canvas.drawRect(
                 getX() * cellSize + margin,
                 getY() * cellSize + margin,

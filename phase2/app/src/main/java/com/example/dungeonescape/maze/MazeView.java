@@ -107,7 +107,6 @@ public class MazeView extends View {
         // draws walls, Coins, the Player and the exit square on the screen
         paintWalls(canvas, cellSize);
         paintCoins(canvas, cellSize, margin);
-//        paintPlayerSprite(canvas, cellSize, margin);
         playerSprite.paintObject(canvas, cellSize, margin);
         paintExit(exitCell, canvas, cellSize, margin);
     }
@@ -177,25 +176,6 @@ public class MazeView extends View {
                     (coin.getY() + 1) * cellSize - margin,
                     coin.getPaint());
         }
-    }
-
-    /** Draws the PlayerSprite square on the screen.
-     *
-     * @param canvas the Canvas to draw the PlayerSprite on.
-     * @param margin the space around the PlayerSprite square.
-     */
-    private void paintPlayerSprite(Canvas canvas, float cellSize, float margin) {
-        int playerX = playerSprite.getX();
-        int playerY = playerSprite.getY();
-
-        Paint mazePlayerPaint = playerSprite.getPaint();
-
-        canvas.drawRect(
-                playerX * cellSize + margin,
-                playerY * cellSize + margin,
-                (playerX + 1) * cellSize - margin,
-                (playerY + 1) * cellSize - margin,
-                mazePlayerPaint);
     }
 
     /** Draws the exit square on the screen.
