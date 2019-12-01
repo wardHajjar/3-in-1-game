@@ -1,8 +1,9 @@
-package com.example.dungeonescape.platformer;
+package com.example.dungeonescape.platformer.views;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 
+import com.example.dungeonescape.platformer.OnCustomEventListener;
 import com.example.dungeonescape.player.Player;
 
 /**
@@ -45,7 +46,7 @@ public class PlatformerView extends LevelView implements Runnable {
         if (getManager().isDead()) {
             lostGame();
         }
-        if (!getManager().update()) {
+        if (getManager().update()) {
             gameOver(getManager().getPlayer());
         }
 
