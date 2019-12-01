@@ -9,6 +9,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class EndGameActivity extends GeneralGameActivity {
     private PlayerManager playerManager;
@@ -41,7 +44,7 @@ public class EndGameActivity extends GeneralGameActivity {
             public void onClick(View view) {
                 player.resetStats();
                 save(playerManager, player);
-                Intent intent = new Intent(EndGameActivity.this, BBMainActivity.class);
+                Intent intent = new Intent(EndGameActivity.this, HomeScreen.class);
                 intent.putExtra("Player", player);
                 intent.putExtra("Game Manager", playerManager);
                 startActivity(intent);
@@ -63,6 +66,7 @@ public class EndGameActivity extends GeneralGameActivity {
     }
 
     private void populatePlayerStats() {
+        List<Integer> score = new ArrayList<>();
         TextView playerTimeElapsed = findViewById(R.id.playerTimeElapsed);
         playerTimeElapsed.setText(String.valueOf(player.getTotalTime()));
 
@@ -71,6 +75,11 @@ public class EndGameActivity extends GeneralGameActivity {
 
         TextView playerNumLives = findViewById(R.id.playerNumLives);
         playerNumLives.setText(String.valueOf(player.getNumLives()));
+        score.add(player.getNumLives());
+        score.add(player.getNumCoins());
+        score.add((int)player.getTotalTime());
+        player.setHighScore(score);
+        save(playerManager, player);
     }
 
     @Override

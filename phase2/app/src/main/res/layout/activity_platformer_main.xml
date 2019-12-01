@@ -16,7 +16,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.784" />
+        app:layout_constraintVertical_bias="0.834" />
 
     <TextView
         android:id="@+id/textView"
@@ -38,18 +38,37 @@
         android:id="@+id/Objective"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="116dp"
+        android:layout_marginBottom="92dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="80dp"
-        android:text="Objective: Use left and right buttons to bounce on platforms and not fall below the screen. To escape the dungeon, get a score of 10 (10 bounces). The coins can be collected for points!"
+        android:layout_marginTop="20dp"
+        android:text="Use left and right buttons to bounce on platforms and not fall below the screen. To escape the dungeon, get a score of 10 (10 bounces). The coins can be collected for points!"
         android:textAlignment="center"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/startButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.117" />
+        app:layout_constraintTop_toBottomOf="@+id/objective"
+        app:layout_constraintVertical_bias="0.646" />
+
+    <TextView
+        android:id="@+id/objective"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="1dp"
+        android:layout_marginEnd="140dp"
+        android:layout_marginStart="139dp"
+        android:layout_marginTop="50dp"
+        android:text="OBJECTIVE:"
+        android:textAlignment="center"
+        android:textColor="#1A287A"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/Objective"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
