@@ -8,7 +8,6 @@ import android.graphics.Color;
 import android.graphics.Rect;
 import java.util.Random;
 
-
 public class Coin extends GameObject implements Collectable, Drawable {
 
     /** The shape of the coin. */

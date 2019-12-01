@@ -4,9 +4,9 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.view.MotionEvent;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.Collections;
-
 import com.example.dungeonescape.game.collectable.Coin;
 import com.example.dungeonescape.game.collectable.Gem;
 import com.example.dungeonescape.game.collectable.Potion;
@@ -14,6 +14,7 @@ import com.example.dungeonescape.player.Player;
 import com.example.dungeonescape.game.collectable.Blitz;
 import com.example.dungeonescape.game.collectable.Collectable;
 import com.example.dungeonescape.game.collectable.CollectableFactory;
+import com.example.dungeonescape.game.Drawable;
 
 /** Instantiates and controls game objects. */
 class BBGameManager {
@@ -22,11 +23,18 @@ class BBGameManager {
      * ball - the ball object that bounces around and hits bricks.
      * paddle - the paddle that catches the ball.
      * bricks - list of all the bricks in the game.
+     * coins - list of all the coins in the game.
+     * gem - the Gem object in the game.
+     * potion - the Potion object in the game that gives the player an extra life.
+     * blitz - the Blitz object that activates hidden round.
+     * screenX, screenY - width and height of the screen, respectively.
+     * player - the user playing the game.
+     * factory - generates all the collectible items used in the game.
      */
     private Ball ball;
     private Paddle paddle;
-    private ArrayList<Brick> bricks;
-    private ArrayList<Coin> coins;
+    private List<Brick> bricks;
+    private List<Coin> coins;
     private Gem gem;
     private Potion potion;
     private Blitz blitz;
@@ -35,15 +43,23 @@ class BBGameManager {
     private Player player;
     private CollectableFactory factory;
 
+    /**
+     * Initializes a brick breaker game manager that receives information about the location of
+     * the objects within the game and relays back information to these objects to move them
+     * accordingly.
+     * @param screenX, width of the screen
+     * @param screenY, height of the screen
+     */
     BBGameManager(int screenX, int screenY) {
 
         /* Construct the ball. */
         this.ball = new Ball(screenX/2 - 75 + (screenX/2 - 75)/2 - 25,
                 screenY - 100 - 26, 25, -26, Color.WHITE);
 
-        /* Construct paddle and bricks. */
+        /* Construct paddle */
         paddle = new Paddle(screenX/2 - 75, screenY - 100, screenX/3, 40);
 
+        /* Construct bricks */
         bricks = new ArrayList<>();
         int brickWidth = screenX / 6;
         int brickHeight = screenY / 20;
@@ -57,7 +73,7 @@ class BBGameManager {
         this.player = null;
         factory = new CollectableFactory();
 
-        /* Random assignment of coins to bricks. */
+        /* Random assignment of collectable items to unoccupied bricks. */
         coins = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             Brick coinBrick = getRandomBrick();
@@ -92,6 +108,10 @@ class BBGameManager {
 
     }
 
+    /**
+     * Return a brick that doesn't contain an item.
+     * @return Brick object from bricks list.
+     */
     private Brick getRandomBrick(){
         Random random = new Random();
         Brick curr = bricks.get(random.nextInt(bricks.size()));
@@ -127,13 +147,16 @@ class BBGameManager {
         manageItemCollision(blitz);
 
         /* Gem Collision Detection */
-//        manageItemCollision(gem);
+        manageItemCollision(gem);
 
         /* Potion Collision Detection */
-//        manageItemCollision(potion);
+        manageItemCollision(potion);
 
     }
 
+    /**
+     * Detects collisions between walls and the ball and moves the ball accordingly.
+     */
     private void manageWallCollision(){
         String wallCollision = ball.madeWallCollision(screenX, screenY);
         if ( wallCollision.equals("x")) {
@@ -144,6 +167,10 @@ class BBGameManager {
         }
     }
 
+    /**
+     * Detects collisions between bricks and the ball and moves the ball accordingly.
+     * Registers the ball as being hit.
+     */
     private void manageBrickCollision(){
         if (!blitz.getBlitzMode().equals("started")){
             for (Brick brick: bricks) {
@@ -163,6 +190,12 @@ class BBGameManager {
         }
     }
 
+    /**
+     * Detects collisions between collectible items and the ball.
+     * Ball passes through item but gets registered as collected.
+     * @param item the item to detect collision with.
+     * @return true if a collision has occurred.
+     */
     private boolean manageItemCollision(Collectable item){
         if (item.getAvailableStatus()) {
             String coinCollision = ball.madeRectCollision(item.getItemShape());
@@ -174,6 +207,9 @@ class BBGameManager {
         return false;
     }
 
+    /**
+     * Detects collisions between the ball and the paddle and moves the ball accordingly.
+     */
     private void managePaddleCollision(){
         String paddleCollision = ball.madeRectCollision(paddle.getRect());
         if (!(paddleCollision.equals(" "))) {
@@ -181,7 +217,6 @@ class BBGameManager {
             ball.setRandomXSpeed();
         }
     }
-
 
     /**
      * Checks if the player still has lives left after they've lost the ball.
@@ -251,7 +286,8 @@ class BBGameManager {
                 curr.draw(canvas);
             } else {    /* Draw if hit brick contains a collectable item to be collected. */
                 if (curr.hasItem() && curr.getItem().getAvailableStatus()) {
-                    curr.getItem().draw(canvas);
+                    Drawable item = (Drawable) curr.getItem();
+                    item.draw(canvas);
                 }
             }
         }
@@ -286,15 +322,6 @@ class BBGameManager {
 
     Blitz getBlitz(){
         return blitz;
-    }
-
-    /**
-     * Checks if the ball collides the top boarder/top of the screen.
-     * @return true if ball collides with the top of the screen.
-     */
-    boolean passedBorder() {
-        String wallCollision = ball.madeWallCollision(screenX, screenY);
-        return wallCollision.equals("win");
     }
 
     /**

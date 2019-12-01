@@ -10,9 +10,10 @@ import java.util.ArrayList;
 
 
 import com.example.dungeonescape.game.GameObject;
+import com.example.dungeonescape.game.Drawable;
 
 
-public class Blitz extends GameObject implements Collectable {
+public class Blitz extends GameObject implements Collectable, Drawable {
 
     private Rect blitzShape;
     private boolean available;
