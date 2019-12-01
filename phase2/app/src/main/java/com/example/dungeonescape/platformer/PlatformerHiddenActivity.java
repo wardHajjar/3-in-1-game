@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.example.dungeonescape.activities.MainActivity;
 import com.example.dungeonescape.activities.MenuActivity;
-import com.example.dungeonescape.player.PlayerManager;
+import com.example.dungeonescape.platformer.views.LevelView;
 import com.example.dungeonescape.activities.GeneralGameActivity;
 import com.example.dungeonescape.player.Player;
 import com.example.dungeonescape.R;
@@ -73,13 +73,12 @@ public class PlatformerHiddenActivity extends GeneralGameActivity {
                             public void run() {
                                 if (running) {
 
-                                    // Update the score shown
-                                    int score = game.getManager().getCharacterScore();
-                                    String scr = String.valueOf(score) ;
-                                    String scre = "Score: " + scr;
+                                    // Update the coins shown
+                                    int numCoins = game.getManager().getPlayer().getNumCoins();
+                                    String strCoins = "Coins: " + (numCoins);
 
-                                    TextView score1 = (TextView) findViewById(R.id.score);
-                                    score1.setText(scre);
+                                    TextView coinsText = findViewById(R.id.hiddenCoins);
+                                    coinsText.setText(strCoins);
                                 }
                             }
                         });
@@ -111,7 +110,6 @@ public class PlatformerHiddenActivity extends GeneralGameActivity {
         }
     }
 
-
     /**
      * User has died in the hidden level i.e. Fell once.
      */
@@ -119,7 +117,7 @@ public class PlatformerHiddenActivity extends GeneralGameActivity {
         long endTime = SystemClock.elapsedRealtime();
         long elapsedMilliSeconds = endTime - startTime;
         player.updateTotalTime(elapsedMilliSeconds);
-
+        save(getPlayerManager());
         Intent intent = new Intent(PlatformerHiddenActivity.this, PlatformerMainActivity.class);
         intent.putExtra("Player Name", player.getName());
         intent.putExtra("Character", i.getSerializableExtra("Character"));
@@ -164,8 +162,6 @@ public class PlatformerHiddenActivity extends GeneralGameActivity {
         super.onPause();
         game.pause();
     }
-
-
 
 }
 

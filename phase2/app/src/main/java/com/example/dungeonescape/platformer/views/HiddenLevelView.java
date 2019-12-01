@@ -1,4 +1,4 @@
-package com.example.dungeonescape.platformer;
+package com.example.dungeonescape.platformer.views;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -12,7 +12,7 @@ public class HiddenLevelView extends LevelView {
     }
 
     public void update() {
-        if (!getManager().update()) {
+        if (getManager().update()) {
             exitHiddenLevel();
         }
     }

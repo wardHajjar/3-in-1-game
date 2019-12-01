@@ -1,5 +1,6 @@
 package com.example.dungeonescape.game.collectable;
 
+import com.example.dungeonescape.game.Drawable;
 import com.example.dungeonescape.game.GameObject;
 
 import android.graphics.Canvas;
@@ -8,7 +9,7 @@ import android.graphics.Rect;
 import java.util.Random;
 
 
-public class Coin extends GameObject implements Collectable{
+public class Coin extends GameObject implements Collectable, Drawable {
 
     /** The shape of the coin. */
     private Rect coinShape;
@@ -72,15 +73,6 @@ public class Coin extends GameObject implements Collectable{
         canvas.drawCircle(this.getX(), this.getY(), coinRadius, this.getPaint());
     }
 
-    public void draw(Canvas canvas, float cellSize, float margin) {
-        canvas.drawOval(
-                this.getX() * cellSize + margin,
-                this.getY() * cellSize + margin,
-                (this.getX() + 1) * cellSize - margin,
-                (this.getY() + 1) * cellSize - margin,
-                this.getPaint());
-    }
-
     @Override
     public Boolean getAvailableStatus() {
         return this.available;
@@ -89,6 +81,14 @@ public class Coin extends GameObject implements Collectable{
     @Override
     public void gotCollected() {
         this.available = false;
+    }
+
+    public void setCoinRadius(int coinRadius) {
+        this.coinRadius = coinRadius;
+    }
+
+    public int getCoinRadius() {
+        return this.coinRadius;
     }
 
 }

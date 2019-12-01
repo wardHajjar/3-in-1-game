@@ -23,11 +23,6 @@ public class GameObject {
     }
 
     /**
-     * abstract class draw which is different depending on the object to be drawn.
-     */
-    void draw(){}
-
-    /**
      * Sets the Game Object Paint's colour.
      *
      * @param colour the RBG value for the Game Object's Paint.

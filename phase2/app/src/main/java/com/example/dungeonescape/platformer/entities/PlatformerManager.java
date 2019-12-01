@@ -1,4 +1,4 @@
-package com.example.dungeonescape.platformer;
+package com.example.dungeonescape.platformer.entities;
 
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
@@ -34,7 +34,7 @@ public class PlatformerManager{
     /**
      * The character for this game.
      */
-    private Character character;
+    private com.example.dungeonescape.platformer.entities.Character character;
     /**
      * A list of coins.
      */
@@ -65,12 +65,13 @@ public class PlatformerManager{
     private Blitz blitz;
     private CollectableFactory factory;
 
+
     /**
      * Platform manager on a screen with characters and platforms.
      * @param height height of the screen.
      * @param width the width of the screen.
      */
-    PlatformerManager(int height, int width) {
+    public PlatformerManager(int height, int width) {
 
         init(height, width);
         createCoins(3);
@@ -98,7 +99,7 @@ public class PlatformerManager{
         potionBrick.setItem(newPotion);
 
     }
-    PlatformerManager(int h, int w, int coins) {
+    public PlatformerManager(int h, int w, int coins) {
         init(h, w);
         createCoins(coins);
         gameMode = "Blitz";
@@ -107,10 +108,10 @@ public class PlatformerManager{
      * Initializes constructor.
      */
     private void init(int h, int w) {
-        character = new Character(50,1000,100, this);
-        player = null;
-        gridHeight = h - 344;
+        gridHeight = h - 500;
         gridWidth = w;
+        character = new com.example.dungeonescape.platformer.entities.Character(50,1000,100, this);
+        player = null;
         platforms = createPlatforms();
         factory = new CollectableFactory();
     }
@@ -135,7 +136,8 @@ public class PlatformerManager{
     int getGridWidth() {
         return gridWidth;
     }
-    List<Platforms> getPlatforms() {
+
+    public List<Platforms> getPlatforms() {
         return platforms;
     }
 
@@ -152,7 +154,7 @@ public class PlatformerManager{
     /**
      * Sets the player and his attributes
      * */
-    void setPlayer(Player player){
+    public void setPlayer(Player player){
         this.player = player;
         character.setColour(player.getColour());
     }
@@ -167,7 +169,7 @@ public class PlatformerManager{
     /**
      * @return the character scores
      * */
-    int getCharacterScore(){
+    public int getCharacterScore(){
         return character.getGameScore();
     }
 
@@ -186,7 +188,7 @@ public class PlatformerManager{
     /**
      * Draws the canvas screen.
      */
-    void draw(Canvas canvas) {
+    public void draw(Canvas canvas) {
 
         for (int i = 0; i < platforms.size(); i++) {
             platforms.get(i).draw(canvas);
@@ -204,7 +206,7 @@ public class PlatformerManager{
     /**
      * @return the platform locations in a List.
      * */
-    ArrayList<List> getPlatformPositions() {
+    public ArrayList<List> getPlatformPositions() {
         ArrayList<List> arr = new ArrayList<>(platforms.size());
 
         for (int i = 0; i < platforms.size(); i++) {
@@ -218,7 +220,7 @@ public class PlatformerManager{
     /**
      * Sets platforms at given locations, used when returning to normal mode.
      */
-    void setPlatforms(ArrayList<List> arr) {
+    public void setPlatforms(ArrayList<List> arr) {
         platforms = new ArrayList<>(arr.size());
         for (int i = 0; i < arr.size(); i++) {
             int x = (int) arr.get(i).get(0);
@@ -229,7 +231,7 @@ public class PlatformerManager{
     /**
      * Sets Character score and location, used when returning to normal mode.
      */
-    void setCharacter(ArrayList<Integer> characterLocation, int score) {
+    public void setCharacter(ArrayList<Integer> characterLocation, int score) {
         this.character.setX(characterLocation.get(0));
         this.character.setY(characterLocation.get(1));
         this.character.setGameScore(score);
@@ -237,7 +239,7 @@ public class PlatformerManager{
     /**
      * @return the character's x and y location
      * */
-    ArrayList<Integer> getCharacterLocation() {
+    public ArrayList<Integer> getCharacterLocation() {
         ArrayList<Integer> lst = new ArrayList<>();
         lst.add(character.getX());
         lst.add(character.getY());
@@ -246,48 +248,76 @@ public class PlatformerManager{
     /**
      * Left and right buttons to move character
      */
-    void left_button() {
+    public void left_button() {
         character.moveLeft();
     }
-    void right_button() {
+    public void right_button() {
         character.moveRight();
     }
 
     /**
      * Updates the characters, platforms and coins.
      */
-    void setImage(Drawable drawable) {
+    public void setImage(Drawable drawable) {
         portalImage = drawable;
     }
     /**
      * @return the portal
      * */
-    Portal getPortal() {
+    public Portal getPortal() {
         return this.portal;
     }
     /**
-     * Updates the game.
+     * Updates the game, and returns true if character has lost a life.
      * */
-    boolean update() {
+    public boolean update() {
 
         character.move();
-        character.coinDetection(coins);
-        boolean alive = character.isAlive();
-        if (portal != null) {
-            enterPortal = character.portalDetection();
-            if (enterPortal) {
-                System.out.println("PORTAL");
-            }
-        }
-        if (!alive) {
+        collisionDetection();
+        updateAll();
+
+        if (!character.isAlive()) {
             player.loseLife();
-            return false;
+            return true;
         }
+
+        if (character.getGameScore() == 2) {
+            createPortal();
+        }
+        return false;
+    }
+
+    /**
+     * Creates a portal.
+     */
+    private void createPortal() {
+        Random random = new Random();
+        int a = random.nextInt(gridWidth - 150);
+        portal = new Portal(a, -100, this, portalImage);
+    }
+    /**
+     * Returns a boolean that indicates if the player has passed this level.
+     */
+    public boolean finishedLevel() {
+        return (character.getGameScore() > 10);
+    }
+    /**
+     * @return if the player has entered the portal.
+     * */
+    public boolean enterPortal() {
+        return enterPortal;
+
+    }
+
+    /**
+     * Updates all entities.
+     */
+    private void updateAll() {
 
         if (character.getY() < 550) {
-            int diff = Math.abs(550 - (int) character.getY());
-            character.setY(549);
+            int diff = Math.abs(550 - character.getY());
 
+            character.update(1);
             for (int i = 0; i < coins.size(); i++) {
                 coins.get(i).update(diff, gridHeight);
             }
@@ -295,35 +325,49 @@ public class PlatformerManager{
                 platforms.get(i).update(diff);
             }
             if (portal != null) {
-                portal.moveDown(diff);
+                portal.update(diff);
             }
         }
+    }
 
-        if (character.getGameScore() == 2) {
-            Random random = new Random();
-            int a = random.nextInt(gridWidth - 150);
-            portal = new Portal(a, -100, this, portalImage);
+    /** Checks for all collision detection. */
+    private void collisionDetection() {
+        coinDetection();
+        platformDetection();
+        portalDetection();
+    }
+
+    /** Checks if there's a PlatformerCoin at the same coordinate as Character. */
+    private void coinDetection() {
+        for (Coin coin: coins) {
+            if (character.getShape().intersect(coin.getItemShape())) {
+                coin.gotCoin();
+                player.addCoin();
+            }
         }
-        return true;
     }
-    /**
-     * Returns a boolean that indicates if the player has passed this level.
-     */
-    boolean finishedLevel() {
-        return (character.getGameScore() > 10);
+    /** Checks if there's a portal at the same coordinate as Character. */
+    private void portalDetection() {
+        if (portal != null) {
+            enterPortal = character.getShape().intersect(portal.getShape());
+        }
     }
-    /**
-     * @return if the player has entered the portal.
-     * */
-    boolean enterPortal() {
-        return enterPortal;
 
+    /** Checks if the Character touches a platform. */
+    private void platformDetection() {
+        if (character.getSpeed() > 10) {
+            for (Platforms platform: platforms) {
+                if (character.getShape().intersect(platform.getShape())) {
+                    character.bounce(platform);
+                }
+            }
+        }
     }
 
     /**
      *  Returns a boolean that indicates if the player has lost all their lives.
      */
-    boolean isDead(){ return (player.getNumLives() <= 0);}
+    public boolean isDead(){ return (player.getNumLives() <= 0);}
 
     private Platforms getRandomPlatform(){
         Random random = new Random();

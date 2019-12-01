@@ -8,17 +8,18 @@
     tools:context=".platformer.PlatformerHiddenActivity">
 
     <TextView
-        android:id="@+id/score"
+        android:id="@+id/hiddenCoins"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="55dp"
         android:fontFamily="sans-serif-medium"
-        android:text="Score"
+        android:text="@string/coins"
+        android:textAlignment="viewStart"
         android:textSize="24sp" />
 
-    <com.example.dungeonescape.platformer.HiddenLevelView
+    <com.example.dungeonescape.platformer.views.HiddenLevelView
         android:id="@+id/level"
         android:layout_width="411dp"
-        android:layout_height="600dp"
+        android:layout_height="593dp"
         android:layout_weight="1"
         android:background="@drawable/black_background" />
 
