@@ -11,7 +11,6 @@ import android.widget.Button;
 import com.example.dungeonescape.activities.GeneralGameActivity;
 import com.example.dungeonescape.activities.MainActivity;
 import com.example.dungeonescape.activities.MenuActivity;
-import com.example.dungeonescape.player.PlayerManager;
 import com.example.dungeonescape.player.Player;
 import com.example.dungeonescape.R;
 
@@ -56,7 +55,7 @@ public class BBInstructionsActivity extends GeneralGameActivity{
         }
     }
 
-    /** Creates the Start button to play the Maze. */
+    /** Creates the Start button to play Brick Breaker. */
     private void configureNextButton() {
         Button nextButton = findViewById(R.id.startGame);
         nextButton.setOnClickListener(new View.OnClickListener() {

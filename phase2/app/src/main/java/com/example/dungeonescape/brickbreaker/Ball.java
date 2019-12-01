@@ -5,6 +5,7 @@ import android.graphics.Paint;
 import com.example.dungeonescape.game.GameObject;
 import android.graphics.Rect;
 import java.util.Random;
+
 /**
  * Class that creates the ball used in the brick breaker game.
  * Ball has the functionality of bouncing from walls and bricks and breaking breaks.
@@ -14,6 +15,7 @@ public class Ball extends GameObject {
      * The ball's speed in the x and y directions, respectively.
      */
     private int xSpeed, ySpeed;
+    /** The colour the ball gets drawn in. */
     private int colour;
 
     /**
@@ -37,6 +39,7 @@ public class Ball extends GameObject {
      * @param x_speed the new speed in the x direction.
      */
     void setXSpeed(int x_speed) {
+
         this.xSpeed = x_speed;
     }
 
@@ -51,8 +54,8 @@ public class Ball extends GameObject {
     }
 
     /**
-     * Sets the speed of the ball in the x direction as a random speed with a max of y_speed - 1
-     * and min speed of 1.
+     * Sets the speed of the ball in the x direction as a random speed with an absolute
+     * max of y_speed - 1 and an absolute min speed of 1.
      */
     void setRandomXSpeed(){
         Random random = new Random();
@@ -66,7 +69,7 @@ public class Ball extends GameObject {
 
     /**
      * Getter method that returns the ball's speed in the x direction.
-     * @return xSpeed attrivute.
+     * @return xSpeed attribute.
      */
     int getXSpeed(){
         return xSpeed;
@@ -117,10 +120,6 @@ public class Ball extends GameObject {
         } else if (newYPos >= height || newYPos <= 0) {
             return "y";
         }
-
-//        } else if(newYPos <= 0) {
-//            return "win";
-//        }
         return " ";
 
     }
@@ -142,13 +141,17 @@ public class Ball extends GameObject {
             intersection = new Rect(leftX, topY, rightX, bottomY);
         }
         if (intersection != null){
-            // if width of the intersection is greater than the height then the ball must have hit
-            // the top/bottom of the obstacle.
+            /*
+             * if width of the intersection is greater than the height then the ball must have hit
+             * the top/bottom of the obstacle.
+             */
             if (intersection.width() >= intersection.height()){
                 return "y";
             }
-            // if height of the intersection is greater than the width then the ball must have hit
-            // the sides of the obstacle.
+            /*
+             * if height of the intersection is greater than the width then the ball must have hit
+             * the sides of the obstacle.
+             */
             else if (intersection.height() >= intersection.width()){
                 return "x";
             }

@@ -5,8 +5,6 @@ import android.graphics.Rect;
 
 public interface Collectable {
 
-    void draw(Canvas canvas);
-
     Boolean getAvailableStatus();
 
     void gotCollected();

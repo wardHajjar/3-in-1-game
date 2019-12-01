@@ -6,8 +6,9 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.Path;
+import com.example.dungeonescape.game.Drawable;
 
-public class Gem extends GameObject implements Collectable {
+public class Gem extends GameObject implements Collectable, Drawable {
 
     private Boolean available;
     private Rect gemShape;
