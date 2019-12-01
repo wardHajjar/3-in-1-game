@@ -5,7 +5,7 @@ import android.graphics.Canvas;
 import com.example.dungeonescape.game.Drawable;
 import com.example.dungeonescape.game.GameObject;
 
-class Sprite extends GameObject implements Drawable {
+class Sprite extends GameObject implements Drawable, RetrieveData {
     private MazeData mazeData;
 
     Sprite(){}
@@ -23,11 +23,8 @@ class Sprite extends GameObject implements Drawable {
                 getPaint());
     }
 
-    /** Sets the mazeData variable equal to the passed in MazeData instance.
-     *
-     * @param mazeData the instance of MazeData that this Sprite will read from.
-     */
-    void setMazeData(MazeData mazeData) {
+    @Override
+    public void setMazeData(MazeData mazeData) {
         this.mazeData = mazeData;
     }
 }
