@@ -18,7 +18,6 @@ public class CollectableFactory {
      * is not an option.
      */
     public Collectable getCollectable(String collectableType, int x, int y, int size) {
-
         if (collectableType.equalsIgnoreCase("coin")) {
             return new Coin(x, y, size);
 
@@ -27,6 +26,8 @@ public class CollectableFactory {
 
         } else if (collectableType.equalsIgnoreCase("potion")) {
             return new Potion(x, y, size);
+        } else if (collectableType.equalsIgnoreCase("blitz")){
+            return new Blitz(x, y, size);
         }
 
         return null;
