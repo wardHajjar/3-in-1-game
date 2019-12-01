@@ -1,6 +1,5 @@
 package com.example.dungeonescape.maze;
 
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -28,7 +27,6 @@ public class MazeInstructionsActivity extends GeneralGameActivity {
      * for any specific purpose besides storing them and then sending them to the next activity,
      * which is MazeActivity, who then does use the two instances. */
     private Player player;
-    private PlayerManager playerManager;
 
     private MenuActivity menuActivity = new MenuActivity();
 
@@ -39,9 +37,10 @@ public class MazeInstructionsActivity extends GeneralGameActivity {
         setTitle("Level2: Maze");
 
         /* Gather saved data. */
+        load();
         Intent i = getIntent();
-        player = (Player) i.getSerializableExtra("Player");
-        playerManager = (PlayerManager) i.getSerializableExtra("Game Manager");
+        String name = (String) i.getSerializableExtra("Player Name");
+        player = getPlayerManager().getPlayer(name);
 
         /* Button to start the Maze. */
         configureNextButton();
@@ -57,9 +56,9 @@ public class MazeInstructionsActivity extends GeneralGameActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.main_menu) {
-            save(playerManager, player);
+            save(getPlayerManager());
             Intent intent = menuActivity.createIntent(MazeInstructionsActivity.this,
-                    MainActivity.class, playerManager, player);
+                    MainActivity.class, player.getName());
             startActivity(intent);
             return true;
         } else {
@@ -77,8 +76,7 @@ public class MazeInstructionsActivity extends GeneralGameActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(
                         MazeInstructionsActivity.this, MazeActivity.class);
-                intent.putExtra("Player", player);
-                intent.putExtra("Game Manager", playerManager);
+                intent.putExtra("Player Name", player.getName());
                 startActivity(intent);
             }
         });

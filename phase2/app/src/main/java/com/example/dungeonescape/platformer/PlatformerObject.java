@@ -58,7 +58,8 @@ class PlatformerObject extends GameObject {
     /**
      * Draws this item to canvas.
      */
-    void draw(Canvas canvas) {
+
+    public void draw(Canvas canvas) {
         if (this instanceof Platforms) {
             canvas.drawRect(getShape(), getPaint());
         }

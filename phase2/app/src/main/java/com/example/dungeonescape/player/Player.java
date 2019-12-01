@@ -2,11 +2,16 @@ package com.example.dungeonescape.player;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 
 import android.graphics.Color;
 
 import com.example.dungeonescape.game.GameObject;
+
+import androidx.annotation.NonNull;
 
 /**
  * Represents a Player in the Game.
@@ -18,6 +23,7 @@ public class Player implements Serializable {
 
     /** The Player's score. */
     private int score;
+    /** The Player's current level. */
     private int currentLevel;
 
     /** The number of lives this Player has. */
@@ -38,10 +44,13 @@ public class Player implements Serializable {
     /** The total time that the character has been playing the game for. */
     private long totalTimePlayed;
 
+    private Map<String, Integer> highScore = new HashMap<>();
+
     public Player(String name) {
         setName(name);
         setScore(0);
         setNumCoins(0);
+        setHighScore();
         setColour(Color.WHITE);
         setCurrentLevel(1);
         totalTimePlayed = 0;
@@ -205,5 +214,42 @@ public class Player implements Serializable {
 
     public List getSatchel() {
         return satchel;
+    }
+
+    private void setHighScore() {
+
+        highScore.put("Time", 0);
+        highScore.put("Coins", 0);
+        highScore.put("Lives", 0);
+
+    }
+
+    public void setHighScore(List<Integer> score) {
+
+        if (highScore.get("Lives") != null && highScore.get("Coins") != null && highScore.get("Time") != null) {
+            if (score.get(0) > highScore.get("Lives")) {
+                highScore.put("Time", score.get(2));
+                highScore.put("Coins", score.get(1));
+                highScore.put("Lives", score.get(0));
+            }
+            else if (score.get(0).equals(highScore.get("Lives"))) {
+                if (score.get(1) > highScore.get("Coins")) {
+                    highScore.put("Time", score.get(2));
+                    highScore.put("Coins", score.get(1));
+                    highScore.put("Lives", score.get(0));
+                }
+            }
+            else if (score.get(0).equals(highScore.get("Lives")) && score.get(1) > highScore.get("Coins")) {
+                if (score.get(1) > highScore.get("Time")) {
+                    highScore.put("Time", score.get(2));
+                    highScore.put("Coins", score.get(1));
+                    highScore.put("Lives", score.get(0));
+                }
+            }
+        }
+
+    }
+    public Map<String, Integer> getHighScore() {
+        return highScore;
     }
 }

@@ -1,7 +1,6 @@
 package com.example.dungeonescape.game;
 
 import android.graphics.Paint;
-import android.graphics.drawable.shapes.RectShape;
 
 /**
  * Represents any Object in the Game that contains an (x, y) coordinate.

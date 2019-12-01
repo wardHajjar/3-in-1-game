@@ -14,11 +14,11 @@ import android.widget.TextView;
 
 import com.example.dungeonescape.activities.MainActivity;
 import com.example.dungeonescape.activities.MenuActivity;
-import com.example.dungeonescape.player.PlayerManager;
 import com.example.dungeonescape.player.Player;
 import com.example.dungeonescape.R;
 import com.example.dungeonescape.activities.GeneralGameActivity;
 import com.example.dungeonescape.platformer.PlatformerInstructionsActivity;
+import com.example.dungeonescape.player.PlayerManager;
 
 import java.util.Locale;
 
@@ -36,7 +36,6 @@ public class MazeActivity extends GeneralGameActivity {
 
     /** Initializes a Player and PlayerManager. */
     private Player player;
-    private PlayerManager playerManager;
 
     private long startTime;
 
@@ -63,8 +62,9 @@ public class MazeActivity extends GeneralGameActivity {
      * @param intent the Intent to gather data from.
      */
     private void getPlayerSaveData(Intent intent) {
-        player = (Player) intent.getSerializableExtra("Player");
-        playerManager = (PlayerManager) intent.getSerializableExtra("Game Manager");
+        load();
+        String name = (String) intent.getSerializableExtra("Player Name");
+        player = getPlayerManager().getPlayer(name);
     }
 
     /** Initializes the MazeManager for this Maze game. */
@@ -119,9 +119,9 @@ public class MazeActivity extends GeneralGameActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.main_menu) {
-            save(playerManager, player);
+            save(getPlayerManager());
             Intent intent = menuActivity.createIntent(MazeActivity.this,
-                    MainActivity.class, playerManager, player);
+                    MainActivity.class, player.getName());
             startActivity(intent);
             return true;
         } else {
@@ -145,11 +145,10 @@ public class MazeActivity extends GeneralGameActivity {
 
             @Override
             public void onClick(View view) {
-                save(playerManager, player);
+                save(getPlayerManager());
                 Intent intent = new Intent(MazeActivity.this,
                         PlatformerInstructionsActivity.class);
-                intent.putExtra("Player", player);
-                intent.putExtra("Game Manager", playerManager);
+                intent.putExtra("Player Name", player.getName());
                 startActivity(intent);
             }
         });
@@ -163,8 +162,7 @@ public class MazeActivity extends GeneralGameActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MazeActivity.this, MazeActivity.class);
-                intent.putExtra("Player", player);
-                intent.putExtra("Game Manager", playerManager);
+                intent.putExtra("Player Name", player.getName());
                 startActivity(intent);
             }
         });
@@ -206,17 +204,16 @@ public class MazeActivity extends GeneralGameActivity {
         long elapsedMilliSeconds = SystemClock.elapsedRealtime() - startTime;
         player.updateTotalTime(elapsedMilliSeconds);
 
-        save(playerManager, player);
+        save(getPlayerManager());
 
         Intent intent = new Intent(MazeActivity.this, PlatformerInstructionsActivity.class);
-        intent.putExtra("Player", player);
-        intent.putExtra("Game Manager", playerManager);
+        intent.putExtra("Player Name", player.getName());
         startActivity(intent);
     }
 
     @Override
-    public void save(PlayerManager playerManager, Player player) {
-        super.save(playerManager, player);
+    public void save(PlayerManager playerManager) {
+        super.save(playerManager);
         player.setCurrentLevel(3);
     }
 }

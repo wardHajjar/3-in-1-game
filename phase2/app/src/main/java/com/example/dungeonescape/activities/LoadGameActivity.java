@@ -14,6 +14,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.dungeonescape.brickbreaker.BBInstructionsActivity;
+import com.example.dungeonescape.maze.MazeInstructionsActivity;
 import com.example.dungeonescape.player.Player;
 import com.example.dungeonescape.player.PlayerManager;
 import com.example.dungeonescape.R;
@@ -23,9 +24,8 @@ import com.example.dungeonescape.platformer.PlatformerInstructionsActivity;
 
 import java.util.List;
 
-public class LoadGameActivity extends AppCompatActivity {
+public class LoadGameActivity extends GeneralGameActivity {
     private Player player;
-    private PlayerManager playerManager;
     private Spinner spinner;
 
     private MenuActivity menuActivity = new MenuActivity();
@@ -34,10 +34,10 @@ public class LoadGameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_load_game);
-        Intent i = getIntent();
-        playerManager = (PlayerManager) i.getSerializableExtra("Game Manager");
+        /* Gather saved data. */
+        load();
         backButton();
-        if (playerManager.getPlayerNames().size() == 0) {
+        if (getPlayerManager().getPlayerNames().size() == 0) {
             Toast t = Toast.makeText(this, "No players have been saved",
                     Toast.LENGTH_LONG);
             t.show();
@@ -59,7 +59,7 @@ public class LoadGameActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.main_menu) {
             Intent intent = menuActivity.createIntent(LoadGameActivity.this,
-                    MainActivity.class, playerManager, player);
+                    MainActivity.class, player.getName());
             startActivity(intent);
             return true;
         } else {
@@ -69,7 +69,7 @@ public class LoadGameActivity extends AppCompatActivity {
 
     private void setSpinner() {
         spinner = (Spinner) findViewById(R.id.spinner);
-        List<String> names = playerManager.getPlayerNames();
+        List<String> names = getPlayerManager().getPlayerNames();
         String[] arr = names.toArray(new String[names.size()]);
 
         ArrayAdapter<String> myAdapter = new ArrayAdapter<>(LoadGameActivity.this,
@@ -89,8 +89,10 @@ public class LoadGameActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String playerName = spinner.getSelectedItem().toString();
-                player = playerManager.getPlayer(playerName);
-                progress();
+                player = getPlayerManager().getPlayer(playerName);
+                Intent intent = new Intent(LoadGameActivity.this, HomeScreen.class);
+                intent.putExtra("Player Name", player.getName());
+                startActivity(intent);
             }
         });
     }
@@ -105,26 +107,6 @@ public class LoadGameActivity extends AppCompatActivity {
             }
         });
     }
-    private void progress() {
-        int level = player.getCurrentLevel();
-        if (level == 1 || level == 0) {
-            Intent intent = new Intent(LoadGameActivity.this, BBInstructionsActivity.class);
-            intent.putExtra("Player", player);
-            intent.putExtra("Game Manager", playerManager);
-            startActivity(intent);
-        }
-        else if(level == 2) {
-            Intent intent = new Intent(LoadGameActivity.this, MazeActivity.class);
-            intent.putExtra("Player", player);
-            intent.putExtra("Game Manager", playerManager);
-            startActivity(intent);
-        }
-        else {
-            Intent intent = new Intent(LoadGameActivity.this, PlatformerInstructionsActivity.class);
-            intent.putExtra("Player", player);
-            intent.putExtra("Game Manager", playerManager);
-            startActivity(intent);
-        }
-    }
+
 
 }

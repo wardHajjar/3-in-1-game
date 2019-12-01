@@ -2,25 +2,29 @@ package com.example.dungeonescape.activities;
 import com.example.dungeonescape.player.Player;
 import com.example.dungeonescape.player.PlayerManager;
 import com.example.dungeonescape.R;
-import com.example.dungeonescape.brickbreaker.BBMainActivity;
+
 import android.os.Bundle;
 import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class EndGameActivity extends GeneralGameActivity {
-    private PlayerManager playerManager;
     private Player player;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stats);
 
+        //* Gather saved data. */
+        load();
         Intent i = getIntent();
-        player = (Player) i.getSerializableExtra("Player");
-        playerManager = (PlayerManager) i.getSerializableExtra("Game Manager");
+        String name = (String) i.getSerializableExtra("Player Name");
+        player = getPlayerManager().getPlayer(name);
 
         configureActionButtons();
 
@@ -40,10 +44,9 @@ public class EndGameActivity extends GeneralGameActivity {
         playAgain.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 player.resetStats();
-                save(playerManager, player);
-                Intent intent = new Intent(EndGameActivity.this, BBMainActivity.class);
-                intent.putExtra("Player", player);
-                intent.putExtra("Game Manager", playerManager);
+                save(getPlayerManager());
+                Intent intent = new Intent(EndGameActivity.this, HomeScreen.class);
+                intent.putExtra("Player Name", player.getName());
                 startActivity(intent);
             }
         });
@@ -54,15 +57,16 @@ public class EndGameActivity extends GeneralGameActivity {
         menu.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 player.resetStats();
-                save(playerManager, player);
+                save(getPlayerManager());
                 Intent intent = new Intent(EndGameActivity.this, MainActivity.class);
-                intent.putExtra("Game Manager", playerManager);
+                intent.putExtra("Player Name", player.getName());
                 startActivity(intent);
             }
         });
     }
 
     private void populatePlayerStats() {
+        List<Integer> score = new ArrayList<>();
         TextView playerTimeElapsed = findViewById(R.id.playerTimeElapsed);
         playerTimeElapsed.setText(String.valueOf(player.getTotalTime()));
 
@@ -71,10 +75,15 @@ public class EndGameActivity extends GeneralGameActivity {
 
         TextView playerNumLives = findViewById(R.id.playerNumLives);
         playerNumLives.setText(String.valueOf(player.getNumLives()));
+        score.add(player.getNumLives());
+        score.add(player.getNumCoins());
+        score.add((int)player.getTotalTime());
+        player.setHighScore(score);
+        save(getPlayerManager());
     }
 
     @Override
-    public void save(PlayerManager playerManager, Player player) {
-        super.save(playerManager, player);
+    public void save(PlayerManager playerManager) {
+        super.save(getPlayerManager());
     }
 }
