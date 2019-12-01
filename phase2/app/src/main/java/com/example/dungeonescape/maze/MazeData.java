@@ -1,9 +1,11 @@
 package com.example.dungeonescape.maze;
 
+import com.example.dungeonescape.game.GameData;
+
 import java.util.ArrayList;
 
 /** Contains all data for the Maze Game. */
-class MazeData {
+class MazeData extends GameData {
 
     /** A 2D Array of MazeCell cells. */
     private MazeCell[][] cells;
@@ -22,7 +24,9 @@ class MazeData {
     private float horizontalPadding;
     private float verticalPadding;
 
-    MazeData(){}
+    MazeData(){
+        super();
+    }
 
     /** Calculates the cellSize based on the screen's dimensions.
      *

@@ -3,7 +3,9 @@ package com.example.dungeonescape.maze;
 import android.graphics.Canvas;
 
 import com.example.dungeonescape.game.Drawable;
+import com.example.dungeonescape.game.GameData;
 import com.example.dungeonescape.game.GameObject;
+import com.example.dungeonescape.game.RetrieveData;
 
 class Sprite extends GameObject implements Drawable, RetrieveData {
     private MazeData mazeData;
@@ -24,8 +26,8 @@ class Sprite extends GameObject implements Drawable, RetrieveData {
     }
 
     @Override
-    public void setMazeData(MazeData mazeData) {
-        this.mazeData = mazeData;
+    public void setGameData(GameData mazeData) {
+        this.mazeData = (MazeData) mazeData;
     }
 }
 
