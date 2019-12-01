@@ -41,10 +41,11 @@ class MazeManager {
     MazeManager(MazeView mazeView, Player player) {
         this.mazeView = mazeView;
 
-        mazeView.setMazeData(this.mazeData);
-
         this.player = player;
         initializeMazeSize();
+
+        mazeView.setMazeData(this.mazeData);
+
         populateMaze();
     }
 
@@ -52,8 +53,6 @@ class MazeManager {
     private void initializeMazeSize() {
         setNumMazeRows(5 * player.getGameDifficulty());
         setNumMazeCols(5 * player.getGameDifficulty());
-        mazeView.setNumMazeCols(getNumMazeCols());
-        mazeView.setNumMazeRows(getNumMazeRows());
 
         mazeData.setNumMazeCols(getNumMazeCols());
         mazeData.setNumMazeRows(getNumMazeRows());
@@ -62,13 +61,13 @@ class MazeManager {
     /** Creates and assigns the Maze 2D Array to this.cells. */
     private void initializeMazeArray() {
         this.cells = createMaze();
-        mazeView.setCells(this.cells);
+        mazeData.setCells(this.cells);
     }
 
     /** Populate Maze with GameObjects. */
     private void populateMaze() {
         initializeMazeArray();
-        mazeView.setCoins(createCoins());
+        mazeData.setCoins(createCoins());
         this.playerSprite = mazeView.getPlayerSprite();
         createExitCell();
     }
@@ -279,8 +278,8 @@ class MazeManager {
         if (playerSprite.getX() == exitSprite.getX() && playerSprite.getY() == exitSprite.getY()) {
             mazeIterations++;
             this.cells = createMaze();
-            mazeView.setCells(this.cells);
-            mazeView.setCoins(createCoins());
+            mazeData.setCells(this.cells);
+            mazeData.setCoins(createCoins());
             relocatePlayerSprite();
         }
     }
@@ -289,7 +288,7 @@ class MazeManager {
      * Removes Coin from game & adds it to Player if true.
      */
     private void playerOnCoin() {
-        Iterator<MazeCoin> coinIterator = mazeView.getCoins().iterator();
+        Iterator<MazeCoin> coinIterator = mazeData.getCoins().iterator();
         while (coinIterator.hasNext()) {
             MazeCoin coin = coinIterator.next();
             if (playerSprite.getX() == coin.getX() && playerSprite.getY() == coin.getY()) {

@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.Path;
 import com.example.dungeonescape.game.Drawable;
+import com.example.dungeonescape.player.Player;
 
 public class Gem extends GameObject implements Collectable, Drawable {
 
@@ -59,5 +60,10 @@ public class Gem extends GameObject implements Collectable, Drawable {
     public Rect getItemShape(){
 
         return gemShape;
+    }
+
+    @Override
+    public void collect(Player player) {
+        player.addToSatchel(this);
     }
 }

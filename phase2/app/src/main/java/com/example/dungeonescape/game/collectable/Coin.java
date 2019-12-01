@@ -2,6 +2,7 @@ package com.example.dungeonescape.game.collectable;
 
 import com.example.dungeonescape.game.Drawable;
 import com.example.dungeonescape.game.GameObject;
+import com.example.dungeonescape.player.Player;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -70,6 +71,11 @@ public class Coin extends GameObject implements Collectable, Drawable {
 
     public void draw(Canvas canvas) {
         canvas.drawCircle(this.getX(), this.getY(), coinRadius, this.getPaint());
+    }
+
+    @Override
+    public void collect(Player player) {
+        player.addToSatchel(this);
     }
 
     @Override
