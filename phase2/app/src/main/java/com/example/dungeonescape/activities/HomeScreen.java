@@ -39,8 +39,12 @@ public class HomeScreen extends GeneralGameActivity {
         TextView coins = findViewById(R.id.numCoins);
         coins.setText(String.format("%s", highScore.get("Coins")));
 
+
         TextView time = findViewById(R.id.numTime);
-        time.setText(String.format("%s", highScore.get("Time")));
+        String minutes = String.valueOf(player.totalMinutes());
+        String seconds = String.valueOf(player.totalSeconds());
+        String totalTime = minutes +":" + seconds;
+        time.setText(totalTime);
 
         int level = player.getCurrentLevel();
         if (level > 1) {
