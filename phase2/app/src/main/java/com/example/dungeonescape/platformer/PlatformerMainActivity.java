@@ -3,7 +3,6 @@ package com.example.dungeonescape.platformer;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -15,13 +14,11 @@ import com.example.dungeonescape.activities.DeadActivity;
 import com.example.dungeonescape.activities.EndGameActivity;
 import com.example.dungeonescape.activities.MainActivity;
 import com.example.dungeonescape.activities.MenuActivity;
-import com.example.dungeonescape.game.SaveData;
 import com.example.dungeonescape.player.PlayerManager;
 import com.example.dungeonescape.activities.GeneralGameActivity;
 import com.example.dungeonescape.player.Player;
 import com.example.dungeonescape.R;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +29,6 @@ public class PlatformerMainActivity extends GeneralGameActivity{
     private PlatformerView game;
     private boolean running;
     private Player player;
-    private PlayerManager playerManager;
     private long startTime;
 
     private MenuActivity menuActivity = new MenuActivity();
@@ -42,10 +38,12 @@ public class PlatformerMainActivity extends GeneralGameActivity{
         super.onCreate(savedInstanceState);
 
         startTime = SystemClock.elapsedRealtime();
-        // Set the View we are using
+
+        //* Gather saved data. */
+        load();
         Intent i = getIntent();
-        player = (Player) i.getSerializableExtra("Player");
-        playerManager = (PlayerManager) i.getSerializableExtra("Game Manager");
+        String name = (String) i.getSerializableExtra("Player Name");
+        player = getPlayerManager().getPlayer(name);
 
         @SuppressWarnings("unchecked")
         ArrayList<Integer> character = (ArrayList<Integer>) i.getSerializableExtra("Character");
@@ -137,9 +135,9 @@ public class PlatformerMainActivity extends GeneralGameActivity{
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.main_menu) {
-            save(playerManager, player);
+            save(getPlayerManager());
             Intent intent = menuActivity.createIntent(PlatformerMainActivity.this,
-                    MainActivity.class, playerManager, player);
+                    MainActivity.class, player.getName());
             startActivity(intent);
             return true;
         } else {
@@ -155,8 +153,8 @@ public class PlatformerMainActivity extends GeneralGameActivity{
         long elapsedMilliSeconds = endTime - startTime;
         player.updateTotalTime(elapsedMilliSeconds);
         Intent intent = new Intent(PlatformerMainActivity.this, PlatformerHiddenActivity.class);
-        intent.putExtra("Player", player);
-        intent.putExtra("Game Manager", playerManager);
+        intent.putExtra("Player Name", player.getName());
+        intent.putExtra("Game Manager", getPlayerManager());
         intent.putExtra("Character", game.getManager().getCharacterLocation());
         intent.putExtra("Platforms", game.getManager().getPlatformPositions());
         intent.putExtra("Score", game.getManager().getCharacterScore());
@@ -170,10 +168,9 @@ public class PlatformerMainActivity extends GeneralGameActivity{
         long endTime = SystemClock.elapsedRealtime();
         long elapsedMilliSeconds = endTime - startTime;
         player.updateTotalTime(elapsedMilliSeconds);
-        save(playerManager, player);
+        save(getPlayerManager());
         Intent intent = new Intent(PlatformerMainActivity.this, EndGameActivity.class);
-        intent.putExtra("Player", player);
-        intent.putExtra("Game Manager", playerManager);
+        intent.putExtra("Player Name", player.getName());
         startActivity(intent);
     }
     /**
@@ -183,10 +180,9 @@ public class PlatformerMainActivity extends GeneralGameActivity{
         long endTime = SystemClock.elapsedRealtime();
         long elapsedMilliSeconds = endTime - startTime;
         player.updateTotalTime(elapsedMilliSeconds);
-        save(playerManager, player);
+        save(getPlayerManager());
         Intent intent = new Intent(PlatformerMainActivity.this, DeadActivity.class);
-        intent.putExtra("Player", player);
-        intent.putExtra("Game Manager", playerManager);
+        intent.putExtra("Player Name", player.getName());
         startActivity(intent);
     }
 
@@ -228,8 +224,8 @@ public class PlatformerMainActivity extends GeneralGameActivity{
     }
 
     @Override
-    public void save(PlayerManager playerManager, Player player) {
-        super.save(playerManager, player);
+    public void save(PlayerManager playerManager) {
+        super.save(playerManager);
         player.setCurrentLevel(3);
     }
 

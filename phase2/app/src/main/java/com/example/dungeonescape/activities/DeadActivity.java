@@ -17,21 +17,24 @@ import com.example.dungeonescape.brickbreaker.BBMainActivity;
 import java.io.File;
 
 public class DeadActivity extends GeneralGameActivity {
-    private PlayerManager playerManager;
-    private Player player;
 
+
+    private Player player;
     private MenuActivity menuActivity = new MenuActivity();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dead);
+        //* Gather saved data. */
+        load();
         Intent i = getIntent();
-        playerManager = (PlayerManager) i.getSerializableExtra("Game Manager");
-        player = (Player) i.getSerializableExtra("Player");
+        String name = (String) i.getSerializableExtra("Player Name");
+        player = getPlayerManager().getPlayer(name);
+
         configureActionButtons();
         player.resetStats();
-        save(playerManager, player);
+        save(getPlayerManager());
     }
 
     @Override
@@ -44,9 +47,9 @@ public class DeadActivity extends GeneralGameActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.main_menu) {
-            save(playerManager, player);
+            save(getPlayerManager());
             Intent intent = menuActivity.createIntent(DeadActivity.this,
-                    MainActivity.class, playerManager, player);
+                    MainActivity.class, player.getName());
             startActivity(intent);
             return true;
         } else {
@@ -63,10 +66,9 @@ public class DeadActivity extends GeneralGameActivity {
         Button playAgain = findViewById(R.id.playAgain);
         playAgain.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                save(playerManager, player);
+                save(getPlayerManager());
                 Intent intent = new Intent(DeadActivity.this, BBMainActivity.class);
-                intent.putExtra("Player", player);
-                intent.putExtra("Game Manager", playerManager);
+                intent.putExtra("Player Name", player.getName());
                 startActivity(intent);
             }
         });
@@ -78,25 +80,14 @@ public class DeadActivity extends GeneralGameActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(DeadActivity.this, MainActivity.class);
-                intent.putExtra("Game Manager", playerManager);
                 startActivity(intent);
             }
         });
     }
 
     @Override
-    public void save(PlayerManager playerManager, Player player) {
-        super.save(playerManager, player);
+    public void save(PlayerManager playerManager) {
+        super.save(playerManager);
     }
 
-    private void load() {
-        try {
-            String filePath = this.getFilesDir().getPath() + "/GameState.txt";
-            File f = new File(filePath);
-            playerManager = (PlayerManager) SaveData.load(f);
-        }
-        catch (Exception e) {
-            System.out.println("Couldn't load load data: " + e.getMessage());
-        }
-    }
 }

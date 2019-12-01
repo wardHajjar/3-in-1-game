@@ -27,10 +27,12 @@ public class PlatformerInstructionsActivity extends GeneralGameActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_platformer_main);
         setTitle("Level3: Platformer");
-        // getting player instance from intent
+        /* Gather saved data. */
+        load();
         Intent i = getIntent();
-        player = (Player) i.getSerializableExtra("Player");
-        playerManager = (PlayerManager) i.getSerializableExtra("Game Manager");
+        String name = (String) i.getSerializableExtra("Player Name");
+        player = getPlayerManager().getPlayer(name);
+
         configureNextButton();
     }
 
@@ -44,9 +46,9 @@ public class PlatformerInstructionsActivity extends GeneralGameActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.main_menu) {
-            save(playerManager, player);
+            save(playerManager);
             Intent intent = menuActivity.createIntent(PlatformerInstructionsActivity.this,
-                    MainActivity.class, playerManager, player);
+                    MainActivity.class, player.getName());
             startActivity(intent);
             return true;
         } else {
@@ -61,8 +63,7 @@ public class PlatformerInstructionsActivity extends GeneralGameActivity {
             public void onClick(View view) {
 
                 Intent intent = new Intent(PlatformerInstructionsActivity.this, PlatformerMainActivity.class);
-                intent.putExtra("Player", player);
-                intent.putExtra("Game Manager", playerManager);
+                intent.putExtra("Player Name", player.getName());
 
                 startActivity(intent);
             }

@@ -10,12 +10,9 @@ public class MenuActivity extends GeneralGameActivity {
 
     public Intent createIntent(Context packageContext,
                      Class nextClass,
-                     PlayerManager playerManager,
-                     Player player) {
+                     String playerName) {
         Intent intent = new Intent(packageContext, nextClass);
-        intent.putExtra("Player", player);
-        intent.putExtra("Game Manager", playerManager);
-
+        intent.putExtra("Player Name", playerName);
         return intent;
     }
 }

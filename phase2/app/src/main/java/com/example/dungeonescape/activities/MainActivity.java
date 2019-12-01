@@ -14,17 +14,14 @@ import com.example.dungeonescape.game.SaveData;
 import java.io.File;
 
 public class MainActivity extends GeneralGameActivity{
-    private PlayerManager playerManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Intent i = getIntent();
-        playerManager = (PlayerManager) i.getSerializableExtra("Game Manager");
         load();
-        if (playerManager == null) {
-            playerManager = new PlayerManager();
+        if (getPlayerManager() == null) {
+            setPlayerManager(new PlayerManager());
         }
         configureActionButtons();
     }
@@ -40,7 +37,6 @@ public class MainActivity extends GeneralGameActivity{
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, NewGameActivity.class);
-                intent.putExtra("Game Manager", playerManager);
                 startActivity(intent);
             }
         });
@@ -52,19 +48,9 @@ public class MainActivity extends GeneralGameActivity{
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, LoadGameActivity.class);
-                intent.putExtra("Game Manager", playerManager);
                 startActivity(intent);
             }
         });
     }
-    private void load() {
-        try {
-            String filePath = this.getFilesDir().getPath() + "/GameState.txt";
-            File f = new File(filePath);
-            playerManager = (PlayerManager) SaveData.load(f);
-        }
-        catch (Exception e) {
-            System.out.println("Couldn't load load data: " + e.getMessage());
-        }
-    }
+
 }

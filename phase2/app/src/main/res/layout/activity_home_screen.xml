@@ -6,6 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".activities.HomeScreen">
 
+    <Button
+        android:id="@+id/newGameButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="36dp"
+        android:layout_marginEnd="138dp"
+        android:layout_marginStart="138dp"
+        android:layout_marginTop="32dp"
+        android:backgroundTint="#ADCFE9"
+        android:text="Play New Game"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/resumeButton"
+        app:layout_constraintVertical_bias="0.625" />
+
     <TextView
         android:id="@+id/coins"
         android:layout_width="0dp"
@@ -29,7 +45,7 @@
         android:layout_marginEnd="274dp"
         android:layout_marginStart="63dp"
         android:layout_marginTop="35dp"
-        android:text='"Time"'
+        android:text="Time"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -86,37 +102,39 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/playButton"
+        android:id="@+id/resumeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="88dp"
+        android:layout_marginBottom="116dp"
         android:layout_marginEnd="161dp"
         android:layout_marginStart="162dp"
-        android:layout_marginTop="346dp"
+        android:layout_marginTop="32dp"
         android:backgroundTint="#ADCFE9"
-        android:text='"Play"'
+        android:text='"Resume Progress"'
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/previousScore"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/message" />
 
     <TextView
         android:id="@+id/message"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="35dp"
+        android:layout_marginBottom="24dp"
         android:layout_marginEnd="60dp"
         android:layout_marginStart="60dp"
-        android:layout_marginTop="63dp"
+        android:layout_marginTop="212dp"
         android:text="Try to beat your highscore by escaping the dungeon with more lives and more coins!"
         android:textAlignment="center"
         android:textSize="22sp"
         android:textStyle="italic"
-        app:layout_constraintBottom_toTopOf="@+id/playButton"
+        app:layout_constraintBottom_toTopOf="@+id/resumeButton"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/time" />
+        app:layout_constraintTop_toBottomOf="@+id/previousScore" />
 
     <TextView
         android:id="@+id/numLives"

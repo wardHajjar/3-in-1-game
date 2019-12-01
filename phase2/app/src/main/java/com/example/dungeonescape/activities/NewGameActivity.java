@@ -11,21 +11,15 @@ import android.widget.EditText;
 import android.graphics.Color;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.example.dungeonescape.brickbreaker.BBInstructionsActivity;
 import com.example.dungeonescape.player.Player;
-import com.example.dungeonescape.player.PlayerManager;
 import com.example.dungeonescape.R;
-import com.example.dungeonescape.game.SaveData;
-
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import static android.text.TextUtils.isEmpty;
 
 public class NewGameActivity extends GeneralGameActivity {
-    private PlayerManager playerManager;
+
     private Player player;
     private EditText name;
     private String nameText;
@@ -41,8 +35,7 @@ public class NewGameActivity extends GeneralGameActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_game);
-        Intent i = getIntent();
-        playerManager = (PlayerManager) i.getSerializableExtra("Game Manager");
+        load();
         isValid = false;
         name = findViewById(R.id.nameInput);
         configureActionButtons();
@@ -59,7 +52,7 @@ public class NewGameActivity extends GeneralGameActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.main_menu) {
             Intent intent = menuActivity.createIntent(NewGameActivity.this,
-                    MainActivity.class, playerManager, player);
+                    MainActivity.class, player.getName());
             startActivity(intent);
             return true;
         } else {
@@ -92,7 +85,7 @@ public class NewGameActivity extends GeneralGameActivity {
                 checkName();
                 if (isValid){
                     player = new Player(nameText);
-                    playerManager.addPlayer(player);
+                    getPlayerManager().addPlayer(player);
                     setListVisibility(playerNameData, View.INVISIBLE);
                     createWelcomeMessage();
                     createColourPrompt();
@@ -109,8 +102,7 @@ public class NewGameActivity extends GeneralGameActivity {
             public void onClick(View view) {
                 if (isValid) {
                     Intent intent = new Intent(NewGameActivity.this, HomeScreen.class);
-                    intent.putExtra("Player", player);
-                    intent.putExtra("Game Manager", playerManager);
+                    intent.putExtra("Player Name", player.getName());
                     startActivity(intent);
                 }
             }
@@ -176,7 +168,7 @@ public class NewGameActivity extends GeneralGameActivity {
                 if (isValid) {
 //                    player.setDifficulty("Easy");
                     player.setGameDifficulty("Easy");
-                    save();
+                    save(getPlayerManager());
                     enter.setVisibility(View.VISIBLE);
                 }
 
@@ -192,7 +184,7 @@ public class NewGameActivity extends GeneralGameActivity {
 //                    player.setDifficulty("Hard");
                     player.setGameDifficulty("Hard");
                     System.out.println(player.getNumLives());
-                    save();
+                    save(getPlayerManager());
                     enter.setVisibility(View.VISIBLE);
                 }
 
@@ -230,7 +222,7 @@ public class NewGameActivity extends GeneralGameActivity {
                 if (isValid) {
                     int color = Color.argb(255, 173, 0, 0);
                     player.setColour(color);
-                    save();
+                    save(getPlayerManager());
                     diffPrompt.setText(("Choose Difficulty Level:"));
                     setListVisibility(gameDifficulties, View.VISIBLE);
                 }
@@ -244,7 +236,7 @@ public class NewGameActivity extends GeneralGameActivity {
                 if (isValid) {
                     int color = Color.argb(255, 76, 175, 80);
                     player.setColour(color);
-                    save();
+                    save(getPlayerManager());
                     diffPrompt.setText(("Choose Difficulty Level:"));
                     setListVisibility(gameDifficulties, View.VISIBLE);
                 }
@@ -259,7 +251,7 @@ public class NewGameActivity extends GeneralGameActivity {
                 if (isValid) {
                     int color = Color.argb(255, 255, 193, 7);
                     player.setColour(color);
-                    save();
+                    save(getPlayerManager());
                     diffPrompt.setText(("Choose Difficulty Level:"));
                     setListVisibility(gameDifficulties, View.VISIBLE);
                 }
@@ -288,7 +280,7 @@ public class NewGameActivity extends GeneralGameActivity {
     private void checkName() {
         nameText = name.getText().toString();
         isValid = true;
-        List<String> allPlayerNames = playerManager.getPlayerNames();
+        List<String> allPlayerNames = getPlayerManager().getPlayerNames();
 
         if (isEmpty(nameText)) {
             Toast t = Toast.makeText(this, "Please Enter a Name", Toast.LENGTH_SHORT);
@@ -302,15 +294,4 @@ public class NewGameActivity extends GeneralGameActivity {
         }
     }
 
-    private void save() {
-        playerManager.updatePlayer(player.getName(), player);
-        try {
-            String filePath = this.getFilesDir().getPath() + "/GameState.txt";
-            File f = new File(filePath);
-            SaveData.save(playerManager, f);
-        }
-        catch (Exception e) {
-            System.out.println("Couldn't save: " + e.getMessage());
-        }
-    }
 }

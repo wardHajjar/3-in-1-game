@@ -24,7 +24,6 @@ public class PlatformerHiddenActivity extends GeneralGameActivity {
     private LevelView game;
     private boolean running;
     private Player player;
-    private PlayerManager playerManager;
     long startTime;
     private Intent i;
 
@@ -35,10 +34,12 @@ public class PlatformerHiddenActivity extends GeneralGameActivity {
         super.onCreate(savedInstanceState);
 
         startTime = SystemClock.elapsedRealtime();
-        // Set the View we are using
+
+        //* Gather saved data. */
+        load();
         i = getIntent();
-        player = (Player) i.getSerializableExtra("Player");
-        playerManager = (PlayerManager) i.getSerializableExtra("Game Manager");
+        String name = (String) i.getSerializableExtra("Player Name");
+        player = getPlayerManager().getPlayer(name);
 
 
         setContentView(R.layout.activity_platformer_hidden_main);
@@ -102,7 +103,7 @@ public class PlatformerHiddenActivity extends GeneralGameActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.main_menu) {
             Intent intent = menuActivity.createIntent(PlatformerHiddenActivity.this,
-                    MainActivity.class, playerManager, player);
+                    MainActivity.class, player.getName());
             startActivity(intent);
             return true;
         } else {
@@ -120,8 +121,7 @@ public class PlatformerHiddenActivity extends GeneralGameActivity {
         player.updateTotalTime(elapsedMilliSeconds);
 
         Intent intent = new Intent(PlatformerHiddenActivity.this, PlatformerMainActivity.class);
-        intent.putExtra("Player", player);
-        intent.putExtra("Game Manager", playerManager);
+        intent.putExtra("Player Name", player.getName());
         intent.putExtra("Character", i.getSerializableExtra("Character"));
         intent.putExtra("Platforms", i.getSerializableExtra("Platforms"));
         intent.putExtra("Score", i.getSerializableExtra("Score"));

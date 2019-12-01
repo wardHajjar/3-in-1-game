@@ -18,20 +18,19 @@ import com.example.dungeonescape.R;
 public class BBInstructionsActivity extends GeneralGameActivity{
     /** Initializes a Player and PlayerManager. */
     private Player player;
-    private PlayerManager playerManager;
-
     private MenuActivity menuActivity = new MenuActivity();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_brick_breaker_instructions);
-        setTitle("Level1: Brick Breaker");
+        setTitle("Level 1: Brick Breaker");
 
         /* Gather saved data. */
+        load();
         Intent i = getIntent();
-        player = (Player) i.getSerializableExtra("Player");
-        playerManager = (PlayerManager) i.getSerializableExtra("Game Manager");
+        String name = (String) i.getSerializableExtra("Player Name");
+        player = getPlayerManager().getPlayer(name);
 
         /* Button to start the Maze. */
         configureNextButton();
@@ -47,9 +46,9 @@ public class BBInstructionsActivity extends GeneralGameActivity{
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.main_menu) {
-            save(playerManager, player);
+            save(getPlayerManager());
             Intent intent = menuActivity.createIntent(BBInstructionsActivity.this,
-                    MainActivity.class, playerManager, player);
+                    MainActivity.class, player.getName());
             startActivity(intent);
             return true;
         } else {
@@ -65,8 +64,8 @@ public class BBInstructionsActivity extends GeneralGameActivity{
             public void onClick(View view) {
                 Intent intent = new Intent(
                         BBInstructionsActivity.this, BBMainActivity.class);
-                intent.putExtra("Player", player);
-                intent.putExtra("Game Manager", playerManager);
+                intent.putExtra("Player Name", player.getName());
+
                 startActivity(intent);
             }
         });

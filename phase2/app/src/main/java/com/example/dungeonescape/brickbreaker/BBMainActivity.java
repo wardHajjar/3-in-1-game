@@ -30,7 +30,6 @@ public class BBMainActivity extends GeneralGameActivity {
     BBView gameView;
     boolean running;
     Player player;
-    PlayerManager playerManager;
     /**
      * The time at which the brick breaker game has been started.
      */
@@ -53,20 +52,23 @@ public class BBMainActivity extends GeneralGameActivity {
         gameView = findViewById(R.id.BBView2);
 
         setTitle("Level1: Brick Breaker");
+        /* Gather saved data. */
+        load();
         Intent i = getIntent();
-        player = (Player) i.getSerializableExtra("Player");
-        playerManager = (PlayerManager) i.getSerializableExtra("Game Manager");
+        String name = (String) i.getSerializableExtra("Player Name");
+        player = getPlayerManager().getPlayer(name);
+
         gameView.manager.addPlayer(player);
 
         Button nextButton = findViewById(R.id.nextlvl);
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                save(playerManager, player);
+                player.setCurrentLevel(2);
+                save(getPlayerManager());
                 //Intent intent = new Intent(BBMainActivity.this, MazeActivity.class);
                 Intent intent = new Intent(BBMainActivity.this, MazeInstructionsActivity.class);
-                intent.putExtra("Player", player);
-                intent.putExtra("Game Manager", playerManager);
+                intent.putExtra("Player Name", player.getName());
                 startActivity(intent);
             }
         });
@@ -128,9 +130,9 @@ public class BBMainActivity extends GeneralGameActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.main_menu) {
-            save(playerManager, player);
+            save(getPlayerManager());
             Intent intent = menuActivity.createIntent(BBMainActivity.this,
-                    MainActivity.class, playerManager, player);
+                    MainActivity.class, player.getName());
             startActivity(intent);
             return true;
         } else {
@@ -165,11 +167,10 @@ public class BBMainActivity extends GeneralGameActivity {
         long endTime = SystemClock.elapsedRealtime();
         long elapsedMilliSeconds = endTime - startTime;
         player.updateTotalTime(elapsedMilliSeconds);
-        save(playerManager, player);
+        save(getPlayerManager());
         //Intent intent = new Intent(BBMainActivity.this, MazeActivity.class);
         Intent intent = new Intent(BBMainActivity.this, MazeInstructionsActivity.class);
-        intent.putExtra("Player", player);
-        intent.putExtra("Game Manager", playerManager);
+        intent.putExtra("Player Name", player.getName());
         startActivity(intent);
     }
 
@@ -182,15 +183,14 @@ public class BBMainActivity extends GeneralGameActivity {
         long elapsedMilliSeconds = endTime - startTime;
         player.updateTotalTime(elapsedMilliSeconds);
         Intent intent = new Intent(BBMainActivity.this, DeadActivity.class);
-        save(playerManager, player);
-        intent.putExtra("Player", player);
-        intent.putExtra("Game Manager", playerManager);
+        save(getPlayerManager());
+        intent.putExtra("Player Name", player.getName());
         startActivity(intent);
     }
 
     @Override
-    public void save(PlayerManager playerManager, Player player) {
-        super.save(playerManager, player);
+    public void save(PlayerManager playerManager) {
+        super.save(playerManager);
         player.setCurrentLevel(2);
     }
 }

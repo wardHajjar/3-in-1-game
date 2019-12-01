@@ -1,7 +1,5 @@
 package com.example.dungeonescape.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,24 +8,25 @@ import android.widget.TextView;
 
 import com.example.dungeonescape.R;
 import com.example.dungeonescape.brickbreaker.BBInstructionsActivity;
+import com.example.dungeonescape.maze.MazeInstructionsActivity;
+import com.example.dungeonescape.platformer.PlatformerInstructionsActivity;
 import com.example.dungeonescape.player.Player;
-import com.example.dungeonescape.player.PlayerManager;
 
 import java.util.Map;
 
-public class HomeScreen extends AppCompatActivity {
+public class HomeScreen extends GeneralGameActivity {
     private Player player;
-    private PlayerManager playerManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
-
+        setTitle("Home Screen");
         /* Gather saved data. */
         Intent i = getIntent();
-        player = (Player) i.getSerializableExtra("Player");
-        playerManager = (PlayerManager) i.getSerializableExtra("Game Manager");
+        load();
+        String name = (String) i.getSerializableExtra("Player Name");
+        player = getPlayerManager().getPlayer(name);
 
         TextView congratulatePlayer = findViewById(R.id.welcome);
         congratulatePlayer.setText(String.format("Welcome, %s!", player.getName()));
@@ -42,20 +41,57 @@ public class HomeScreen extends AppCompatActivity {
 
         TextView time = findViewById(R.id.numTime);
         time.setText(String.format("%s", highScore.get("Time")));
-        enterButton();
+
+        int level = player.getCurrentLevel();
+        if (level > 1) {
+            resumeButton();
+        }
+        newGameButton();
     }
 
-    private void enterButton() {
-        Button enterGame = findViewById(R.id.playButton);
+    private void resumeButton() {
+
+        Button enterGame = findViewById(R.id.resumeButton);
+        enterGame.setVisibility(View.VISIBLE);
+        enterGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                progress();
+            }
+        });
+    }
+
+    private void newGameButton() {
+        Button enterGame = findViewById(R.id.newGameButton);
 
         enterGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                player.resetStats();
+                save(getPlayerManager());
                 Intent intent = new Intent(HomeScreen.this, BBInstructionsActivity.class);
-                intent.putExtra("Player", player);
-                intent.putExtra("Game Manager", playerManager);
+                intent.putExtra("Player Name", player.getName());
                 startActivity(intent);
             }
         });
+    }
+
+    private void progress() {
+        int level = player.getCurrentLevel();
+        if (level == 1 || level == 0) {
+            Intent intent = new Intent(HomeScreen.this, BBInstructionsActivity.class);
+            intent.putExtra("Player Name", player.getName());
+            startActivity(intent);
+        }
+        else if(level == 2) {
+            Intent intent = new Intent(HomeScreen.this, MazeInstructionsActivity.class);
+            intent.putExtra("Player Name", player.getName());
+            startActivity(intent);
+        }
+        else {
+            Intent intent = new Intent(HomeScreen.this, PlatformerInstructionsActivity.class);
+            intent.putExtra("Player Name", player.getName());
+            startActivity(intent);
+        }
     }
 }
