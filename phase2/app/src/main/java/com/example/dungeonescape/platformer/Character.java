@@ -1,7 +1,6 @@
 package com.example.dungeonescape.platformer;
 
 import com.example.dungeonescape.game.collectable.Coin;
-
 import java.io.Serializable;
 import java.util.List;
 
@@ -22,7 +21,6 @@ class Character extends PlatformerObject implements Serializable{
     /** The number of platforms this Character has bounced off of. */
     private int gameScore;
 
-    private int colour;
 
     Character(int x, int y, int size, PlatformerManager manager){
         super(x,y,size,manager);
@@ -32,9 +30,8 @@ class Character extends PlatformerObject implements Serializable{
     }
 
     void setColour(int colour){
-        this.colour = colour;
         this.bottom = getY() + (getSize() / 2);
-        getPaint().setColor(this.colour);
+        getPaint().setColor(colour);
     }
 
     /** Returns the GameScore.

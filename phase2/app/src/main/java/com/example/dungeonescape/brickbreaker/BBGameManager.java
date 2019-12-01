@@ -13,6 +13,7 @@ import com.example.dungeonescape.game.collectable.Potion;
 import com.example.dungeonescape.player.Player;
 import com.example.dungeonescape.game.collectable.Blitz;
 import com.example.dungeonescape.game.collectable.Collectable;
+import com.example.dungeonescape.game.collectable.CollectableFactory;
 
 /** Instantiates and controls game objects. */
 class BBGameManager {
@@ -32,6 +33,7 @@ class BBGameManager {
     private int screenX;
     private int screenY;
     private Player player;
+    private CollectableFactory factory;
 
     BBGameManager(int screenX, int screenY) {
 
@@ -53,34 +55,38 @@ class BBGameManager {
         this.screenX = screenX;
         this.screenY = screenY;
         this.player = null;
+        factory = new CollectableFactory();
 
         /* Random assignment of coins to bricks. */
         coins = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             Brick coinBrick = getRandomBrick();
-            Coin newCoin = new Coin(
+            Collectable newCoin = factory.getCollectable("coin",
                     coinBrick.getX() + brickWidth/2,
                     coinBrick.getY() + brickHeight/2,
                     brickHeight/2);
             coinBrick.setItem(newCoin);
-            coins.add(newCoin);
+            coins.add((Coin) newCoin);
         }
 
         Brick blitzBrick = getRandomBrick();
-        Blitz newBlitz = new Blitz(blitzBrick.getX() + brickWidth/2,
-                blitzBrick.getY() + brickHeight/2, brickHeight/2);
+        Blitz newBlitz = (Blitz) factory.getCollectable("blitz",
+                blitzBrick.getX() + brickWidth/2, blitzBrick.getY() + brickHeight/2,
+                brickHeight/2);
         this.blitz = newBlitz;
         blitzBrick.setItem(newBlitz);
 
         Brick gemBrick = getRandomBrick();
-        Gem newGem = new Gem(gemBrick.getX() + brickWidth/2,
-                gemBrick.getY() + brickHeight/2, brickHeight/2);
+        Gem newGem = (Gem) factory.getCollectable("gem",
+                gemBrick.getX() + brickWidth/2, gemBrick.getY() + brickHeight/2,
+                brickHeight/2);
         this.gem = newGem;
         gemBrick.setItem(newGem);
 
         Brick potionBrick = getRandomBrick();
-        Potion newPotion = new Potion(potionBrick.getX() + brickWidth/2,
-                potionBrick.getY() + brickHeight/2, brickHeight/2);
+        Potion newPotion = (Potion) factory.getCollectable("potion",
+                potionBrick.getX() + brickWidth/2, potionBrick.getY() + brickHeight/2,
+                brickHeight/2);
         this.potion = newPotion;
         potionBrick.setItem(newPotion);
 

@@ -17,8 +17,8 @@ import com.example.dungeonescape.R;
 
 public class PlatformerInstructionsActivity extends GeneralGameActivity {
 
-    Player player;
-    PlayerManager playerManager;
+    private Player player;
+    private PlayerManager playerManager;
 
     private MenuActivity menuActivity = new MenuActivity();
 

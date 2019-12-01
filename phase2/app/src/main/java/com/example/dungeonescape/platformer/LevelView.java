@@ -18,8 +18,8 @@ abstract class LevelView extends GameView implements Runnable {
 
     private PlatformerManager manager;
     private Point size;
-    protected OnCustomEventListener endGameListener;
-    protected OnCustomEventListener finishLevelListener;
+    OnCustomEventListener endGameListener;
+    OnCustomEventListener finishLevelListener;
 
     public LevelView(Context context, AttributeSet attrs, String mode) {
 
