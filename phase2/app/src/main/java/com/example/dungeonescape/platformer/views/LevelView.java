@@ -1,4 +1,4 @@
-package com.example.dungeonescape.platformer;
+package com.example.dungeonescape.platformer.views;
 
 import android.app.Activity;
 import android.content.Context;
@@ -8,13 +8,15 @@ import android.util.AttributeSet;
 import android.view.Display;
 
 import com.example.dungeonescape.game.GameView;
+import com.example.dungeonescape.platformer.OnCustomEventListener;
+import com.example.dungeonescape.platformer.entities.PlatformerManager;
 import com.example.dungeonescape.player.Player;
 
 /**
  * This class is responsible for drawing out the game objects of the level, as well as
  * as well as updating player state.
  */
-abstract class LevelView extends GameView implements Runnable {
+abstract public class LevelView extends GameView implements Runnable {
 
     private PlatformerManager manager;
     private Point size;
@@ -47,7 +49,7 @@ abstract class LevelView extends GameView implements Runnable {
         }
     }
 
-    PlatformerManager getManager() {
+    public PlatformerManager getManager() {
         return manager;
     }
     void setManager(PlatformerManager manager) {

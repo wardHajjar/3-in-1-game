@@ -1,11 +1,12 @@
-package com.example.dungeonescape.platformer;
+package com.example.dungeonescape.platformer.entities;
 
 import android.graphics.Color;
+
 import java.lang.Math;
 import java.util.Random;
 
 
-class Platforms extends PlatformerObject{
+class Platforms extends PlatformerObject {
 
     /** length of the platforms. */
     private int length;
@@ -31,9 +32,9 @@ class Platforms extends PlatformerObject{
     /** Moves the platforms down, i.e when the ball surpasses the platforms they get moved to their
      * new location above the character. */
     private void platformDown(int down) {
-        if (getY() + down > getManager().getGridHeight()) {
+        if (getY() + down >= getGridHeight()) {
             // Move it to the top
-            int diff = Math.abs((int)getY() + down - getManager().getGridHeight());
+            int diff = Math.abs((int)getY() + down - getGridHeight());
             if (diff > 400) {
                 setY(0);
             }
@@ -44,7 +45,7 @@ class Platforms extends PlatformerObject{
                 setY(-diff);
             }
             Random r = new Random();
-            int a = r.nextInt(getManager().getGridWidth() - 150);
+            int a = r.nextInt(getGridWidth() - 150);
             this.setX(a);
         }
         else {

@@ -32,7 +32,7 @@ public class MazeView extends View {
     private MazeCell[][] cells;
 
     /** A list of coins that can be collected for score. */
-    private ArrayList<Coin> coins;
+    private ArrayList<MazeCoin> coins;
 
     /** Player and exit objects, and their positions. */
     private Sprite playerSprite = new Sprite();
@@ -117,7 +117,8 @@ public class MazeView extends View {
 
         // draws walls, Coins, the Player and the exit square on the screen
         paintWalls(canvas, cellSize);
-        paintCoins(canvas, cellSize, margin);
+
+        paintCoins(canvas);
 
         playerSprite.draw(canvas);
         exitSprite.draw(canvas);
@@ -145,11 +146,11 @@ public class MazeView extends View {
     /** Draws the Coin circles on the screen.
      *
      * @param canvas the Canvas to draw the Coins on.
-     * @param margin the space around the Coin circles.
      */
-    private void paintCoins(Canvas canvas, float cellSize, float margin) {
-        for (Coin coin : coins) {
-            coin.draw(canvas, cellSize, margin);
+    private void paintCoins(Canvas canvas) {
+        for (MazeCoin coin : coins) {
+            coin.setMazeData(mazeData);
+            coin.draw(canvas);
         }
     }
 
@@ -177,11 +178,11 @@ public class MazeView extends View {
         this.cells = cells;
     }
 
-    ArrayList<Coin> getCoins() {
+    ArrayList<MazeCoin> getCoins() {
         return this.coins;
     }
 
-    void setCoins(ArrayList<Coin> coins) {
+    void setCoins(ArrayList<MazeCoin> coins) {
         this.coins = coins;
     }
 

@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.example.dungeonescape.activities.MainActivity;
 import com.example.dungeonescape.activities.MenuActivity;
-import com.example.dungeonescape.player.PlayerManager;
+import com.example.dungeonescape.platformer.views.LevelView;
 import com.example.dungeonescape.activities.GeneralGameActivity;
 import com.example.dungeonescape.player.Player;
 import com.example.dungeonescape.R;
@@ -111,7 +111,6 @@ public class PlatformerHiddenActivity extends GeneralGameActivity {
         }
     }
 
-
     /**
      * User has died in the hidden level i.e. Fell once.
      */
@@ -164,8 +163,6 @@ public class PlatformerHiddenActivity extends GeneralGameActivity {
         super.onPause();
         game.pause();
     }
-
-
 
 }
 
