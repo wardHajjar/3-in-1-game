@@ -4,9 +4,10 @@ import com.example.dungeonescape.game.GameObject;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Rect;
+import com.example.dungeonescape.game.Drawable;
 
 /** Creates a paddle object that "catches" the ball within the Brick Breaker game. */
-class Paddle extends GameObject {
+class Paddle extends GameObject implements Drawable{
     /** Width and height of the paddle, respectively. */
     private int w, h;
 
@@ -27,17 +28,13 @@ class Paddle extends GameObject {
         movingRight = false;
     }
 
-    /**
-     * Draws the paddle object on screen.
-     * @param canvas the graphic context on which the object is drawn.
-     */
-    void draw(Canvas canvas) {
+    @Override
+    public void draw(Canvas canvas) {
         this.getPaint().setColor(Color.WHITE);
         this.getPaint().setStrokeWidth(3);
         int x = this.getX();
         int y = this.getY();
         canvas.drawRect(x, y, x + w, y + h, this.getPaint());
-        // x is left, y is top
     }
 
     /**
@@ -62,10 +59,19 @@ class Paddle extends GameObject {
         }
     }
 
+    /**
+     * Returns whether the paddle is moving left.
+     * @return boolean value
+     */
     Boolean getMovingLeft() {
+
         return movingLeft;
     }
 
+    /**
+     * Returns whether the paddle is moving right.
+     * @return boolean value
+     */
     Boolean getMovingRight() {
         return movingRight;
     }
@@ -79,14 +85,6 @@ class Paddle extends GameObject {
         int y = this.getY();
         return new Rect(x, y, x + w, y + h);
 
-    }
-
-    /**
-     * Returns the height of the paddle.
-     * @return integer value of height dimension.
-     */
-    int getHeight(){
-        return h;
     }
 
     /**

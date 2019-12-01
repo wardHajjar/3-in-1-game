@@ -13,8 +13,7 @@ import com.example.dungeonescape.game.collectable.Blitz;
 /**
  * BBMainActivity and BBView were structured like the following game:
  * http://gamecodeschool.com/android/building-a-simple-game-engine/
- */
-/**
+
  * Class that controls the logic of the game by handling collisions, updating the objects' stats and
  * drawing the new states onto the canvas.
  */
@@ -22,25 +21,23 @@ public class BBView extends GameView {
     /**
      * screenX - the width of the screen.
      * screenY - the height of the screen.
+     * startGame - player has started playing game.
+     * manager - the manager class that receives information from the view and relays it to the
+     * game objects.
+     * blitzStartTime - time when the player activated hidden level.
      */
     int screenX;
     int screenY;
-
-    /**
-     * ball - the ball object that bounces around and hits bricks.
-     * paddle - the paddle that catches the ball.
-     * bricks - list of all the bricks in the game.
-     */
     boolean startGame = false;
     BBGameManager manager;
-    long startTime;
+    long blitzStartTime;
     public BBView(Context context, AttributeSet attrs) {
         super(context, attrs);
         Display display = ((Activity)context).getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
         this.screenX = size.x;
-        this.screenY = size.y - 350;    /* 300 accounts for the buttons above the playing screen. */
+        this.screenY = size.y - 350;    // 350 accounts for the buttons above the playing screen.
         manager = new BBGameManager(screenX, screenY);
 
     }
@@ -68,13 +65,15 @@ public class BBView extends GameView {
                 startGame = false;
             }
             Blitz blitz = manager.getBlitz();
+            /* Blitz item got collected and the hidden level got activated */
             if (blitz.getBlitzMode().equals("notStarted") && !blitz.getAvailableStatus()){
                 blitz.setBlitzMode("started");
                 manager.initializeBlitzCoins();
-                startTime = SystemClock.elapsedRealtime();
+                blitzStartTime = SystemClock.elapsedRealtime();
             }
             long currTime = SystemClock.elapsedRealtime();
-            if ((int) ((currTime - startTime) / 1000)  == 30){
+            /* 30 seconds have passed so blitz mode ends. */
+            if ((int) ((currTime - blitzStartTime) / 1000)  == 30){
                 blitz.setBlitzMode("done");
                 manager.endBlitzGame();
             }
@@ -92,13 +91,11 @@ public class BBView extends GameView {
             /* Draw the background color – black. */
             canvas.drawColor(Color.argb(255,  0, 0, 0));
 
-            /* Choose the brush color for drawing - white. */
             if (manager.getBlitz().getBlitzMode().equals("started")){
                 manager.drawBlitzGame(canvas);
             }else{
                 manager.drawGame(canvas);
             }
-
 
             /* Draws everything to the screen. */
             holder.unlockCanvasAndPost(canvas);

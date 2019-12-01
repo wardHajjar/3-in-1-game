@@ -115,7 +115,7 @@ class BBGameManager {
     private Brick getRandomBrick(){
         Random random = new Random();
         Brick curr = bricks.get(random.nextInt(bricks.size()));
-        while(curr.hasItem()){
+        while(curr.getItem() != null){
             Collections.shuffle(bricks);
             curr = bricks.get(0);
         }
@@ -150,7 +150,10 @@ class BBGameManager {
         manageItemCollision(gem);
 
         /* Potion Collision Detection */
-        manageItemCollision(potion);
+        boolean potionCollision = manageItemCollision(potion);
+        if (potionCollision){
+            player.setNumLives(player.getNumLives() + 1);
+        }
 
     }
 
@@ -268,7 +271,7 @@ class BBGameManager {
     }
 
     /**
-     * Draws all the game objects: Ball, Paddle, Bricks, Coins.
+     * Draws all the game objects: Ball, Paddle, Bricks, Collectable items.
      * @param canvas the Canvas which the objects are drawn on
      */
     void drawGame(Canvas canvas) {
@@ -285,7 +288,7 @@ class BBGameManager {
             if (!curr.getHitStatus()) {
                 curr.draw(canvas);
             } else {    /* Draw if hit brick contains a collectable item to be collected. */
-                if (curr.hasItem() && curr.getItem().getAvailableStatus()) {
+                if (curr.getItem() != null && curr.getItem().getAvailableStatus()) {
                     Drawable item = (Drawable) curr.getItem();
                     item.draw(canvas);
                 }
@@ -293,9 +296,16 @@ class BBGameManager {
         }
     }
 
+    /**
+     * Creates the new coins that replace bricks when the hidden level is initialized.
+     */
     void initializeBlitzCoins(){
         for (Brick brick: bricks){
             Collectable item = brick.getItem();
+
+            /* Adds a coin in place of every brick that doesn't have a coin or has an already
+             * collected coin.
+             */
             if (item == null || item.getClass() != Coin.class ||
                     (item.getClass() == Coin.class && !item.getAvailableStatus())){
                 Coin newCoin = new Coin(brick.getX() + brick.getWidth()/2,
@@ -305,11 +315,18 @@ class BBGameManager {
         }
     }
 
+    /**
+     * Removes all the extra coins that got added during the hidden level when the time is up for
+     * blitz mode.
+     */
     void endBlitzGame(){
-        //TODO: change starting index after testing is done
-        coins.subList(10, coins.size()).clear();
+        coins.subList(5, coins.size()).clear();
     }
 
+    /**
+     * Draws the ball, paddle and coins for the hidden level.
+     * @param canvas the Canvas which the objects are drawn on
+     */
     void drawBlitzGame(Canvas canvas){
         ball.draw(canvas);
         paddle.draw(canvas);
@@ -320,6 +337,10 @@ class BBGameManager {
         }
     }
 
+    /**
+     * Returns the Blitz item in the game.
+     * @return Blitz object.
+     */
     Blitz getBlitz(){
         return blitz;
     }
