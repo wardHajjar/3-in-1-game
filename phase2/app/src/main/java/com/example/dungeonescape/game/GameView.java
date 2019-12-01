@@ -57,17 +57,14 @@ public abstract class GameView extends SurfaceView implements Runnable{
     @Override
     public void run(){
         while (playing) {
-
-            // Capture the current time in milliseconds in startFrameTime
-            try {
-                //set time in milli
-                Thread.sleep(1);
+            try {   // Capture the current time in milliseconds in startFrameTime
+                Thread.sleep(1);    //set time in milli
 
             } catch (Exception e){
                 e.printStackTrace();
             }
-//             Updating the frame
-            if(!paused){
+
+            if(!paused){    // Updating the frame
                 update();
             }
 
@@ -108,8 +105,6 @@ public abstract class GameView extends SurfaceView implements Runnable{
         gameThread = new Thread(this);
         gameThread.start();
     }
-
-
 
 }
 

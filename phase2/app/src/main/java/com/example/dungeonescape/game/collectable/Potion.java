@@ -9,12 +9,23 @@ import android.graphics.Path;
 import com.example.dungeonescape.game.Drawable;
 import com.example.dungeonescape.player.Player;
 
-
+/**
+ * Creates a potion that the player can collect to gain an extra life.
+ */
 public class Potion extends GameObject implements Collectable, Drawable {
-
+    /**
+     * available - whether the potion is available for the user to collect.
+     * potionShape - Rect representation of the potion.
+     */
     private Boolean available;
     private Rect potionShape;
 
+    /**
+     * Creates a potion item.
+     * @param x x coordinate of the top left corner of the potion.
+     * @param y y coordinate of the top left corner of the potion.
+     * @param size size of the potion.
+     */
     public Potion(int x, int y, int size) {
         super(x, y);
         available = true;
