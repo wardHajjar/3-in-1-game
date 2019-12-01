@@ -108,7 +108,7 @@ public class NewGameActivity extends GeneralGameActivity {
             @Override
             public void onClick(View view) {
                 if (isValid) {
-                    Intent intent = new Intent(NewGameActivity.this, BBInstructionsActivity.class);
+                    Intent intent = new Intent(NewGameActivity.this, HomeScreen.class);
                     intent.putExtra("Player", player);
                     intent.putExtra("Game Manager", playerManager);
                     startActivity(intent);

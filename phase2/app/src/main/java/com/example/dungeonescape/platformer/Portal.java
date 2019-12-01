@@ -12,7 +12,8 @@ class Portal extends PlatformerObject {
         portal = drawable;
         setShape();
     }
-    void draw(Canvas canvas) {
+
+    public void draw(Canvas canvas) {
         portal.setBounds(getX() - 100, getY() - 100, getX() + 100, getY() + 100);
         portal.draw(canvas);
     }
