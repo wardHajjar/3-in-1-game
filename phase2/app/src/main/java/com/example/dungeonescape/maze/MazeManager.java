@@ -204,8 +204,8 @@ class MazeManager {
      * Create 2 coins at random locations in the maze and return this list.
      * @return The list of coins we just created.
      */
-    private ArrayList<Coin> createCoins() {
-        ArrayList<Coin> coins = new ArrayList<>();
+    private ArrayList<MazeCoin> createCoins() {
+        ArrayList<MazeCoin> coins = new ArrayList<>();
         SparseIntArray coordinates = new SparseIntArray();
         coordinates.append(0,0);
         coordinates.append(numMazeCols, numMazeRows);
@@ -227,7 +227,7 @@ class MazeManager {
         for (int i = 0; i < 2; i++) {
             int x = coordinates.keyAt(i);
             int y = coordinates.get(x);
-            Coin coin = new Coin(x, y, (int) mazeView.getCellSize());
+            MazeCoin coin = new MazeCoin(x, y, (int) Math.ceil(mazeData.getCellSize()));
             coins.add(coin);
         }
         return coins;
@@ -289,9 +289,9 @@ class MazeManager {
      * Removes Coin from game & adds it to Player if true.
      */
     private void playerOnCoin() {
-        Iterator<Coin> coinIterator = mazeView.getCoins().iterator();
+        Iterator<MazeCoin> coinIterator = mazeView.getCoins().iterator();
         while (coinIterator.hasNext()) {
-            Coin coin = coinIterator.next();
+            MazeCoin coin = coinIterator.next();
             if (playerSprite.getX() == coin.getX() && playerSprite.getY() == coin.getY()) {
                 coinIterator.remove();
                 player.addCoin();
