@@ -3,7 +3,9 @@ package com.example.dungeonescape.maze;
 import android.graphics.Canvas;
 
 import com.example.dungeonescape.game.Drawable;
+import com.example.dungeonescape.game.GameData;
 import com.example.dungeonescape.game.GameObject;
+import com.example.dungeonescape.game.RetrieveData;
 
 /**
  * Represents a MazeCell GameObject which is a square cell in the Maze.
@@ -63,8 +65,8 @@ public class MazeCell extends GameObject implements Drawable, RetrieveData {
     }
 
     @Override
-    public void setMazeData(MazeData mazeData) {
-        this.mazeData = mazeData;
+    public void setGameData(GameData mazeData) {
+        this.mazeData = (MazeData) mazeData;
     }
 
     boolean isTopWall() {

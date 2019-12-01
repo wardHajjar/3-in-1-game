@@ -2,6 +2,8 @@ package com.example.dungeonescape.maze;
 
 import android.graphics.Canvas;
 
+import com.example.dungeonescape.game.GameData;
+import com.example.dungeonescape.game.RetrieveData;
 import com.example.dungeonescape.game.collectable.Coin;
 import com.example.dungeonescape.game.Drawable;
 import com.example.dungeonescape.game.collectable.Collectable;
@@ -34,7 +36,7 @@ class MazeCoin extends Coin implements Collectable, Drawable, RetrieveData {
     }
 
     @Override
-    public void setMazeData(MazeData mazeData) {
-        this.mazeData = mazeData;
+    public void setGameData(GameData mazeData) {
+        this.mazeData = (MazeData) mazeData;
     }
 }
