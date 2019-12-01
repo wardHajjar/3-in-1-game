@@ -1,5 +1,6 @@
 package com.example.dungeonescape.game.collectable;
 
+import com.example.dungeonescape.game.GameData;
 import com.example.dungeonescape.game.GameObject;
 
 import android.graphics.Canvas;
@@ -7,12 +8,13 @@ import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.Path;
 import com.example.dungeonescape.game.Drawable;
+import com.example.dungeonescape.game.RetrieveData;
 import com.example.dungeonescape.player.Player;
 
 /**
  * Creates a gem that can be collected by the player to increase their score.
  */
-public class Gem extends GameObject implements Collectable, Drawable {
+public class Gem extends GameObject implements Collectable, Drawable, RetrieveData {
 
     /**
      * available - whether the gem can be collected by the player.
@@ -20,6 +22,8 @@ public class Gem extends GameObject implements Collectable, Drawable {
      */
     private Boolean available;
     private Rect gemShape;
+
+    private GameData gameData;
 
     /**
      * Initializes a gem item.
@@ -55,6 +59,10 @@ public class Gem extends GameObject implements Collectable, Drawable {
         path.close();
 
         canvas.drawPath(path, getPaint());
+    }
+
+    public void setGameData(GameData gameData) {
+        this.gameData = gameData;
     }
 
     @Override

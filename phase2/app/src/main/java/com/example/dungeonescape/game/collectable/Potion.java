@@ -1,5 +1,6 @@
 package com.example.dungeonescape.game.collectable;
 
+import com.example.dungeonescape.game.GameData;
 import com.example.dungeonescape.game.GameObject;
 
 import android.graphics.Canvas;
@@ -7,18 +8,21 @@ import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.Path;
 import com.example.dungeonescape.game.Drawable;
+import com.example.dungeonescape.game.RetrieveData;
 import com.example.dungeonescape.player.Player;
 
 /**
  * Creates a potion that the player can collect to gain an extra life.
  */
-public class Potion extends GameObject implements Collectable, Drawable {
+public class Potion extends GameObject implements Collectable, Drawable, RetrieveData {
     /**
      * available - whether the potion is available for the user to collect.
      * potionShape - Rect representation of the potion.
      */
     private Boolean available;
     private Rect potionShape;
+
+    private GameData gameData;
 
     /**
      * Creates a potion item.
@@ -58,6 +62,10 @@ public class Potion extends GameObject implements Collectable, Drawable {
     @Override
     public void collect(Player player) {
         player.addToSatchel(this);
+    }
+
+    public void setGameData(GameData gameData) {
+        this.gameData = gameData;
     }
 
     @Override
