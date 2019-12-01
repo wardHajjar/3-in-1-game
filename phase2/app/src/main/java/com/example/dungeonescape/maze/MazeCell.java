@@ -8,7 +8,7 @@ import com.example.dungeonescape.game.GameObject;
 /**
  * Represents a MazeCell GameObject which is a square cell in the Maze.
  */
-public class MazeCell extends GameObject implements Drawable {
+public class MazeCell extends GameObject implements Drawable, RetrieveData {
 
     private MazeData mazeData;
 
@@ -62,11 +62,8 @@ public class MazeCell extends GameObject implements Drawable {
         }
     }
 
-    /** Sets the mazeData variable equal to the passed in MazeData instance.
-     *
-     * @param mazeData the instance of MazeData that this MazeCell will read from.
-     */
-    void setMazeData(MazeData mazeData) {
+    @Override
+    public void setMazeData(MazeData mazeData) {
         this.mazeData = mazeData;
     }
 
