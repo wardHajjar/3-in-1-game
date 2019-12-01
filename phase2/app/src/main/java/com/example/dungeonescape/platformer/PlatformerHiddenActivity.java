@@ -79,10 +79,6 @@ public class PlatformerHiddenActivity extends GeneralGameActivity {
 
                                     TextView score1 = (TextView) findViewById(R.id.score);
                                     score1.setText(scre);
-                                    int lives = game.getManager().getPlayer().getNumLives();
-                                    String life = "Lives: " + String.valueOf(lives);
-                                    TextView lifeText = (TextView) findViewById(R.id.lives);
-                                    lifeText.setText(life);
                                 }
                             }
                         });
