@@ -41,10 +41,11 @@ class MazeManager {
     MazeManager(MazeView mazeView, Player player) {
         this.mazeView = mazeView;
 
-        mazeView.setMazeData(this.mazeData);
-
         this.player = player;
         initializeMazeSize();
+
+        mazeView.setMazeData(this.mazeData);
+
         populateMaze();
     }
 
@@ -52,8 +53,8 @@ class MazeManager {
     private void initializeMazeSize() {
         setNumMazeRows(5 * player.getGameDifficulty());
         setNumMazeCols(5 * player.getGameDifficulty());
-        mazeView.setNumMazeCols(getNumMazeCols());
-        mazeView.setNumMazeRows(getNumMazeRows());
+//        mazeView.setNumMazeCols(getNumMazeCols());
+//        mazeView.setNumMazeRows(getNumMazeRows());
 
         mazeData.setNumMazeCols(getNumMazeCols());
         mazeData.setNumMazeRows(getNumMazeRows());

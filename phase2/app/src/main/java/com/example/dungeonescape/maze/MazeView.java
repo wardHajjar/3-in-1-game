@@ -1,19 +1,12 @@
 package com.example.dungeonescape.maze;
 
-import java.util.Iterator;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.example.dungeonescape.game.GameObject;
-import com.example.dungeonescape.player.Player;
-import com.example.dungeonescape.game.collectable.Coin;
-
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * This class is responsible for drawing out the game objects and walls of the maze, as well as
@@ -50,8 +43,13 @@ public class MazeView extends View {
 
     void setMazeData(MazeData mazeData) {
         this.mazeData = mazeData;
+        setMazeSize();
     }
 
+    void setMazeSize() {
+        setNumMazeRows(mazeData.getNumMazeRows());
+        setNumMazeCols(mazeData.getNumMazeCols());
+    }
 
 
     @Override
@@ -141,8 +139,8 @@ public class MazeView extends View {
     }
 
     void setExitSprite() {
-        this.exitSprite.setX(this.numMazeCols - 1);
-        this.exitSprite.setY(this.numMazeRows - 1);
+        this.exitSprite.setX(numMazeCols - 1);
+        this.exitSprite.setY(numMazeRows - 1);
     }
 
     Sprite getPlayerSprite() {
