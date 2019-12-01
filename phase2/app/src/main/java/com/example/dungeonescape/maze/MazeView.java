@@ -42,13 +42,6 @@ public class MazeView extends View {
     private int numMazeCols;
     private int numMazeRows;
 
-    /** The size of each MazeCell */
-    private float cellSize;
-
-    /** The horizontal and vertical margin from the edge of the screen to the walls of the maze */
-    private float horizontalPadding;
-    private float verticalPadding;
-
     private MazeData mazeData;
 
     public MazeView(Context context, AttributeSet attrs) {
@@ -59,46 +52,7 @@ public class MazeView extends View {
         this.mazeData = mazeData;
     }
 
-    /** Calculates the cellSize based on the screen's dimensions.
-     *
-     * @param screenWidth the width of the phone screen in pixels.
-     * @param screenHeight the height of the phone screen in pixels.
-     */
-    void calculateCellSize(int screenWidth, int screenHeight) {
-        float newCellSize;
-        float screenWidthDivHeight = screenWidth / screenHeight;
-        float mazeColsDivRows = numMazeCols / numMazeRows;
 
-        if (screenWidthDivHeight < mazeColsDivRows) {
-            newCellSize = screenWidth / (numMazeCols + 1);
-        } else {
-            newCellSize = screenHeight / (numMazeRows + 1);
-        }
-
-        setCellSize(newCellSize);
-
-        mazeData.setCellSize(newCellSize);
-    }
-
-    /**
-     * Calculates the cell's horizontal padding based on the screen's width and calculated cell size.
-     *
-     * @param screenWidth the width of the phone screen in pixels.
-     * @param cellSize the calculated size of the MazeCell.
-     */
-    void calculateCellHorizontalPadding(int screenWidth, float cellSize) {
-        horizontalPadding = (screenWidth - (numMazeCols * cellSize)) / 2;
-    }
-
-    /**
-     * Calculates the cell's vertical padding based on the screen's height and calculated cell size.
-     *
-     * @param screenHeight the height of the phone screen in pixels.
-     * @param cellSize the calculated size of the MazeCell.
-     */
-    void calculateCellVerticalPadding(int screenHeight, float cellSize) {
-        verticalPadding = (screenHeight - (numMazeRows * cellSize)) / 2;
-    }
 
     @Override
     protected void onDraw(Canvas canvas) {
@@ -110,32 +64,27 @@ public class MazeView extends View {
         calculateDimensions();
 
         // translate the canvas by our padding values so the maze is always centered on our screen.
-        canvas.translate(horizontalPadding, verticalPadding);
-
-        // adding a padding so the player cell and the exit cells don't touch the walls.
-        float margin = cellSize / 10;
+        canvas.translate(mazeData.getHorizontalPadding(), mazeData.getVerticalPadding());
 
         // draws walls, Coins, the Player and the exit square on the screen
-        paintWalls(canvas, cellSize);
-
+        paintWalls(canvas);
         paintCoins(canvas);
-
         playerSprite.draw(canvas);
         exitSprite.draw(canvas);
     }
 
     /** Performs dimensions calculations including cellSize and padding values. */
     private void calculateDimensions() {
-        calculateCellSize(getWidth(), getHeight());
-        calculateCellHorizontalPadding(getWidth(), cellSize);
-        calculateCellVerticalPadding(getHeight(), cellSize);
+        mazeData.calculateCellSize(getWidth(), getHeight());
+        mazeData.calculateCellHorizontalPadding(getWidth());
+        mazeData.calculateCellVerticalPadding(getHeight());
     }
 
     /** Draws walls (borders) for each mazeCell.
      *
      * @param canvas the Canvas to draw the walls on.
      */
-    private void paintWalls(Canvas canvas, float cellSize) {
+    private void paintWalls(Canvas canvas) {
         for(int x = 0; x < numMazeCols; x++) {
             for(int y = 0; y < numMazeRows; y++) {
                 cells[x][y].setMazeData(mazeData);
@@ -187,21 +136,13 @@ public class MazeView extends View {
         this.coins = coins;
     }
 
-    void setCellSize(float cellSize) {
-        this.cellSize = cellSize;
-    }
-
-    float getCellSize() {
-        return this.cellSize;
-    }
-
     Sprite getExitSprite() {
         return this.exitSprite;
     }
 
     void setExitSprite() {
-        this.exitSprite.setX(this.numMazeCols-1);
-        this.exitSprite.setY(this.numMazeRows-1);
+        this.exitSprite.setX(this.numMazeCols - 1);
+        this.exitSprite.setY(this.numMazeRows - 1);
     }
 
     Sprite getPlayerSprite() {
