@@ -140,6 +140,7 @@ class BBGameManager {
             boolean itemCollision = manageItemCollision(coin);
             if (itemCollision){
                 player.addCoin();
+                coin.collect(player);
             }
         }
 
@@ -147,7 +148,10 @@ class BBGameManager {
         manageItemCollision(blitz);
 
         /* Gem Collision Detection */
-        manageItemCollision(gem);
+        boolean gemCollision = manageItemCollision(gem);
+        if (gemCollision){
+            gem.collect(player);
+        }
 
         /* Potion Collision Detection */
         boolean potionCollision = manageItemCollision(potion);
