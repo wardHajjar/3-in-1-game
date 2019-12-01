@@ -23,6 +23,10 @@ class Sprite extends GameObject implements Drawable {
                 getPaint());
     }
 
+    /** Sets the mazeData variable equal to the passed in MazeData instance.
+     *
+     * @param mazeData the instance of MazeData that this Sprite will read from.
+     */
     void setMazeData(MazeData mazeData) {
         this.mazeData = mazeData;
     }
