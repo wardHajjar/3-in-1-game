@@ -29,6 +29,7 @@ class MazeManager {
 
     private Player player;
 
+    private MazeData mazeData = new MazeData();
     private MazeView mazeView;
     private Sprite playerSprite;
     private MazeCell playerLocation;
@@ -39,6 +40,9 @@ class MazeManager {
 
     MazeManager(MazeView mazeView, Player player) {
         this.mazeView = mazeView;
+
+        mazeView.setMazeData(this.mazeData);
+
         this.player = player;
         initializeMazeSize();
         populateMaze();
@@ -50,6 +54,9 @@ class MazeManager {
         setNumMazeCols(5 * player.getGameDifficulty());
         mazeView.setNumMazeCols(getNumMazeCols());
         mazeView.setNumMazeRows(getNumMazeRows());
+
+        mazeData.setNumMazeCols(getNumMazeCols());
+        mazeData.setNumMazeRows(getNumMazeRows());
     }
 
     /** Creates and assigns the Maze 2D Array to this.cells. */

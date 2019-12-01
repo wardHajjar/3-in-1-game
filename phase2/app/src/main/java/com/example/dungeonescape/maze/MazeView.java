@@ -49,8 +49,14 @@ public class MazeView extends View {
     private float horizontalPadding;
     private float verticalPadding;
 
+    private MazeData mazeData;
+
     public MazeView(Context context, AttributeSet attrs) {
         super(context, attrs);
+    }
+
+    void setMazeData(MazeData mazeData) {
+        this.mazeData = mazeData;
     }
 
     /** Calculates the cellSize based on the screen's dimensions.
@@ -70,6 +76,8 @@ public class MazeView extends View {
         }
 
         setCellSize(newCellSize);
+
+        mazeData.setCellSize(newCellSize);
     }
 
     /**
@@ -96,6 +104,9 @@ public class MazeView extends View {
     protected void onDraw(Canvas canvas) {
         canvas.drawColor(Color.BLACK);
 
+        playerSprite.setMazeData(this.mazeData);
+        exitSprite.setMazeData(this.mazeData);
+
         calculateDimensions();
 
         // translate the canvas by our padding values so the maze is always centered on our screen.
@@ -107,8 +118,9 @@ public class MazeView extends View {
         // draws walls, Coins, the Player and the exit square on the screen
         paintWalls(canvas, cellSize);
         paintCoins(canvas, cellSize, margin);
-        playerSprite.draw(canvas, cellSize, margin);
-        exitSprite.draw(canvas, cellSize, margin);
+
+        playerSprite.draw(canvas);
+        exitSprite.draw(canvas);
     }
 
     /** Performs dimensions calculations including cellSize and padding values. */
