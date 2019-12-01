@@ -61,14 +61,13 @@ class MazeManager {
     /** Creates and assigns the Maze 2D Array to this.cells. */
     private void initializeMazeArray() {
         this.cells = createMaze();
-//        mazeView.setCells(this.cells);
         mazeData.setCells(this.cells);
     }
 
     /** Populate Maze with GameObjects. */
     private void populateMaze() {
         initializeMazeArray();
-        mazeView.setCoins(createCoins());
+        mazeData.setCoins(createCoins());
         this.playerSprite = mazeView.getPlayerSprite();
         createExitCell();
     }
@@ -279,9 +278,8 @@ class MazeManager {
         if (playerSprite.getX() == exitSprite.getX() && playerSprite.getY() == exitSprite.getY()) {
             mazeIterations++;
             this.cells = createMaze();
-//            mazeView.setCells(this.cells);
             mazeData.setCells(this.cells);
-            mazeView.setCoins(createCoins());
+            mazeData.setCoins(createCoins());
             relocatePlayerSprite();
         }
     }
@@ -290,7 +288,7 @@ class MazeManager {
      * Removes Coin from game & adds it to Player if true.
      */
     private void playerOnCoin() {
-        Iterator<MazeCoin> coinIterator = mazeView.getCoins().iterator();
+        Iterator<MazeCoin> coinIterator = mazeData.getCoins().iterator();
         while (coinIterator.hasNext()) {
             MazeCoin coin = coinIterator.next();
             if (playerSprite.getX() == coin.getX() && playerSprite.getY() == coin.getY()) {

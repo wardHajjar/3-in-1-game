@@ -1,10 +1,15 @@
 package com.example.dungeonescape.maze;
 
+import java.util.ArrayList;
+
 /** Contains all data for the Maze Game. */
 class MazeData {
 
     /** A 2D Array of MazeCell cells. */
     private MazeCell[][] cells;
+
+    /** A list of coins that can be collected for score. */
+    private ArrayList<MazeCoin> coins;
 
     /** The number of columns and rows in this Maze. */
     private int numMazeCols;
@@ -102,6 +107,14 @@ class MazeData {
 
     void setCells(MazeCell[][] cells) {
         this.cells = cells;
+    }
+
+    ArrayList<MazeCoin> getCoins() {
+        return this.coins;
+    }
+
+    void setCoins(ArrayList<MazeCoin> coins) {
+        this.coins = coins;
     }
 
 }

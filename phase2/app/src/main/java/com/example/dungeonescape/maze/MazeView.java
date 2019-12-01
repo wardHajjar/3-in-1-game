@@ -21,11 +21,6 @@ import java.util.ArrayList;
  */
 
 public class MazeView extends View {
-//    /** A 2D Array of MazeCell cells. */
-//    private MazeCell[][] cells;
-
-    /** A list of coins that can be collected for score. */
-    private ArrayList<MazeCoin> coins;
 
     /** Player and exit objects, and their positions. */
     private Sprite playerSprite = new Sprite();
@@ -85,18 +80,10 @@ public class MazeView extends View {
      * @param canvas the Canvas to draw the Coins on.
      */
     private void paintCoins(Canvas canvas) {
-        for (MazeCoin coin : coins) {
+        for (MazeCoin coin : mazeData.getCoins()) {
             coin.setMazeData(mazeData);
             coin.draw(canvas);
         }
-    }
-
-    ArrayList<MazeCoin> getCoins() {
-        return this.coins;
-    }
-
-    void setCoins(ArrayList<MazeCoin> coins) {
-        this.coins = coins;
     }
 
     Sprite getExitSprite() {
