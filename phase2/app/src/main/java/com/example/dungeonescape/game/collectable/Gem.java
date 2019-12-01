@@ -9,11 +9,24 @@ import android.graphics.Path;
 import com.example.dungeonescape.game.Drawable;
 import com.example.dungeonescape.player.Player;
 
+/**
+ * Creates a gem that can be collected by the player to increase their score.
+ */
 public class Gem extends GameObject implements Collectable, Drawable {
 
+    /**
+     * available - whether the gem can be collected by the player.
+     * gemShape - Rect representation of the Gem.
+     */
     private Boolean available;
     private Rect gemShape;
 
+    /**
+     * Initializes a gem item.
+     * @param x x coordinate of top left corner of the gem.
+     * @param y y coordinate of top left corner of the gem
+     * @param size size of the gem.
+     */
     public Gem(int x, int y, int size) {
 
         super(x, y);

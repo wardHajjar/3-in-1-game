@@ -7,19 +7,30 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import java.util.List;
 import java.util.ArrayList;
-
-
 import com.example.dungeonescape.game.GameObject;
 import com.example.dungeonescape.game.Drawable;
 import com.example.dungeonescape.player.Player;
 
-
+/**
+ * Blitz item that can be collected by player and activates hidden level in Brick Breaker game.
+ */
 public class Blitz extends GameObject implements Collectable, Drawable {
 
+    /**
+     * blitzShape - Rect representation of the object.
+     * available - whether the item is still available to be picked up by the player.
+     * blitzMode - state of the hidden level; whether it has been played, in progress or not yet
+     * played.
+     */
     private Rect blitzShape;
     private boolean available;
     private String blitzMode;
 
+    /**
+     * @param x x coordinate of the top left corner of the item.
+     * @param y y coordinate of the top left corner of the item.
+     * @param size the size of the item.
+     */
     public Blitz(int x, int y, int size){
         super(x, y);
         setPaintColour(Color.RED);
@@ -50,6 +61,10 @@ public class Blitz extends GameObject implements Collectable, Drawable {
         player.addToSatchel(this);
     }
 
+    /**
+     * Helper method that creates the points required to draw a star shape.
+     * @return list of Points that represent a star.
+     */
     private List<Point> createShapePoints(){
 
         List<Point> shapePoints = new ArrayList<>();
@@ -86,22 +101,34 @@ public class Blitz extends GameObject implements Collectable, Drawable {
         return shapePoints;
 
     }
+
+    @Override
     public Boolean getAvailableStatus(){
         return available;
     }
 
+    @Override
     public void gotCollected(){
         available = false;
     }
 
+    /**
+     * Changes the state of the Blitz item's activation status
+     * @param mode mode in ["started", "notstarted", "done"]
+     */
     public void setBlitzMode(String mode){
         blitzMode = mode;
     }
 
+    /**
+     * Rerturns the state of the Blitz item's activation status.
+     * @return String representing the state.
+     */
     public String getBlitzMode(){
         return blitzMode;
     }
 
+    @Override
     public Rect getItemShape() {
         return blitzShape;
     }

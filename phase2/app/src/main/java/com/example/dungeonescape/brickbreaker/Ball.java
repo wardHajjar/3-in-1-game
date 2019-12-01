@@ -90,8 +90,8 @@ public class Ball extends GameObject implements Drawable{
      */
     public void move() {
 
-        this.setX(this.getX() + this.xSpeed);
-        this.setY(this.getY() + this.ySpeed);
+        this.incX(this.xSpeed);
+        this.incY(this.ySpeed);
     }
 
     @Override

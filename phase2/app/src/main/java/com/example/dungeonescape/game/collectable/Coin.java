@@ -9,6 +9,9 @@ import android.graphics.Color;
 import android.graphics.Rect;
 import java.util.Random;
 
+/**
+ *  Class that creates a coin that a user can collect to increase score.
+ */
 public class Coin extends GameObject implements Collectable, Drawable {
 
     /** The shape of the coin. */
@@ -69,6 +72,7 @@ public class Coin extends GameObject implements Collectable, Drawable {
         updateCoinLocation();
     }
 
+    @Override
     public void draw(Canvas canvas) {
         canvas.drawCircle(this.getX(), this.getY(), coinRadius, this.getPaint());
     }
