@@ -6,8 +6,6 @@ import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.View;
 
-import java.util.ArrayList;
-
 /**
  * This class is responsible for drawing out the game objects and walls of the maze, as well as
  * executing the movements of the player in the maze on the touch screen.
@@ -40,9 +38,7 @@ public class MazeView extends View {
     protected void onDraw(Canvas canvas) {
         canvas.drawColor(Color.BLACK);
 
-        playerSprite.setMazeData(this.mazeData);
-        exitSprite.setMazeData(this.mazeData);
-
+        updateMazeObjectsData();
         calculateDimensions();
 
         // translate the canvas by our padding values so the maze is always centered on our screen.
@@ -69,7 +65,6 @@ public class MazeView extends View {
     private void paintWalls(Canvas canvas) {
         for(int x = 0; x < mazeData.getNumMazeCols(); x++) {
             for(int y = 0; y < mazeData.getNumMazeRows(); y++) {
-                mazeData.getCells()[x][y].setMazeData(mazeData);
                 mazeData.getCells()[x][y].draw(canvas);
             }
         }
@@ -81,8 +76,31 @@ public class MazeView extends View {
      */
     private void paintCoins(Canvas canvas) {
         for (MazeCoin coin : mazeData.getCoins()) {
-            coin.setMazeData(mazeData);
             coin.draw(canvas);
+        }
+    }
+
+    /** Runs method setMazeData on all GameObjects that implement RetrieveData. */
+    void updateMazeObjectsData() {
+        playerSprite.setMazeData(this.mazeData);
+        exitSprite.setMazeData(this.mazeData);
+        updateMazeCellData();
+        updateCoinData();
+    }
+
+    /** Runs method setMazeData on all MazeCells. */
+    void updateMazeCellData() {
+        for (int x = 0; x < mazeData.getNumMazeRows(); x++) {
+            for (int y = 0; y < mazeData.getNumMazeRows(); y++) {
+                mazeData.getCells()[x][y].setMazeData(mazeData);
+            }
+        }
+    }
+
+    /** Runs method setMazeData on all MazeCoins. */
+    void updateCoinData() {
+        for (MazeCoin coin: mazeData.getCoins()) {
+            coin.setMazeData(mazeData);
         }
     }
 
