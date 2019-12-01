@@ -1,4 +1,4 @@
-package com.example.dungeonescape.platformer;
+package com.example.dungeonescape.platformer.entities;
 
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
@@ -17,7 +17,7 @@ class Portal extends PlatformerObject {
         portal.setBounds(getX() - 100, getY() - 100, getX() + 100, getY() + 100);
         portal.draw(canvas);
     }
-    void moveDown(int down) {
+    void update(int down) {
         incY(down);
         this.setShape();
     }

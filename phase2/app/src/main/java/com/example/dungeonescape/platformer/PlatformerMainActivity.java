@@ -14,6 +14,7 @@ import com.example.dungeonescape.activities.DeadActivity;
 import com.example.dungeonescape.activities.EndGameActivity;
 import com.example.dungeonescape.activities.MainActivity;
 import com.example.dungeonescape.activities.MenuActivity;
+import com.example.dungeonescape.platformer.views.PlatformerView;
 import com.example.dungeonescape.player.PlayerManager;
 import com.example.dungeonescape.activities.GeneralGameActivity;
 import com.example.dungeonescape.player.Player;

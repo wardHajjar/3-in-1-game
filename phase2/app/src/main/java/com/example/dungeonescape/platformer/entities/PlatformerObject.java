@@ -1,11 +1,11 @@
-package com.example.dungeonescape.platformer;
+package com.example.dungeonescape.platformer.entities;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import com.example.dungeonescape.game.GameObject;
 
 
-class PlatformerObject extends GameObject {
+abstract public class PlatformerObject extends GameObject {
     /**
      * The size of the object.
      */
@@ -15,14 +15,20 @@ class PlatformerObject extends GameObject {
      */
     private Rect shape;
     /**
-     * The manager for this object.
+     * The gridHeight for the canvas.
      */
-    private PlatformerManager manager;
+    private int gridHeight;
+    /**
+     * The gridWidth for the canvas.
+     */
+    private int gridWidth;
+
 
     PlatformerObject(int x, int y, int size, PlatformerManager manager) {
         super(x, y);
         this.size = size;
-        this.manager = manager;
+        gridHeight = manager.getGridHeight();
+        gridWidth = manager.getGridWidth();
     }
 
     /**
@@ -68,11 +74,15 @@ class PlatformerObject extends GameObject {
                     getY() + size / 2, getPaint());
         }
     }
-    /**
-     * @return the manager.
-     */
-    PlatformerManager getManager() {
-        return this.manager;
+    abstract void update(int down);
+
+
+    int getGridHeight() {
+        return gridHeight;
     }
 
+    int getGridWidth() {
+        return gridWidth;
+    }
 }
+
