@@ -12,18 +12,14 @@ import com.example.dungeonescape.game.collectable.Collectable;
 
 import java.util.List;
 
-/**
- * This class is responsible for drawing out the game objects and walls of the maze, as well as
- * executing the movements of the player in the maze on the touch screen.
+/** Draws all instances of GameObjects onto the screen. Collects and reads data from MazeData.
  *
  * The original code from MazeView was from the following videos:
  * https://www.youtube.com/watch?v=I9lTBTAk5MU
  * https://www.youtube.com/watch?v=iri0wZ3NvdQ
  *
  * It has been edited and adjusted to fit our own objectives and visions of the game.
- * TODO: Edit this javadoc as we change the code below.
  */
-
 public class MazeView extends View {
 
     /** Player and exit objects, and their positions. */
