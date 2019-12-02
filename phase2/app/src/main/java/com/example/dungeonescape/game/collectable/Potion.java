@@ -14,15 +14,13 @@ import com.example.dungeonescape.player.Player;
 /**
  * Creates a potion that the player can collect to gain an extra life.
  */
-public class Potion extends GameObject implements Collectable, Drawable, RetrieveData {
+public class Potion extends GameObject implements Collectable, Drawable {
     /**
      * available - whether the potion is available for the user to collect.
      * potionShape - Rect representation of the potion.
      */
     private Boolean available;
     private Rect potionShape;
-
-    private GameData gameData;
 
     /**
      * Creates a potion item.
@@ -62,10 +60,6 @@ public class Potion extends GameObject implements Collectable, Drawable, Retriev
     @Override
     public void collect(Player player) {
         player.addToSatchel(this);
-    }
-
-    public void setGameData(GameData gameData) {
-        this.gameData = gameData;
     }
 
     @Override

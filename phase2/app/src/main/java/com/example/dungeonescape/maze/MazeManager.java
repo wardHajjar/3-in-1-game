@@ -241,23 +241,51 @@ class MazeManager {
 
     private List<Collectable> createCollectables() {
         List<Collectable> collectables = new ArrayList<>();
-        SparseIntArray coordinates = createCoordinates();
+
         CollectableFactory factory = new CollectableFactory();
 
-        for (int i = 0; i < 2; i++) {
+        SparseIntArray coordinates = new SparseIntArray();
+        coordinates.append(0, 0);
+        coordinates.append(numMazeCols, numMazeRows);
+
+        while (coordinates.size() < 4) {
+            int x = rand.nextInt(numMazeCols);
+            if (coordinates.get(x, -1) == -1) {
+                coordinates.append(x, rand.nextInt(numMazeRows));
+            } else {
+                int y = rand.nextInt(numMazeRows);
+                while (coordinates.get(x) == y) {
+                    y = rand.nextInt(numMazeRows);
+                }
+                coordinates.append(x, y);
+            }
+        }
+
+        coordinates.delete(0);
+        coordinates.delete(numMazeCols);
+
+        for (int i = 0; i < 6; i++) {
             int x = coordinates.keyAt(i);
             int y = coordinates.get(x);
             int cellSize = (int) mazeData.getCellSize();
-            int val = rand.nextInt(5);
-            if (val > 2) {
+            int val = rand.nextInt(10);
+            if (val > 4) {
                 MazeCoin mazeCoin = new MazeCoin(x, y, cellSize);
                 collectables.add(mazeCoin);
-            } else if (val == 2) {
-                Gem gem = (Gem) factory.getCollectable("gem", x, y, cellSize);
+            } else if (val > 1) {
+                Gem gem = (Gem) factory.getCollectable(
+                        "gem",
+                        (int) (x + mazeData.getHorizontalPadding()),
+                        (int) (y + mazeData.getVerticalPadding()),
+                        (int) (cellSize / 2.5));
                 collectables.add(gem);
             } else {
                 Potion potion =
-                        (Potion) factory.getCollectable("potion", x, y, cellSize);
+                        (Potion) factory.getCollectable(
+                                "potion",
+                                (int) (x + (mazeData.getHorizontalPadding() / 2.2)),
+                                (int) (y + (mazeData.getVerticalPadding() / 2.2)),
+                                (int) (cellSize / 1.5));
                 collectables.add(potion);
             }
         }
