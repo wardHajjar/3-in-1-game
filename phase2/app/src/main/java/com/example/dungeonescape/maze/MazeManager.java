@@ -312,15 +312,31 @@ class MazeManager {
         }
     }
 
+    /** Returns the number of columns in this Maze.
+     *
+     * @return the integer value for the number of columns in this Maze.
+     */
     private int getNumMazeCols() {
         return numMazeCols;
     }
 
+    /** Sets the number of columns in this Maze.
+     *
+     * @param numMazeCols the number of columns to create.
+     */
     private void setNumMazeCols(int numMazeCols){ this.numMazeCols = numMazeCols; }
 
+    /** Returns the number of rows in this Maze.
+     *
+     * @return the integer value for the number of rows in this Maze.
+     */
     private int getNumMazeRows() {
         return numMazeRows;
     }
 
+    /** Sets the number of rows in this Maze.
+     *
+     * @param numMazeRows the number of rows to create.
+     */
     private void setNumMazeRows(int numMazeRows){ this.numMazeRows = numMazeRows; }
 }
