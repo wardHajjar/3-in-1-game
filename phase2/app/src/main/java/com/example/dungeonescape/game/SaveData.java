@@ -9,6 +9,9 @@ import java.nio.file.Files;
 
 // The code in this file is from https://www.youtube.com/watch?v=-xW0pBZqpjU&t=207s
 
+/**
+ * A SaveData class for writing game data to file.
+ */
 public class SaveData implements Serializable {
 
     public static void save(Serializable data, File f) throws Exception {

@@ -1,17 +1,14 @@
 package com.example.dungeonescape.player;
 
-import com.example.dungeonescape.player.Player;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Represents the Game Manager.
+ * Represents the Player Manager. It contains all player data.
  *
  * It controls the statistics that determines pass/fail conditions.
  *
- * TODO: Edit this javadoc as this class is updated.
  */
 
 public class PlayerManager implements Serializable {
