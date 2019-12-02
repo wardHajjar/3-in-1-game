@@ -44,10 +44,8 @@ public class BBMainActivity extends GeneralGameActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // starts the clock
-        startTime = SystemClock.elapsedRealtime();
-        // Set the View we are using
-        setContentView(R.layout.activity_brick_breaker_main);
+        startTime = SystemClock.elapsedRealtime();  // starts the clock
+        setContentView(R.layout.activity_brick_breaker_main);   // Set the View we are using
         gameView = findViewById(R.id.BBView2);
 
         setTitle("Level1: Brick Breaker");
@@ -65,7 +63,6 @@ public class BBMainActivity extends GeneralGameActivity {
             public void onClick(View view) {
                 player.setCurrentLevel(2);
                 save(getPlayerManager());
-                //Intent intent = new Intent(BBMainActivity.this, MazeActivity.class);
                 Intent intent = new Intent(BBMainActivity.this, MazeInstructionsActivity.class);
                 intent.putExtra("Player Name", player.getName());
                 startActivity(intent);

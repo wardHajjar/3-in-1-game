@@ -1,5 +1,6 @@
 package com.example.dungeonescape.game.collectable;
 
+import com.example.dungeonescape.game.GameData;
 import com.example.dungeonescape.game.GameObject;
 
 import android.graphics.Canvas;
@@ -7,18 +8,34 @@ import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.Path;
 import com.example.dungeonescape.game.Drawable;
-
+import com.example.dungeonescape.game.RetrieveData;
+import com.example.dungeonescape.player.Player;
 import java.io.Serializable;
 import java.util.Random;
 
 
-public class Potion extends GameObject implements Collectable, Drawable, Serializable {
+/**
+ * Creates a potion that the player can collect to gain an extra life.
+ */
+public class Potion extends GameObject implements Collectable, Drawable, RetrieveData, Serializable {
+    /**
+     * available - whether the potion is available for the user to collect.
+     * potionShape - Rect representation of the potion.
+     */
 
     private Boolean available;
     private Rect potionShape;
     /** The size of the potion. */
     private int size;
 
+    private GameData gameData;
+
+    /**
+     * Creates a potion item.
+     * @param x x coordinate of the top left corner of the potion.
+     * @param y y coordinate of the top left corner of the potion.
+     * @param size size of the potion.
+     */
     public Potion(int x, int y, int size) {
         super(x, y);
         available = true;
@@ -49,9 +66,9 @@ public class Potion extends GameObject implements Collectable, Drawable, Seriali
         canvas.drawPath(path, getPaint());
     }
 
+
     /** Moves the Gem down when the Character jumps up. */
     public void update(int down, int height) {
-
         if (getY() + down > height) {
             /* Moves coin up if the Character moves down without collection the PlatformerCoin. */
             int diff = Math.abs(getY() + down - height);
@@ -70,6 +87,16 @@ public class Potion extends GameObject implements Collectable, Drawable, Seriali
         }
         updatePotionLocation();
     }
+
+    @Override
+    public void collect(Player player) {
+        player.addToSatchel(this);
+    }
+
+    public void setGameData(GameData gameData) {
+        this.gameData = gameData;
+    }
+
     private void updatePotionLocation() {
         this.potionShape.top = getY();
         this.potionShape.right = getX() + size;

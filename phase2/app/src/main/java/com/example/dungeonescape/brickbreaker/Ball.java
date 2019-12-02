@@ -5,12 +5,13 @@ import android.graphics.Paint;
 import com.example.dungeonescape.game.GameObject;
 import android.graphics.Rect;
 import java.util.Random;
+import com.example.dungeonescape.game.Drawable;
 
 /**
  * Class that creates the ball used in the brick breaker game.
  * Ball has the functionality of bouncing from walls and bricks and breaking breaks.
  */
-public class Ball extends GameObject {
+public class Ball extends GameObject implements Drawable{
     /**
      * The ball's speed in the x and y directions, respectively.
      */
@@ -89,15 +90,11 @@ public class Ball extends GameObject {
      */
     public void move() {
 
-        this.setX(this.getX() + this.xSpeed);
-        this.setY(this.getY() + this.ySpeed);
+        this.incX(this.xSpeed);
+        this.incY(this.ySpeed);
     }
 
-    /**
-     * Draws the ball object as a black circle.
-     *
-     * @param canvas the graphic context on which the object is drawn
-     */
+    @Override
     public void draw(Canvas canvas) {
         this.getPaint().setStyle(Paint.Style.FILL);
         this.getPaint().setColor(colour);

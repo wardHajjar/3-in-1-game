@@ -294,7 +294,13 @@ public class PlatformerManager{
      * Returns a boolean that indicates if the player has passed this level.
      */
     public boolean finishedLevel() {
-        return (character.getGameScore() > 10);
+        return (character.getGameScore() > player.getGameDifficulty()*10);
+//        if (player.getGameDifficulty() == 2) {
+//            return (character.getGameScore() > 20);
+//        } else
+//            {
+//            return (character.getGameScore() > 10);
+//            }
     }
     /**
      * @return if the player has entered the portal.

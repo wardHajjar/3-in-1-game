@@ -1,5 +1,6 @@
 package com.example.dungeonescape.game.collectable;
 
+import com.example.dungeonescape.game.GameData;
 import com.example.dungeonescape.game.GameObject;
 
 import android.graphics.Canvas;
@@ -7,17 +8,33 @@ import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.Path;
 import com.example.dungeonescape.game.Drawable;
-
 import java.io.Serializable;
 import java.util.Random;
+import com.example.dungeonescape.game.RetrieveData;
+import com.example.dungeonescape.player.Player;
 
-public class Gem extends GameObject implements Collectable, Drawable, Serializable {
+/**
+ * Creates a gem that can be collected by the player to increase their score.
+ */
+public class Gem extends GameObject implements Collectable, Drawable, Serializable, RetrieveData {
 
+    /**
+     * available - whether the gem can be collected by the player.
+     * gemShape - Rect representation of the Gem.
+     */
     private Boolean available;
     private Rect gemShape;
     /** The size of the Gem. */
     private int size;
 
+    private GameData gameData;
+
+    /**
+     * Initializes a gem item.
+     * @param x x coordinate of top left corner of the gem.
+     * @param y y coordinate of top left corner of the gem
+     * @param size size of the gem.
+     */
     public Gem(int x, int y, int size) {
 
         super(x, y);
@@ -47,6 +64,10 @@ public class Gem extends GameObject implements Collectable, Drawable, Serializab
         path.close();
 
         canvas.drawPath(path, getPaint());
+    }
+
+    public void setGameData(GameData gameData) {
+        this.gameData = gameData;
     }
 
     @Override
@@ -99,5 +120,9 @@ public class Gem extends GameObject implements Collectable, Drawable, Serializab
         Random r = new Random();
         setX(r.nextInt(1080 - 150));
         updateGemLocation();
+    }
+    @Override
+    public void collect(Player player) {
+        player.addToSatchel(this);
     }
 }
