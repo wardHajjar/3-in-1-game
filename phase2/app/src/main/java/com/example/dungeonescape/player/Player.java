@@ -1,19 +1,15 @@
 package com.example.dungeonescape.player;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import android.graphics.Color;
 
-import com.example.dungeonescape.game.GameObject;
 import com.example.dungeonescape.game.collectable.Coin;
 import com.example.dungeonescape.game.collectable.Collectable;
 import com.example.dungeonescape.game.collectable.Gem;
-
-import androidx.annotation.NonNull;
 
 /**
  * Represents a Player in the Game.
@@ -25,6 +21,7 @@ public class Player implements Serializable {
 
     /** The Player's score. */
     private int score;
+
     /** The Player's current level. */
     private int currentLevel;
 
@@ -37,7 +34,7 @@ public class Player implements Serializable {
     /** The colour of the user's character. */
     private int colour;
 
-    /** An Arraylist of the Collectable GameObjects this Player has. */
+    /** A HashMap of the Collectable GameObjects this Player has. */
     private Map<String, Integer> satchel = new HashMap<>();;
 
     /** The Game Difficulty. Acts as a modifier. */
@@ -56,11 +53,13 @@ public class Player implements Serializable {
         setColour(Color.WHITE);
         setCurrentLevel(1);
         totalTimePlayed = 0;
-        initSatchel();
+        initializeSatchel();
 
     }
+
+
     /** Initializes the Satchel. */
-    private void initSatchel(){
+    private void initializeSatchel(){
         satchel.put("Coins", 0);
         satchel.put("Gems", 0);
     }
@@ -236,7 +235,7 @@ public class Player implements Serializable {
         setCurrentLevel(1);
         resetTime();
         updatePlayerData();
-        initSatchel();
+        initializeSatchel();
 
     }
 
