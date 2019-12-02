@@ -116,7 +116,7 @@ public class Gem extends GameObject implements Collectable, Drawable, Serializab
     }
 
     public void gotCollectable() {
-        setY(0);
+        setY(-500);
         Random r = new Random();
         setX(r.nextInt(1080 - 150));
         updateGemLocation();

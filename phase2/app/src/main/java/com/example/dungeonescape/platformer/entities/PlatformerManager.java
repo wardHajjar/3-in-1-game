@@ -74,12 +74,14 @@ public class PlatformerManager{
 
         init(height, width);
         createCoins(3);
+        platforms = createPlatforms(8);
         gameMode = "Regular";
 
     }
     public PlatformerManager(int h, int w, int coins) {
         init(h, w);
         createCoins(coins);
+        platforms = createPlatforms(6);
         gameMode = "Blitz";
     }
     /**
@@ -90,19 +92,17 @@ public class PlatformerManager{
         gridWidth = w;
         character = new Character(50,1000,100, this);
         player = null;
-        platforms = createPlatforms();
+
         factory = new CollectableFactory();
         Random random = new Random();
-        int a = random.nextInt(gridWidth - 150);
-        int b = random.nextInt(gridHeight - 150);
 
         this.gem = (Gem) factory.getCollectable("gem",
                 random.nextInt(gridWidth - 150), random.nextInt(gridHeight - 150)
-                , 30);
+                , 70);
 
         this.potion = (Potion) factory.getCollectable("potion",
                 random.nextInt(gridWidth - 150), random.nextInt(gridHeight - 150),
-                30);
+                70);
         collectables.add(this.potion);
         collectables.add(this.gem);
 
@@ -168,9 +168,9 @@ public class PlatformerManager{
     /**
      * Creates platforms.
      */
-    private List<Platforms> createPlatforms() {
-        List<Platforms> arr = new ArrayList<>(15);
-        for (int i = 1; i <= 8; i++) {
+    private List<Platforms> createPlatforms(int number) {
+        List<Platforms> arr = new ArrayList<>(number);
+        for (int i = 1; i <= number; i++) {
             Random random = new Random();
             int a = random.nextInt(gridWidth - 150);
             arr.add(new Platforms(a, gridHeight*i/10, 150, 30, this));
@@ -350,6 +350,8 @@ public class PlatformerManager{
                     c.gotCollectable();
                     player.addCoin();
                 }
+                System.out.println("HIT");
+                collectable.gotCollectable();
 //                player.addToSatchel(collectable);
 
             }

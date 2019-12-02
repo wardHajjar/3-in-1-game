@@ -2,7 +2,6 @@ package com.example.dungeonescape.game.collectable;
 
 import com.example.dungeonescape.game.GameData;
 import com.example.dungeonescape.game.GameObject;
-
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Rect;
@@ -27,7 +26,6 @@ public class Potion extends GameObject implements Collectable, Drawable, Retriev
     private Rect potionShape;
     /** The size of the potion. */
     private int size;
-
     private GameData gameData;
 
     /**
@@ -40,7 +38,7 @@ public class Potion extends GameObject implements Collectable, Drawable, Retriev
         super(x, y);
         available = true;
         this.size = size;
-        setPaintColour(Color.GREEN);
+        setPaintColour(Color.RED);
         potionShape = new Rect(x, y, x + size, y + size);
     }
 
@@ -104,7 +102,7 @@ public class Potion extends GameObject implements Collectable, Drawable, Retriev
         this.potionShape.left = getX();
     }
     public void gotCollectable() {
-        setY(0);
+        setY(-500);
         Random r = new Random();
         setX(r.nextInt(1080 - 150));
         updatePotionLocation();
