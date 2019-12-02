@@ -115,20 +115,25 @@ public class MazeView extends View {
         }
     }
 
+    /** Returns the Maze's ExitSprite.
+     *
+     * @return the ExitSprite GameObject.
+     */
     Sprite getExitSprite() {
         return this.exitSprite;
     }
 
+    /** Sets the location of the ExitSprite. */
     void setExitSprite() {
         this.exitSprite.setX(mazeData.getNumMazeCols() - 1);
         this.exitSprite.setY(mazeData.getNumMazeRows() - 1);
     }
 
+    /** Returns the PlayerSprite.
+     *
+     * @return the PlayerSprite GameObject.
+     */
     Sprite getPlayerSprite() {
         return this.playerSprite;
-    }
-
-    void setPlayerSprite(Sprite playerSprite) {
-        this.playerSprite = playerSprite;
     }
 }
