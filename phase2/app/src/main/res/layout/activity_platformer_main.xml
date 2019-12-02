@@ -42,7 +42,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
-        android:text="Use left and right buttons to bounce on platforms and not fall below the screen. To escape the dungeon, get a score of 10 (10 bounces). The coins can be collected for points!"
+        android:text="Use left and right buttons to bounce on platforms and not fall below the screen. To escape the dungeon, get a score of 10 (10 bounces) for easy mode and 20 for hard. The coins can be collected for points!"
         android:textAlignment="center"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/startButton"
