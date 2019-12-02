@@ -66,10 +66,6 @@ public class MazeView extends View {
                 ((Drawable) obj).draw(canvas);
             }
         }
-
-//        System.out.println(mazeData.getCollectables());
-//        System.out.println(mazeData.getCollectables().size());
-
     }
 
     /** Performs dimensions calculations including cellSize and padding values. */
@@ -96,18 +92,18 @@ public class MazeView extends View {
      *
      * @param canvas the Canvas to draw the Coins on.
      */
-    private void paintCoins(Canvas canvas) {
-        for (MazeCoin coin : mazeData.getCoins()) {
-            coin.draw(canvas);
-        }
-    }
+//    private void paintCoins(Canvas canvas) {
+//        for (MazeCoin coin : mazeData.getCoins()) {
+//            coin.draw(canvas);
+//        }
+//    }
 
     /** Runs method setMazeData on all GameObjects that implement RetrieveData. */
     void updateMazeObjectsData() {
         playerSprite.setGameData(this.mazeData);
         exitSprite.setGameData(this.mazeData);
 //        updateMazeCellData();
-        updateCoinData();
+//        updateCoinData();
     }
 
     /** Runs method setMazeData on all MazeCells. */
@@ -120,11 +116,11 @@ public class MazeView extends View {
     }
 
     /** Runs method setMazeData on all MazeCoins. */
-    void updateCoinData() {
-        for (MazeCoin coin: mazeData.getCoins()) {
-            coin.setGameData(mazeData);
-        }
-    }
+//    void updateCoinData() {
+//        for (MazeCoin coin: mazeData.getCoins()) {
+//            coin.setGameData(mazeData);
+//        }
+//    }
 
     Sprite getExitSprite() {
         return this.exitSprite;
