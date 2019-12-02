@@ -41,14 +41,19 @@ public class MazeActivity extends GeneralGameActivity {
     /** The time elapsed within this MazeActivity. */
     private long startTime;
 
-    private boolean running;
+    private boolean isGameRunning;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maze);
+
+        // gather Player data
         getPlayerSaveData(getIntent());
+
         initializeMazeManager();
+
+        // start the countdown
         startCountDown();
 
         configureActionButtons();
@@ -56,10 +61,11 @@ public class MazeActivity extends GeneralGameActivity {
         // starts the Time Elapsed clock
         startTime = SystemClock.elapsedRealtime();
 
-        running = true;
+        isGameRunning = true;
         startThread();
     }
 
+    /** Creates the Thread that updates the display for the Player lives & coins. */
     private void startThread() {
         Thread t = new Thread() {
             @Override
@@ -71,7 +77,7 @@ public class MazeActivity extends GeneralGameActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                if (running) {
+                                if (isGameRunning) {
                                     updatePlayerScoreText();
                                     updatePlayerLivesText();
                                 }
