@@ -23,7 +23,9 @@ class Character extends PlatformerObject implements Serializable{
         start = false;
         this.gameScore = 0;
     }
-
+    /** @param colour the colour we want to set to
+     * Sets the colour of the paint.
+     * */
     void setColour(int colour){
 
         getPaint().setColor(colour);
@@ -63,16 +65,18 @@ class Character extends PlatformerObject implements Serializable{
         }
         setShape();
     }
-
+    /** Moves the Character down a few units. */
     @Override
     void update(int down) {
         setY(550 - down);
     }
 
+    /** @return the speed. */
     int getSpeed() {
         return speed;
     }
 
+    /** Makes the player bounce on platform. */
     void bounce(Platforms platform) {
         this.gameScore += 1;
         setY(platform.getY() - (getSize() / 2));

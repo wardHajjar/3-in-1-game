@@ -96,12 +96,4 @@ public class Coin extends GameObject implements Collectable, Drawable, Serializa
         this.available = false;
     }
 
-    public void setCoinRadius(int coinRadius) {
-        this.coinRadius = coinRadius;
-    }
-
-    public int getCoinRadius() {
-        return this.coinRadius;
-    }
-
 }

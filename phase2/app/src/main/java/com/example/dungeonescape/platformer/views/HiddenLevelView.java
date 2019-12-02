@@ -4,18 +4,25 @@ import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
 
+/**
+ * The view class that draws the hidden level in platformer.
+ */
 public class HiddenLevelView extends LevelView {
 
     public HiddenLevelView(Context context, AttributeSet attrs) {
         super(context, attrs, "Blitz");
     }
-
+    /**
+     * Updates the screen.
+     */
     public void update() {
         if (getManager().update()) {
             exitHiddenLevel();
         }
     }
-
+    /**
+     * Draws the view.
+     */
     @Override
     public void draw() {
         if (holder.getSurface().isValid()) {
@@ -26,7 +33,9 @@ public class HiddenLevelView extends LevelView {
             holder.unlockCanvasAndPost(canvas);
         }
     }
-
+    /**
+     * A listener for exiting the hidden level.
+     */
     public void exitHiddenLevel() {
         endGameListener.onEvent();
     }

@@ -4,7 +4,9 @@ import android.graphics.Color;
 import java.lang.Math;
 import java.util.Random;
 
-
+/**
+ * A Platform class that represents the platforms the character jumps on.
+ */
 class Platforms extends PlatformerObject {
 
     /** length of the platforms. */

@@ -21,17 +21,24 @@ public class PlatformerView extends LevelView implements Runnable {
         setSaveEnabled(true);
     }
 
+    /**
+     * Sets the portal listener.
+     */
     public void setEnterPortalListener(OnCustomEventListener eventListener) {
         this.portalEventListener = eventListener;
     }
 
-
+    /**
+     * Sets the portal Image.
+     */
     public void setPortalImage(Drawable drawable) {
         portalImage = drawable;
         getManager().setImage(drawable);
     }
 
-
+    /**
+     * Updates all the activites in the game.
+     */
     public void update() {
 
         if (getManager().getPortal() != null) {
@@ -57,19 +64,30 @@ public class PlatformerView extends LevelView implements Runnable {
         getManager().setImage(portalImage);
 
     }
-
+    /**
+     * When the character enters the portal.
+     */
     public void enterPortal() {
         portalEventListener.onEvent();
     }
 
+    /**
+     * Sets the finish level listener.
+     */
     public void setFinishLevelListener(OnCustomEventListener eventListener) {
         this.finishLevelListener = eventListener;
     }
 
+    /**
+     * When the character finishes the level.
+     */
     public void nextLevel() {
         finishLevelListener.onEvent();
     }
 
+    /**
+     * When the character has lost all lives.
+     */
     public void lostGame() {
         endGameListener.onEvent();
     }
