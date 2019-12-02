@@ -20,7 +20,6 @@ public class DeadActivity extends GeneralGameActivity {
 
 
     private Player player;
-    private MenuActivity menuActivity = new MenuActivity();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +47,7 @@ public class DeadActivity extends GeneralGameActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.main_menu) {
             save(getPlayerManager());
-            Intent intent = menuActivity.createIntent(DeadActivity.this,
-                    MainActivity.class, player.getName());
+            Intent intent = new Intent(DeadActivity.this, MainActivity.class);
             startActivity(intent);
             return true;
         } else {

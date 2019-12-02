@@ -8,7 +8,6 @@ public class HiddenLevelView extends LevelView {
 
     public HiddenLevelView(Context context, AttributeSet attrs) {
         super(context, attrs, "Blitz");
-
     }
 
     public void update() {

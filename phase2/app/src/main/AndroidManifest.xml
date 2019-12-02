@@ -15,6 +15,7 @@
         <activity android:name=".activities.NewGameActivity" />
         <activity android:name=".maze.MazeInstructionsActivity" />
         <activity android:name=".platformer.PlatformerMainActivity" />
+
         <activity android:name=".platformer.PlatformerHiddenActivity" />
         <activity android:name=".maze.MazeActivity" />
         <activity android:name=".brickbreaker.BBMainActivity">

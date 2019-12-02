@@ -7,6 +7,7 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import java.util.List;
 import java.util.ArrayList;
+
 import com.example.dungeonescape.game.GameObject;
 import com.example.dungeonescape.game.Drawable;
 import com.example.dungeonescape.player.Player;
@@ -102,7 +103,13 @@ public class Blitz extends GameObject implements Collectable, Drawable {
 
     }
 
-    @Override
+    public void update(int down, int height) {
+        incY(down);
+    }
+    public void gotCollectable() {
+        setY(0);
+    }
+
     public Boolean getAvailableStatus(){
         return available;
     }
@@ -128,7 +135,7 @@ public class Blitz extends GameObject implements Collectable, Drawable {
         return blitzMode;
     }
 
-    @Override
+
     public Rect getItemShape() {
         return blitzShape;
     }

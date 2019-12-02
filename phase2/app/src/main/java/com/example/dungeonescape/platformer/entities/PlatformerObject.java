@@ -2,10 +2,12 @@ package com.example.dungeonescape.platformer.entities;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;
+
+import com.example.dungeonescape.game.Drawable;
 import com.example.dungeonescape.game.GameObject;
 
 
-abstract public class PlatformerObject extends GameObject {
+abstract public class PlatformerObject extends GameObject implements Drawable {
     /**
      * The size of the object.
      */
@@ -64,7 +66,7 @@ abstract public class PlatformerObject extends GameObject {
     /**
      * Draws this item to canvas.
      */
-
+    @Override
     public void draw(Canvas canvas) {
         if (this instanceof Platforms) {
             canvas.drawRect(getShape(), getPaint());
