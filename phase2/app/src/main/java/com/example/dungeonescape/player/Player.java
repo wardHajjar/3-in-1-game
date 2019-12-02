@@ -235,6 +235,8 @@ public class Player implements Serializable {
         setCurrentLevel(1);
         resetTime();
         updatePlayerData();
+        initSatchel();
+
     }
 
     public Map<String, Integer> getSatchel() {

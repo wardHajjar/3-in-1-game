@@ -86,7 +86,7 @@ public class BBMainActivity extends GeneralGameActivity {
                                     // Update the score shown
                                     int score = player.getNumCoins();
                                     String scr = String.valueOf(score) ;
-                                    String scre = "Score: " + scr;
+                                    String scre = "Coins: " + scr;
 
                                     TextView score1 = findViewById(R.id.score);
 
