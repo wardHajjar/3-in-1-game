@@ -29,7 +29,8 @@ public class MazeActivity extends GeneralGameActivity {
     private MazeManager mazeManager;
 
     /** Initial time set in milliseconds. */
-    public long counter = 120000; // 2 min
+//    private long counter = 120000; // 2 min
+    private long counter = 6000; // 5s
 
     /** The minutes and seconds left in the counter. */
     private long minutes;
@@ -146,13 +147,12 @@ public class MazeActivity extends GeneralGameActivity {
 
             @Override
             public void onFinish() {
+                isGameRunning = false;
                 // Player loses a life when the countdown runs out
                 player.loseLife();
                 int playerLivesLeft = player.getNumLives();
 
-                String updatedNumLives = "Lives: " + playerLivesLeft;
-                TextView playerLives = findViewById(R.id.lives);
-                playerLives.setText(updatedNumLives);
+                updatePlayerLivesText();
 
                 // Change UI to Lose Life screen
                 setContentView(R.layout.activity_maze_lose_life);
@@ -231,6 +231,7 @@ public class MazeActivity extends GeneralGameActivity {
 
             @Override
             public void onClick(View view) {
+                save(getPlayerManager());
                 Intent intent = new Intent(MazeActivity.this, MazeActivity.class);
                 intent.putExtra("Player Name", player.getName());
                 startActivity(intent);
