@@ -11,7 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
 import com.example.dungeonescape.activities.DeadActivity;
 import com.example.dungeonescape.activities.EndGameActivity;
 import com.example.dungeonescape.activities.MainActivity;
@@ -20,7 +19,6 @@ import com.example.dungeonescape.player.PlayerManager;
 import com.example.dungeonescape.activities.GeneralGameActivity;
 import com.example.dungeonescape.player.Player;
 import com.example.dungeonescape.R;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

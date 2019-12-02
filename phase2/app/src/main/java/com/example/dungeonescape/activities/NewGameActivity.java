@@ -18,6 +18,10 @@ import java.util.List;
 
 import static android.text.TextUtils.isEmpty;
 
+/**
+ * The NewGameActivity for creating a new game and player name.
+ *
+ */
 public class NewGameActivity extends GeneralGameActivity {
 
     private Player player;
@@ -164,7 +168,6 @@ public class NewGameActivity extends GeneralGameActivity {
             @Override
             public void onClick(View view) {
                 if (isValid) {
-//                    player.setDifficulty("Easy");
                     player.setGameDifficulty("Easy");
                     save(getPlayerManager());
                     enter.setVisibility(View.VISIBLE);
@@ -179,7 +182,6 @@ public class NewGameActivity extends GeneralGameActivity {
             @Override
             public void onClick(View view) {
                 if (isValid) {
-//                    player.setDifficulty("Hard");
                     player.setGameDifficulty("Hard");
                     System.out.println(player.getNumLives());
                     save(getPlayerManager());
