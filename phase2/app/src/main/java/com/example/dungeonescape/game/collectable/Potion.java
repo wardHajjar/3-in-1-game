@@ -41,7 +41,7 @@ public class Potion extends GameObject implements Collectable, Drawable, Retriev
         setPaintColour(Color.RED);
         potionShape = new Rect(x, y, x + size, y + size);
     }
-
+    /** Draws the Potion onto canvas */
     @Override
     public void draw(Canvas canvas) {
         int width = potionShape.width();
@@ -64,19 +64,11 @@ public class Potion extends GameObject implements Collectable, Drawable, Retriev
         canvas.drawPath(path, getPaint());
     }
 
-
     /** Moves the Gem down when the Character jumps up. */
     public void update(int down, int height) {
         if (getY() + down > height) {
             /* Moves coin up if the Character moves down without collection the PlatformerCoin. */
-            int diff = Math.abs(getY() + down - height);
-            if (diff > 400) {
-                setY(0);
-            } else if (diff > 200) {
-                setY(-200);
-            } else {
-                setY(-diff);
-            }
+            setY(-700);
             Random r = new Random();
             int a = r.nextInt(height - 150);
             this.setX(a);
@@ -85,7 +77,7 @@ public class Potion extends GameObject implements Collectable, Drawable, Retriev
         }
         updatePotionLocation();
     }
-
+    /** Adds the collectable to the player's satchel. */
     @Override
     public void collect(Player player) {
         player.addToSatchel(this);
@@ -94,15 +86,16 @@ public class Potion extends GameObject implements Collectable, Drawable, Retriev
     public void setGameData(GameData gameData) {
         this.gameData = gameData;
     }
-
+    /** Updates the potion location */
     private void updatePotionLocation() {
         this.potionShape.top = getY();
         this.potionShape.right = getX() + size;
         this.potionShape.bottom = getY() + size;
         this.potionShape.left = getX();
     }
+    /** Updates the potion location when collected*/
     public void gotCollectable() {
-        setY(-500);
+        setY(-800);
         Random r = new Random();
         setX(r.nextInt(1080 - 150));
         updatePotionLocation();

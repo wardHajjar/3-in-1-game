@@ -91,15 +91,9 @@ public class Gem extends GameObject implements Collectable, Drawable, Serializab
     public void update(int down, int height) {
 
         if (getY() + down > height) {
-            /* Moves coin up if the Character moves down without collection the PlatformerCoin. */
+            /* Moves collectable up if the Character moves down without collection. */
             int diff = Math.abs(getY() + down - height);
-            if (diff > 400) {
-                setY(0);
-            } else if (diff > 200) {
-                setY(-200);
-            } else {
-                setY(-diff);
-            }
+            setY(-500);
             Random r = new Random();
             int a = r.nextInt(height - 150);
             this.setX(a);

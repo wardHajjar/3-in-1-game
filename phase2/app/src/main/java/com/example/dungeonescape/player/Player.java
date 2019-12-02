@@ -9,7 +9,9 @@ import java.util.Map;
 import android.graphics.Color;
 
 import com.example.dungeonescape.game.GameObject;
+import com.example.dungeonescape.game.collectable.Coin;
 import com.example.dungeonescape.game.collectable.Collectable;
+import com.example.dungeonescape.game.collectable.Gem;
 
 import androidx.annotation.NonNull;
 
@@ -35,8 +37,8 @@ public class Player implements Serializable {
     /** The colour of the user's character. */
     private int colour;
 
-    /** An ArrayList of the Collectable GameObjects this Player has. */
-    private List<Collectable> satchel = new ArrayList<>();
+    /** An Arraylist of the Collectable GameObjects this Player has. */
+    private Map<String, Integer> satchel = new HashMap<>();;
 
     /** The Game Difficulty. Acts as a modifier. */
     private int gameDifficulty = 1;
@@ -54,11 +56,23 @@ public class Player implements Serializable {
         setColour(Color.WHITE);
         setCurrentLevel(1);
         totalTimePlayed = 0;
+        initSatchel();
+
+    }
+    /** Initializes the Satchel. */
+    private void initSatchel(){
+        satchel.put("Coins", 0);
+        satchel.put("Gems", 0);
     }
 
     /** Adds a Collectable GameObject to the Player's satchel. */
-    public void addToSatchel(Collectable object) {
-        satchel.add(object);
+    public void addToSatchel(Collectable collectable) {
+        if (collectable instanceof Coin) {
+            satchel.put("Coins", satchel.get("Coins") + 1);
+        }
+        else if (collectable instanceof Gem) {
+            satchel.put("Gems", satchel.get("Coins") + 1);
+        }
     }
 
     /**
@@ -86,13 +100,16 @@ public class Player implements Serializable {
 
     /** Causes this Player to lose one life. */
     public void loseLife() {
-        setNumLives(getNumLives() - 1);
+        numLives -= 1;
     }
 
+    /** Causes this Player to gain one life. */
+    public void addLife() {numLives += 1;}
+
+    /** Returns player name */
     public String getName() {
         return name;
     }
-
     /**
      * Sets the Player's name.
      *
@@ -220,7 +237,7 @@ public class Player implements Serializable {
         updatePlayerData();
     }
 
-    public List getSatchel() {
+    public Map<String, Integer> getSatchel() {
         return satchel;
     }
 

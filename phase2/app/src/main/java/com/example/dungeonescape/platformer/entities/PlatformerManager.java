@@ -295,12 +295,7 @@ public class PlatformerManager{
      */
     public boolean finishedLevel() {
         return (character.getGameScore() > player.getGameDifficulty()*10);
-//        if (player.getGameDifficulty() == 2) {
-//            return (character.getGameScore() > 20);
-//        } else
-//            {
-//            return (character.getGameScore() > 10);
-//            }
+
     }
     /**
      * @return if the player has entered the portal.
@@ -329,8 +324,6 @@ public class PlatformerManager{
             if (portal != null) {
                 portal.update(diff);
             }
-            gem.update(diff, gridHeight);
-            potion.update(diff, gridHeight);
         }
     }
 
@@ -350,10 +343,13 @@ public class PlatformerManager{
                     c.gotCollectable();
                     player.addCoin();
                 }
-                System.out.println("HIT");
                 collectable.gotCollectable();
-//                player.addToSatchel(collectable);
-
+                if (collectable instanceof Potion) {
+                    player.addLife();
+                }
+                else {
+                    player.addToSatchel(collectable);
+                }
             }
         }
     }
