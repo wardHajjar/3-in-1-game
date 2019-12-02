@@ -47,16 +47,19 @@ public class Player implements Serializable {
 
     public Player(String name) {
         setName(name);
+        initializePlayerStartingStats();
+    }
+
+    /** Sets the initial values for a new Player. */
+    private void initializePlayerStartingStats() {
         setScore(0);
-        setNumCoins(0);
+        setNumLives(0);
         setHighScore();
         setColour(Color.WHITE);
         setCurrentLevel(1);
         totalTimePlayed = 0;
         initializeSatchel();
-
     }
-
 
     /** Initializes the Satchel. */
     private void initializeSatchel(){
@@ -69,19 +72,9 @@ public class Player implements Serializable {
         if (collectable instanceof Coin) {
             satchel.put("Coins", satchel.get("Coins") + 1);
             addCoin();
-        }
-        else if (collectable instanceof Gem) {
+        } else if (collectable instanceof Gem) {
             satchel.put("Gems", satchel.get("Coins") + 1);
         }
-    }
-
-    /**
-     * Sets this Player's Current Level.
-     *
-     * @param level the new level.
-     */
-    public void setCurrentLevel (int level) {
-        this.currentLevel = level;
     }
 
     /**
@@ -91,6 +84,15 @@ public class Player implements Serializable {
      */
     public int getCurrentLevel() {
         return this.currentLevel;
+    }
+
+    /**
+     * Sets this Player's Current Level.
+     *
+     * @param level the new level.
+     */
+    public void setCurrentLevel (int level) {
+        this.currentLevel = level;
     }
 
     /** Adds 1 coin to this Player. */
@@ -119,11 +121,10 @@ public class Player implements Serializable {
         this.name = name;
     }
 
-    //return the score of the player.
-    public int getScore() {
-        return score;
-    }
-
+    /** Returns this Player's Game Difficulty.
+     *
+     * @return the integer value of gameDifficulty.
+     */
     public int getGameDifficulty() {
         return gameDifficulty;
     }
@@ -141,8 +142,17 @@ public class Player implements Serializable {
         updatePlayerData();
     }
 
+    /** Updates certain Player values that use gameDifficulty as a modifier. */
     private void updatePlayerData() {
         setNumLives((int) Math.ceil(5.0 / gameDifficulty));
+    }
+
+    /** Returns this Player's score.
+     *
+     * @return the integer value of the Player's score.
+     */
+    public int getScore() {
+        return score;
     }
 
     /**
@@ -154,6 +164,10 @@ public class Player implements Serializable {
         this.score = score;
     }
 
+    /** Returns the number of lives this Player has.
+     *
+     * @return the integer value of the number of lives this Player has.
+     */
     public int getNumLives() {
         return numLives;
     }
@@ -167,6 +181,10 @@ public class Player implements Serializable {
         this.numLives = numLives;
     }
 
+    /** Returns the number of Coins this Player has.
+     *
+     * @return the integer value of the number of coins.
+     */
     public int getNumCoins() {
         return numCoins;
     }
@@ -250,21 +268,20 @@ public class Player implements Serializable {
     }
 
     public void setHighScore(List<Integer> score) {
-
-        if (highScore.get("Lives") != null && highScore.get("Coins") != null && highScore.get("Time") != null) {
+        if (highScore.get("Lives") != null
+                && highScore.get("Coins") != null
+                && highScore.get("Time") != null) {
             if (score.get(0) > highScore.get("Lives")) {
                 highScore.put("Time", score.get(2));
                 highScore.put("Coins", score.get(1));
                 highScore.put("Lives", score.get(0));
-            }
-            else if (score.get(0).equals(highScore.get("Lives"))) {
+            } else if (score.get(0).equals(highScore.get("Lives"))) {
                 if (score.get(1) > highScore.get("Coins")) {
                     highScore.put("Time", score.get(2));
                     highScore.put("Coins", score.get(1));
                     highScore.put("Lives", score.get(0));
                 }
-            }
-            else if (score.get(0).equals(highScore.get("Lives")) && score.get(1) > highScore.get("Coins")) {
+            } else if (score.get(0).equals(highScore.get("Lives")) && score.get(1) > highScore.get("Coins")) {
                 if (score.get(2) < highScore.get("Time")) {
                     if (score.get(2) > 0) {
                         highScore.put("Time", score.get(2));
