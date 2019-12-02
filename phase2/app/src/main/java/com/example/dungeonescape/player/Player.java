@@ -69,6 +69,7 @@ public class Player implements Serializable {
     public void addToSatchel(Collectable collectable) {
         if (collectable instanceof Coin) {
             satchel.put("Coins", satchel.get("Coins") + 1);
+            addCoin();
         }
         else if (collectable instanceof Gem) {
             satchel.put("Gems", satchel.get("Coins") + 1);
