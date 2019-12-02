@@ -68,12 +68,21 @@ class BBGameManager {
                 bricks.add(new Brick(x, y, brickWidth, brickHeight));
             }
         }
+
         this.screenX = screenX;
         this.screenY = screenY;
         this.player = null;
         factory = new CollectableFactory();
+        initializeGameItems();
+    }
 
+    /**
+     * Initializes all the collectable items within the game.
+     */
+    private void initializeGameItems(){
         /* Random assignment of collectable items to unoccupied bricks. */
+        int brickWidth = bricks.get(0).getWidth();
+        int brickHeight = bricks.get(0).getHeight();
         coins = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             Brick coinBrick = getRandomBrick();
@@ -105,7 +114,6 @@ class BBGameManager {
                 (int) (brickHeight/1.5));
         this.potion = newPotion;
         potionBrick.setItem(newPotion);
-
     }
 
     /**
@@ -369,5 +377,6 @@ class BBGameManager {
     void addPlayer(Player player) {
         this.player = player;
         this.ball.setColour(player.getColour());
+
     }
 }
