@@ -20,53 +20,93 @@ import com.example.dungeonescape.activities.GeneralGameActivity;
 import com.example.dungeonescape.platformer.PlatformerInstructionsActivity;
 import com.example.dungeonescape.player.PlayerManager;
 
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-
+/** Runs the Maze game. */
 public class MazeActivity extends GeneralGameActivity {
+    /** The MazeManager for this MazeActivity. */
     private MazeManager mazeManager;
 
     /** Initial time set in milliseconds. */
-    public long counter = 120000; // 2 min
-//     public long counter = 6000; // 5s (for testing)
+//    private long counter = 120000; // 2 min
+    private long counter = 6000; // 5s
 
-    /** Minutes and seconds values. */
+    /** The minutes and seconds left in the counter. */
     private long minutes;
     private long seconds;
 
-    /** Initializes a Player and PlayerManager. */
+    /** The Player of this MazeActivity. */
     private Player player;
 
+    /** The time elapsed within this MazeActivity. */
     private long startTime;
+
+    private boolean isGameRunning;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maze);
 
+        // gather Player data
         getPlayerSaveData(getIntent());
+
         initializeMazeManager();
+
+        // start the countdown
         startCountDown();
+
+        configureActionButtons();
 
         // starts the Time Elapsed clock
         startTime = SystemClock.elapsedRealtime();
 
-        // go to Next Mini-game; testing only
-        configureNextButton();
+        isGameRunning = true;
+        startThread();
+    }
 
+    /** Creates the Thread that updates the display for the Player lives & coins. */
+    private void startThread() {
+        Thread t = new Thread() {
+            @Override
+            public void run() {
+                while (!isInterrupted()) {
+                    try {
+
+                        Thread.sleep(1000);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (isGameRunning) {
+                                    updatePlayerScoreText();
+                                    updatePlayerLivesText();
+                                }
+                            }
+                        });
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        };
+        t.start();
+    }
+
+    /** Updates the display of the Player's score. */
+    private void updatePlayerScoreText() {
         int playerNumCoins = player.getNumCoins();
-        String playerScoreStr = "Score: " + String.valueOf(playerNumCoins) ;
+        String playerScoreStr = "Score: " + playerNumCoins;
         TextView playerScore = findViewById(R.id.score);
         playerScore.setText(playerScoreStr);
+    }
 
+    /** Updates the display of the number of lives the Player has. */
+    private void updatePlayerLivesText() {
         int playerNumLives = player.getNumLives();
         String life = "Lives: " + playerNumLives;
         TextView playerLives = findViewById(R.id.lives);
         playerLives.setText(life);
-
-        configureSatchelButton();
     }
 
     /** Assigns variables player and playerManager to data from the specified Intent.
@@ -107,13 +147,12 @@ public class MazeActivity extends GeneralGameActivity {
 
             @Override
             public void onFinish() {
+                isGameRunning = false;
                 // Player loses a life when the countdown runs out
                 player.loseLife();
                 int playerLivesLeft = player.getNumLives();
 
-                String updatedNumLives = "Lives: " + playerLivesLeft;
-                TextView playerLives = findViewById(R.id.lives);
-                playerLives.setText(updatedNumLives);
+                updatePlayerLivesText();
 
                 // Change UI to Lose Life screen
                 setContentView(R.layout.activity_maze_lose_life);
@@ -144,14 +183,19 @@ public class MazeActivity extends GeneralGameActivity {
         }
     }
 
-    /**
-     * Converts milliseconds to minutes and seconds.
+    /** Converts milliseconds to minutes and seconds.
      * Calculation from:
      * https://codinginflow.com/tutorials/android/countdowntimer/part-2-configuration-changes
      */
     private void updateCountDown() {
         minutes = (counter / 1000) / 60;
         seconds = (counter / 1000) % 60;
+    }
+
+    /** Initializes Buttons for this Maze. Note: does not include movement buttons. */
+    private void configureActionButtons() {
+        configureNextButton();
+        configureSatchelButton();
     }
 
     private void configureNextButton() {
@@ -169,20 +213,6 @@ public class MazeActivity extends GeneralGameActivity {
         });
     }
 
-    /** Creates the Button to play the Maze Game from the beginning. */
-    private void configureStartOverButton() {
-        Button startOver = findViewById(R.id.startOver);
-        startOver.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MazeActivity.this, MazeActivity.class);
-                intent.putExtra("Player Name", player.getName());
-                startActivity(intent);
-            }
-        });
-    }
-
     /** Creates the Satchel Button which opens up the Player's Satchel. */
     private void configureSatchelButton() {
         Button satchelButton = findViewById(R.id.satchelButton);
@@ -190,6 +220,21 @@ public class MazeActivity extends GeneralGameActivity {
             @Override
             public void onClick(View view) {
                 openSatchel();
+            }
+        });
+    }
+
+    /** Creates the Button to play the Maze Game from the beginning. */
+    private void configureStartOverButton() {
+        Button startOver = findViewById(R.id.startOver);
+        startOver.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                save(getPlayerManager());
+                Intent intent = new Intent(MazeActivity.this, MazeActivity.class);
+                intent.putExtra("Player Name", player.getName());
+                startActivity(intent);
             }
         });
     }
@@ -267,7 +312,7 @@ public class MazeActivity extends GeneralGameActivity {
 
         save(getPlayerManager());
 
-        Intent intent = new Intent(MazeActivity.this, PlatformerInstructionsActivity.class);
+        Intent intent = new Intent(this, PlatformerInstructionsActivity.class);
         intent.putExtra("Player Name", player.getName());
         startActivity(intent);
     }
