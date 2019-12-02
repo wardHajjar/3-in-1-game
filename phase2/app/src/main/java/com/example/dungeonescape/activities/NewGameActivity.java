@@ -24,7 +24,6 @@ public class NewGameActivity extends GeneralGameActivity {
     private EditText name;
     private String nameText;
     private Boolean isValid;
-    private MenuActivity menuActivity = new MenuActivity();
 
     /** For New Game choices. */
     private List<TextView> playerNameData = new ArrayList<>();
@@ -51,8 +50,7 @@ public class NewGameActivity extends GeneralGameActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.main_menu) {
-            Intent intent = menuActivity.createIntent(NewGameActivity.this,
-                    MainActivity.class, player.getName());
+            Intent intent = new Intent(NewGameActivity.this, MainActivity.class);
             startActivity(intent);
             return true;
         } else {

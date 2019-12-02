@@ -2,17 +2,19 @@ package com.example.dungeonescape.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
 import com.example.dungeonescape.R;
 import com.example.dungeonescape.brickbreaker.BBInstructionsActivity;
 import com.example.dungeonescape.maze.MazeInstructionsActivity;
 import com.example.dungeonescape.platformer.PlatformerInstructionsActivity;
 import com.example.dungeonescape.player.Player;
-
 import java.util.Map;
+
 
 public class HomeScreen extends GeneralGameActivity {
     private Player player;
@@ -52,7 +54,26 @@ public class HomeScreen extends GeneralGameActivity {
         }
         newGameButton();
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.game_menu, menu);
+        return true;
+    }
 
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.main_menu) {
+            save(getPlayerManager());
+            Intent intent = new Intent(HomeScreen.this, MainActivity.class);
+            startActivity(intent);
+            return true;
+        } else {
+            return super.onContextItemSelected(item);
+        }
+    }
     private void resumeButton() {
 
         Button enterGame = findViewById(R.id.resumeButton);
@@ -98,4 +119,5 @@ public class HomeScreen extends GeneralGameActivity {
             startActivity(intent);
         }
     }
+
 }

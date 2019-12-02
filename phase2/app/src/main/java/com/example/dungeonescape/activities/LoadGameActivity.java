@@ -28,7 +28,6 @@ public class LoadGameActivity extends GeneralGameActivity {
     private Player player;
     private Spinner spinner;
 
-    private MenuActivity menuActivity = new MenuActivity();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,8 +57,7 @@ public class LoadGameActivity extends GeneralGameActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.main_menu) {
-            Intent intent = menuActivity.createIntent(LoadGameActivity.this,
-                    MainActivity.class, player.getName());
+            Intent intent = new Intent(LoadGameActivity.this, MainActivity.class);
             startActivity(intent);
             return true;
         } else {

@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.example.dungeonescape.activities.DeadActivity;
 import com.example.dungeonescape.activities.EndGameActivity;
 import com.example.dungeonescape.activities.MainActivity;
-import com.example.dungeonescape.activities.MenuActivity;
 import com.example.dungeonescape.platformer.views.PlatformerView;
 import com.example.dungeonescape.player.PlayerManager;
 import com.example.dungeonescape.activities.GeneralGameActivity;
@@ -31,8 +30,6 @@ public class PlatformerMainActivity extends GeneralGameActivity{
     private boolean running;
     private Player player;
     private long startTime;
-
-    private MenuActivity menuActivity = new MenuActivity();
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -145,8 +142,7 @@ public class PlatformerMainActivity extends GeneralGameActivity{
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.main_menu) {
             save(getPlayerManager());
-            Intent intent = menuActivity.createIntent(PlatformerMainActivity.this,
-                    MainActivity.class, player.getName());
+            Intent intent = new Intent(PlatformerMainActivity.this, MainActivity.class);
             startActivity(intent);
             return true;
         } else {

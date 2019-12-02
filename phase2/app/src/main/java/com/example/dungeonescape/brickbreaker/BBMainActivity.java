@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import com.example.dungeonescape.activities.MainActivity;
-import com.example.dungeonescape.activities.MenuActivity;
 import com.example.dungeonescape.maze.MazeInstructionsActivity;
 import com.example.dungeonescape.player.PlayerManager;
 import com.example.dungeonescape.activities.GeneralGameActivity;
@@ -34,8 +33,6 @@ public class BBMainActivity extends GeneralGameActivity {
      */
     long startTime;
 
-    /** Instantiates a MenuActivity class for Menu related functions. */
-    private MenuActivity menuActivity = new MenuActivity();
 
     /**
      *
@@ -127,8 +124,7 @@ public class BBMainActivity extends GeneralGameActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.main_menu) {
             save(getPlayerManager());
-            Intent intent = menuActivity.createIntent(BBMainActivity.this,
-                    MainActivity.class, player.getName());
+            Intent intent = new Intent(BBMainActivity.this, MainActivity.class);
             startActivity(intent);
             return true;
         } else {
