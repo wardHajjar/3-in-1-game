@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * The activity for the main level3 game.
+ * The activity for the main level 3 game.
  */
 public class PlatformerMainActivity extends GeneralGameActivity{
     private PlatformerView game;
@@ -42,39 +42,16 @@ public class PlatformerMainActivity extends GeneralGameActivity{
 
         //* Gather saved data. */
         load();
-        Intent i = getIntent();
-        String name = (String) i.getSerializableExtra("Player Name");
-        player = getPlayerManager().getPlayer(name);
-
-        @SuppressWarnings("unchecked")
-        ArrayList<Integer> character = (ArrayList<Integer>) i.getSerializableExtra("Character");
-        @SuppressWarnings("unchecked")
-        ArrayList<List> platformLocations = (ArrayList) i.getSerializableExtra("Platforms");
-
-
         setContentView(R.layout.activity_level3_main);
         game = findViewById(R.id.level3);
-
-        if (platformLocations != null && character != null) {
-            int score = (int) i.getSerializableExtra("Score");
-            game.getManager().setCharacter(character, score);
-            game.getManager().setPlatforms(platformLocations);
-        }
-
-        // getting player instance from intent
-        //pass player into manager
-        game.getManager().setPlayer(player);
-        // get Resource file for portal
-        game.setPortalImage(this.getResources().getDrawable(R.drawable.portal, null));
-
         setTitle("Level3: Platformer");
+        loadGameInfo();
 
         // Set Buttons
         buttons();
-        configureSatchelButton();
         running = true;
 
-
+        // Set listeners
         game.setEnterPortalListener(new OnCustomEventListener() {
             public void onEvent() {enterHiddenLevel(savedInstanceState);
 
@@ -101,26 +78,7 @@ public class PlatformerMainActivity extends GeneralGameActivity{
                             @Override
                             public void run() {
                                 if (running) {
-
-                                    // Update the score shown
-                                    int score = game.getManager().getCharacterScore();
-                                    String scr = String.valueOf(score) ;
-                                    String scre = "Score: " + scr;
-
-                                    TextView score1 = findViewById(R.id.score);
-                                    score1.setText(scre);
-                                    // Update the lives shown
-                                    int lives = game.getManager().getPlayer().getNumLives();
-                                    String life = "Lives: " + (lives);
-
-                                    TextView lifeText = findViewById(R.id.lives);
-                                    lifeText.setText(life);
-                                    // Update the coins shown
-                                    int numCoins = game.getManager().getPlayer().getNumCoins();
-                                    String strCoins = "Coins: " + (numCoins);
-
-                                    TextView coinsText = findViewById(R.id.coins);
-                                    coinsText.setText(strCoins);
+                                    updateScores();
                                 }
                             }
                         });
@@ -133,6 +91,32 @@ public class PlatformerMainActivity extends GeneralGameActivity{
         t.start();
     }
 
+    /**
+     * Loads all the information from intent and initializes it into game.
+     */
+    private void loadGameInfo(){
+        Intent i = getIntent();
+        String name = (String) i.getSerializableExtra("Player Name");
+        player = getPlayerManager().getPlayer(name);
+        // Load Character and platform old locations if returning from hidden level.
+        @SuppressWarnings("unchecked")
+        ArrayList<Integer> character = (ArrayList<Integer>) i.getSerializableExtra("Character");
+        @SuppressWarnings("unchecked")
+        ArrayList<List> platformLocations = (ArrayList) i.getSerializableExtra("Platforms");
+
+        // Setup Platform and Character Locations if returning from hidden level.
+        if (platformLocations != null && character != null) {
+            int score = (int) i.getSerializableExtra("Score");
+            game.getManager().setCharacter(character, score);
+            game.getManager().setPlatforms(platformLocations);
+        }
+
+        //pass player into manager
+        game.getManager().setPlayer(player);
+        // get Resource file for portal
+        game.setPortalImage(this.getResources().getDrawable(R.drawable.portal, null));
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -140,7 +124,30 @@ public class PlatformerMainActivity extends GeneralGameActivity{
         return true;
     }
 
+    /**
+     * Updates Scores shown on screen
+     */
+    private void updateScores() {
+        // Update the score shown
+        int score = game.getManager().getCharacterScore();
+        String scr = String.valueOf(score) ;
+        String scre = "Score: " + scr;
 
+        TextView score1 = findViewById(R.id.score);
+        score1.setText(scre);
+        // Update the lives shown
+        int lives = game.getManager().getPlayer().getNumLives();
+        String life = "Lives: " + (lives);
+
+        TextView lifeText = findViewById(R.id.lives);
+        lifeText.setText(life);
+        // Update the coins shown
+        int numCoins = game.getManager().getPlayer().getNumCoins();
+        String strCoins = "Coins: " + (numCoins);
+
+        TextView coinsText = findViewById(R.id.coins);
+        coinsText.setText(strCoins);
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -224,6 +231,7 @@ public class PlatformerMainActivity extends GeneralGameActivity{
                 game.getManager().right_button();
             }
         });
+        configureSatchelButton();
     }
 
     @Override
@@ -232,6 +240,9 @@ public class PlatformerMainActivity extends GeneralGameActivity{
         game.pause();
     }
 
+    /**
+     * Saves the  player data.
+     */
     @Override
     public void save(PlayerManager playerManager) {
         super.save(playerManager);
