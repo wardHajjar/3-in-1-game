@@ -95,7 +95,7 @@ public class MazeActivity extends GeneralGameActivity {
     /** Updates the display of the Player's score. */
     private void updatePlayerScoreText() {
         int playerNumCoins = player.getNumCoins();
-        String playerScoreStr = "Score: " + String.valueOf(playerNumCoins) ;
+        String playerScoreStr = "Score: " + playerNumCoins;
         TextView playerScore = findViewById(R.id.score);
         playerScore.setText(playerScoreStr);
     }
