@@ -7,7 +7,7 @@ import java.util.Random;
 /**
  * A Platform class that represents the platforms the character jumps on.
  */
-class Platforms extends PlatformerObject {
+class Platform extends PlatformerObject {
 
     /** length of the platforms. */
     private int length;
@@ -16,7 +16,7 @@ class Platforms extends PlatformerObject {
     private int width;
 
 
-    Platforms(int x, int y, int length, int width, PlatformerManager manager) {
+    Platform(int x, int y, int length, int width, PlatformerManager manager) {
         super(x,y,0, manager);
         this.length = length;
         this.width = width;

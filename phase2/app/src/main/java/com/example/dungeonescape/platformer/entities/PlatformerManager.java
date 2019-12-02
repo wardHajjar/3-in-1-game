@@ -29,7 +29,7 @@ public class PlatformerManager{
     /**
      * The list of platforms.
      */
-    private List<Platforms> platforms;
+    private List<Platform> platforms;
     /**
      * The character for this game.
      */
@@ -177,7 +177,7 @@ public class PlatformerManager{
         for (int i = 1; i <= number; i++) {
             Random random = new Random();
             int a = random.nextInt(gridWidth - 150);
-            Platforms p = new Platforms(a, gridHeight*i/number, 150, 30,
+            Platform p = new Platform(a, gridHeight*i/number, 150, 30,
                     this);
             platforms.add(p);
             entities.add(p);
@@ -226,12 +226,12 @@ public class PlatformerManager{
         for (int i = 0; i < arr.size() - 1; i++) {
             int x = (int) arr.get(i).get(0);
             int y = (int) arr.get(i).get(1);
-            Platforms p = new Platforms(x,y,150, 30, this);
+            Platform p = new Platform(x,y,150, 30, this);
             platforms.add(p);
             entities.add(p);
         }
         // Creates a platform right under character, so character doesn't fall right away.
-        Platforms p = new Platforms(character.getX() - 50, character.getY() + 400,150,
+        Platform p = new Platform(character.getX() - 50, character.getY() + 400,150,
                 30, this);
         platforms.add(p);
         entities.add(p);
@@ -371,7 +371,7 @@ public class PlatformerManager{
     /** Checks if the Character touches a platform. */
     private void platformDetection() {
         if (character.getSpeed() > 10) {
-            for (Platforms platform: platforms) {
+            for (Platform platform: platforms) {
                 if (character.getShape().intersect(platform.getShape())) {
                     character.bounce(platform);
                 }

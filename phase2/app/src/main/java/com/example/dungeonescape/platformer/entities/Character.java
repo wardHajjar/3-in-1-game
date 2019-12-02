@@ -77,7 +77,7 @@ class Character extends PlatformerObject implements Serializable{
     }
 
     /** Makes the player bounce on platform. */
-    void bounce(Platforms platform) {
+    void bounce(Platform platform) {
         this.gameScore += 1;
         setY(platform.getY() - (getSize() / 2));
         speed = -75;

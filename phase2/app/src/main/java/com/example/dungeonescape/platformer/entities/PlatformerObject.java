@@ -70,7 +70,7 @@ abstract public class PlatformerObject extends GameObject implements Drawable {
      */
     @Override
     public void draw(Canvas canvas) {
-        if (this instanceof Platforms) {
+        if (this instanceof Platform) {
             canvas.drawRect(getShape(), getPaint());
         }
         else {
