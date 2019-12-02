@@ -1,5 +1,7 @@
 package com.example.dungeonescape.maze;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -20,7 +22,9 @@ import com.example.dungeonescape.activities.GeneralGameActivity;
 import com.example.dungeonescape.platformer.PlatformerInstructionsActivity;
 import com.example.dungeonescape.player.PlayerManager;
 
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 
 public class MazeActivity extends GeneralGameActivity {
@@ -28,7 +32,7 @@ public class MazeActivity extends GeneralGameActivity {
 
     /** Initial time set in milliseconds. */
     public long counter = 120000; // 2 min
-    // public long counter = 6000; // 5s (for testing)
+//     public long counter = 6000; // 5s (for testing)
 
     /** Minutes and seconds values. */
     private long minutes;
@@ -55,6 +59,18 @@ public class MazeActivity extends GeneralGameActivity {
 
         // go to Next Mini-game; testing only
         configureNextButton();
+
+        int playerNumCoins = player.getNumCoins();
+        String playerScoreStr = "Score: " + String.valueOf(playerNumCoins) ;
+        TextView playerScore = findViewById(R.id.score);
+        playerScore.setText(playerScoreStr);
+
+        int playerNumLives = player.getNumLives();
+        String life = "Lives: " + playerNumLives;
+        TextView playerLives = findViewById(R.id.lives);
+        playerLives.setText(life);
+
+        configureSatchelButton();
     }
 
     /** Assigns variables player and playerManager to data from the specified Intent.
@@ -77,7 +93,7 @@ public class MazeActivity extends GeneralGameActivity {
     /** Creates and runs the countdown to losing the game. */
     private void startCountDown() {
         final TextView countTime = findViewById(R.id.countTime);
-        countTime.setTextColor(Color.WHITE);
+        countTime.setTextColor(Color.BLACK);
 
         /* Countdown code from: https://www.tutorialspoint.com/how-to-make-a-countdown-timer-in-android
           Partially edited.
@@ -89,7 +105,7 @@ public class MazeActivity extends GeneralGameActivity {
                 counter = millisUntilFinished;
                 updateCountDown();
                 countTime.setText(String.format(Locale.getDefault(),
-                        "%02d:%02d", minutes, seconds));
+                        "Time Left: %02d:%02d", minutes, seconds));
                 counter--;
             }
 
@@ -98,6 +114,10 @@ public class MazeActivity extends GeneralGameActivity {
                 // Player loses a life when the countdown runs out
                 player.loseLife();
                 int playerLivesLeft = player.getNumLives();
+
+                String updatedNumLives = "Lives: " + playerLivesLeft;
+                TextView playerLives = findViewById(R.id.lives);
+                playerLives.setText(updatedNumLives);
 
                 // Change UI to Lose Life screen
                 setContentView(R.layout.activity_maze_lose_life);
@@ -166,6 +186,52 @@ public class MazeActivity extends GeneralGameActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    /** Creates the Satchel Button which opens up the Player's Satchel. */
+    private void configureSatchelButton() {
+        Button satchelButton = findViewById(R.id.satchelButton);
+        satchelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openSatchel();
+            }
+        });
+    }
+
+    /** Creates the AlertDialog that displays the contents of the Player's Satchel. */
+    private void openSatchel() {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        dialogBuilder.setMessage(getPlayerSatchelData());
+        dialogBuilder.setCancelable(true);
+
+        dialogBuilder.setNeutralButton(
+                "Return to Game",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog showSatchel = dialogBuilder.create();
+        showSatchel.show();
+    }
+
+    /** Returns the contents of the Player's satchel.
+     *
+     * @return A string containing the contents of the Player's satchel.
+     */
+    private StringBuilder getPlayerSatchelData() {
+        StringBuilder satchelContents = new StringBuilder();
+        Map<String, Integer> satchel = player.getSatchel();
+        for (Map.Entry<String, Integer> collectedItem : satchel.entrySet()) {
+            satchelContents
+                    .append(collectedItem.getKey())
+                    .append(" ")
+                    .append(collectedItem.getValue())
+                    .append("\n");
+        }
+        return satchelContents;
     }
 
     /** Moves the Player up by one MazeCell. */

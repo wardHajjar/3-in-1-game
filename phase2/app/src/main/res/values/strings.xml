@@ -18,4 +18,6 @@
     <string name="maze_game_title">Level 2: Maze</string>
     <string name="start_game">Start Game</string>
     <string name="name_input">Name</string>
+    <string name="satchelButton">Satchel</string>
+    <string name="countTime">Time left: 00:00</string>
 </resources>
