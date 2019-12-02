@@ -261,12 +261,19 @@ public class Player implements Serializable {
         return satchel;
     }
 
+    /**
+     * Sets the high score at the beginning of the game.
+     */
     private void setHighScore() {
         highScore.put("Lives", 0);
         highScore.put("Coins", 0);
         highScore.put("Time", 99999999);
     }
 
+    /**
+     * Sets new high score for player, if they finished the game with more lives then before, or
+     * if lives are the same, then it tie breaks using number of coins and time.
+     */
     public void setHighScore(List<Integer> score) {
         if (highScore.get("Lives") != null
                 && highScore.get("Coins") != null

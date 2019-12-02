@@ -15,7 +15,10 @@ import com.example.dungeonescape.platformer.PlatformerInstructionsActivity;
 import com.example.dungeonescape.player.Player;
 import java.util.Map;
 
-
+/**
+ * The HomeScreen for player high scores.
+ *
+ */
 public class HomeScreenActivity extends GeneralGameActivity {
     private Player player;
 

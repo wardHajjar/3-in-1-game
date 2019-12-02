@@ -205,6 +205,7 @@ public class BBMainActivity extends GeneralGameActivity {
 
     /** Creates the AlertDialog that displays the contents of the Player's Satchel. */
     private void openSatchel() {
+        onPause();
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         dialogBuilder.setMessage(getPlayerSatchelData());
         dialogBuilder.setCancelable(true);
@@ -214,6 +215,7 @@ public class BBMainActivity extends GeneralGameActivity {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
+                        onResume();
                     }
                 });
 
