@@ -29,8 +29,7 @@ public class MazeActivity extends GeneralGameActivity {
     private MazeManager mazeManager;
 
     /** Initial time set in milliseconds. */
-//    private long counter = 120000; // 2 min
-    private long counter = 6000; // 5s
+    private long counter = 120000; // 2 min
 
     /** The minutes and seconds left in the counter. */
     private long minutes;
@@ -93,39 +92,6 @@ public class MazeActivity extends GeneralGameActivity {
         t.start();
     }
 
-    /** Updates the display of the Player's score. */
-    private void updatePlayerScoreText() {
-        int playerNumCoins = player.getNumCoins();
-        String playerScoreStr = "Score: " + playerNumCoins;
-        TextView playerScore = findViewById(R.id.score);
-        playerScore.setText(playerScoreStr);
-    }
-
-    /** Updates the display of the number of lives the Player has. */
-    private void updatePlayerLivesText() {
-        int playerNumLives = player.getNumLives();
-        String life = "Lives: " + playerNumLives;
-        TextView playerLives = findViewById(R.id.lives);
-        playerLives.setText(life);
-    }
-
-    /** Assigns variables player and playerManager to data from the specified Intent.
-     *
-     * @param intent the Intent to gather data from.
-     */
-    private void getPlayerSaveData(Intent intent) {
-        load();
-        String name = (String) intent.getSerializableExtra("Player Name");
-        player = getPlayerManager().getPlayer(name);
-    }
-
-    /** Initializes the MazeManager for this Maze game. */
-    private void initializeMazeManager() {
-        MazeView mazeView = findViewById(R.id.view);
-        mazeManager = new MazeManager(mazeView, player);
-        mazeManager.relocatePlayerSprite();
-    }
-
     /** Creates and runs the countdown to losing the game. */
     private void startCountDown() {
         final TextView countTime = findViewById(R.id.countTime);
@@ -164,6 +130,39 @@ public class MazeActivity extends GeneralGameActivity {
         }.start();
     }
 
+    /** Updates the display of the Player's score. */
+    private void updatePlayerScoreText() {
+        int playerNumCoins = player.getNumCoins();
+        String playerScoreStr = "Score: " + playerNumCoins;
+        TextView playerScore = findViewById(R.id.score);
+        playerScore.setText(playerScoreStr);
+    }
+
+    /** Updates the display of the number of lives the Player has. */
+    private void updatePlayerLivesText() {
+        int playerNumLives = player.getNumLives();
+        String life = "Lives: " + playerNumLives;
+        TextView playerLives = findViewById(R.id.lives);
+        playerLives.setText(life);
+    }
+
+    /** Assigns variables player and playerManager to data from the specified Intent.
+     *
+     * @param intent the Intent to gather data from.
+     */
+    private void getPlayerSaveData(Intent intent) {
+        load();
+        String name = (String) intent.getSerializableExtra("Player Name");
+        player = getPlayerManager().getPlayer(name);
+    }
+
+    /** Initializes the MazeManager for this Maze game. */
+    private void initializeMazeManager() {
+        MazeView mazeView = findViewById(R.id.view);
+        mazeManager = new MazeManager(mazeView, player);
+        mazeManager.relocatePlayerSprite();
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -198,6 +197,7 @@ public class MazeActivity extends GeneralGameActivity {
         configureSatchelButton();
     }
 
+    /** Initializes the NextLevel Button. Note: testing & demo purposes. */
     private void configureNextButton() {
         Button nextButton = findViewById(R.id.nextlvl);
         nextButton.setOnClickListener(new View.OnClickListener() {

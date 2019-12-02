@@ -117,18 +117,6 @@ class MazeData extends GameData {
         this.collectables = collectables;
     }
 
-//    List<MazeCoin> getCoins() {
-//        return this.coins;
-//    }
-//
-//    /** Sets the MazeCoins array to the inputted array.
-//     *
-//     * @param coins the List of MazeCoins.
-//     */
-//    void setCoins(ArrayList<MazeCoin> coins) {
-//        this.coins = coins;
-//    }
-
     float getCellSize() {
         return this.cellSize;
     }
