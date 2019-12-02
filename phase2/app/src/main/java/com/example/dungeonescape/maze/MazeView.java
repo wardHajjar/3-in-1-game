@@ -52,20 +52,11 @@ public class MazeView extends View {
 
         // draws walls, Coins, the Player and the exit square on the screen
         paintWalls(canvas);
-//        paintCoins(canvas);
+        paintCollectables(canvas);
         playerSprite.draw(canvas);
         exitSprite.draw(canvas);
 
-        List<Collectable> collectables = mazeData.getCollectables();
 
-        for (Collectable obj : collectables) {
-            if (obj instanceof Drawable && obj instanceof RetrieveData) {
-                ((RetrieveData)obj).setGameData(this.mazeData);
-                ((Drawable) obj).draw(canvas);
-            } else if (obj instanceof Drawable) {
-                ((Drawable) obj).draw(canvas);
-            }
-        }
     }
 
     /** Performs dimensions calculations including cellSize and padding values. */
@@ -82,7 +73,6 @@ public class MazeView extends View {
     private void paintWalls(Canvas canvas) {
         for(int x = 0; x < mazeData.getNumMazeCols(); x++) {
             for(int y = 0; y < mazeData.getNumMazeRows(); y++) {
-                mazeData.getCells()[x][y].setGameData(mazeData);
                 mazeData.getCells()[x][y].draw(canvas);
             }
         }
@@ -92,18 +82,22 @@ public class MazeView extends View {
      *
      * @param canvas the Canvas to draw the Coins on.
      */
-//    private void paintCoins(Canvas canvas) {
-//        for (MazeCoin coin : mazeData.getCoins()) {
-//            coin.draw(canvas);
-//        }
-//    }
+    private void paintCollectables(Canvas canvas) {
+        List<Collectable> collectables = mazeData.getCollectables();
+
+        for (Collectable obj : collectables) {
+            if (obj instanceof Drawable) {
+                ((Drawable) obj).draw(canvas);
+            }
+        }
+    }
 
     /** Runs method setMazeData on all GameObjects that implement RetrieveData. */
     void updateMazeObjectsData() {
         playerSprite.setGameData(this.mazeData);
         exitSprite.setGameData(this.mazeData);
-//        updateMazeCellData();
-//        updateCoinData();
+        updateMazeCellData();
+        updateCollectableData();
     }
 
     /** Runs method setMazeData on all MazeCells. */
@@ -115,12 +109,15 @@ public class MazeView extends View {
         }
     }
 
-    /** Runs method setMazeData on all MazeCoins. */
-//    void updateCoinData() {
-//        for (MazeCoin coin: mazeData.getCoins()) {
-//            coin.setGameData(mazeData);
-//        }
-//    }
+    void updateCollectableData() {
+        List<Collectable> collectables = mazeData.getCollectables();
+
+        for (Collectable obj : collectables) {
+            if (obj instanceof RetrieveData) {
+                ((RetrieveData)obj).setGameData(this.mazeData);
+            }
+        }
+    }
 
     Sprite getExitSprite() {
         return this.exitSprite;
