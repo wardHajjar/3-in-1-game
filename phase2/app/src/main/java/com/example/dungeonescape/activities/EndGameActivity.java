@@ -11,7 +11,10 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * The EndGameActivity for the final stats screen.
+ *
+ */
 public class EndGameActivity extends GeneralGameActivity {
     private Player player;
 

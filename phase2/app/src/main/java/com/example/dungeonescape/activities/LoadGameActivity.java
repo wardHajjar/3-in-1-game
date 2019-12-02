@@ -16,6 +16,10 @@ import com.example.dungeonescape.R;
 
 import java.util.List;
 
+/**
+ * The LoadGame screen that shows for loading users.
+ *
+ */
 public class LoadGameActivity extends GeneralGameActivity {
     private Player player;
     private Spinner spinner;

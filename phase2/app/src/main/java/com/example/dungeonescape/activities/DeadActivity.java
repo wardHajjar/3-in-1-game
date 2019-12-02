@@ -7,15 +7,16 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-
 import com.example.dungeonescape.player.Player;
 import com.example.dungeonescape.player.PlayerManager;
 import com.example.dungeonescape.R;
-import com.example.dungeonescape.game.SaveData;
 import com.example.dungeonescape.brickbreaker.BBMainActivity;
 
-import java.io.File;
 
+/**
+ * The DeadActivity that shows up once the player has lost all of their lives
+ *
+ */
 public class DeadActivity extends GeneralGameActivity {
 
 
