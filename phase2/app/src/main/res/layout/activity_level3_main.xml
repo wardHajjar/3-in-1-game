@@ -39,7 +39,7 @@
         android:textSize="24sp" />
 
     <com.example.dungeonescape.platformer.views.PlatformerView
-        android:id="@+id/level2"
+        android:id="@+id/level3"
         android:layout_width="411dp"
         android:layout_height="600dp"
         android:layout_weight="1" />

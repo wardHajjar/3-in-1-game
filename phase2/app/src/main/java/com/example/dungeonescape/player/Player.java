@@ -266,7 +266,9 @@ public class Player implements Serializable {
             }
             else if (score.get(0).equals(highScore.get("Lives")) && score.get(1) > highScore.get("Coins")) {
                 if (score.get(2) < highScore.get("Time")) {
-                    highScore.put("Time", score.get(2));
+                    if (score.get(2) > 0) {
+                        highScore.put("Time", score.get(2));
+                    }
                     highScore.put("Coins", score.get(1));
                     highScore.put("Lives", score.get(0));
                 }

@@ -50,7 +50,7 @@ public class PlatformerMainActivity extends GeneralGameActivity{
 
 
         setContentView(R.layout.activity_level3_main);
-        game = findViewById(R.id.level2);
+        game = findViewById(R.id.level3);
 
         if (platformLocations != null && character != null) {
             int score = (int) i.getSerializableExtra("Score");

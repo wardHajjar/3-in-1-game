@@ -78,7 +78,7 @@ public class PlatformerManager{
 
         init(height, width);
         createCoins(3);
-        createPlatforms(8);
+        createPlatforms(7);
         gameMode = "Regular";
 
     }
@@ -88,7 +88,7 @@ public class PlatformerManager{
     public PlatformerManager(int h, int w, int coins) {
         init(h, w);
         createCoins(coins);
-        createPlatforms(5);
+        createPlatforms(4);
         gameMode = "Blitz";
     }
     /**
@@ -177,7 +177,8 @@ public class PlatformerManager{
         for (int i = 1; i <= number; i++) {
             Random random = new Random();
             int a = random.nextInt(gridWidth - 150);
-            Platforms p = new Platforms(a, gridHeight*i/10, 150, 30, this);
+            Platforms p = new Platforms(a, gridHeight*i/number, 150, 30,
+                    this);
             platforms.add(p);
             entities.add(p);
         }
@@ -222,13 +223,18 @@ public class PlatformerManager{
      */
     public void setPlatforms(ArrayList<List> arr) {
         platforms = new ArrayList<>(arr.size());
-        for (int i = 0; i < arr.size(); i++) {
+        for (int i = 0; i < arr.size() - 1; i++) {
             int x = (int) arr.get(i).get(0);
             int y = (int) arr.get(i).get(1);
             Platforms p = new Platforms(x,y,150, 30, this);
             platforms.add(p);
             entities.add(p);
         }
+        // Creates a platform right under character, so character doesn't fall right away.
+        Platforms p = new Platforms(character.getX() - 50, character.getY() + 400,150,
+                30, this);
+        platforms.add(p);
+        entities.add(p);
     }
     /**
      * Sets Character score and location, used when returning to normal mode.

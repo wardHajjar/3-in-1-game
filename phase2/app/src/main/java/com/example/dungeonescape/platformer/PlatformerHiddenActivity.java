@@ -9,17 +9,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
-import com.example.dungeonescape.activities.DeadActivity;
 import com.example.dungeonescape.activities.MainActivity;
-import com.example.dungeonescape.maze.MazeActivity;
 import com.example.dungeonescape.platformer.views.LevelView;
 import com.example.dungeonescape.activities.GeneralGameActivity;
 import com.example.dungeonescape.player.Player;
 import com.example.dungeonescape.R;
 
 /**
- * The activity for the main level3 game.
+ * The activity for the Hidden Blitz Level in Platformer.
  */
 public class PlatformerHiddenActivity extends GeneralGameActivity {
     private LevelView game;

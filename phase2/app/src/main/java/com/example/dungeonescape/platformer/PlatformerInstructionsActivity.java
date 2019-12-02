@@ -13,6 +13,9 @@ import com.example.dungeonescape.activities.MainActivity;
 import com.example.dungeonescape.player.Player;
 import com.example.dungeonescape.R;
 
+/**
+ * The activity for the instructions page for platformer.
+ */
 public class PlatformerInstructionsActivity extends GeneralGameActivity {
 
     private Player player;
