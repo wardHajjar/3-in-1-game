@@ -9,6 +9,7 @@ import java.util.Map;
 import android.graphics.Color;
 
 import com.example.dungeonescape.game.GameObject;
+import com.example.dungeonescape.game.collectable.Collectable;
 
 import androidx.annotation.NonNull;
 
@@ -35,7 +36,7 @@ public class Player implements Serializable {
     private int colour;
 
     /** An ArrayList of the Collectable GameObjects this Player has. */
-    private List<GameObject> satchel = new ArrayList<GameObject>();
+    private List<Collectable> satchel = new ArrayList<>();
 
     /** The Game Difficulty. Acts as a modifier. */
     private int gameDifficulty = 1;
@@ -56,7 +57,7 @@ public class Player implements Serializable {
     }
 
     /** Adds a Collectable GameObject to the Player's satchel. */
-    public void addToSatchel(GameObject object) {
+    public void addToSatchel(Collectable object) {
         satchel.add(object);
     }
 

@@ -34,13 +34,7 @@ public class PlayerManager implements Serializable {
         players.add(player);
     }
 
-    public void updatePlayer(String name, Player player) {
-        Player p = getPlayer(name);
-        p.setCurrentLevel(player.getCurrentLevel());
-        p.setNumLives(player.getNumLives());
-        p.setNumCoins(player.getNumCoins());
 
-    }
     public Player getPlayer(String name) {
         if (players.size() != 0) {
             Player p = players.get(0);

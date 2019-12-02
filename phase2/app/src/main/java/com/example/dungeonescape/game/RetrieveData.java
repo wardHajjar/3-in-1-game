@@ -9,5 +9,5 @@ public interface RetrieveData {
      *
      * @param gameData the instance of GameData that this GameObject will read from.
      */
-    public void setGameData(GameData gameData);
+    void setGameData(GameData gameData);
 }
