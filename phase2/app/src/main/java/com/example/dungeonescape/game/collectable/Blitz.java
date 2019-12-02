@@ -7,6 +7,7 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Random;
 
 
 import com.example.dungeonescape.game.GameObject;
@@ -80,6 +81,13 @@ public class Blitz extends GameObject implements Collectable, Drawable {
         return shapePoints;
 
     }
+    public void update(int down, int height) {
+        incY(down);
+    }
+    public void gotCollectable() {
+        setY(0);
+    }
+
     public Boolean getAvailableStatus(){
         return available;
     }

@@ -164,7 +164,6 @@ public class PlatformerMainActivity extends GeneralGameActivity{
         save(getPlayerManager());
         Intent intent = new Intent(PlatformerMainActivity.this, PlatformerHiddenActivity.class);
         intent.putExtra("Player Name", player.getName());
-        intent.putExtra("Game Manager", getPlayerManager());
         intent.putExtra("Character", game.getManager().getCharacterLocation());
         intent.putExtra("Platforms", game.getManager().getPlatformPositions());
         intent.putExtra("Score", game.getManager().getCharacterScore());

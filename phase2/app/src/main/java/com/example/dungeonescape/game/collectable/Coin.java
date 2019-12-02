@@ -6,12 +6,15 @@ import com.example.dungeonescape.game.GameObject;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Rect;
+
+import java.io.Serializable;
 import java.util.Random;
 
-public class Coin extends GameObject implements Collectable, Drawable {
+public class Coin extends GameObject implements Collectable, Drawable, Serializable {
 
     /** The shape of the coin. */
     private Rect coinShape;
+
     /** The available status of the coin */
     private Boolean available;
 
@@ -33,7 +36,7 @@ public class Coin extends GameObject implements Collectable, Drawable {
         this.coinShape.left = getX();
     }
 
-    public void gotCoin() {
+    public void gotCollectable() {
         setY(0);
         Random r = new Random();
         setX(r.nextInt(1080 - 150));
