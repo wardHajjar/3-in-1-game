@@ -129,6 +129,10 @@ class MazeData extends GameData {
         this.cellSize = cellSize;
     }
 
+    /** Returns the Maze's horizontalPadding.
+     *
+     * @return the float value that is the horizontalPadding.
+     */
     float getHorizontalPadding() {
         return this.horizontalPadding;
     }
@@ -141,6 +145,10 @@ class MazeData extends GameData {
         this.horizontalPadding = horizontalPadding;
     }
 
+    /** Returns the Maze's verticalPadding.
+     *
+     * @return the float value that is the verticalPadding.
+     */
     float getVerticalPadding() {
         return this.verticalPadding;
     }
