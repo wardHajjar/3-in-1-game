@@ -1,7 +1,5 @@
 package com.example.dungeonescape.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,14 +11,8 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.dungeonescape.brickbreaker.BBInstructionsActivity;
-import com.example.dungeonescape.maze.MazeInstructionsActivity;
 import com.example.dungeonescape.player.Player;
-import com.example.dungeonescape.player.PlayerManager;
 import com.example.dungeonescape.R;
-import com.example.dungeonescape.maze.MazeActivity;
-import com.example.dungeonescape.brickbreaker.BBMainActivity;
-import com.example.dungeonescape.platformer.PlatformerInstructionsActivity;
 
 import java.util.List;
 
@@ -28,7 +20,6 @@ public class LoadGameActivity extends GeneralGameActivity {
     private Player player;
     private Spinner spinner;
 
-    private MenuActivity menuActivity = new MenuActivity();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,8 +49,7 @@ public class LoadGameActivity extends GeneralGameActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.main_menu) {
-            Intent intent = menuActivity.createIntent(LoadGameActivity.this,
-                    MainActivity.class, player.getName());
+            Intent intent = new Intent(LoadGameActivity.this, MainActivity.class);
             startActivity(intent);
             return true;
         } else {
@@ -90,7 +80,7 @@ public class LoadGameActivity extends GeneralGameActivity {
             public void onClick(View view) {
                 String playerName = spinner.getSelectedItem().toString();
                 player = getPlayerManager().getPlayer(playerName);
-                Intent intent = new Intent(LoadGameActivity.this, HomeScreen.class);
+                Intent intent = new Intent(LoadGameActivity.this, HomeScreenActivity.class);
                 intent.putExtra("Player Name", player.getName());
                 startActivity(intent);
             }

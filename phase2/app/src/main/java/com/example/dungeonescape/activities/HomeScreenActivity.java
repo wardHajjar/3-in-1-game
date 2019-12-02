@@ -2,19 +2,21 @@ package com.example.dungeonescape.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
 import com.example.dungeonescape.R;
 import com.example.dungeonescape.brickbreaker.BBInstructionsActivity;
 import com.example.dungeonescape.maze.MazeInstructionsActivity;
 import com.example.dungeonescape.platformer.PlatformerInstructionsActivity;
 import com.example.dungeonescape.player.Player;
-
 import java.util.Map;
 
-public class HomeScreen extends GeneralGameActivity {
+
+public class HomeScreenActivity extends GeneralGameActivity {
     private Player player;
 
     @Override
@@ -52,7 +54,26 @@ public class HomeScreen extends GeneralGameActivity {
         }
         newGameButton();
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.game_menu, menu);
+        return true;
+    }
 
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.main_menu) {
+            save(getPlayerManager());
+            Intent intent = new Intent(HomeScreenActivity.this, MainActivity.class);
+            startActivity(intent);
+            return true;
+        } else {
+            return super.onContextItemSelected(item);
+        }
+    }
     private void resumeButton() {
 
         Button enterGame = findViewById(R.id.resumeButton);
@@ -73,7 +94,7 @@ public class HomeScreen extends GeneralGameActivity {
             public void onClick(View view) {
                 player.resetStats();
                 save(getPlayerManager());
-                Intent intent = new Intent(HomeScreen.this, BBInstructionsActivity.class);
+                Intent intent = new Intent(HomeScreenActivity.this, BBInstructionsActivity.class);
                 intent.putExtra("Player Name", player.getName());
                 startActivity(intent);
             }
@@ -83,19 +104,20 @@ public class HomeScreen extends GeneralGameActivity {
     private void progress() {
         int level = player.getCurrentLevel();
         if (level == 1 || level == 0) {
-            Intent intent = new Intent(HomeScreen.this, BBInstructionsActivity.class);
+            Intent intent = new Intent(HomeScreenActivity.this, BBInstructionsActivity.class);
             intent.putExtra("Player Name", player.getName());
             startActivity(intent);
         }
         else if(level == 2) {
-            Intent intent = new Intent(HomeScreen.this, MazeInstructionsActivity.class);
+            Intent intent = new Intent(HomeScreenActivity.this, MazeInstructionsActivity.class);
             intent.putExtra("Player Name", player.getName());
             startActivity(intent);
         }
         else {
-            Intent intent = new Intent(HomeScreen.this, PlatformerInstructionsActivity.class);
+            Intent intent = new Intent(HomeScreenActivity.this, PlatformerInstructionsActivity.class);
             intent.putExtra("Player Name", player.getName());
             startActivity(intent);
         }
     }
+
 }

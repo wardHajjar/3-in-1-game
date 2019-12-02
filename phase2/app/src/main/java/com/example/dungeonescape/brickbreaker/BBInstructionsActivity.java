@@ -10,15 +10,12 @@ import android.widget.Button;
 
 import com.example.dungeonescape.activities.GeneralGameActivity;
 import com.example.dungeonescape.activities.MainActivity;
-import com.example.dungeonescape.activities.MenuActivity;
 import com.example.dungeonescape.player.Player;
 import com.example.dungeonescape.R;
 
 public class BBInstructionsActivity extends GeneralGameActivity{
     /** Initializes a Player and PlayerManager. */
     private Player player;
-    private MenuActivity menuActivity = new MenuActivity();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,8 +43,7 @@ public class BBInstructionsActivity extends GeneralGameActivity{
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.main_menu) {
             save(getPlayerManager());
-            Intent intent = menuActivity.createIntent(BBInstructionsActivity.this,
-                    MainActivity.class, player.getName());
+            Intent intent = new Intent(BBInstructionsActivity.this, MainActivity.class);
             startActivity(intent);
             return true;
         } else {

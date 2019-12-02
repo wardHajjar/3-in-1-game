@@ -10,8 +10,6 @@ import android.widget.Button;
 
 import com.example.dungeonescape.activities.GeneralGameActivity;
 import com.example.dungeonescape.activities.MainActivity;
-import com.example.dungeonescape.activities.MenuActivity;
-import com.example.dungeonescape.player.PlayerManager;
 import com.example.dungeonescape.player.Player;
 import com.example.dungeonescape.R;
 
@@ -27,8 +25,6 @@ public class MazeInstructionsActivity extends GeneralGameActivity {
      * for any specific purpose besides storing them and then sending them to the next activity,
      * which is MazeActivity, who then does use the two instances. */
     private Player player;
-
-    private MenuActivity menuActivity = new MenuActivity();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +53,7 @@ public class MazeInstructionsActivity extends GeneralGameActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.main_menu) {
             save(getPlayerManager());
-            Intent intent = menuActivity.createIntent(MazeInstructionsActivity.this,
-                    MainActivity.class, player.getName());
+            Intent intent = new Intent(MazeInstructionsActivity.this, MainActivity.class);
             startActivity(intent);
             return true;
         } else {

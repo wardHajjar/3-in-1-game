@@ -33,7 +33,7 @@ public class PlatformerManager{
     /**
      * The character for this game.
      */
-    private com.example.dungeonescape.platformer.entities.Character character;
+    private Character character;
     /**
      * A list of coins.
      */
@@ -64,6 +64,10 @@ public class PlatformerManager{
     private CollectableFactory factory;
     private List<Collectable> collectables = new ArrayList<>();
 
+    /**
+     * A list of all platformer objects except for character.
+     */
+    private List<PlatformerObject> entities = new ArrayList<>();
 
     /**
      * Platform manager on a screen with characters and platforms.
@@ -74,14 +78,17 @@ public class PlatformerManager{
 
         init(height, width);
         createCoins(3);
-        platforms = createPlatforms(8);
+        createPlatforms(7);
         gameMode = "Regular";
 
     }
+    /**
+     * Alternate Platform manager constructor for blitz level with specific number of coins.
+     */
     public PlatformerManager(int h, int w, int coins) {
         init(h, w);
         createCoins(coins);
-        platforms = createPlatforms(6);
+        createPlatforms(4);
         gameMode = "Blitz";
     }
     /**
@@ -108,7 +115,7 @@ public class PlatformerManager{
 
     }
     /**
-     * Creates platforms.
+     * Creates Coins.
      */
     private void createCoins(int number) {
 
@@ -117,10 +124,7 @@ public class PlatformerManager{
             Random random = new Random();
             int a = random.nextInt(gridWidth - 150);
             int b = random.nextInt(gridHeight - 150);
-
-            Collectable newCoin = factory.getCollectable("coin",
-                    a + gridWidth/2, b, 30);
-
+            Collectable newCoin = factory.getCollectable("coin", a, b, 30);
             coins.add((Coin) newCoin);
             collectables.add(newCoin);
         }
@@ -168,14 +172,16 @@ public class PlatformerManager{
     /**
      * Creates platforms.
      */
-    private List<Platforms> createPlatforms(int number) {
-        List<Platforms> arr = new ArrayList<>(number);
+    private void createPlatforms(int number) {
+        platforms = new ArrayList<>(number);
         for (int i = 1; i <= number; i++) {
             Random random = new Random();
             int a = random.nextInt(gridWidth - 150);
-            arr.add(new Platforms(a, gridHeight*i/10, 150, 30, this));
+            Platforms p = new Platforms(a, gridHeight*i/number, 150, 30,
+                    this);
+            platforms.add(p);
+            entities.add(p);
         }
-        return arr;
     }
     /**
      * Draws the canvas screen.
@@ -217,11 +223,18 @@ public class PlatformerManager{
      */
     public void setPlatforms(ArrayList<List> arr) {
         platforms = new ArrayList<>(arr.size());
-        for (int i = 0; i < arr.size(); i++) {
+        for (int i = 0; i < arr.size() - 1; i++) {
             int x = (int) arr.get(i).get(0);
             int y = (int) arr.get(i).get(1);
-            platforms.add(new Platforms(x,y,150, 30, this));
+            Platforms p = new Platforms(x,y,150, 30, this);
+            platforms.add(p);
+            entities.add(p);
         }
+        // Creates a platform right under character, so character doesn't fall right away.
+        Platforms p = new Platforms(character.getX() - 50, character.getY() + 400,150,
+                30, this);
+        platforms.add(p);
+        entities.add(p);
     }
     /**
      * Sets Character score and location, used when returning to normal mode.
@@ -289,6 +302,7 @@ public class PlatformerManager{
         Random random = new Random();
         int a = random.nextInt(gridWidth - 150);
         portal = new Portal(a, -100, this, portalImage);
+        entities.add(portal);
     }
     /**
      * Returns a boolean that indicates if the player has passed this level.
@@ -311,18 +325,17 @@ public class PlatformerManager{
     private void updateAll() {
 
         if (character.getY() < 550) {
+            // how much the character moves up by
             int diff = Math.abs(550 - character.getY());
 
             character.update(1);
-
+            // Update all collectables
             for (int i = 0; i < collectables.size(); i++) {
                 collectables.get(i).update(diff, gridHeight);
             }
-            for (int i = 0; i < platforms.size(); i++) {
-                platforms.get(i).update(diff);
-            }
-            if (portal != null) {
-                portal.update(diff);
+            // Update all entities
+            for (int i = 0; i < entities.size(); i++) {
+                entities.get(i).update(diff);
             }
         }
     }

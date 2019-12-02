@@ -1,6 +1,5 @@
 package com.example.dungeonescape.activities;
 import com.example.dungeonescape.player.Player;
-import com.example.dungeonescape.player.PlayerManager;
 import com.example.dungeonescape.R;
 
 import android.os.Bundle;
@@ -25,27 +24,25 @@ public class EndGameActivity extends GeneralGameActivity {
         Intent i = getIntent();
         String name = (String) i.getSerializableExtra("Player Name");
         player = getPlayerManager().getPlayer(name);
-
-        configureActionButtons();
-
         TextView congratulatePlayer = findViewById(R.id.congratulatePlayer);
-        congratulatePlayer.setText(String.format("Congratulation, %s!", player.getName()));
+        congratulatePlayer.setText(String.format("Congratulations, %s!", player.getName()));
 
         populatePlayerStats();
+        configureActionButtons();
     }
 
     private void configureActionButtons() {
         configurePlayAgainButton();
         configureMenuButton();
+        player.resetStats();
+        save(getPlayerManager());
     }
 
     private void configurePlayAgainButton() {
         Button playAgain = findViewById(R.id.playAgain);
         playAgain.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                player.resetStats();
-                save(getPlayerManager());
-                Intent intent = new Intent(EndGameActivity.this, HomeScreen.class);
+                Intent intent = new Intent(EndGameActivity.this, HomeScreenActivity.class);
                 intent.putExtra("Player Name", player.getName());
                 startActivity(intent);
             }
@@ -56,8 +53,6 @@ public class EndGameActivity extends GeneralGameActivity {
         Button menu = findViewById(R.id.mainMenu);
         menu.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                player.resetStats();
-                save(getPlayerManager());
                 Intent intent = new Intent(EndGameActivity.this, MainActivity.class);
                 intent.putExtra("Player Name", player.getName());
                 startActivity(intent);
@@ -83,10 +78,5 @@ public class EndGameActivity extends GeneralGameActivity {
         score.add((int)player.getTotalTime());
         player.setHighScore(score);
         save(getPlayerManager());
-    }
-
-    @Override
-    public void save(PlayerManager playerManager) {
-        super.save(getPlayerManager());
     }
 }
