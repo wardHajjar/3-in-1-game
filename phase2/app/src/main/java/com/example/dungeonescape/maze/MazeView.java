@@ -12,18 +12,14 @@ import com.example.dungeonescape.game.collectable.Collectable;
 
 import java.util.List;
 
-/**
- * This class is responsible for drawing out the game objects and walls of the maze, as well as
- * executing the movements of the player in the maze on the touch screen.
+/** Draws all instances of GameObjects onto the screen. Collects and reads data from MazeData.
  *
  * The original code from MazeView was from the following videos:
  * https://www.youtube.com/watch?v=I9lTBTAk5MU
  * https://www.youtube.com/watch?v=iri0wZ3NvdQ
  *
  * It has been edited and adjusted to fit our own objectives and visions of the game.
- * TODO: Edit this javadoc as we change the code below.
  */
-
 public class MazeView extends View {
 
     /** Player and exit objects, and their positions. */
@@ -52,23 +48,10 @@ public class MazeView extends View {
 
         // draws walls, Coins, the Player and the exit square on the screen
         paintWalls(canvas);
-//        paintCoins(canvas);
+        paintCollectables(canvas);
         playerSprite.draw(canvas);
         exitSprite.draw(canvas);
 
-        List<Collectable> collectables = mazeData.getCollectables();
-
-        for (Collectable obj : collectables) {
-            if (obj instanceof Drawable && obj instanceof RetrieveData) {
-                ((RetrieveData)obj).setGameData(this.mazeData);
-                ((Drawable) obj).draw(canvas);
-            } else if (obj instanceof Drawable) {
-                ((Drawable) obj).draw(canvas);
-            }
-        }
-
-//        System.out.println(mazeData.getCollectables());
-//        System.out.println(mazeData.getCollectables().size());
 
     }
 
@@ -86,7 +69,6 @@ public class MazeView extends View {
     private void paintWalls(Canvas canvas) {
         for(int x = 0; x < mazeData.getNumMazeCols(); x++) {
             for(int y = 0; y < mazeData.getNumMazeRows(); y++) {
-                mazeData.getCells()[x][y].setGameData(mazeData);
                 mazeData.getCells()[x][y].draw(canvas);
             }
         }
@@ -96,9 +78,13 @@ public class MazeView extends View {
      *
      * @param canvas the Canvas to draw the Coins on.
      */
-    private void paintCoins(Canvas canvas) {
-        for (MazeCoin coin : mazeData.getCoins()) {
-            coin.draw(canvas);
+    private void paintCollectables(Canvas canvas) {
+        List<Collectable> collectables = mazeData.getCollectables();
+
+        for (Collectable obj : collectables) {
+            if (obj instanceof Drawable) {
+                ((Drawable) obj).draw(canvas);
+            }
         }
     }
 
@@ -106,8 +92,8 @@ public class MazeView extends View {
     void updateMazeObjectsData() {
         playerSprite.setGameData(this.mazeData);
         exitSprite.setGameData(this.mazeData);
-//        updateMazeCellData();
-        updateCoinData();
+        updateMazeCellData();
+        updateCollectableData();
     }
 
     /** Runs method setMazeData on all MazeCells. */
@@ -119,10 +105,13 @@ public class MazeView extends View {
         }
     }
 
-    /** Runs method setMazeData on all MazeCoins. */
-    void updateCoinData() {
-        for (MazeCoin coin: mazeData.getCoins()) {
-            coin.setGameData(mazeData);
+    void updateCollectableData() {
+        List<Collectable> collectables = mazeData.getCollectables();
+
+        for (Collectable obj : collectables) {
+            if (obj instanceof RetrieveData) {
+                ((RetrieveData)obj).setGameData(this.mazeData);
+            }
         }
     }
 
