@@ -1,6 +1,5 @@
 package com.example.dungeonescape.activities;
 import com.example.dungeonescape.player.Player;
-import com.example.dungeonescape.player.PlayerManager;
 import com.example.dungeonescape.R;
 
 import android.os.Bundle;
@@ -43,7 +42,7 @@ public class EndGameActivity extends GeneralGameActivity {
         Button playAgain = findViewById(R.id.playAgain);
         playAgain.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Intent intent = new Intent(EndGameActivity.this, HomeScreen.class);
+                Intent intent = new Intent(EndGameActivity.this, HomeScreenActivity.class);
                 intent.putExtra("Player Name", player.getName());
                 startActivity(intent);
             }

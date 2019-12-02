@@ -11,7 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
 import com.example.dungeonescape.activities.MainActivity;
 import com.example.dungeonescape.player.Player;
 import com.example.dungeonescape.R;
@@ -209,7 +208,7 @@ public class MazeActivity extends GeneralGameActivity {
 
     @Override
     public void save(PlayerManager playerManager) {
-        super.save(playerManager);
         player.setCurrentLevel(3);
+        super.save(playerManager);
     }
 }

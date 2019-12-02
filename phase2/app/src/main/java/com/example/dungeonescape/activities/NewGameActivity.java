@@ -99,7 +99,7 @@ public class NewGameActivity extends GeneralGameActivity {
             @Override
             public void onClick(View view) {
                 if (isValid) {
-                    Intent intent = new Intent(NewGameActivity.this, HomeScreen.class);
+                    Intent intent = new Intent(NewGameActivity.this, HomeScreenActivity.class);
                     intent.putExtra("Player Name", player.getName());
                     startActivity(intent);
                 }

@@ -16,7 +16,7 @@ import com.example.dungeonescape.player.Player;
 import java.util.Map;
 
 
-public class HomeScreen extends GeneralGameActivity {
+public class HomeScreenActivity extends GeneralGameActivity {
     private Player player;
 
     @Override
@@ -67,7 +67,7 @@ public class HomeScreen extends GeneralGameActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.main_menu) {
             save(getPlayerManager());
-            Intent intent = new Intent(HomeScreen.this, MainActivity.class);
+            Intent intent = new Intent(HomeScreenActivity.this, MainActivity.class);
             startActivity(intent);
             return true;
         } else {
@@ -94,7 +94,7 @@ public class HomeScreen extends GeneralGameActivity {
             public void onClick(View view) {
                 player.resetStats();
                 save(getPlayerManager());
-                Intent intent = new Intent(HomeScreen.this, BBInstructionsActivity.class);
+                Intent intent = new Intent(HomeScreenActivity.this, BBInstructionsActivity.class);
                 intent.putExtra("Player Name", player.getName());
                 startActivity(intent);
             }
@@ -104,17 +104,17 @@ public class HomeScreen extends GeneralGameActivity {
     private void progress() {
         int level = player.getCurrentLevel();
         if (level == 1 || level == 0) {
-            Intent intent = new Intent(HomeScreen.this, BBInstructionsActivity.class);
+            Intent intent = new Intent(HomeScreenActivity.this, BBInstructionsActivity.class);
             intent.putExtra("Player Name", player.getName());
             startActivity(intent);
         }
         else if(level == 2) {
-            Intent intent = new Intent(HomeScreen.this, MazeInstructionsActivity.class);
+            Intent intent = new Intent(HomeScreenActivity.this, MazeInstructionsActivity.class);
             intent.putExtra("Player Name", player.getName());
             startActivity(intent);
         }
         else {
-            Intent intent = new Intent(HomeScreen.this, PlatformerInstructionsActivity.class);
+            Intent intent = new Intent(HomeScreenActivity.this, PlatformerInstructionsActivity.class);
             intent.putExtra("Player Name", player.getName());
             startActivity(intent);
         }
