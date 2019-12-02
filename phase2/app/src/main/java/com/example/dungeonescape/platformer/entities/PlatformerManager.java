@@ -351,17 +351,12 @@ public class PlatformerManager{
     private void collectableDetection() {
         for (Collectable collectable: collectables) {
             if (character.getShape().intersect(collectable.getItemShape())) {
-                if (collectable instanceof Coin) {
-                    Coin c = (Coin) collectable;
-                    c.gotCollectable();
-                    player.addCoin();
-                }
                 collectable.gotCollectable();
                 if (collectable instanceof Potion) {
                     player.addLife();
                 }
                 else {
-                    player.addToSatchel(collectable);
+                    collectable.collect(player);
                 }
             }
         }

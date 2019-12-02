@@ -13,13 +13,21 @@ import com.example.dungeonescape.platformer.entities.PlatformerManager;
 import com.example.dungeonescape.player.Player;
 
 /**
- * This class is responsible for drawing out the game objects of the level, as well as
+ * This LevelView abstract class is responsible for drawing out the game objects of the level,
  * as well as updating player state.
  */
 abstract public class LevelView extends GameView implements Runnable {
-
+    /**
+     * The platformer manager.
+     */
     private PlatformerManager manager;
+    /**
+     * The size of the screen
+     */
     private Point size;
+    /**
+     * The listeners for when the player ends the level or loses the level.
+     */
     OnCustomEventListener endGameListener;
     OnCustomEventListener finishLevelListener;
 
@@ -48,20 +56,32 @@ abstract public class LevelView extends GameView implements Runnable {
             holder.unlockCanvasAndPost(canvas);
         }
     }
-
+    /**
+     * @return the manager.
+     */
     public PlatformerManager getManager() {
         return manager;
     }
+    /**
+     * Sets the manager.
+     */
     void setManager(PlatformerManager manager) {
         this.manager = manager;
     }
-
+    /**
+     * @return the size of the screen.
+     */
     Point getSize() {
         return size;
     }
-
+    /**
+     * An abstract method update.
+     */
     public abstract void update();
 
+    /**
+     * Executes when the player has lost a life, but has not lost all lives.
+     */
     public void gameOver(Player player) {
         manager = new PlatformerManager(size.y, size.x);
         manager.setPlayer(player);
@@ -70,7 +90,9 @@ abstract public class LevelView extends GameView implements Runnable {
         setZOrderOnTop(true);
 
     }
-
+    /**
+     * Set the listener for when the player loses all lives.
+     */
     public void setEndGameListener(OnCustomEventListener eventListener) {
         this.endGameListener = eventListener;
     }

@@ -6,7 +6,9 @@ import android.graphics.Rect;
 import com.example.dungeonescape.game.Drawable;
 import com.example.dungeonescape.game.GameObject;
 
-
+/**
+ * An abstract class for all platformer objects.
+ */
 abstract public class PlatformerObject extends GameObject implements Drawable {
     /**
      * The size of the object.
