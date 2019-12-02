@@ -1,5 +1,7 @@
 package com.example.dungeonescape.platformer;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -14,6 +16,7 @@ import com.example.dungeonescape.platformer.views.LevelView;
 import com.example.dungeonescape.activities.GeneralGameActivity;
 import com.example.dungeonescape.player.Player;
 import com.example.dungeonescape.R;
+import java.util.Map;
 
 /**
  * The activity for the Hidden Blitz Level in Platformer.
@@ -150,12 +153,61 @@ public class PlatformerHiddenActivity extends GeneralGameActivity {
                 game.getManager().right_button();
             }
         });
+        configureSatchelButton();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         game.pause();
+    }
+
+    /** Creates the Satchel Button which opens up the Player's Satchel. */
+    private void configureSatchelButton() {
+        Button satchelButton = findViewById(R.id.satchelButton);
+        satchelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openSatchel();
+            }
+        });
+    }
+
+    /** Creates the AlertDialog that displays the contents of the Player's Satchel. */
+    private void openSatchel() {
+        onPause();
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        dialogBuilder.setMessage(getPlayerSatchelData());
+        dialogBuilder.setCancelable(true);
+
+        dialogBuilder.setNeutralButton(
+                "Return to Game",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                        onResume();
+                    }
+                });
+
+        AlertDialog showSatchel = dialogBuilder.create();
+        showSatchel.show();
+    }
+
+    /** Returns the contents of the Player's satchel.
+     *
+     * @return A string containing the contents of the Player's satchel.
+     */
+    private StringBuilder getPlayerSatchelData() {
+        StringBuilder satchelContents = new StringBuilder();
+        Map<String, Integer> satchel = player.getSatchel();
+        for (Map.Entry<String, Integer> collectedItem : satchel.entrySet()) {
+            satchelContents
+                    .append(collectedItem.getKey())
+                    .append(" ")
+                    .append(collectedItem.getValue())
+                    .append("\n");
+        }
+        return satchelContents;
     }
 
 }
